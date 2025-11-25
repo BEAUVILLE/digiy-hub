@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>DIGIY HUB — Super App Afrique</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="DIGIY HUB — Porte d’entrée unique vers les services DIGIY : DRIVER, LOC, PAY, POS, MARKET.">
+  <meta name="theme-color" content="#020617">
+
+  <style>
+    :root{
+      --bg:#020617;
+      --bg-soft:#020818;
+      --card:#030712;
+      --card-alt:#020617;
+      --accent:#facc15;
+      --accent-soft:#f97316;
+      --accent-soft2:#22c55e;
+      --ink:#f9fafb;
+      --muted:#9ca3af;
+      --line:#1f2937;
+      --danger:#ef4444;
+      --good:#22c55e;
+      --info:#38bdf8;
+      --radius-xl:20px;
+      --radius-lg:16px;
+      --radius-md:12px;
+      --shadow-soft:0 20px 45px rgba(15,23,42,0.9);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:-apple-system, BlinkMacSystemFont, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top, rgba(250,204,21,0.16), transparent 60%),
+        radial-gradient(circle at bottom, rgba(56,189,248,0.12), transparent 55%),
+        #020617;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      padding:10px;
+    }
+
+    .app{
+      width:100%;
+      max-width:1100px;
+      min-height:100vh;
+      background:linear-gradient(135deg, #020617 0%, #020819 50%, #020617 100%);
+      border-radius:24px;
+      border:1px solid rgba(148,163,184,0.25);
+      box-shadow:var(--shadow-soft);
+      padding:14px 14px 22px;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .app::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(250,204,21,0.08), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(34,197,94,0.08), transparent 45%);
+      opacity:0.75;
+      pointer-events:none;
+    }
+
+    header{
+      position:relative;
+      z-index:5;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:8px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .brand-logo{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      background:radial-gradient(circle at 30% 0%, #facc15, #f97316);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      box-shadow:0 10px 25px rgba(234,179,8,0.5);
+    }
+
+    .brand-text-title{
+      font-size:16px;
+      font-weight:800;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--accent);
+    }
+    .brand-text-sub{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .user-pill{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:rgba(15,23,42,0.9);
+      border-radius:999px;
+      padding:6px 12px;
+      border:1px solid rgba(148,163,184,0.5);
+      font-size:11px;
+    }
+
+    .user-avatar{
+      width:26px;
+      height:26px;
+      border-radius:999px;
+      background:radial-gradient(circle at 30% 0%, var(--accent), #f97316);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+    }
+
+    .user-name{
+      font-weight:600;
+    }
+
+    .user-role{
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    .logout-btn{
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      font-size:14px;
+      cursor:pointer;
+      padding:0 0 0 4px;
+    }
+
+    main{
+      position:relative;
+      z-index:5;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:6px;
+    }
+
+    .welcome{
+      background:radial-gradient(circle at top left, rgba(250,204,21,0.14), transparent 55%);
+      border-radius:var(--radius-xl);
+      border:1px solid rgba(148,163,184,0.45);
+      padding:12px 12px 10px;
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+    }
+
+    .welcome-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+    }
+
+    .welcome-title{
+      font-size:15px;
+      font-weight:700;
+    }
+
+    .welcome-sub{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .welcome-badge{
+      font-size:10px;
+      border-radius:999px;
+      padding:4px 10px;
+      border:1px solid rgba(250,204,21,0.5);
+      background:rgba(15,23,42,0.85);
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .welcome-badge span.dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:radial-gradient(circle, var(--accent), #f97316);
+      box-shadow:0 0 10px rgba(250,204,21,0.8);
+    }
+
+    .welcome-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:5px;
+    }
+
+    .welcome-tag{
+      font-size:10px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.5);
+      color:var(--muted);
+      background:rgba(15,23,42,0.7);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:2.2fr 3.2fr;
+      gap:12px;
+      align-items:flex-start;
+    }
+
+    @media(max-width:800px){
+      .app{
+        border-radius:0;
+        border:none;
+        box-shadow:none;
+      }
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .card{
+      background:radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(3,7,18,0.96));
+      border-radius:var(--radius-xl);
+      border:1px solid rgba(30,64,175,0.4);
+      padding:12px;
+      box-shadow:0 12px 35px rgba(15,23,42,0.8);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:6px;
+    }
+
+    .card-title{
+      font-size:13px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--muted);
+    }
+
+    .card-pill{
+      font-size:10px;
+      padding:3px 7px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.5);
+      color:var(--muted);
+    }
+
+    .wallet-main{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-top:4px;
+    }
+
+    .wallet-balance{
+      font-size:22px;
+      font-weight:800;
+    }
+
+    .wallet-label{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .wallet-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:4px;
+      gap:6px;
+    }
+
+    .wallet-meta{
+      font-size:10px;
+      color:var(--muted);
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .wallet-actions{
+      display:flex;
+      gap:8px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:11px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      white-space:nowrap;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, #facc15, #f97316);
+      color:#111827;
+      font-weight:600;
+    }
+
+    .btn-ghost{
+      background:rgba(15,23,42,0.9);
+      color:var(--muted);
+      border:1px solid rgba(148,163,184,0.5);
+    }
+
+    .wallet-foot{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:6px;
+      font-size:10px;
+      color:var(--muted);
+    }
+
+    .status-dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--good);
+      box-shadow:0 0 10px rgba(34,197,94,0.9);
+      margin-right:5px;
+      display:inline-block;
+    }
+
+    .modules{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:8px;
+      margin-top:4px;
+    }
+
+    @media(max-width:900px){
+      .modules{
+        grid-template-columns:repeat(2, minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:600px){
+      .modules{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    .module{
+      background:radial-gradient(circle at top, rgba(15,23,42,0.95), #020617);
+      border-radius:var(--radius-lg);
+      border:1px solid rgba(30,64,175,0.6);
+      padding:9px 8px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:4px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .module::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at top, rgba(250,204,21,0.08), transparent 55%);
+      opacity:0.75;
+      pointer-events:none;
+    }
+
+    .module-header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:6px;
+    }
+
+    .module-icon{
+      width:26px;
+      height:26px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.4);
+      flex-shrink:0;
+    }
+
+    .module-titles{
+      flex:1;
+    }
+
+    .module-name{
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .module-tagline{
+      font-size:10px;
+      color:var(--muted);
+    }
+
+    .module-badge{
+      font-size:9px;
+      padding:3px 6px;
+      border-radius:999px;
+      border:1px solid rgba(34,197,94,0.8);
+      color:var(--good);
+      background:rgba(15,23,42,0.9);
+      white-space:nowrap;
+    }
+
+    .module-body{
+      font-size:10px;
+      color:var(--muted);
+      margin-top:3px;
+      min-height:28px;
+    }
+
+    .module-foot{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:4px;
+      font-size:9px;
+      color:var(--muted);
+    }
+
+    .module-btn{
+      border:none;
+      border-radius:999px;
+      padding:4px 8px;
+      font-size:10px;
+      cursor:pointer;
+      background:linear-gradient(135deg, #facc15, #f97316);
+      color:#020617;
+      font-weight:600;
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    .module-mini{
+      font-size:9px;
+      color:var(--muted);
+    }
+
+    footer{
+      position:relative;
+      z-index:5;
+      margin-top:10px;
+      font-size:9px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .footer-left span{
+      color:var(--accent);
+      font-weight:600;
+    }
+
+    .footer-right{
+      text-align:right;
+    }
+
+    .footer-right strong{
+      color:var(--accent-soft2);
+    }
+
+    /* OVERLAY LOGIN DIGIY ID */
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(3,7,18,0.96));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:50;
+    }
+
+    .overlay.hidden{
+      display:none;
+    }
+
+    .login-card{
+      width:100%;
+      max-width:360px;
+      background:radial-gradient(circle at top, rgba(250,204,21,0.12), #020617);
+      border-radius:24px;
+      border:1px solid rgba(148,163,184,0.45);
+      padding:20px 18px 16px;
+      box-shadow:0 22px 50px rgba(15,23,42,1);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .login-card::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(250,204,21,0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(56,189,248,0.12), transparent 45%);
+      opacity:0.9;
+      pointer-events:none;
+    }
+
+    .login-head{
+      position:relative;
+      z-index:2;
+      margin-bottom:12px;
+    }
+
+    .login-logo{
+      width:38px;
+      height:38px;
+      border-radius:14px;
+      background:radial-gradient(circle at 30% 0%, #facc15, #f97316);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      box-shadow:0 12px 28px rgba(234,179,8,0.6);
+      margin-bottom:6px;
+    }
+
+    .login-title{
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+    }
+
+    .login-sub{
+      font-size:11px;
+      color:var(--muted);
+      max-width:260px;
+    }
+
+    .login-form{
+      position:relative;
+      z-index:2;
+      margin-top:8px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .field label{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .field input, .field select{
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.9);
+      color:var(--ink);
+      padding:7px 11px;
+      font-size:12px;
+      outline:none;
+    }
+
+    .field input::placeholder{
+      color:rgba(148,163,184,0.8);
+    }
+
+    .login-tip{
+      font-size:9px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+
+    .login-actions{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .btn-full{
+      width:100%;
+      justify-content:center;
+    }
+
+    .btn-alt{
+      background:rgba(15,23,42,0.8);
+      color:var(--muted);
+      border:1px solid rgba(148,163,184,0.6);
+      font-size:10px;
+      padding:6px 8px;
+    }
+
+    .login-foot{
+      margin-top:8px;
+      font-size:9px;
+      color:var(--muted);
+    }
+
+    .login-foot span{
+      color:var(--accent-soft2);
+    }
+
+    .pill-env{
+      position:absolute;
+      right:12px;
+      top:12px;
+      font-size:9px;
+      padding:3px 7px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      color:var(--muted);
+      background:rgba(15,23,42,0.9);
+      z-index:3;
+    }
+
+    .pill-env strong{
+      color:var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+<div class="overlay" id="loginOverlay">
+  <div class="login-card">
+    <div class="pill-env">
+      DIGIY HUB • <strong>ALPHA</strong>
+    </div>
+    <div class="login-head">
+      <div class="login-logo">⚡</div>
+      <div class="login-title">DIGIY HUB</div>
+      <div class="login-sub">
+        Un seul compte. Tous vos services DIGIY : COURSE, LOC, PAY, POS, MARKET… 
+        Au service du peuple, pas des commissions.
+      </div>
+    </div>
+
+    <form class="login-form" onsubmit="event.preventDefault(); handleLogin();">
+      <div class="field">
+        <label for="loginName">Votre prénom / nom</label>
+        <input id="loginName" type="text" placeholder="Ex. Mamadou, Astou…" required>
+      </div>
+      <div class="field">
+        <label for="loginPhone">Téléphone (WhatsApp)</label>
+        <input id="loginPhone" type="tel" placeholder="+221 77 000 00 00" required>
+      </div>
+      <div class="field">
+        <label for="loginRole">Vous êtes plutôt…</label>
+        <select id="loginRole" required>
+          <option value="">Choisissez un profil</option>
+          <option value="client">Client / voyageur</option>
+          <option value="chauffeur">Chauffeur / livreur</option>
+          <option value="commercant">Commerçant / Pro</option>
+          <option value="hebergeur">Hébergeur / Pro LOC</option>
+          <option value="admin">Admin DIGIY</option>
+        </select>
+      </div>
+
+      <div class="login-tip">
+        Ce compte servira demain pour DIGIY DRIVER, PAY, LOC, POS, MARKET… 
+        <br>1 numéro = 1 identité DIGIY.
+      </div>
+
+      <div class="login-actions">
+        <button type="submit" class="btn btn-primary btn-full">
+          Continuer vers DIGIY HUB
+        </button>
+        <button type="button" class="btn btn-alt" onclick="quickDemoUser()">
+          Utiliser un compte démo rapide
+        </button>
+      </div>
+
+      <div class="login-foot">
+        Données stockées localement pour l’instant. <span>Aucune donnée envoyée sur un serveur</span> tant que DIGIY ID n’est pas activé.
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="brand-logo">⚡</div>
+      <div>
+        <div class="brand-text-title">DIGIY HUB</div>
+        <div class="brand-text-sub">Super App • Sénégal • Afrique</div>
+      </div>
+    </div>
+
+    <div class="user-pill" id="userPill">
+      <div class="user-avatar" id="userAvatar">👤</div>
+      <div>
+        <div class="user-name" id="userName">Invité DIGIY</div>
+        <div class="user-role" id="userRole">Connectez-vous pour accéder à vos services</div>
+      </div>
+      <button class="logout-btn" onclick="logoutUser()" title="Changer de compte">⏏</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <div class="welcome-top">
+        <div>
+          <div class="welcome-title" id="welcomeTitle">
+            Bienvenue dans votre HUB DIGIY
+          </div>
+          <div class="welcome-sub" id="welcomeSub">
+            Commandez un VTC, encaissez vos ventes, gérez vos locations et vos paiements dans un seul espace.
+          </div>
+        </div>
+        <div class="welcome-badge">
+          <span class="dot"></span>
+          <span id="welcomeBadge">Alpha • Vision WeChat Sénégal</span>
+        </div>
+      </div>
+      <div class="welcome-tags">
+        <div class="welcome-tag">0% commission</div>
+        <div class="welcome-tag">Paiement direct au pro</div>
+        <div class="welcome-tag">Données souveraines</div>
+        <div class="welcome-tag">Made in Sénégal</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Wallet DIGIY PAY</div>
+          <div class="card-pill" id="walletStatus">Mode démo local</div>
+        </div>
+
+        <div class="wallet-main">
+          <div class="wallet-balance" id="walletBalance">0 F</div>
+          <div class="wallet-label">Solde disponible (bientôt connecté à DIGIY PAY réel)</div>
+
+          <div class="wallet-row">
+            <div class="wallet-meta">
+              <span id="lastActivity">Dernière action : aucune</span>
+              <span id="walletOwner">Compte : invité</span>
+            </div>
+            <div class="wallet-actions">
+              <button class="btn btn-primary" onclick="simulateTopUp(5000)">+5 000 F</button>
+              <button class="btn btn-ghost" onclick="resetWallet()">Reset</button>
+            </div>
+          </div>
+
+          <div class="wallet-foot">
+            <div>
+              <span class="status-dot"></span>
+              Préparation connexion temps réel DIGIY PAY
+            </div>
+            <div>Étape suivante : <strong>ID + PAY unifiés</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Vos services DIGIY</div>
+          <div class="card-pill">Cliquez pour ouvrir un module</div>
+        </div>
+
+        <div class="modules">
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">🚗</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY DRIVER</div>
+                <div class="module-tagline">Courses AIBD, Dakar, Saly, Afrique</div>
+              </div>
+              <div class="module-badge">0% commission</div>
+            </div>
+            <div class="module-body">
+              Commander un VTC DIGIY, avec prix justes et paiement direct au chauffeur.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('driver')">
+                Ouvrir DRIVER →
+              </button>
+              <div class="module-mini">Client & chauffeur</div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">🏡</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY LOC</div>
+                <div class="module-tagline">Locations sans commission</div>
+              </div>
+              <div class="module-badge">Host friendly</div>
+            </div>
+            <div class="module-body">
+              Louer ou gérer un bien sans OTA qui vous enferme : direct propriétaire ↔ client.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('loc')">
+                Ouvrir LOC →
+              </button>
+              <div class="module-mini">Hébergeurs & voyageurs</div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">🧾</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY POS</div>
+                <div class="module-tagline">Caisse 0% commission</div>
+              </div>
+              <div class="module-badge">Boutiques</div>
+            </div>
+            <div class="module-body">
+              Encaisser ventes en boutique : espèces, Wave, OM, et tickets traçables.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('pos')">
+                Ouvrir POS →
+              </button>
+              <div class="module-mini">Commerçants & restaurants</div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">💳</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY PAY</div>
+                <div class="module-tagline">Cœur de paiement</div>
+              </div>
+              <div class="module-badge">Bientôt live</div>
+            </div>
+            <div class="module-body">
+              Wallet DIGIY, encaissements, transferts, connectés à tous les modules.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('pay')">
+                Ouvrir PAY →
+              </button>
+              <div class="module-mini">Un seul cœur financier</div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">🛒</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY MARKET</div>
+                <div class="module-tagline">Annonces & services</div>
+              </div>
+              <div class="module-badge">Terrain</div>
+            </div>
+            <div class="module-body">
+              Publier offres locales : jobs, services, biens, toujours sans commission forcée.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('market')">
+                Ouvrir MARKET →
+              </button>
+              <div class="module-mini">Peuple & pros</div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">🧠</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY CORE</div>
+                <div class="module-tagline">Pilotage & stats</div>
+              </div>
+              <div class="module-badge">Admin</div>
+            </div>
+            <div class="module-body">
+              Tableau de bord global : modules, flux, revenus, santé de l’écosystème DIGIY.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('core')">
+                Ouvrir CORE →
+              </button>
+              <div class="module-mini">Management DIGIY</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-left">
+      DIGIY HUB • <span>Alpha Vision</span> — Sénégal → Afrique
+    </div>
+    <div class="footer-right">
+      Indépendance financière & données souveraines. <br>
+      <strong>Pas d’OTA, pas de racket. Juste le peuple & ses outils.</strong>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // ====== CONFIG LIENS MODULES (À ADAPTER) ======
+  const LINKS = {
+    driver: "#",   // ex: "https://beauville.github.io/digiy-driver-client/"
+    loc: "#",      // ex: "https://digiylyfe.com/digiy-loc/"
+    pos: "#",      // ex: "https://beauville.github.io/astou-pos/"
+    pay: "#",      // futur DIGIY PAY
+    market: "#",   // futur DIGIY MARKET
+    core: "#"      // ex: "https://beauville.github.io/digiy-core/"
+  };
+
+  // ====== ÉTAT LOCAL (DIGIY ID simplifié + Wallet démo) ======
+  const STORAGE_USER_KEY = "digiy_hub_user_v1";
+  const STORAGE_WALLET_KEY = "digiy_hub_wallet_v1";
+
+  let currentUser = null;
+  let walletBalance = 0;
+  let lastActivity = "Aucune activité";
+
+  function formatCurrency(amount){
+    return (amount || 0).toLocaleString("fr-FR") + " F";
+  }
+
+  function loadUser(){
+    try{
+      const raw = localStorage.getItem(STORAGE_USER_KEY);
+      if(!raw) return null;
+      return JSON.parse(raw);
+    }catch(e){
+      console.error("Erreur chargement user:", e);
+      return null;
+    }
+  }
+
+  function saveUser(user){
+    currentUser = user;
+    localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(user));
+  }
+
+  function loadWallet(){
+    try{
+      const raw = localStorage.getItem(STORAGE_WALLET_KEY);
+      if(!raw) return 0;
+      return Number(raw) || 0;
+    }catch(e){
+      return 0;
+    }
+  }
+
+  function saveWallet(value){
+    walletBalance = value;
+    localStorage.setItem(STORAGE_WALLET_KEY, String(value));
+  }
+
+  function updateUI(){
+    const userNameEl = document.getElementById("userName");
+    const userRoleEl = document.getElementById("userRole");
+    const welcomeTitle = document.getElementById("welcomeTitle");
+    const welcomeSub = document.getElementById("welcomeSub");
+    const walletBalanceEl = document.getElementById("walletBalance");
+    const walletOwnerEl = document.getElementById("walletOwner");
+    const lastActivityEl = document.getElementById("lastActivity");
+
+    if(currentUser){
+      const roleLabel = getRoleLabel(currentUser.role);
+
+      userNameEl.textContent = currentUser.name || "Compte DIGIY";
+      userRoleEl.textContent = roleLabel;
+
+      welcomeTitle.textContent = `Bonjour, ${currentUser.name || "frérot"} 👋`;
+      welcomeSub.textContent = `Bienvenue dans votre HUB DIGIY. Vous pouvez accéder à vos services et, bientôt, à vos flux financiers unifiés.`;
+
+      walletOwnerEl.textContent = `Compte : ${currentUser.phone || "—"}`;
+    }else{
+      userNameEl.textContent = "Invité DIGIY";
+      userRoleEl.textContent = "Connectez-vous pour profiter des services.";
+      welcomeTitle.textContent = "Bienvenue dans votre HUB DIGIY";
+      welcomeSub.textContent = "Commandez un VTC, encaissez vos ventes, gérez vos locations et vos paiements dans un seul espace.";
+      walletOwnerEl.textContent = "Compte : invité";
+    }
+
+    walletBalanceEl.textContent = formatCurrency(walletBalance);
+    lastActivityEl.textContent = "Dernière action : " + lastActivity;
+  }
+
+  function getRoleLabel(role){
+    switch(role){
+      case "client": return "Client / voyageur";
+      case "chauffeur": return "Chauffeur / livreur";
+      case "commercant": return "Commerçant / Pro";
+      case "hebergeur": return "Hébergeur / Pro LOC";
+      case "admin": return "Admin DIGIY";
+      default: return "Profil DIGIY";
+    }
+  }
+
+  function handleLogin(){
+    const nameInput = document.getElementById("loginName");
+    const phoneInput = document.getElementById("loginPhone");
+    const roleSelect = document.getElementById("loginRole");
+
+    const name = nameInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const role = roleSelect.value;
+
+    if(!name || !phone || !role){
+      alert("Merci de remplir tous les champs pour créer votre DIGIY ID local.");
+      return;
+    }
+
+    const user = {
+      name,
+      phone,
+      role,
+      createdAt: new Date().toISOString()
+    };
+
+    saveUser(user);
+    lastActivity = "Connexion DIGIY HUB";
+    saveWallet(loadWallet()); // recharge valeur actuelle
+
+    document.getElementById("loginOverlay").classList.add("hidden");
+    updateUI();
+  }
+
+  function quickDemoUser(){
+    const demo = {
+      name: "Mamadou Démo",
+      phone: "+221 77 000 00 00",
+      role: "chauffeur",
+      createdAt: new Date().toISOString()
+    };
+    saveUser(demo);
+    lastActivity = "Connexion avec compte démo";
+    if(walletBalance === 0){
+      saveWallet(15000);
+    }
+    document.getElementById("loginOverlay").classList.add("hidden");
+    updateUI();
+  }
+
+  function logoutUser(){
+    if(!confirm("Changer de compte DIGIY HUB ?")){
+      return;
+    }
+    localStorage.removeItem(STORAGE_USER_KEY);
+    currentUser = null;
+    document.getElementById("loginOverlay").classList.remove("hidden");
+    updateUI();
+  }
+
+  function simulateTopUp(amount){
+    walletBalance = loadWallet() + Number(amount || 0);
+    saveWallet(walletBalance);
+    lastActivity = `Crédit démo +${formatCurrency(amount)}`;
+    updateUI();
+  }
+
+  function resetWallet(){
+    walletBalance = 0;
+    saveWallet(walletBalance);
+    lastActivity = "Réinitialisation solde démo";
+    updateUI();
+  }
+
+  function openModule(key){
+    const url = LINKS[key] || "#";
+    if(url === "#"){
+      alert("Le lien vers ce module n'est pas encore configuré. Tu peux le définir dans l’objet LINKS du script.");
+      return;
+    }
+    window.open(url, "_blank");
+  }
+
+  // ====== INIT ======
+  document.addEventListener("DOMContentLoaded", () => {
+    currentUser = loadUser();
+    walletBalance = loadWallet();
+
+    if(currentUser){
+      document.getElementById("loginOverlay").classList.add("hidden");
+    }
+
+    updateUI();
+  });
+</script>
+
+</body>
+</html>
