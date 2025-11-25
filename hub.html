@@ -1083,18 +1083,10 @@
   };
 </script>
 
-<!-- 2) CONFIG STOCKAGE + VARIABLES GLOBALES -->
+<!-- 2) CONFIG & LOGIQUE HUB -->
 <script>
   const STORAGE_USER_KEY = "digiy_hub_user_v1";
   const STORAGE_WALLET_KEY = "digiy_hub_wallet_v1";
-
-  let currentUser = null;
-  let walletBalance = 0;
-  let lastActivity = "Aucune activité";
-  let firebaseDB = null;
-  let firebaseReady = false;
-  let walletPath = null;
-</script>
 
   let currentUser = null;
   let walletBalance = 0;
@@ -1219,9 +1211,11 @@
       userNameEl.textContent = name;
       userRoleEl.textContent = getRoleLabel(role);
       welcomeTitle.textContent = "Bonjour, " + name + " 👋";
+
       if(!welcomeSub.textContent){
         welcomeSub.textContent = "Bienvenue dans votre HUB DIGIY. Vous pouvez ouvrir vos services depuis cet espace central.";
       }
+
       walletOwnerEl.textContent = "Compte : " + phone;
 
       const initial = name.trim().charAt(0).toUpperCase() || "👤";
