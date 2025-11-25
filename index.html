@@ -32,7 +32,7 @@
       box-sizing:border-box;
       margin:0;
       padding:0;
-      font-family:-apple-system, BlinkMacSystemFont, system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-family:-apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
     }
 
     body{
@@ -938,14 +938,14 @@
 </div>
 
 <script>
-  // ====== CONFIG LIENS MODULES (À ADAPTER) ======
+  // ====== CONFIG LIENS MODULES (BRANCHÉS) ======
   const LINKS = {
-    driver: "#",   // ex: "https://beauville.github.io/digiy-driver-client/"
-    loc: "#",      // ex: "https://digiylyfe.com/digiy-loc/"
-    pos: "#",      // ex: "https://beauville.github.io/astou-pos/"
+    driver: "https://beauville.github.io/digiy-driver-client/",
+    loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",
+    pos: "https://beauville.github.io/Caisse-officielle-ASTOU/",
     pay: "#",      // futur DIGIY PAY
     market: "#",   // futur DIGIY MARKET
-    core: "#"      // ex: "https://beauville.github.io/digiy-core/"
+    core: "#"      // futur DIGIY CORE
   };
 
   // ====== ÉTAT LOCAL (DIGIY ID simplifié + Wallet démo) ======
@@ -991,6 +991,17 @@
     localStorage.setItem(STORAGE_WALLET_KEY, String(value));
   }
 
+  function getRoleLabel(role){
+    switch(role){
+      case "client": return "Client / voyageur";
+      case "chauffeur": return "Chauffeur / livreur";
+      case "commercant": return "Commerçant / Pro";
+      case "hebergeur": return "Hébergeur / Pro LOC";
+      case "admin": return "Admin DIGIY";
+      default: return "Profil DIGIY";
+    }
+  }
+
   function updateUI(){
     const userNameEl = document.getElementById("userName");
     const userRoleEl = document.getElementById("userRole");
@@ -1022,17 +1033,6 @@
     lastActivityEl.textContent = "Dernière action : " + lastActivity;
   }
 
-  function getRoleLabel(role){
-    switch(role){
-      case "client": return "Client / voyageur";
-      case "chauffeur": return "Chauffeur / livreur";
-      case "commercant": return "Commerçant / Pro";
-      case "hebergeur": return "Hébergeur / Pro LOC";
-      case "admin": return "Admin DIGIY";
-      default: return "Profil DIGIY";
-    }
-  }
-
   function handleLogin(){
     const nameInput = document.getElementById("loginName");
     const phoneInput = document.getElementById("loginPhone");
@@ -1056,7 +1056,7 @@
 
     saveUser(user);
     lastActivity = "Connexion DIGIY HUB";
-    saveWallet(loadWallet()); // recharge valeur actuelle
+    saveWallet(loadWallet());
 
     document.getElementById("loginOverlay").classList.add("hidden");
     updateUI();
@@ -1103,12 +1103,20 @@
   }
 
   function openModule(key){
-    const url = LINKS[key] || "#";
-    if(url === "#"){
-      alert("Le lien vers ce module n'est pas encore configuré. Tu peux le définir dans l’objet LINKS du script.");
+    const url = LINKS[key];
+    console.log("[DIGIY HUB] openModule:", key, "→", url);
+
+    if(!url){
+      alert("Ce module n'est pas défini dans LINKS.");
       return;
     }
-    window.open(url, "_blank");
+    if(url === "#"){
+      alert("Ce module n'est pas encore connecté. Tu peux lui brancher une URL dans LINKS.");
+      return;
+    }
+
+    // Navigation directe (évite les blocages popup)
+    window.location.href = url;
   }
 
   // ====== INIT ======
