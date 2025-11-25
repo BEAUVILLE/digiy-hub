@@ -729,13 +729,26 @@
 <script>
   // ===== CONFIG LIENS MODULES (à adapter quand tu veux brancher) =====
   const LINKS = {
-    driver: "#",   // ex: "https://beauville.github.io/digiy-driver-client/"
-    loc: "#",
-    pos: "#",
-    pay: "#",
-    market: "#",
-    core: "#"
-  };
+  // 🚗 DIGIY DRIVER
+  driver: "https://beauville.github.io/digiy-driver-client/",   // Client → Commander une course
+  driverTop: "https://beauville.github.io/digiy-driver-top/",   // Chauffeur → Interface driver
+
+  // 🏡 DIGIY LOC
+  loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",   // Exemple : Chez Baptiste
+
+  // 🧾 DIGIY POS
+  pos: "https://beauville.github.io/Caisse-officielle-ASTOU/",   // POS officiel ASTOU
+
+  // 💳 DIGIY PAY (à venir)
+  pay: "#",  
+
+  // 🛒 DIGIY MARKET (à venir)
+  market: "#",
+
+  // 🧠 DIGIY CORE (Master Panel)
+  core: "#"    // tu me donnes l’URL quand tu veux le brancher
+};
+
 
   const STORAGE_USER_KEY = "digiy_hub_user_v1";
   const STORAGE_WALLET_KEY = "digiy_hub_wallet_v1";
