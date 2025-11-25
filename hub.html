@@ -706,6 +706,20 @@
       color:var(--accent-soft2);
     }
   </style>
+
+  <!-- 🚨 Sécurité : interdit l'accès direct au HUB sans inscription -->
+  <script>
+    (function(){
+      try {
+        const userDataCheck = localStorage.getItem("digiy_hub_user_v1");
+        if (!userDataCheck) {
+          window.location.replace("index.html");
+        }
+      } catch(e) {
+        window.location.replace("index.html");
+      }
+    })();
+  </script>
 </head>
 <body>
 
