@@ -1083,12 +1083,17 @@
   };
 </script>
 
-<!-- 2) TON ANCIEN CODE REMIS PROPRE DANS UN SCRIPT -->
+<!-- 2) CONFIG STOCKAGE + VARIABLES GLOBALES -->
 <script>
   const STORAGE_USER_KEY = "digiy_hub_user_v1";
   const STORAGE_WALLET_KEY = "digiy_hub_wallet_v1";
 
   let currentUser = null;
+  let walletBalance = 0;
+  let lastActivity = "Aucune activité";
+  let firebaseDB = null;
+  let firebaseReady = false;
+  let walletPath = null;
 </script>
 
   let currentUser = null;
