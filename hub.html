@@ -77,7 +77,7 @@
       }
     }
 
-    /* HEADER + TOP BAR */
+    /* HEADER */
 
     header{
       position:relative;
@@ -152,6 +152,12 @@
       border-radius:999px;
       border:1px solid rgba(148,163,184,0.5);
       min-width:0;
+      transition:box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .user-pill.admin-mode{
+      border-color:rgba(250,204,21,0.9);
+      box-shadow:0 0 22px rgba(250,204,21,0.55);
     }
 
     .user-avatar{
@@ -165,6 +171,12 @@
       font-size:14px;
       color:#022c22;
       flex-shrink:0;
+    }
+
+    .user-avatar.admin-mode{
+      background:linear-gradient(135deg,#facc15,#f97316);
+      color:#111827;
+      box-shadow:0 0 18px rgba(250,204,21,0.9);
     }
 
     .user-meta{
@@ -560,6 +572,11 @@
       overflow:hidden;
     }
 
+    .module.admin-core{
+      border-color:rgba(250,204,21,0.9);
+      box-shadow:0 0 18px rgba(250,204,21,0.5);
+    }
+
     .module::before{
       content:"";
       position:absolute;
@@ -764,7 +781,7 @@
 
     <div class="header-right">
       <button class="menu-btn" onclick="openSideMenu()">☰</button>
-      <div class="user-pill">
+      <div class="user-pill" id="userPill">
         <div class="user-avatar" id="userAvatar">👤</div>
         <div class="user-meta">
           <div class="user-name" id="userName">Invité DIGIY</div>
@@ -786,7 +803,7 @@
             Commander un VTC, gérer vos locations, encaisser vos ventes et piloter vos flux depuis un seul endroit.
           </div>
         </div>
-        <div class="welcome-badge">
+        <div class="welcome-badge" id="welcomeBadgeWrapper">
           <span class="welcome-dot"></span>
           <span id="welcomeBadge">Alpha • Super App terrain Sénégal</span>
         </div>
@@ -995,7 +1012,7 @@
           </div>
 
           <!-- CORE -->
-          <div class="module">
+          <div class="module" id="coreModule">
             <div class="module-inner">
               <div class="module-header">
                 <div class="module-left">
@@ -1005,16 +1022,16 @@
                     <div class="module-tagline">Pilotage global</div>
                   </div>
                 </div>
-                <div class="module-badge module-badge-soon">Admin</div>
+                <div class="module-badge module-badge-soon" id="coreBadge">Admin</div>
               </div>
-              <div class="module-body">
+              <div class="module-body" id="coreBody">
                 Tableau de bord maître : suivi des modules, flux, revenus, alertes terrain.
               </div>
               <div class="module-foot">
                 <button class="module-btn" onclick="openModule('core')">
                   Ouvrir →
                 </button>
-                <div class="module-mini">Pour la maison mère</div>
+                <div class="module-mini" id="coreMini">Pour la maison mère</div>
               </div>
             </div>
           </div>
@@ -1042,24 +1059,16 @@
 <script>
   // ===== CONFIG LIENS MODULES =====
   const LINKS = {
-    // 🚗 DIGIY DRIVER — Client
     driver: "https://beauville.github.io/digiy-driver-client/",
-    // 🚖 DIGIY DRIVER — Chauffeur
     driverTop: "https://beauville.github.io/digiy-driver-top/",
-    // 🏡 DIGIY LOC
     loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",
-    // 🧾 DIGIY POS
     pos: "https://beauville.github.io/Caisse-officielle-ASTOU/",
-    // 💳 DIGIY PAY (plus tard UI dédiée)
     pay: "#",
-    // 🛒 DIGIY MARKET (à venir)
     market: "#",
-    // 🧠 DIGIY CORE (Master Panel)
     core: "#"
   };
 
-  // ===== LOCAL STORAGE KEYS =====
-  const STORAGE_USER_KEY = "digiy_hub_user_v1";   // créé par ta page d’inscription
+  const STORAGE_USER_KEY = "digiy_hub_user_v1";
   const STORAGE_WALLET_KEY = "digiy_hub_wallet_v1";
 
   let currentUser = null;
@@ -1069,7 +1078,6 @@
   let firebaseReady = false;
   let walletPath = null;
 
-  // ===== FIREBASE CONFIG (même projet DIGIYLYFE que DRIVER) =====
   const firebaseConfig = {
     apiKey: "AIzaSyBqEQWoE2iC7_rp-u4riilNVHolcP2o0B0",
     authDomain: "digiylyfe-ecosystem.firebaseapp.com",
@@ -1113,8 +1121,6 @@
     return (amount || 0).toLocaleString("fr-FR") + " F";
   }
 
-  // ===== USER & UI =====
-
   function loadUser(){
     try{
       const raw = localStorage.getItem(STORAGE_USER_KEY);
@@ -1126,6 +1132,52 @@
     }
   }
 
+  function getRoleLabel(role){
+    switch(role){
+      case "client": return "Client / voyageur";
+      case "chauffeur": return "Chauffeur / driver";
+      case "commercant": return "Commerçant / POS";
+      case "hebergeur": return "Hébergeur / LOC";
+      case "admin": return "Administrateur DIGIY";
+      default: return "Profil DIGIY";
+    }
+  }
+
+  function applyAdminMode(){
+    const userPill = document.getElementById("userPill");
+    const avatarEl = document.getElementById("userAvatar");
+    const welcomeBadge = document.getElementById("welcomeBadge");
+    const welcomeSub = document.getElementById("welcomeSub");
+    const coreBadge = document.getElementById("coreBadge");
+    const coreBody = document.getElementById("coreBody");
+    const coreMini = document.getElementById("coreMini");
+    const coreModule = document.getElementById("coreModule");
+
+    if(userPill) userPill.classList.add("admin-mode");
+    if(avatarEl) avatarEl.classList.add("admin-mode");
+
+    if(welcomeBadge){
+      welcomeBadge.textContent = "MODE ADMIN — Pilotage complet";
+    }
+    if(welcomeSub){
+      welcomeSub.textContent = "Accès maison mère : CORE, finances, flux et modules DIGIY reliés.";
+    }
+    if(coreBadge){
+      coreBadge.textContent = "Admin • ACTIF";
+    }
+    if(coreBody){
+      coreBody.textContent = "Accès privilégié : vision globale, monitoring et stratégie DIGIY (proto).";
+    }
+    if(coreMini){
+      coreMini.textContent = "Réservé à l’administrateur";
+    }
+    if(coreModule){
+      coreModule.classList.add("admin-core");
+    }
+
+    document.title = "DIGIY HUB — MODE ADMIN";
+  }
+
   function updateUserUI(){
     const userNameEl = document.getElementById("userName");
     const userRoleEl = document.getElementById("userRole");
@@ -1135,18 +1187,24 @@
     const avatarEl = document.getElementById("userAvatar");
 
     if(currentUser){
+      const role = currentUser.role || "profil";
       const name = currentUser.name || "Compte DIGIY";
       const phone = currentUser.phone || "—";
-      const role = currentUser.role || "profil";
 
       userNameEl.textContent = name;
       userRoleEl.textContent = getRoleLabel(role);
       welcomeTitle.textContent = "Bonjour, " + name + " 👋";
-      welcomeSub.textContent = "Bienvenue dans votre HUB DIGIY. Vous pouvez ouvrir vos services depuis cet espace central.";
+      if(!welcomeSub.textContent){
+        welcomeSub.textContent = "Bienvenue dans votre HUB DIGIY. Vous pouvez ouvrir vos services depuis cet espace central.";
+      }
       walletOwnerEl.textContent = "Compte : " + phone;
 
       const initial = name.trim().charAt(0).toUpperCase() || "👤";
       avatarEl.textContent = initial;
+
+      if(role === "admin"){
+        applyAdminMode();
+      }
     }else{
       userNameEl.textContent = "Invité DIGIY";
       userRoleEl.textContent = "Connectez-vous depuis la page d’inscription";
@@ -1156,19 +1214,6 @@
       avatarEl.textContent = "👤";
     }
   }
-
-  function getRoleLabel(role){
-    switch(role){
-      case "client": return "Client / voyageur";
-      case "chauffeur": return "Chauffeur / livreur";
-      case "commercant": return "Commerçant / pro";
-      case "hebergeur": return "Hébergeur / LOC";
-      case "admin": return "Admin DIGIY";
-      default: return "Profil DIGIY";
-    }
-  }
-
-  // ===== WALLET (LOCAL + FIREBASE) =====
 
   function loadLocalWallet(){
     try{
@@ -1199,7 +1244,6 @@
           lastActivity = "Solde synchronisé depuis Firebase";
           updateWalletUI();
         }else{
-          // Pas de wallet encore, on initialise à 0
           firebaseDB.ref(walletPath).set({ balance: 0, updatedAt: firebase.database.ServerValue.TIMESTAMP });
           walletBalance = 0;
           saveLocalWallet(walletBalance);
@@ -1256,8 +1300,6 @@
     updateWalletUI();
   }
 
-  // ===== NAV / MENU =====
-
   function openSideMenu(){
     document.getElementById("sideMenu").classList.add("open");
     document.getElementById("sideMenuOverlay").classList.add("open");
@@ -1281,32 +1323,24 @@
     window.open(url, "_blank");
   }
 
-  // ===== LOGOUT =====
-
   function logoutUser(){
     if(!confirm("Se déconnecter du HUB et revenir à la page d’inscription ?")) return;
     try{
       localStorage.removeItem(STORAGE_USER_KEY);
     }catch(e){}
-    window.location.href = "index.html"; // adapte si ton fichier d’entrée a un autre nom
+    window.location.href = "index.html";
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    // 1) Charger l’utilisateur
     currentUser = loadUser();
     updateUserUI();
 
-    // 2) Initialiser Firebase
     initFirebase();
 
-    // 3) Calculer le chemin wallet si user avec téléphone
     walletPath = getWalletPathForUser(currentUser);
-
-    // 4) Charger le wallet local
     walletBalance = loadLocalWallet();
     updateWalletUI();
 
-    // 5) Si Firebase OK + user identifié → synchroniser depuis Firebase
     if(firebaseReady && walletPath){
       syncWalletFromFirebase();
     }else if(!walletPath){
