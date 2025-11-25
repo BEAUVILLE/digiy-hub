@@ -1333,13 +1333,18 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  // 🔑 ICI : navigation directe, évite les blocages de window.open
   function openModule(key){
     const url = LINKS[key] || "#";
+    console.log("[DIGIY HUB] openModule →", key, url);
+
     if(!url || url === "#"){
       alert("Ce module n’est pas encore branché. On le connectera dans une prochaine étape.");
       return;
     }
-    window.open(url, "_blank");
+
+    // Navigation dans le même onglet (plus robuste que window.open sur certains navigateurs)
+    window.location.href = url;
   }
 
   function logoutUser(){
