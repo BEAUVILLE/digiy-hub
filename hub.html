@@ -1070,8 +1070,8 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
 
+<!-- 1) LES LIENS DES MODULES -->
 <script>
-  // 🌍 LIENS OFFICIELS DES MODULES DIGIY
   const LINKS = {
     driver: "https://beauville.github.io/digiy-driver-client/",
     driverTop: "https://beauville.github.io/digiy-driver-top/",
@@ -1083,8 +1083,13 @@
   };
 </script>
 
+<!-- 2) TON ANCIEN CODE REMIS PROPRE DANS UN SCRIPT -->
+<script>
   const STORAGE_USER_KEY = "digiy_hub_user_v1";
   const STORAGE_WALLET_KEY = "digiy_hub_wallet_v1";
+
+  let currentUser = null;
+</script>
 
   let currentUser = null;
   let walletBalance = 0;
