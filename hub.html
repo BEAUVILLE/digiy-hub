@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>DIGIY CORE ADMIN — Lecture seule</title>
+  <title>DIGIY CORE HUB — Lecture seule+</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="DIGIY CORE — Vue d'ensemble des partenaires (lecture seule)">
+  <meta name="description" content="DIGIY CORE HUB — Vue d'ensemble des partenaires (lecture seule + recherche + filtres)">
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
@@ -23,6 +23,7 @@
       --danger:#ef4444;
       --good:#22c55e;
       --info:#38bdf8;
+      --warn:#eab308;
     }
     *{
       box-sizing:border-box;
@@ -91,6 +92,7 @@
       flex-direction:column;
       align-items:flex-end;
       gap:8px;
+      min-width:220px;
     }
     .btn{
       border:none;
@@ -128,7 +130,7 @@
       overflow:hidden;
     }
     .card-header{
-      padding:14px 16px;
+      padding:14px 16px 10px;
       border-bottom:1px solid rgba(31,41,55,.9);
       display:flex;
       justify-content:space-between;
@@ -161,6 +163,62 @@
       color:var(--muted);
     }
 
+    .filters{
+      padding:10px 16px 8px;
+      border-bottom:1px solid rgba(31,41,55,.9);
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .filters-section{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      align-items:center;
+      margin-right:10px;
+    }
+    .filters-label{
+      font-size:.7rem;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+    .filter-chip{
+      font-size:.7rem;
+      padding:4px 9px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.5);
+      color:var(--muted);
+      background:rgba(15,23,42,.7);
+      cursor:pointer;
+    }
+    .filter-chip.active{
+      border-color:var(--accent);
+      color:var(--accent);
+      background:rgba(250,204,21,.08);
+    }
+    .search-input{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.6);
+      background:rgba(15,23,42,.8);
+      color:var(--ink);
+      font-size:.8rem;
+      min-width:180px;
+    }
+    .search-input::placeholder{
+      color:var(--muted);
+    }
+    .select{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.6);
+      background:rgba(15,23,42,.8);
+      color:var(--ink);
+      font-size:.75rem;
+    }
+
     .table-wrapper{
       overflow-x:auto;
       max-height:65vh;
@@ -169,7 +227,7 @@
       width:100%;
       border-collapse:collapse;
       font-size:.8rem;
-      min-width:720px;
+      min-width:780px;
     }
     thead{
       position:sticky;
@@ -220,7 +278,7 @@
     .pill-dot.good{background:var(--good);}
     .pill-dot.bad{background:var(--danger);}
     .pill-dot.info{background:var(--info);}
-    .pill-dot.warn{background:var(--accent-soft);}
+    .pill-dot.warn{background:var(--warn);}
     .modules-list{
       display:flex;
       flex-wrap:wrap;
@@ -282,6 +340,9 @@
       .card{
         border-radius:14px;
       }
+      .filters{
+        padding:8px 10px;
+      }
     }
   </style>
 </head>
@@ -289,7 +350,7 @@
   <div class="app">
     <header>
       <div class="title-block">
-        <h1>DIGIY CORE • ADMIN VIEW</h1>
+        <h1>DIGIY CORE • HUB</h1>
         <p>Vue d’ensemble lecture seule des partenaires connectés à l’écosystème DIGIY.</p>
         <div class="chip-row">
           <div class="chip">
@@ -302,6 +363,7 @@
         </div>
       </div>
       <div class="actions">
+        <input id="searchInput" class="search-input" type="text" placeholder="Rechercher (nom, ville, module…)" />
         <button class="btn" id="refreshBtn">
           <span class="icon">🔄</span>
           Rafraîchir les données
@@ -322,6 +384,31 @@
             <span id="statusText">Connecté à Firebase</span>
           </div>
         </div>
+
+        <!-- Filtres -->
+        <div class="filters">
+          <div class="filters-section">
+            <span class="filters-label">Modules</span>
+            <button class="filter-chip active" data-filter-module="all">Tous</button>
+            <button class="filter-chip" data-filter-module="pos">POS</button>
+            <button class="filter-chip" data-filter-module="loc">LOC</button>
+            <button class="filter-chip" data-filter-module="driver">DRIVER</button>
+            <button class="filter-chip" data-filter-module="pay">PAY</button>
+          </div>
+          <div class="filters-section">
+            <span class="filters-label">Statut</span>
+            <button class="filter-chip active" data-filter-status="all">Tous</button>
+            <button class="filter-chip" data-filter-status="active">Actifs</button>
+            <button class="filter-chip" data-filter-status="nonactive">Non actifs</button>
+          </div>
+          <div class="filters-section">
+            <span class="filters-label">Alliance</span>
+            <select id="allianceFilter" class="select">
+              <option value="all">Toutes</option>
+            </select>
+          </div>
+        </div>
+
         <div class="table-wrapper" id="tableWrapper">
           <div class="empty" id="emptyState">Lecture des partenaires en cours…</div>
           <table style="display:none" id="partnersTable">
@@ -335,6 +422,7 @@
                 <th>Statut</th>
                 <th>Créé le</th>
                 <th>Contact</th>
+                <th>Rappel SMS</th>
               </tr>
             </thead>
             <tbody id="partnersBody">
@@ -372,6 +460,14 @@
     const partnersTable = document.getElementById('partnersTable');
     const partnersBody = document.getElementById('partnersBody');
     const refreshBtn = document.getElementById('refreshBtn');
+    const searchInput = document.getElementById('searchInput');
+    const allianceFilterSelect = document.getElementById('allianceFilter');
+
+    let allPartners = [];
+    let currentModuleFilter = "all";
+    let currentStatusFilter = "all";
+    let currentAllianceFilter = "all";
+    let currentSearch = "";
 
     function formatDate(ts){
       if(!ts){ return "—"; }
@@ -395,19 +491,87 @@
       if(key === 'coreUsers' || key === 'tenants' || key === 'alliances' || key === 'alerts' || key === 'pulse'){
         return false;
       }
-      // Heuristique : un partenaire a au moins un nom + modules
       if(value.name && value.modules){
         return true;
       }
       return false;
     }
 
+    function buildAllianceFilterOptions(partners){
+      const alliances = new Set();
+      partners.forEach(p => {
+        if(p.allianceId){
+          alliances.add(p.allianceId);
+        }
+      });
+      allianceFilterSelect.innerHTML = '<option value="all">Toutes</option>';
+      Array.from(alliances).sort().forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a;
+        opt.textContent = a;
+        allianceFilterSelect.appendChild(opt);
+      });
+    }
+
+    function applyFiltersAndRender(){
+      let filtered = allPartners.slice();
+
+      // Texte de recherche (sur plusieurs champs)
+      if(currentSearch.trim() !== ""){
+        const q = currentSearch.toLowerCase();
+        filtered = filtered.filter(p => {
+          const fields = [
+            p.id,
+            p.name || "",
+            p.city || "",
+            p.country || "",
+            p.allianceId || "",
+            (p.status || ""),
+            (p.owner && p.owner.name) || "",
+            (p.owner && p.owner.phone) || "",
+            (p.owner && p.owner.email) || ""
+          ];
+          // modules + liens dans la recherche
+          if(p.modules){
+            Object.keys(p.modules).forEach(k => fields.push(k + ":" + (p.modules[k] ? "on" : "off")));
+          }
+          if(p.links){
+            Object.values(p.links).forEach(v => fields.push(String(v || "")));
+          }
+          const haystack = fields.join(" ").toLowerCase();
+          return haystack.includes(q);
+        });
+      }
+
+      // Filtre module
+      if(currentModuleFilter !== "all"){
+        filtered = filtered.filter(p => p.modules && p.modules[currentModuleFilter]);
+      }
+
+      // Filtre statut
+      if(currentStatusFilter === "active"){
+        filtered = filtered.filter(p => (p.status || "").toLowerCase() === "active");
+      }else if(currentStatusFilter === "nonactive"){
+        filtered = filtered.filter(p => {
+          const s = (p.status || "").toLowerCase();
+          return s && s !== "active";
+        });
+      }
+
+      // Filtre alliance
+      if(currentAllianceFilter !== "all"){
+        filtered = filtered.filter(p => (p.allianceId || "") === currentAllianceFilter);
+      }
+
+      renderPartners(filtered);
+    }
+
     function renderPartners(partners){
       if(!partners || partners.length === 0){
         partnersTable.style.display = 'none';
         emptyState.style.display = 'block';
-        emptyState.textContent = "Aucun partenaire détecté à la racine pour le moment.";
-        summaryText.textContent = "0 partenaire trouvé.";
+        emptyState.textContent = "Aucun partenaire ne correspond aux critères.";
+        summaryText.textContent = "0 partenaire filtré.";
         return;
       }
 
@@ -438,12 +602,7 @@
         const tdModules = document.createElement('td');
         const modulesDiv = document.createElement('div');
         modulesDiv.className = 'modules-list';
-        const moduleLabels = {
-          pos: 'POS',
-          loc: 'LOC',
-          driver: 'DRIVER',
-          pay: 'PAY'
-        };
+        const moduleLabels = { pos: 'POS', loc: 'LOC', driver: 'DRIVER', pay: 'PAY' };
         if(p.modules){
           Object.keys(moduleLabels).forEach(k => {
             const span = document.createElement('span');
@@ -534,6 +693,28 @@
           tdOwner.innerHTML = `<span class="muted">—</span>`;
         }
 
+        // Rappel SMS
+        const tdReminder = document.createElement('td');
+        const reminder = p.reminder || {};
+        const needSms = !!reminder.needSms;
+        const lastSmsAt = reminder.lastSmsAt ? formatDate(reminder.lastSmsAt) : '—';
+        const note = reminder.note || '';
+
+        let rDotClass = 'good';
+        let rLabel = 'OK';
+        if(needSms){
+          rDotClass = 'warn';
+          rLabel = 'À rappeler';
+        }
+        tdReminder.innerHTML = `
+          <div class="pill">
+            <span class="pill-dot ${rDotClass}"></span>
+            ${rLabel}
+          </div>
+          <div class="muted" style="margin-top:4px;">Dernier SMS : ${lastSmsAt}</div>
+          ${note ? `<div class="muted">${note}</div>` : ''}
+        `;
+
         tr.appendChild(tdName);
         tr.appendChild(tdCity);
         tr.appendChild(tdAlliance);
@@ -542,13 +723,14 @@
         tr.appendChild(tdStatus);
         tr.appendChild(tdCreated);
         tr.appendChild(tdOwner);
+        tr.appendChild(tdReminder);
 
         partnersBody.appendChild(tr);
       });
 
       partnersTable.style.display = 'table';
       emptyState.style.display = 'none';
-      summaryText.textContent = `${partners.length} partenaire(s) détecté(s) à la racine.`;
+      summaryText.textContent = `${partners.length} partenaire(s) filtré(s) sur ${allPartners.length} total.`;
     }
 
     function loadPartners(){
@@ -574,7 +756,8 @@
                 modules: val.modules || null,
                 links: val.links || null,
                 createdAt: val.createdAt || null,
-                owner: val.owner || null
+                owner: val.owner || null,
+                reminder: val.reminder || null
               });
             }
           });
@@ -583,7 +766,9 @@
             const tb = Number(b.createdAt || 0);
             return tb - ta;
           });
-          renderPartners(partners);
+          allPartners = partners;
+          buildAllianceFilterOptions(allPartners);
+          applyFiltersAndRender();
           statusText.textContent = "Connecté à Firebase • Lecture seule";
           const now = new Date();
           lastUpdated.textContent = "Dernière mise à jour : " + now.toLocaleTimeString('fr-FR', {
@@ -602,8 +787,37 @@
         });
     }
 
+    // Events filtres
     refreshBtn.addEventListener('click', () => {
       loadPartners();
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      currentSearch = e.target.value || "";
+      applyFiltersAndRender();
+    });
+
+    document.querySelectorAll('[data-filter-module]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter-module]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentModuleFilter = btn.getAttribute('data-filter-module');
+        applyFiltersAndRender();
+      });
+    });
+
+    document.querySelectorAll('[data-filter-status]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter-status]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentStatusFilter = btn.getAttribute('data-filter-status');
+        applyFiltersAndRender();
+      });
+    });
+
+    allianceFilterSelect.addEventListener('change', () => {
+      currentAllianceFilter = allianceFilterSelect.value || "all";
+      applyFiltersAndRender();
     });
 
     // Chargement initial
