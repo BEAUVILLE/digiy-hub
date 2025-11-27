@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>DIGIY HUB — Super App Afrique</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="DIGIY HUB — Porte d’entrée unique vers les services DIGIY : DRIVER, LOC, PAY, POS, MARKET.">
+  <meta name="description" content="DIGIY HUB — Porte d'entrée unique vers les services DIGIY : DRIVER, LOC, PAY, POS, MARKET, TABLES.">
   <meta name="theme-color" content="#020617">
 
   <style>
@@ -671,7 +671,7 @@
       <div class="login-logo">⚡</div>
       <div class="login-title">DIGIY HUB</div>
       <div class="login-sub">
-        Un seul compte. Tous vos services DIGIY : COURSE, LOC, PAY, POS, MARKET… 
+        Un seul compte. Tous vos services DIGIY : COURSE, LOC, PAY, POS, MARKET, RESTO… 
         Au service du peuple, pas des commissions.
       </div>
     </div>
@@ -698,7 +698,7 @@
       </div>
 
       <div class="login-tip">
-        Ce compte servira demain pour DIGIY DRIVER, PAY, LOC, POS, MARKET… 
+        Ce compte servira demain pour DIGIY DRIVER, PAY, LOC, POS, MARKET, RESTO… 
         <br>1 numéro = 1 identité DIGIY.
       </div>
 
@@ -712,7 +712,7 @@
       </div>
 
       <div class="login-foot">
-        Données stockées localement pour l’instant. <span>Aucune donnée envoyée sur un serveur</span> tant que DIGIY ID n’est pas activé.
+        Données stockées localement pour l'instant. <span>Aucune donnée envoyée sur un serveur</span> tant que DIGIY ID n'est pas activé.
       </div>
     </form>
   </div>
@@ -746,7 +746,7 @@
             Bienvenue dans votre HUB DIGIY
           </div>
           <div class="welcome-sub" id="welcomeSub">
-            Commandez un VTC, encaissez vos ventes, gérez vos locations et vos paiements dans un seul espace.
+            Commandez un VTC, encaissez vos ventes, gérez vos locations, réservez une table et vos paiements dans un seul espace.
           </div>
         </div>
         <div class="welcome-badge">
@@ -917,7 +917,7 @@
               <div class="module-badge">Admin</div>
             </div>
             <div class="module-body">
-              Tableau de bord global : modules, flux, revenus, santé de l’écosystème DIGIY.
+              Tableau de bord global : modules, flux, revenus, santé de l'écosystème DIGIY.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('core')">
@@ -927,22 +927,22 @@
             </div>
           </div>
 
-          <!-- 🆕 DIGIY TABLES -->
+          <!-- 🆕 DIGIY TABLES / RESTO PRO -->
           <div class="module">
             <div class="module-header">
               <div class="module-icon">🍽️</div>
               <div class="module-titles">
-                <div class="module-name">DIGIY TABLES</div>
-                <div class="module-tagline">Réservation de tables</div>
+                <div class="module-name">DIGIY RESTO</div>
+                <div class="module-tagline">Gestion restaurant complète</div>
               </div>
-              <div class="module-badge">Nouveau</div>
+              <div class="module-badge">🔥 Connecté</div>
             </div>
             <div class="module-body">
-              Réserver une table au restaurant (Malraux & futurs partenaires) avec confirmation WhatsApp & email.
+              Plan de salle, commandes, KDS cuisine, réservations. 0% commission pour les restaurateurs.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('tables')">
-                Ouvrir TABLES →
+                Ouvrir RESTO →
               </button>
               <div class="module-mini">Restaurants & bars</div>
             </div>
@@ -960,7 +960,7 @@
     </div>
     <div class="footer-right">
       Indépendance financière & données souveraines. <br>
-      <strong>Pas d’OTA, pas de racket. Juste le peuple & ses outils.</strong>
+      <strong>Pas d'OTA, pas de racket. Juste le peuple & ses outils.</strong>
     </div>
   </footer>
 </div>
@@ -974,7 +974,7 @@
     pay: "#",      // futur DIGIY PAY
     market: "#",   // futur DIGIY MARKET
     core: "#",     // futur DIGIY CORE
-    tables: "https://ton-domaine-ou-netlify.com/malraux-tables/" // 🔗 URL DE TA PWA RÉSA
+    tables: "https://beauville.github.io/digiy-resto/" // 🔥 DIGIY RESTO PRO CONNECTÉ
   };
 
   // ====== ÉTAT LOCAL (DIGIY ID simplifié + Wallet démo) ======
@@ -1054,7 +1054,7 @@
       userNameEl.textContent = "Invité DIGIY";
       userRoleEl.textContent = "Connectez-vous pour profiter des services.";
       welcomeTitle.textContent = "Bienvenue dans votre HUB DIGIY";
-      welcomeSub.textContent = "Commandez un VTC, encaissez vos ventes, gérez vos locations et vos paiements dans un seul espace.";
+      welcomeSub.textContent = "Commandez un VTC, encaissez vos ventes, gérez vos locations, réservez une table et vos paiements dans un seul espace.";
       walletOwnerEl.textContent = "Compte : invité";
     }
 
