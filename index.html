@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>DIGIY HUB — Super App Afrique</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="DIGIY HUB — Porte d'entrée unique vers les services DIGIY : DRIVER, LOC, PAY, POS, MARKET, TABLES.">
+  <meta name="description" content="DIGIY HUB — Porte d'entrée unique vers les services DIGIY : DRIVER, LOC, PAY, POS, MARKET, RESTO, RÉSA.">
   <meta name="theme-color" content="#020617">
 
   <style>
@@ -198,6 +198,13 @@
       display:inline-flex;
       align-items:center;
       gap:6px;
+      cursor:pointer;
+      transition: all 0.3s;
+    }
+
+    .welcome-badge:hover{
+      background:rgba(250,204,21,0.2);
+      border-color:var(--accent);
     }
 
     .welcome-badge span.dot{
@@ -323,6 +330,7 @@
       align-items:center;
       gap:5px;
       white-space:nowrap;
+      transition:all 0.3s;
     }
 
     .btn-primary{
@@ -331,10 +339,19 @@
       font-weight:600;
     }
 
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 5px 15px rgba(250,204,21,0.5);
+    }
+
     .btn-ghost{
       background:rgba(15,23,42,0.9);
       color:var(--muted);
       border:1px solid rgba(148,163,184,0.5);
+    }
+
+    .btn-ghost:hover{
+      border-color:var(--accent);
     }
 
     .wallet-foot{
@@ -386,6 +403,12 @@
       gap:4px;
       position:relative;
       overflow:hidden;
+      transition:all 0.3s;
+    }
+
+    .module:hover{
+      border-color:var(--accent);
+      transform:translateY(-2px);
     }
 
     .module::before{
@@ -469,6 +492,12 @@
       display:inline-flex;
       align-items:center;
       gap:4px;
+      transition:all 0.3s;
+    }
+
+    .module-btn:hover{
+      transform:translateX(2px);
+      box-shadow:0 3px 10px rgba(250,204,21,0.4);
     }
 
     .module-mini{
@@ -671,7 +700,7 @@
       <div class="login-logo">⚡</div>
       <div class="login-title">DIGIY HUB</div>
       <div class="login-sub">
-        Un seul compte. Tous vos services DIGIY : COURSE, LOC, PAY, POS, MARKET, RESTO… 
+        Un seul compte. Tous vos services DIGIY : COURSE, LOC, PAY, POS, MARKET, RESTO, RÉSA... 
         Au service du peuple, pas des commissions.
       </div>
     </div>
@@ -698,7 +727,7 @@
       </div>
 
       <div class="login-tip">
-        Ce compte servira demain pour DIGIY DRIVER, PAY, LOC, POS, MARKET, RESTO… 
+        Ce compte servira pour DIGIY DRIVER, PAY, LOC, POS, MARKET, RESTO, RÉSA... 
         <br>1 numéro = 1 identité DIGIY.
       </div>
 
@@ -708,6 +737,9 @@
         </button>
         <button type="button" class="btn btn-alt" onclick="quickDemoUser()">
           Utiliser un compte démo rapide
+        </button>
+        <button type="button" class="btn btn-alt" onclick="openModule('inscription')">
+          ✨ Créer un compte DIGIYLYFE complet
         </button>
       </div>
 
@@ -749,9 +781,9 @@
             Commandez un VTC, encaissez vos ventes, gérez vos locations, réservez une table et vos paiements dans un seul espace.
           </div>
         </div>
-        <div class="welcome-badge">
+        <div class="welcome-badge" onclick="openModule('inscription')" title="Créer un compte complet">
           <span class="dot"></span>
-          <span id="welcomeBadge">Alpha • Vision WeChat Sénégal</span>
+          <span id="welcomeBadge">📝 S'inscrire</span>
         </div>
       </div>
       <div class="welcome-tags">
@@ -807,16 +839,16 @@
               <div class="module-icon">🚗</div>
               <div class="module-titles">
                 <div class="module-name">DIGIY DRIVER</div>
-                <div class="module-tagline">Courses AIBD, Dakar, Saly, Afrique</div>
+                <div class="module-tagline">Courses AIBD, Dakar, Saly</div>
               </div>
-              <div class="module-badge">0% commission</div>
+              <div class="module-badge">0% com</div>
             </div>
             <div class="module-body">
               Commander un VTC DIGIY, avec prix justes et paiement direct au chauffeur.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('driver')">
-                Ouvrir DRIVER →
+                Ouvrir →
               </button>
               <div class="module-mini">Client & chauffeur</div>
             </div>
@@ -833,11 +865,11 @@
               <div class="module-badge">Host friendly</div>
             </div>
             <div class="module-body">
-              Louer ou gérer un bien sans OTA qui vous enferme : direct propriétaire ↔ client.
+              Louer ou gérer un bien sans OTA : direct propriétaire ↔ client.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('loc')">
-                Ouvrir LOC →
+                Ouvrir →
               </button>
               <div class="module-mini">Hébergeurs & voyageurs</div>
             </div>
@@ -854,13 +886,55 @@
               <div class="module-badge">Boutiques</div>
             </div>
             <div class="module-body">
-              Encaisser ventes en boutique : espèces, Wave, OM, et tickets traçables.
+              Encaisser ventes : espèces, Wave, OM, et tickets traçables.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('pos')">
-                Ouvrir POS →
+                Ouvrir →
               </button>
-              <div class="module-mini">Commerçants & restaurants</div>
+              <div class="module-mini">Commerçants</div>
+            </div>
+          </div>
+
+          <!-- RESTO PRO -->
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">🍽️</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY RESTO</div>
+                <div class="module-tagline">Gestion restaurant complète</div>
+              </div>
+              <div class="module-badge">🔥 Live</div>
+            </div>
+            <div class="module-body">
+              Plan de salle, commandes, KDS cuisine, réservations. 0% commission.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('tables')">
+                Ouvrir →
+              </button>
+              <div class="module-mini">Restaurants & bars</div>
+            </div>
+          </div>
+
+          <!-- RÉSA -->
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">📅</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY RÉSA</div>
+                <div class="module-tagline">Réserver une table</div>
+              </div>
+              <div class="module-badge">🔥 Live</div>
+            </div>
+            <div class="module-body">
+              Réserver une table au restaurant. Confirmation WhatsApp & email.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('resa')">
+                Ouvrir →
+              </button>
+              <div class="module-mini">Clients restaurants</div>
             </div>
           </div>
 
@@ -870,18 +944,18 @@
               <div class="module-icon">💳</div>
               <div class="module-titles">
                 <div class="module-name">DIGIY PAY</div>
-                <div class="module-tagline">Cœur de paiement</div>
+                <div class="module-tagline">Wallet & paiements</div>
               </div>
-              <div class="module-badge">Bientôt live</div>
+              <div class="module-badge">Bientôt</div>
             </div>
             <div class="module-body">
-              Wallet DIGIY, encaissements, transferts, connectés à tous les modules.
+              Wallet DIGIY, encaissements, transferts unifiés.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('pay')">
-                Ouvrir PAY →
+                Ouvrir →
               </button>
-              <div class="module-mini">Un seul cœur financier</div>
+              <div class="module-mini">Cœur financier</div>
             </div>
           </div>
 
@@ -896,11 +970,11 @@
               <div class="module-badge">Terrain</div>
             </div>
             <div class="module-body">
-              Publier offres locales : jobs, services, biens, toujours sans commission forcée.
+              Publier offres locales : jobs, services, biens.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('market')">
-                Ouvrir MARKET →
+                Ouvrir →
               </button>
               <div class="module-mini">Peuple & pros</div>
             </div>
@@ -912,60 +986,39 @@
               <div class="module-icon">🧠</div>
               <div class="module-titles">
                 <div class="module-name">DIGIY CORE</div>
-                <div class="module-tagline">Pilotage & stats</div>
+                <div class="module-tagline">Admin & stats</div>
               </div>
               <div class="module-badge">Admin</div>
             </div>
             <div class="module-body">
-              Tableau de bord global : modules, flux, revenus, santé de l'écosystème DIGIY.
+              Tableau de bord global : modules, flux, revenus.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('core')">
-                Ouvrir CORE →
+                Ouvrir →
               </button>
               <div class="module-mini">Management DIGIY</div>
             </div>
           </div>
 
-          <!-- 🆕 DIGIY TABLES / RESTO PRO -->
+          <!-- INSCRIPTION -->
           <div class="module">
             <div class="module-header">
-              <div class="module-icon">🍽️</div>
+              <div class="module-icon">📝</div>
               <div class="module-titles">
-                <div class="module-name">DIGIY RESTO</div>
-                <div class="module-tagline">Gestion restaurant complète</div>
+                <div class="module-name">INSCRIPTION</div>
+                <div class="module-tagline">Créer un compte DIGIYLYFE</div>
               </div>
-              <div class="module-badge">🔥 Connecté</div>
+              <div class="module-badge">✨ Nouveau</div>
             </div>
             <div class="module-body">
-              Plan de salle, commandes, KDS cuisine, réservations. 0% commission pour les restaurateurs.
+              Portail d'inscription complet avec Firebase. Accès à tous les services.
             </div>
             <div class="module-foot">
-              <button class="module-btn" onclick="openModule('tables')">
-                Ouvrir RESTO →
+              <button class="module-btn" onclick="openModule('inscription')">
+                Ouvrir →
               </button>
-              <div class="module-mini">Restaurants & bars</div>
-            </div>
-          </div>
-
-          <!-- 🆕 DIGIY RÉSA -->
-          <div class="module">
-            <div class="module-header">
-              <div class="module-icon">📅</div>
-              <div class="module-titles">
-                <div class="module-name">DIGIY RÉSA</div>
-                <div class="module-tagline">Réservation de tables</div>
-              </div>
-              <div class="module-badge">🔥 Connecté</div>
-            </div>
-            <div class="module-body">
-              Interface client pour réserver une table au restaurant. Confirmation WhatsApp & email.
-            </div>
-            <div class="module-foot">
-              <button class="module-btn" onclick="openModule('resa')">
-                Ouvrir RÉSA →
-              </button>
-              <div class="module-mini">Clients restaurants</div>
+              <div class="module-mini">Nouveau compte</div>
             </div>
           </div>
 
@@ -987,16 +1040,17 @@
 </div>
 
 <script>
-  // ====== CONFIG LIENS MODULES (BRANCHÉS) ======
+  // ====== CONFIG LIENS MODULES (TOUS BRANCHÉS) ======
   const LINKS = {
     driver: "https://beauville.github.io/digiy-driver-client/",
     loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",
     pos: "https://beauville.github.io/Caisse-officielle-ASTOU/",
+    tables: "https://digiyrestaupro.netlify.app/", // 🔥 DIGIY RESTO PRO (CONNECTÉ!)
+    resa: "https://beauville.github.io/digiy-resa/", // 🔥 DIGIY RÉSA
+    inscription: "https://beauville.github.io/portail-inscription/", // ✨ PORTAIL INSCRIPTION
     pay: "#",      // futur DIGIY PAY
     market: "#",   // futur DIGIY MARKET
-    core: "#",     // futur DIGIY CORE
-    tables: "https://beauville.github.io/digiy-resto/", // 🔥 DIGIY RESTO PRO (gestion)
-    resa: "https://beauville.github.io/digiy-resa/" // 🔥 DIGIY RÉSA (clients)
+    core: "#"      // futur DIGIY CORE
   };
 
   // ====== ÉTAT LOCAL (DIGIY ID simplifié + Wallet démo) ======
@@ -1125,7 +1179,7 @@
     if(walletBalance === 0){
       saveWallet(15000);
     }
-    document.getElementById("loginOverlay").classList.add("hidden");
+    document.getElementById("loginOverlay").classList.remove("hidden");
     updateUI();
   }
 
@@ -1162,11 +1216,11 @@
       return;
     }
     if(url === "#"){
-      alert("Ce module n'est pas encore connecté. Tu peux lui brancher une URL dans LINKS.");
+      alert("Ce module n'est pas encore connecté. Bientôt disponible !");
       return;
     }
 
-    // Navigation directe (évite les blocages popup)
+    // Navigation directe
     window.location.href = url;
   }
 
