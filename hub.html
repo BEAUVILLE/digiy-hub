@@ -620,44 +620,59 @@
         tdModules.appendChild(modulesDiv);
 
         const tdLinks = document.createElement('td');
-        const linksDiv = document.createElement('div');
-        linksDiv.className = 'link-list';
-        if(p.links){
-          if(p.links.pos && p.links.pos !== '#'){
-            const a = document.createElement('a');
-            a.href = p.links.pos;
-            a.target = '_blank';
-            a.textContent = 'POS';
-            linksDiv.appendChild(a);
-          }
-          if(p.links.loc && p.links.loc !== '#'){
-            const a = document.createElement('a');
-            a.href = p.links.loc;
-            a.target = '_blank';
-            a.textContent = 'LOC';
-            linksDiv.appendChild(a);
-          }
-          if(p.links.driver && p.links.driver !== '#'){
-            const a = document.createElement('a');
-            a.href = p.links.driver;
-            a.target = '_blank';
-            a.textContent = 'DRIVER';
-            linksDiv.appendChild(a);
-          }
-          if(p.links.pay && p.links.pay !== '#'){
-            const a = document.createElement('a');
-            a.href = p.links.pay;
-            a.target = '_blank';
-            a.textContent = 'PAY';
-            linksDiv.appendChild(a);
-          }
-        }
-        if(!linksDiv.children.length){
-          const span = document.createElement('span');
-          span.className = 'muted';
-          span.textContent = '—';
-          linksDiv.appendChild(span);
-        }
+const linksDiv = document.createElement('div');
+linksDiv.className = 'link-list';
+
+if (p.links) {
+
+  if (p.links.pos && p.links.pos !== '#') {
+    const a = document.createElement('a');
+    a.href = p.links.pos;
+    a.target = '_blank';
+    a.textContent = 'POS';
+    linksDiv.appendChild(a);
+  }
+
+  if (p.links.loc && p.links.loc !== '#') {
+    const a = document.createElement('a');
+    a.href = p.links.loc;
+    a.target = '_blank';
+    a.textContent = 'LOC';
+    linksDiv.appendChild(a);
+  }
+
+  if (p.links.driver && p.links.driver !== '#') {
+    const a = document.createElement('a');
+    a.href = p.links.driver;
+    a.target = '_blank';
+    a.textContent = 'DRIVER';
+    linksDiv.appendChild(a);
+  }
+
+  if (p.links.tables && p.links.tables !== '#') {     // ⭐️ AJOUT DIGIY TABLES
+    const a = document.createElement('a');
+    a.href = p.links.tables;
+    a.target = '_blank';
+    a.textContent = 'TABLES';
+    linksDiv.appendChild(a);
+  }
+
+  if (p.links.pay && p.links.pay !== '#') {
+    const a = document.createElement('a');
+    a.href = p.links.pay;
+    a.target = '_blank';
+    a.textContent = 'PAY';
+    linksDiv.appendChild(a);
+  }
+}
+
+// Si aucun lien → afficher un tiret
+if (!linksDiv.children.length) {
+  const span = document.createElement('span');
+  span.className = 'muted';
+  span.textContent = '—';
+  linksDiv.appendChild(span);
+}
         tdLinks.appendChild(linksDiv);
 
         const tdStatus = document.createElement('td');
