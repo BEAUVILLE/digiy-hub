@@ -80,6 +80,7 @@
       align-items:center;
       justify-content:space-between;
       margin-bottom:8px;
+      gap:10px;
     }
 
     .brand{
@@ -110,6 +111,23 @@
     .brand-text-sub{
       font-size:11px;
       color:var(--muted);
+    }
+
+    /* 🔥 Bouton HUB 2.0 */
+    .hub2-btn{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--accent);
+      background:rgba(250,204,21,0.12);
+      color:var(--accent);
+      font-size:11px;
+      font-weight:600;
+      cursor:pointer;
+      backdrop-filter:blur(4px);
+      white-space:nowrap;
+    }
+    .hub2-btn:hover{
+      background:rgba(250,204,21,0.22);
     }
 
     .user-pill{
@@ -243,6 +261,9 @@
         border-radius:0;
         border:none;
         box-shadow:none;
+      }
+      header{
+        flex-wrap:wrap;
       }
       .grid{
         grid-template-columns:1fr;
@@ -760,6 +781,15 @@
       </div>
     </div>
 
+    <!-- 🔥 Bouton HUB 2.0 posé ici -->
+    <div>
+      <a href="hub2.html">
+        <button type="button" class="hub2-btn">
+          HUB 2.0
+        </button>
+      </a>
+    </div>
+
     <div class="user-pill" id="userPill">
       <div class="user-avatar" id="userAvatar">👤</div>
       <div>
@@ -897,26 +927,25 @@
           </div>
 
           <!-- RESTO PRO -->
-<div class="module">
-  <div class="module-header">
-    <div class="module-icon">🍽️</div>
-    <div class="module-titles">
-      <div class="module-name">DIGIY RESTO</div>
-      <div class="module-tagline">Gestion restaurant complète</div>
-    </div>
-    <div class="module-badge">🔥 Live</div>
-  </div>
-  <div class="module-body">
-    Plan de salle, commandes, KDS cuisine, réservations. 0% commission.
-  </div>
-  <div class="module-foot">
-    <button class="module-btn" onclick="openModule('tables')">
-      Ouvrir →
-    </button>
-    <div class="module-mini">Restaurants & bars</div>
-  </div>
-</div>
-
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">🍽️</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY RESTO</div>
+                <div class="module-tagline">Gestion restaurant complète</div>
+              </div>
+              <div class="module-badge">🔥 Live</div>
+            </div>
+            <div class="module-body">
+              Plan de salle, commandes, KDS cuisine, réservations. 0% commission.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('tables')">
+                Ouvrir →
+              </button>
+              <div class="module-mini">Restaurants & bars</div>
+            </div>
+          </div>
 
           <!-- RÉSA -->
           <div class="module">
@@ -1042,20 +1071,18 @@
 
 <script>
   const LINKS = {
-  driver: "https://beauville.github.io/digiy-driver-client/",
-  loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",
-  pos: "https://beauville.github.io/Caisse-officielle-ASTOU/",
-  tables: "https://beauville.github.io/digiy-resto/",
-  resa: "https://beauville.github.io/digiy-resa/",
-  inscription: "https://beauville.github.io/portail-inscription/",
-  pay: "https://beauville.github.io/digiy-pay/",
-  build: "https://beauville.github.io/DIGIY-BUILD---Professionnel-du-b-timent/",
-  market: "https://beauville.github.io/digiy-market/", // ✅ ICI BRANCHÉ
-  core: "#" // CORE reste hors interface publique
-};
+    driver: "https://beauville.github.io/digiy-driver-client/",
+    loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",
+    pos: "https://beauville.github.io/Caisse-officielle-ASTOU/",
+    tables: "https://beauville.github.io/digiy-resto/",
+    resa: "https://beauville.github.io/digiy-resa/",
+    inscription: "https://beauville.github.io/portail-inscription/",
+    pay: "https://beauville.github.io/digiy-pay/",
+    build: "https://beauville.github.io/DIGIY-BUILD---Professionnel-du-b-timent/",
+    market: "https://beauville.github.io/digiy-market/",
+    core: "#" // CORE reste hors interface publique
+  };
 
-
-  // ====== ÉTAT LOCAL (DIGIY ID simplifié + Wallet démo) ======
   const STORAGE_USER_KEY = "digiy_hub_user_v1";
   const STORAGE_WALLET_KEY = "digiy_hub_wallet_v1";
 
@@ -1181,7 +1208,7 @@
     if(walletBalance === 0){
       saveWallet(15000);
     }
-    document.getElementById("loginOverlay").classList.remove("hidden");
+    document.getElementById("loginOverlay").classList.add("hidden");
     updateUI();
   }
 
@@ -1222,11 +1249,9 @@
       return;
     }
 
-    // Navigation directe
     window.location.href = url;
   }
 
-  // ====== INIT ======
   document.addEventListener("DOMContentLoaded", () => {
     currentUser = loadUser();
     walletBalance = loadWallet();
