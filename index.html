@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>DIGIY HUB — Super App Afrique</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="DIGIY HUB — Porte d'entrée unique vers les services DIGIY : DRIVER, LOC, PAY, POS, MARKET, RESTO, RÉSA.">
+  <meta name="description" content="DIGIY HUB — Porte d'entrée unique vers les services DIGIY : DRIVER, LOC, PAY, POS, MARKET, RESTO, JOBS, RÉSA.">
   <meta name="theme-color" content="#020617">
 
   <style>
@@ -116,7 +116,6 @@
       font-weight:600;
     }
 
-    /* 🔥 Bouton HUB 2.0 */
     .hub2-btn{
       padding:7px 12px;
       border-radius:999px;
@@ -558,7 +557,6 @@
       font-weight:500;
     }
 
-    /* ⭐ DIGIY LOC MIS EN AVANT (texte blanc, plus grand, bold) */
     .module-loc{
       border-color: rgba(250,204,21,0.9);
       box-shadow:0 0 25px rgba(250,204,21,0.25);
@@ -620,8 +618,6 @@
       color:var(--accent-soft2);
       font-weight:800;
     }
-
-    /* OVERLAY LOGIN DIGIY ID */
 
     .overlay{
       position:fixed;
@@ -800,7 +796,7 @@
       <div class="login-logo">⚡</div>
       <div class="login-title">DIGIY HUB</div>
       <div class="login-sub">
-        Un seul compte. Tous vos services DIGIY : COURSE, LOC, PAY, POS, MARKET, RESTO, RÉSA... 
+        Un seul compte. Tous vos services DIGIY : COURSE, LOC, PAY, POS, MARKET, JOB, RESTO, RÉSA...
         Au service du peuple, pas des commissions.
       </div>
     </div>
@@ -827,7 +823,7 @@
       </div>
 
       <div class="login-tip">
-        Ce compte servira pour DIGIY DRIVER, PAY, LOC, POS, MARKET, RESTO, RÉSA... 
+        Ce compte servira pour DIGIY DRIVER, PAY, LOC, POS, MARKET, JOB, RESTO, RÉSA... 
         <br>1 numéro = 1 identité DIGIY.
       </div>
 
@@ -983,49 +979,49 @@
             </div>
           </div>
 
-          <!-- POS -->
+          <!-- POS → VITRINE BOUTIQUE -->
           <div class="module">
             <div class="module-header">
               <div class="module-icon">🧾</div>
               <div class="module-titles">
                 <div class="module-name">DIGIY POS</div>
-                <div class="module-tagline">Caisse 0% commission</div>
+                <div class="module-tagline">Vitrine boutiques partenaires</div>
               </div>
               <div class="module-badge">Boutiques</div>
             </div>
             <div class="module-body">
-              Encaisser ventes : espèces, Wave, OM, et tickets traçables.
+              Découvrir les boutiques DIGIY POS et accéder à leur vitrine en ligne 0% commission.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('pos')">
                 Ouvrir →
               </button>
-              <div class="module-mini">Commerçants</div>
+              <div class="module-mini">Clients & commerçants</div>
             </div>
           </div>
 
-          <!-- RESTO PRO -->
+          <!-- RESTO → VITRINE RESTO -->
           <div class="module">
             <div class="module-header">
               <div class="module-icon">🍽️</div>
               <div class="module-titles">
                 <div class="module-name">DIGIY RESTO</div>
-                <div class="module-tagline">Gestion restaurant complète</div>
+                <div class="module-tagline">Vitrine restaurants & menus</div>
               </div>
               <div class="module-badge">🔥 Live</div>
             </div>
             <div class="module-body">
-              Plan de salle, commandes, KDS cuisine, réservations. 0% commission.
+              Découvrir les restaurants partenaires, leurs cartes et leurs offres spéciales.
             </div>
             <div class="module-foot">
-              <button class="module-btn" onclick="openModule('tables')">
+              <button class="module-btn" onclick="openModule('resto')">
                 Ouvrir →
               </button>
-              <div class="module-mini">Restaurants & bars</div>
+              <div class="module-mini">Clients & restos</div>
             </div>
           </div>
 
-          <!-- RÉSA -->
+          <!-- RÉSA TABLE → VITRINE RÉSA -->
           <div class="module">
             <div class="module-header">
               <div class="module-icon">📅</div>
@@ -1036,7 +1032,7 @@
               <div class="module-badge">🔥 Live</div>
             </div>
             <div class="module-body">
-              Réserver une table au restaurant. Confirmation WhatsApp & email.
+              Accéder à la vitrine de réservation de table DIGIY RESA TABLE.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('resa')">
@@ -1088,24 +1084,69 @@
             </div>
           </div>
 
-          <!-- MARKET -->
+          <!-- MARKET → 2 BOUTONS (ANNONCE + VITRINE) -->
           <div class="module">
             <div class="module-header">
               <div class="module-icon">🛒</div>
               <div class="module-titles">
                 <div class="module-name">DIGIY MARKET</div>
-                <div class="module-tagline">Annonces & services</div>
+                <div class="module-tagline">Annonces & vitrine boutiques</div>
               </div>
               <div class="module-badge">Terrain</div>
             </div>
             <div class="module-body">
-              Publier offres locales : jobs, services, biens.
+              Publier vos annonces locales (10 000 F / mois) et accéder à la vitrine DIGIY MARKET.
+            </div>
+            <div class="module-foot" style="gap:4px;flex-wrap:wrap;">
+              <button class="module-btn" onclick="openModule('market')">
+                Annonces →
+              </button>
+              <button class="module-btn" style="background:linear-gradient(135deg,#22c55e,#16a34a);" onclick="openModule('marketVitrine')">
+                Vitrine →
+              </button>
+              <div class="module-mini">Pros & indépendants</div>
+            </div>
+          </div>
+
+          <!-- JOBS -->
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">💼</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY JOB</div>
+                <div class="module-tagline">Offres & candidatures</div>
+              </div>
+              <div class="module-badge">Jeunes & pros</div>
+            </div>
+            <div class="module-body">
+              Plateforme pour trouver un job, poster une offre, et connecter talents & employeurs locaux.
             </div>
             <div class="module-foot">
-              <button class="module-btn" onclick="openModule('market')">
+              <button class="module-btn" onclick="openModule('job')">
                 Ouvrir →
               </button>
-              <div class="module-mini">Peuple & pros</div>
+              <div class="module-mini">Emploi & opportunités</div>
+            </div>
+          </div>
+
+          <!-- BON PLAN → vitrine bonnes affaires -->
+          <div class="module">
+            <div class="module-header">
+              <div class="module-icon">💡</div>
+              <div class="module-titles">
+                <div class="module-name">DIGIY BON PLAN</div>
+                <div class="module-tagline">Meilleures offres sélectionnées</div>
+              </div>
+              <div class="module-badge">Clients</div>
+            </div>
+            <div class="module-body">
+              Vitrine des bonnes affaires DIGIYLYFE : promos, packs, deals du moment.
+            </div>
+            <div class="module-foot">
+              <button class="module-btn" onclick="openModule('bonPlan')">
+                Ouvrir →
+              </button>
+              <div class="module-mini">Grand public</div>
             </div>
           </div>
 
@@ -1120,7 +1161,7 @@
               <div class="module-badge">✨ Nouveau</div>
             </div>
             <div class="module-body">
-              Portail d'inscription complet avec Firebase. Accès à tous les services.
+              Portail d'inscription complet. À terme : synchronisé avec DIGIY ID & PAY.
             </div>
             <div class="module-foot">
               <button class="module-btn" onclick="openModule('inscription')">
@@ -1151,14 +1192,17 @@
   const LINKS = {
     driver: "https://beauville.github.io/digiy-driver-client/",
     loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",
-    pos: "https://beauville.github.io/Caisse-officielle-ASTOU/",
-    tables: "https://beauville.github.io/digiy-resto/",
-    resa: "https://beauville.github.io/digiy-resa/",
+    pos: "https://digiylyfe.com/vitrine-boutique/",
+    resto: "https://digiylyfe.com/vitrine-resto/",
+    resa: "https://digiylyfe.com/vitrine-resa-table/",
     inscription: "https://beauville.github.io/portail-inscription/",
     pay: "https://beauville.github.io/digiy-pay/",
     build: "https://beauville.github.io/DIGIY-BUILD---Professionnel-du-b-timent/",
     market: "https://beauville.github.io/digiy-market/",
-    core: "#" // CORE reste hors interface publique
+    marketVitrine: "https://digiylyfe.com/vitrine-boutique/",
+    job: "https://digiylyfe.com/digiy-jobs/",
+    bonPlan: "https://digiylyfe.com/digiy-bonne-affaire/",
+    core: "#"
   };
 
   const STORAGE_USER_KEY = "digiy_hub_user_v1";
@@ -1242,7 +1286,9 @@
     }
 
     walletBalanceEl.textContent = formatCurrency(walletBalance);
-    lastActivityEl.textContent = "Dernière action : " + lastActivity;
+    if(lastActivityEl){
+      lastActivityEl.textContent = "Dernière action : " + lastActivity;
+    }
   }
 
   function handleLogin(){
@@ -1272,6 +1318,9 @@
 
     document.getElementById("loginOverlay").classList.add("hidden");
     updateUI();
+
+    // 2e page après inscription : vitrine boutique
+    window.location.href = "https://digiylyfe.com/vitrine-boutique/";
   }
 
   function quickDemoUser(){
@@ -1288,6 +1337,8 @@
     }
     document.getElementById("loginOverlay").classList.add("hidden");
     updateUI();
+
+    window.location.href = "https://digiylyfe.com/vitrine-boutique/";
   }
 
   function logoutUser(){
