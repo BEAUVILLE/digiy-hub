@@ -73,37 +73,16 @@
       pointer-events:none;
     }
 
-    <header>
-  <div class="brand">
-    <div class="brand-logo">⚡</div>
-    <div>
-      <div class="brand-text-title">DIGIY HUB</div>
-      <div class="brand-text-sub">Super App • Sénégal • Afrique</div>
-    </div>
-  </div>
-
-  <!-- ⭐️ BOUTON POUR OUVRIR LE HASH PANEL ⭐️ -->
-  <button onclick="window.location.href='hashpanel.html'"
-    style="
-      padding:6px 12px;
-      border-radius:12px;
-      border:1px solid rgba(250,204,21,0.5);
-      background:rgba(250,204,21,0.15);
-      color:#facc15;
-      font-size:11px;
-      font-weight:600;
-      cursor:pointer;
-      backdrop-filter:blur(4px);
-      white-space:nowrap;
-    ">
-    ⚡ HASH PANEL
-  </button>
-
-  <div class="user-pill" id="userPill">
-    ...
-  </div>
-</header>
-
+    header{
+      position:relative;
+      z-index:5;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:8px;
+      flex-wrap:wrap;
+    }
 
     .brand{
       display:flex;
@@ -112,38 +91,40 @@
     }
 
     .brand-logo{
-      width:34px;
-      height:34px;
-      border-radius:12px;
+      width:40px;
+      height:40px;
+      border-radius:14px;
       background:radial-gradient(circle at 30% 0%, #facc15, #f97316);
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:20px;
+      font-size:22px;
       box-shadow:0 10px 25px rgba(234,179,8,0.5);
+      font-weight:800;
     }
 
     .brand-text-title{
-      font-size:16px;
-      font-weight:800;
-      letter-spacing:0.08em;
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:0.1em;
       text-transform:uppercase;
       color:var(--accent);
     }
     .brand-text-sub{
-      font-size:11px;
+      font-size:12px;
       color:var(--muted);
+      font-weight:600;
     }
 
     /* 🔥 Bouton HUB 2.0 */
     .hub2-btn{
-      padding:6px 10px;
+      padding:7px 12px;
       border-radius:999px;
       border:1px solid var(--accent);
       background:rgba(250,204,21,0.12);
       color:var(--accent);
-      font-size:11px;
-      font-weight:600;
+      font-size:12px;
+      font-weight:700;
       cursor:pointer;
       backdrop-filter:blur(4px);
       white-space:nowrap;
@@ -158,36 +139,39 @@
       gap:10px;
       background:rgba(15,23,42,0.9);
       border-radius:999px;
-      padding:6px 12px;
+      padding:7px 13px;
       border:1px solid rgba(148,163,184,0.5);
-      font-size:11px;
+      font-size:12px;
     }
 
     .user-avatar{
-      width:26px;
-      height:26px;
+      width:28px;
+      height:28px;
       border-radius:999px;
       background:radial-gradient(circle at 30% 0%, var(--accent), #f97316);
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:14px;
+      font-size:15px;
     }
 
     .user-name{
-      font-weight:600;
+      font-weight:700;
+      font-size:13px;
+      color:#e5e7eb;
     }
 
     .user-role{
       color:var(--muted);
-      font-size:10px;
+      font-size:11px;
+      font-weight:500;
     }
 
     .logout-btn{
       border:none;
       background:transparent;
       color:var(--muted);
-      font-size:14px;
+      font-size:16px;
       cursor:pointer;
       padding:0 0 0 4px;
     }
@@ -203,13 +187,13 @@
     }
 
     .welcome{
-      background:radial-gradient(circle at top left, rgba(250,204,21,0.14), transparent 55%);
+      background:radial-gradient(circle at top left, rgba(250,204,21,0.18), transparent 55%);
       border-radius:var(--radius-xl);
-      border:1px solid rgba(148,163,184,0.45);
-      padding:12px 12px 10px;
+      border:1px solid rgba(148,163,184,0.55);
+      padding:14px 12px 12px;
       display:flex;
       flex-direction:column;
-      gap:3px;
+      gap:5px;
     }
 
     .welcome-top{
@@ -217,29 +201,35 @@
       justify-content:space-between;
       align-items:flex-start;
       gap:10px;
+      flex-wrap:wrap;
     }
 
     .welcome-title{
-      font-size:15px;
-      font-weight:700;
+      font-size:17px;
+      font-weight:800;
+      color:#f9fafb;
     }
 
     .welcome-sub{
-      font-size:11px;
-      color:var(--muted);
+      font-size:13px;
+      color:#e5e7eb;
+      font-weight:500;
+      margin-top:2px;
     }
 
     .welcome-badge{
-      font-size:10px;
+      font-size:11px;
       border-radius:999px;
-      padding:4px 10px;
-      border:1px solid rgba(250,204,21,0.5);
-      background:rgba(15,23,42,0.85);
+      padding:5px 11px;
+      border:1px solid rgba(250,204,21,0.6);
+      background:rgba(15,23,42,0.9);
       display:inline-flex;
       align-items:center;
       gap:6px;
       cursor:pointer;
       transition: all 0.3s;
+      font-weight:600;
+      color:#e5e7eb;
     }
 
     .welcome-badge:hover{
@@ -259,16 +249,17 @@
       display:flex;
       flex-wrap:wrap;
       gap:6px;
-      margin-top:5px;
+      margin-top:6px;
     }
 
     .welcome-tag{
-      font-size:10px;
-      padding:3px 8px;
+      font-size:11px;
+      padding:4px 9px;
       border-radius:999px;
-      border:1px solid rgba(148,163,184,0.5);
-      color:var(--muted);
-      background:rgba(15,23,42,0.7);
+      border:1px solid rgba(148,163,184,0.6);
+      color:#e5e7eb;
+      background:rgba(15,23,42,0.9);
+      font-weight:600;
     }
 
     .grid{
@@ -293,11 +284,11 @@
     }
 
     .card{
-      background:radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(3,7,18,0.96));
+      background:radial-gradient(circle at top, rgba(15,23,42,0.95), rgba(3,7,18,0.98));
       border-radius:var(--radius-xl);
-      border:1px solid rgba(30,64,175,0.4);
-      padding:12px;
-      box-shadow:0 12px 35px rgba(15,23,42,0.8);
+      border:1px solid rgba(30,64,175,0.5);
+      padding:13px 12px 11px;
+      box-shadow:0 12px 35px rgba(15,23,42,0.9);
       position:relative;
       overflow:hidden;
     }
@@ -306,40 +297,46 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
-      margin-bottom:6px;
+      margin-bottom:7px;
+      gap:6px;
+      flex-wrap:wrap;
     }
 
     .card-title{
-      font-size:13px;
-      font-weight:700;
+      font-size:14px;
+      font-weight:800;
       text-transform:uppercase;
-      letter-spacing:0.08em;
-      color:var(--muted);
+      letter-spacing:0.09em;
+      color:#e5e7eb;
     }
 
     .card-pill{
-      font-size:10px;
-      padding:3px 7px;
+      font-size:11px;
+      padding:4px 8px;
       border-radius:999px;
-      border:1px solid rgba(148,163,184,0.5);
-      color:var(--muted);
+      border:1px solid rgba(148,163,184,0.7);
+      color:#e5e7eb;
+      font-weight:500;
+      background:rgba(15,23,42,0.85);
     }
 
     .wallet-main{
       display:flex;
       flex-direction:column;
-      gap:6px;
+      gap:7px;
       margin-top:4px;
     }
 
     .wallet-balance{
-      font-size:22px;
-      font-weight:800;
+      font-size:24px;
+      font-weight:900;
+      color:#f9fafb;
     }
 
     .wallet-label{
-      font-size:11px;
-      color:var(--muted);
+      font-size:12px;
+      color:#e5e7eb;
+      font-weight:500;
     }
 
     .wallet-row{
@@ -347,27 +344,30 @@
       justify-content:space-between;
       align-items:center;
       margin-top:4px;
-      gap:6px;
+      gap:8px;
+      flex-wrap:wrap;
     }
 
     .wallet-meta{
-      font-size:10px;
-      color:var(--muted);
+      font-size:11px;
+      color:#e5e7eb;
       display:flex;
       flex-direction:column;
       gap:2px;
+      font-weight:500;
     }
 
     .wallet-actions{
       display:flex;
       gap:8px;
+      flex-wrap:wrap;
     }
 
     .btn{
       border:none;
       border-radius:999px;
-      padding:6px 10px;
-      font-size:11px;
+      padding:7px 11px;
+      font-size:12px;
       cursor:pointer;
       display:inline-flex;
       align-items:center;
@@ -379,7 +379,7 @@
     .btn-primary{
       background:linear-gradient(135deg, #facc15, #f97316);
       color:#111827;
-      font-weight:600;
+      font-weight:700;
     }
 
     .btn-primary:hover{
@@ -389,8 +389,9 @@
 
     .btn-ghost{
       background:rgba(15,23,42,0.9);
-      color:var(--muted);
+      color:#e5e7eb;
       border:1px solid rgba(148,163,184,0.5);
+      font-weight:600;
     }
 
     .btn-ghost:hover{
@@ -401,14 +402,16 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
-      margin-top:6px;
-      font-size:10px;
-      color:var(--muted);
+      margin-top:7px;
+      font-size:11px;
+      color:#e5e7eb;
+      flex-wrap:wrap;
+      gap:4px;
     }
 
     .status-dot{
-      width:8px;
-      height:8px;
+      width:9px;
+      height:9px;
       border-radius:999px;
       background:var(--good);
       box-shadow:0 0 10px rgba(34,197,94,0.9);
@@ -419,7 +422,7 @@
     .modules{
       display:grid;
       grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:8px;
+      gap:9px;
       margin-top:4px;
     }
 
@@ -436,14 +439,14 @@
     }
 
     .module{
-      background:radial-gradient(circle at top, rgba(15,23,42,0.95), #020617);
+      background:radial-gradient(circle at top, rgba(15,23,42,0.98), #020617);
       border-radius:var(--radius-lg);
-      border:1px solid rgba(30,64,175,0.6);
-      padding:9px 8px;
+      border:1px solid rgba(30,64,175,0.7);
+      padding:10px 9px 8px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-      gap:4px;
+      gap:5px;
       position:relative;
       overflow:hidden;
       transition:all 0.3s;
@@ -471,15 +474,15 @@
     }
 
     .module-icon{
-      width:26px;
-      height:26px;
+      width:28px;
+      height:28px;
       border-radius:12px;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:16px;
+      font-size:17px;
       background:rgba(15,23,42,0.9);
-      border:1px solid rgba(148,163,184,0.4);
+      border:1px solid rgba(148,163,184,0.5);
       flex-shrink:0;
     }
 
@@ -488,50 +491,56 @@
     }
 
     .module-name{
-      font-size:12px;
-      font-weight:700;
+      font-size:13px;
+      font-weight:800;
+      color:#f9fafb;
     }
 
     .module-tagline{
-      font-size:10px;
-      color:var(--muted);
+      font-size:11px;
+      color:#e5e7eb;
+      font-weight:500;
     }
 
     .module-badge{
-      font-size:9px;
+      font-size:10px;
       padding:3px 6px;
       border-radius:999px;
-      border:1px solid rgba(34,197,94,0.8);
+      border:1px solid rgba(34,197,94,0.9);
       color:var(--good);
-      background:rgba(15,23,42,0.9);
+      background:rgba(15,23,42,0.95);
       white-space:nowrap;
+      font-weight:600;
     }
 
     .module-body{
-      font-size:10px;
-      color:var(--muted);
-      margin-top:3px;
-      min-height:28px;
+      font-size:11px;
+      color:#e5e7eb;
+      margin-top:4px;
+      min-height:32px;
+      font-weight:500;
     }
 
     .module-foot{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      margin-top:4px;
-      font-size:9px;
-      color:var(--muted);
+      margin-top:5px;
+      font-size:10px;
+      color:#e5e7eb;
+      gap:6px;
+      flex-wrap:wrap;
     }
 
     .module-btn{
       border:none;
       border-radius:999px;
-      padding:4px 8px;
-      font-size:10px;
+      padding:5px 9px;
+      font-size:11px;
       cursor:pointer;
       background:linear-gradient(135deg, #facc15, #f97316);
       color:#020617;
-      font-weight:600;
+      font-weight:700;
       display:inline-flex;
       align-items:center;
       gap:4px;
@@ -544,25 +553,63 @@
     }
 
     .module-mini{
-      font-size:9px;
-      color:var(--muted);
+      font-size:10px;
+      color:#e5e7eb;
+      font-weight:500;
+    }
+
+    /* ⭐ DIGIY LOC MIS EN AVANT (texte blanc, plus grand, bold) */
+    .module-loc{
+      border-color: rgba(250,204,21,0.9);
+      box-shadow:0 0 25px rgba(250,204,21,0.25);
+    }
+
+    .module-loc .module-name{
+      font-size:14px;
+      font-weight:900;
+      color:#f9fafb;
+    }
+
+    .module-loc .module-tagline{
+      font-size:12px;
+      color:#e5e7eb;
+      font-weight:600;
+    }
+
+    .module-loc .module-body{
+      font-size:12px;
+      color:#f9fafb;
+      font-weight:600;
+    }
+
+    .module-btn-loc{
+      background:linear-gradient(135deg,#facc15,#f97316);
+      color:#111827;
+      font-weight:800;
+      font-size:11px;
+      padding:6px 12px;
+    }
+    .module-btn-loc:hover{
+      transform:translateY(-1px);
+      box-shadow:0 4px 14px rgba(250,204,21,0.6);
     }
 
     footer{
       position:relative;
       z-index:5;
-      margin-top:10px;
-      font-size:9px;
-      color:var(--muted);
+      margin-top:12px;
+      font-size:11px;
+      color:#e5e7eb;
       display:flex;
       justify-content:space-between;
-      gap:6px;
+      gap:8px;
       flex-wrap:wrap;
+      font-weight:500;
     }
 
     .footer-left span{
       color:var(--accent);
-      font-weight:600;
+      font-weight:700;
     }
 
     .footer-right{
@@ -571,6 +618,7 @@
 
     .footer-right strong{
       color:var(--accent-soft2);
+      font-weight:800;
     }
 
     /* OVERLAY LOGIN DIGIY ID */
@@ -578,7 +626,7 @@
     .overlay{
       position:fixed;
       inset:0;
-      background:radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(3,7,18,0.96));
+      background:radial-gradient(circle at top, rgba(15,23,42,0.96), rgba(3,7,18,0.98));
       display:flex;
       align-items:center;
       justify-content:center;
@@ -591,11 +639,11 @@
 
     .login-card{
       width:100%;
-      max-width:360px;
-      background:radial-gradient(circle at top, rgba(250,204,21,0.12), #020617);
+      max-width:380px;
+      background:radial-gradient(circle at top, rgba(250,204,21,0.16), #020617);
       border-radius:24px;
-      border:1px solid rgba(148,163,184,0.45);
-      padding:20px 18px 16px;
+      border:1px solid rgba(148,163,184,0.55);
+      padding:22px 18px 18px;
       box-shadow:0 22px 50px rgba(15,23,42,1);
       position:relative;
       overflow:hidden;
@@ -606,8 +654,8 @@
       position:absolute;
       inset:-40%;
       background:
-        radial-gradient(circle at 0% 0%, rgba(250,204,21,0.16), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(56,189,248,0.12), transparent 45%);
+        radial-gradient(circle at 0% 0%, rgba(250,204,21,0.18), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(56,189,248,0.16), transparent 45%);
       opacity:0.9;
       pointer-events:none;
     }
@@ -619,38 +667,41 @@
     }
 
     .login-logo{
-      width:38px;
-      height:38px;
+      width:40px;
+      height:40px;
       border-radius:14px;
       background:radial-gradient(circle at 30% 0%, #facc15, #f97316);
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:20px;
+      font-size:22px;
       box-shadow:0 12px 28px rgba(234,179,8,0.6);
-      margin-bottom:6px;
+      margin-bottom:8px;
+      font-weight:800;
     }
 
     .login-title{
-      font-size:18px;
-      font-weight:800;
-      letter-spacing:0.06em;
+      font-size:19px;
+      font-weight:900;
+      letter-spacing:0.08em;
       text-transform:uppercase;
     }
 
     .login-sub{
-      font-size:11px;
-      color:var(--muted);
-      max-width:260px;
+      font-size:12px;
+      color:#e5e7eb;
+      max-width:280px;
+      font-weight:500;
+      margin-top:3px;
     }
 
     .login-form{
       position:relative;
       z-index:2;
-      margin-top:8px;
+      margin-top:10px;
       display:flex;
       flex-direction:column;
-      gap:8px;
+      gap:9px;
     }
 
     .field{
@@ -660,35 +711,37 @@
     }
 
     .field label{
-      font-size:11px;
-      color:var(--muted);
+      font-size:12px;
+      color:#e5e7eb;
+      font-weight:600;
     }
 
     .field input, .field select{
       border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.8);
+      background:rgba(15,23,42,0.95);
       color:var(--ink);
-      padding:7px 11px;
-      font-size:12px;
+      padding:8px 12px;
+      font-size:13px;
       outline:none;
     }
 
     .field input::placeholder{
-      color:rgba(148,163,184,0.8);
+      color:rgba(148,163,184,0.9);
     }
 
     .login-tip{
-      font-size:9px;
-      color:var(--muted);
+      font-size:11px;
+      color:#e5e7eb;
       margin-top:2px;
+      font-weight:500;
     }
 
     .login-actions{
       margin-top:10px;
       display:flex;
       flex-direction:column;
-      gap:6px;
+      gap:7px;
     }
 
     .btn-full{
@@ -697,34 +750,38 @@
     }
 
     .btn-alt{
-      background:rgba(15,23,42,0.8);
-      color:var(--muted);
-      border:1px solid rgba(148,163,184,0.6);
-      font-size:10px;
-      padding:6px 8px;
+      background:rgba(15,23,42,0.9);
+      color:#e5e7eb;
+      border:1px solid rgba(148,163,184,0.7);
+      font-size:11px;
+      padding:7px 9px;
+      font-weight:600;
     }
 
     .login-foot{
-      margin-top:8px;
-      font-size:9px;
-      color:var(--muted);
+      margin-top:9px;
+      font-size:11px;
+      color:#e5e7eb;
+      font-weight:500;
     }
 
     .login-foot span{
       color:var(--accent-soft2);
+      font-weight:700;
     }
 
     .pill-env{
       position:absolute;
       right:12px;
       top:12px;
-      font-size:9px;
-      padding:3px 7px;
+      font-size:10px;
+      padding:4px 8px;
       border-radius:999px;
-      border:1px solid rgba(148,163,184,0.6);
-      color:var(--muted);
+      border:1px solid rgba(148,163,184,0.7);
+      color:#e5e7eb;
       background:rgba(15,23,42,0.9);
       z-index:3;
+      font-weight:600;
     }
 
     .pill-env strong{
@@ -803,7 +860,6 @@
       </div>
     </div>
 
-    <!-- 🔥 Bouton HUB 2.0 posé ici -->
     <div>
       <a href="hub2.html">
         <button type="button" class="hub2-btn">
@@ -906,22 +962,22 @@
             </div>
           </div>
 
-          <!-- LOC -->
-          <div class="module">
+          <!-- LOC PREMIUM -->
+          <div class="module module-loc">
             <div class="module-header">
               <div class="module-icon">🏡</div>
               <div class="module-titles">
                 <div class="module-name">DIGIY LOC</div>
                 <div class="module-tagline">Locations sans commission</div>
               </div>
-              <div class="module-badge">Host friendly</div>
+              <div class="module-badge">HOST FRIENDLY</div>
             </div>
             <div class="module-body">
-              Louer ou gérer un bien sans OTA : direct propriétaire ↔ client.
+              Locations gérées en direct avec le propriétaire. Prix nets, sans OTA, sans commission.
             </div>
             <div class="module-foot">
-              <button class="module-btn" onclick="openModule('loc')">
-                Ouvrir →
+              <button class="module-btn module-btn-loc" onclick="openModule('loc')">
+                🏡 Ouvrir DIGIY LOC
               </button>
               <div class="module-mini">Hébergeurs & voyageurs</div>
             </div>
