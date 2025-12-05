@@ -1,1310 +1,572 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription DIGIYLYFE - Rejoignez l'Écosystème ∞</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100%;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #e5e7eb; /* fond clair pour bon contraste */
-            color: #111827;
-            padding: 16px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(15,23,42,0.25);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            color: #f9fafb;
-            padding: 32px 24px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 6px;
-            font-weight: 800;
-            letter-spacing: .08em;
-        }
-
-        .header .infinity {
-            font-size: 2.8rem;
-            margin: 4px 0;
-        }
-
-        .header p {
-            font-size: 0.95rem;
-            opacity: 0.95;
-        }
-
-        .form-container {
-            padding: 24px 20px 32px;
-        }
-
-        .step-indicator {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 28px;
-            position: relative;
-        }
-
-        .step-indicator::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #e5e7eb;
-            z-index: 0;
-        }
-
-        .step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .step-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 999px;
-            background: #e5e7eb;
-            margin: 0 auto 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: #4b5563;
-            transition: all 0.25s;
-        }
-
-        .step-label {
-            font-size: 0.75rem;
-            color: #6b7280;
-            font-weight: 600;
-        }
-
-        .step.active .step-circle {
-            background: #4f46e5;
-            color: #f9fafb;
-            transform: scale(1.1);
-        }
-
-        .step.active .step-label {
-            color: #4f46e5;
-        }
-
-        .step.completed .step-circle {
-            background: #16a34a;
-            color: #f9fafb;
-        }
-
-        .step.completed .step-label {
-            color: #16a34a;
-        }
-
-        .form-section {
-            display: none;
-        }
-
-        .form-section.active {
-            display: block;
-            animation: fadeIn 0.35s;
-        }
-
-        .form-section h2 {
-            font-size: 1.3rem;
-            color: #111827;
-            margin-bottom: 14px;
-        }
-
-        .form-section h3 {
-            font-size: 1.1rem;
-            color: #111827;
-            margin: 16px 0 10px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .module-selection {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 14px;
-            margin-top: 10px;
-        }
-
-        .module-card {
-            border: 2px solid #e5e7eb;
-            border-radius: 14px;
-            padding: 14px 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.25s;
-            position: relative;
-            background: #ffffff;
-        }
-
-        .module-card:hover {
-            border-color: #4f46e5;
-            box-shadow: 0 10px 25px rgba(15,23,42,0.12);
-            transform: translateY(-2px);
-        }
-
-        .module-card.selected {
-            border-color: #4f46e5;
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            color: #f9fafb;
-        }
-
-        .module-icon {
-            font-size: 2rem;
-            margin-bottom: 6px;
-        }
-
-        .module-name {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .module-price {
-            font-size: 0.8rem;
-            opacity: 0.9;
-        }
-
-        .tier-badge {
-            position: absolute;
-            top: -8px;
-            right: -6px;
-            background: #f97316;
-            color: #f9fafb;
-            padding: 4px 8px;
-            border-radius: 999px;
-            font-size: 0.65rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: .04em;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 600;
-            color: #111827;
-            font-size: 0.9rem;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="number"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px 10px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            background: #ffffff;
-            color: #111827;
-        }
-
-        input::placeholder,
-        textarea::placeholder {
-            color: #9ca3af;
-        }
-
-        select option {
-            color: #111827;
-            background: #ffffff;
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 1px rgba(79,70,229,0.25);
-        }
-
-        textarea {
-            min-height: 90px;
-            resize: vertical;
-        }
-
-        .file-upload {
-            border: 2px dashed #4f46e5;
-            border-radius: 10px;
-            padding: 14px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: #f9fafb;
-            font-size: 0.9rem;
-            color: #1f2937;
-        }
-
-        .file-upload:hover {
-            background: #eef2ff;
-        }
-
-        .file-upload input[type="file"] {
-            display: none;
-        }
-
-        .file-preview {
-            margin-top: 8px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .file-item {
-            background: #e5e7eb;
-            padding: 4px 8px;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: #111827;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 22px;
-            gap: 10px;
-        }
-
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 999px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            color: #f9fafb;
-            flex: 1;
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 10px 30px rgba(79,70,229,0.35);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: #e5e7eb;
-            color: #111827;
-            min-width: 120px;
-        }
-
-        .btn-secondary:hover {
-            background: #d1d5db;
-        }
-
-        .price-display {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            color: #f9fafb;
-            padding: 18px 16px;
-            border-radius: 12px;
-            text-align: center;
-            margin: 16px 0 6px;
-        }
-
-        .price-display h3 {
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-
-        .price-display .amount {
-            font-size: 2.1rem;
-            font-weight: 800;
-        }
-
-        .price-display .detail {
-            font-size: 0.8rem;
-            margin-top: 4px;
-            opacity: 0.95;
-        }
-
-        .success-message {
-            display: none;
-            text-align: center;
-            padding: 40px 20px 24px;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        .success-icon {
-            font-size: 3.6rem;
-            color: #16a34a;
-            margin-bottom: 12px;
-        }
-
-        .row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 12px;
-        }
-
-        .info-box {
-            background: #eff6ff;
-            padding: 10px 10px;
-            border-radius: 10px;
-            border-left: 4px solid #4f46e5;
-            margin: 10px 0 12px;
-            color: #111827;
-            font-size: 0.9rem;
-        }
-
-        .info-box strong {
-            color: #4f46e5;
-        }
-
-        .pricing-table {
-            background: #f9fafb;
-            padding: 10px;
-            border-radius: 10px;
-            margin: 10px 0 12px;
-            color: #111827;
-            font-size: 0.85rem;
-            overflow-x: auto;
-        }
-
-        .pricing-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .pricing-table th,
-        .pricing-table td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .pricing-table th {
-            background: #4f46e5;
-            color: #f9fafb;
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-
-        .pricing-table tr:hover {
-            background: #eef2ff;
-        }
-
-        #summary {
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.5rem;
-            }
-
-            .form-container {
-                padding: 18px 14px 24px;
-            }
-
-            .step-label {
-                font-size: 0.7rem;
-            }
-
-            .button-group {
-                flex-direction: column-reverse;
-            }
-
-            .btn-secondary,
-            .btn-primary {
-                width: 100%;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>DIGIY HUB — Accueil • Super App 0% commission</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="DIGIY HUB — Super App Sénégal & Afrique. 0% commission, paiement direct au pro, souveraineté des données.">
+  <style>
+    :root{
+      --bg:#020617;
+      --bg-soft:#020818;
+      --card:#020617;
+      --card-soft:#0b1120;
+      --accent-main:#facc15; /* Or */
+      --accent-soft:#f97316; /* Orange vif */
+      --accent-blue:#38bdf8; /* Bleu clair */
+      --ink:#f9fafb;
+      --muted:#cbd5f5;
+      --line:#1f2937;
+      --shadow-soft:0 24px 60px rgba(15,23,42,0.9);
+      --radius-xl:24px;
+      --radius-lg:18px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+      background:radial-gradient(circle at top,#0b1120,#020617 60%,#000 100%);
+      color:var(--ink);
+      min-height:100vh;
+      padding:16px;
+    }
+
+    .hub-shell{
+      max-width:1100px;
+      margin:0 auto 40px;
+    }
+
+    .hub-header{
+      text-align:center;
+      padding:18px 10px 10px;
+    }
+
+    .hub-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.5);
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+
+    .hub-badge span{
+      font-size:14px;
+    }
+
+    .hub-title{
+      font-size:28px;
+      line-height:1.1;
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--ink);
+      margin-bottom:6px;
+    }
+
+    .hub-subtitle{
+      font-size:15px;
+      color:var(--muted);
+    }
+
+    .hub-subtitle strong{
+      color:var(--accent-main);
+      font-weight:700;
+    }
+
+    .hub-layout{
+      display:grid;
+      grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+      gap:22px;
+      margin-top:22px;
+    }
+
+    .hub-main-card{
+      background:radial-gradient(circle at top left,#111827,#020617 55%);
+      border-radius:var(--radius-xl);
+      padding:22px 20px 20px;
+      box-shadow:var(--shadow-soft);
+      border:1px solid rgba(148,163,184,0.35);
+    }
+
+    .hub-kicker{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      color:var(--accent-main);
+      margin-bottom:10px;
+    }
+
+    .hub-main-title{
+      font-size:22px;
+      line-height:1.2;
+      font-weight:800;
+      color:var(--ink);
+      margin-bottom:8px;
+    }
+
+    .hub-main-highlight{
+      font-size:15px;
+      color:var(--muted);
+      margin-bottom:12px;
+    }
+
+    .hub-main-highlight strong{
+      color:var(--accent-main);
+    }
+
+    .hub-cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:14px 0 16px;
+    }
+
+    .hub-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding:12px 18px;
+      border-radius:999px;
+      border:none;
+      text-decoration:none;
+      cursor:pointer;
+      font-size:15px;
+      font-weight:700;
+      transition:all .2s;
+      white-space:nowrap;
+    }
+
+    .hub-btn-primary{
+      background:linear-gradient(135deg,#facc15,#f97316);
+      color:#000;
+      flex:1;
+      min-width:160px;
+    }
+
+    .hub-btn-primary:hover{
+      filter:brightness(1.05);
+      transform:translateY(-1px);
+      box-shadow:0 18px 35px rgba(234,179,8,0.35);
+    }
+
+    .hub-btn-secondary{
+      background:rgba(15,23,42,0.9);
+      color:var(--muted);
+      border:1px solid rgba(148,163,184,0.6);
+      min-width:140px;
+    }
+
+    .hub-btn-secondary:hover{
+      background:#020617;
+      color:var(--ink);
+    }
+
+    .hub-pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+    }
+
+    .hub-pill{
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      border:1px solid rgba(148,163,184,0.5);
+      color:var(--muted);
+      background:rgba(15,23,42,0.8);
+    }
+
+    .hub-pill--gold{
+      border-color:rgba(250,204,21,0.8);
+      color:var(--accent-main);
+    }
+
+    .hub-stats-row{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .hub-stat{
+      background:rgba(15,23,42,0.85);
+      border-radius:14px;
+      padding:10px 10px 9px;
+      border:1px solid rgba(30,64,175,0.6);
+    }
+
+    .hub-stat-label{
+      font-size:11px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      margin-bottom:3px;
+    }
+
+    .hub-stat-value{
+      font-size:16px;
+      font-weight:700;
+      color:var(--accent-blue);
+    }
+
+    .hub-stat-note{
+      font-size:11px;
+      color:#9ca3af;
+      margin-top:2px;
+    }
+
+    /* Colonne modules */
+    .hub-side-card{
+      background:radial-gradient(circle at top,#020617,#020617 55%);
+      border-radius:var(--radius-xl);
+      padding:18px 16px 16px;
+      box-shadow:var(--shadow-soft);
+      border:1px solid rgba(55,65,81,0.9);
+    }
+
+    .hub-side-title{
+      font-size:16px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .hub-side-sub{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:12px;
+    }
+
+    .hub-mod-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .hub-mod{
+      background:#020617;
+      border-radius:14px;
+      padding:9px 9px 8px;
+      border:1px solid rgba(55,65,81,0.9);
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      cursor:pointer;
+      transition:all .18s;
+    }
+
+    .hub-mod:hover{
+      border-color:var(--accent-main);
+      box-shadow:0 14px 32px rgba(15,23,42,0.9);
+      transform:translateY(-1px);
+    }
+
+    .hub-mod-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:5px;
+    }
+
+    .hub-mod-emoji{
+      font-size:18px;
+    }
+
+    .hub-mod-name{
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .hub-mod-tag{
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:var(--muted);
+    }
+
+    .hub-mod-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:4px;
+    }
+
+    .hub-mod-price{
+      font-size:11px;
+      color:var(--accent-main);
+      font-weight:600;
+    }
+
+    .hub-mod-note{
+      font-size:10px;
+      color:#9ca3af;
+    }
+
+    .hub-footer{
+      max-width:1100px;
+      margin:22px auto 0;
+      padding:12px 4px 20px;
+      text-align:center;
+      font-size:11px;
+      color:#9ca3af;
+    }
+
+    .hub-footer strong{
+      color:var(--accent-main);
+    }
+
+    @media (max-width: 840px){
+      body{
+        padding:10px;
+      }
+      .hub-layout{
+        grid-template-columns:1fr;
+      }
+      .hub-main-card,
+      .hub-side-card{
+        border-radius:20px;
+      }
+    }
+
+    @media (max-width: 480px){
+      .hub-title{
+        font-size:22px;
+      }
+      .hub-main-title{
+        font-size:19px;
+      }
+      .hub-subtitle{
+        font-size:14px;
+      }
+      .hub-btn{
+        font-size:14px;
+      }
+      .hub-mod-name{
+        font-size:12px;
+      }
+      .hub-mod-tag,
+      .hub-mod-price,
+      .hub-mod-note{
+        font-size:9px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>DIGIYLYFE</h1>
-            <div class="infinity">∞</div>
-            <p>L'Afrique enracinée, connectée au monde</p>
-            <p style="margin-top: 6px; font-size: 0.8rem;">Inscription Professionnelle - 0% Commission</p>
+  <div class="hub-shell">
+    <!-- Bandeau haut -->
+    <header class="hub-header">
+      <div class="hub-badge">
+        <span>∞ DIGIYLYFE</span>
+        <span>•</span>
+        <span>Super App • Sénégal • Afrique</span>
+      </div>
+      <h1 class="hub-title">DIGIY HUB</h1>
+      <p class="hub-subtitle">
+        0% commission • Paiement direct au pro • <strong>Données souveraines</strong>
+      </p>
+    </header>
+
+    <!-- Layout principal -->
+    <main class="hub-layout">
+      <!-- Carte principale -->
+      <section class="hub-main-card">
+        <div class="hub-kicker">Espace Professionnels • Inscription & Accès</div>
+        <h2 class="hub-main-title">Devenir PRO DIGIY, c’est se libérer des plateformes qui prennent des %.</h2>
+        <p class="hub-main-highlight">
+          Un seul HUB pour vos réservations, paiements, visibilité et relation avec vos clients.
+          <strong>Sans intermédiaire, sans commission.</strong>
+        </p>
+
+        <!-- CTA -->
+        <div class="hub-cta-row">
+          <!-- 🔥 Lien corrigé vers la bonne page -->
+          <a class="hub-btn hub-btn-primary" href="/digiy-inscription/">
+            S'inscrire maintenant
+            <span>→</span>
+          </a>
+          <!-- Placeholder connexion (à brancher plus tard) -->
+          <a class="hub-btn hub-btn-secondary" href="#">
+            Se connecter (bientôt)
+          </a>
         </div>
 
-        <div class="form-container">
-            <div class="step-indicator">
-                <div class="step active" data-step="1">
-                    <div class="step-circle">1</div>
-                    <div class="step-label">Module</div>
-                </div>
-                <div class="step" data-step="2">
-                    <div class="step-circle">2</div>
-                    <div class="step-label">Capacité</div>
-                </div>
-                <div class="step" data-step="3">
-                    <div class="step-circle">3</div>
-                    <div class="step-label">Informations</div>
-                </div>
-                <div class="step" data-step="4">
-                    <div class="step-circle">4</div>
-                    <div class="step-label">Documents</div>
-                </div>
-                <div class="step" data-step="5">
-                    <div class="step-circle">5</div>
-                    <div class="step-label">Contenu</div>
-                </div>
-                <div class="step" data-step="6">
-                    <div class="step-circle">6</div>
-                    <div class="step-label">Validation</div>
-                </div>
-            </div>
-
-            <form id="inscriptionForm">
-                <!-- ÉTAPE 1: module -->
-                <div class="form-section active" data-section="1">
-                    <h2>Choisissez votre module</h2>
-                    <div class="module-selection">
-                        <div class="module-card" data-module="driver" data-has-tiers="true">
-                            <div class="tier-badge">PALIERS</div>
-                            <div class="module-icon">🚗</div>
-                            <div class="module-name">DIGIY DRIVER</div>
-                            <div class="module-price">À partir de 9,900 F/mois</div>
-                        </div>
-                        <div class="module-card" data-module="loc" data-has-tiers="true">
-                            <div class="tier-badge">PALIERS</div>
-                            <div class="module-icon">🏠</div>
-                            <div class="module-name">DIGIY LOC</div>
-                            <div class="module-price">À partir de 9,900 F/mois</div>
-                        </div>
-                        <div class="module-card" data-module="resto" data-has-tiers="true">
-                            <div class="tier-badge">PALIERS</div>
-                            <div class="module-icon">🍴</div>
-                            <div class="module-name">DIGIY RESTO PRO</div>
-                            <div class="module-price">À partir de 14,900 F/mois</div>
-                        </div>
-                        <div class="module-card" data-module="market" data-has-tiers="true">
-                            <div class="tier-badge">PALIERS</div>
-                            <div class="module-icon">🛒</div>
-                            <div class="module-name">DIGIY MARKET</div>
-                            <div class="module-price">À partir de 9,900 F/mois</div>
-                        </div>
-                        <div class="module-card" data-module="resa" data-has-tiers="false">
-                            <div class="module-icon">🍽️</div>
-                            <div class="module-name">DIGIY RÉSA</div>
-                            <div class="module-price">9,900 F/mois</div>
-                        </div>
-                        <div class="module-card" data-module="pos" data-has-tiers="false">
-                            <div class="module-icon">💳</div>
-                            <div class="module-name">DIGIY POS</div>
-                            <div class="module-price">9,900 F/mois</div>
-                        </div>
-                        <div class="module-card" data-module="build" data-has-tiers="false">
-                            <div class="module-icon">🏗️</div>
-                            <div class="module-name">DIGIY BUILD</div>
-                            <div class="module-price">9,900 F/mois</div>
-                        </div>
-                        <div class="module-card" data-module="pay" data-has-tiers="false">
-                            <div class="module-icon">💰</div>
-                            <div class="module-name">DIGIY PAY</div>
-                            <div class="module-price">4,900 F/mois</div>
-                        </div>
-                        <div class="module-card" data-module="jobs" data-has-tiers="false">
-                            <div class="module-icon">💼</div>
-                            <div class="module-name">DIGIY JOBS</div>
-                            <div class="module-price">7,900 F/mois</div>
-                        </div>
-                    </div>
-                    <input type="hidden" id="selectedModule" name="module" required>
-                </div>
-
-                <!-- ÉTAPE 2: capacité -->
-                <div class="form-section" data-section="2">
-                    <h2>Définissez votre capacité</h2>
-                    <div id="capacityFields"></div>
-                </div>
-
-                <!-- ÉTAPE 3: infos générales + spécifiques -->
-                <div class="form-section" data-section="3">
-                    <h2>Vos informations</h2>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Nom complet *</label>
-                            <input type="text" name="fullName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email *</label>
-                            <input type="email" name="email" required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Téléphone *</label>
-                            <input type="tel" name="phone" required>
-                        </div>
-                        <div class="form-group">
-                            <label>WhatsApp</label>
-                            <input type="tel" name="whatsapp">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Adresse complète *</label>
-                        <textarea name="address" required></textarea>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Ville *</label>
-                            <input type="text" name="city" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Pays *</label>
-                            <select name="country" required>
-                                <option value="">Sélectionnez...</option>
-                                <option value="Sénégal">Sénégal</option>
-                                <option value="France">France</option>
-                                <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-                                <option value="Mali">Mali</option>
-                                <option value="Burkina Faso">Burkina Faso</option>
-                                <option value="Autre">Autre</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="specificFields"></div>
-                </div>
-
-                <!-- ÉTAPE 4: documents -->
-                <div class="form-section" data-section="4">
-                    <h2>Documents administratifs</h2>
-                    <div class="info-box">
-                        <strong>Important :</strong> Les documents peuvent être ajoutés même plus tard. Pour l’instant, vous pouvez déposer des fichiers provisoires.
-                    </div>
-
-                    <div class="form-group">
-                        <label>Carte d'identité ou Passeport *</label>
-                        <div class="file-upload" onclick="document.getElementById('idCard').click()">
-                            📄 Cliquez pour uploader votre pièce d'identité
-                            <input type="file" id="idCard" name="idCard" accept=".pdf,.jpg,.jpeg,.png" required>
-                        </div>
-                        <div class="file-preview" id="idCardPreview"></div>
-                    </div>
-
-                    <div id="moduleDocuments"></div>
-                </div>
-
-                <!-- ÉTAPE 5: contenu -->
-                <div class="form-section" data-section="5">
-                    <h2>Contenu de votre fiche</h2>
-                    <div id="contentFields"></div>
-                </div>
-
-                <!-- ÉTAPE 6: recap -->
-                <div class="form-section" data-section="6">
-                    <h2>Récapitulatif de votre inscription</h2>
-                    <div id="summary"></div>
-
-                    <div class="price-display">
-                        <h3>Cotisation mensuelle</h3>
-                        <div class="amount"><span id="finalPrice">0</span> F</div>
-                        <div class="detail" id="priceDetail"></div>
-                        <p style="margin-top: 4px; font-size: 0.8rem;">✅ Sans engagement - 0% commission sur vos transactions</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem;">
-                            <input type="checkbox" name="acceptTerms" required style="width:auto;">
-                            J'accepte les conditions générales d'utilisation de DIGIYLYFE *
-                        </label>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" class="btn-secondary" id="prevBtn" style="display:none;">← Précédent</button>
-                    <button type="button" class="btn-primary" id="nextBtn">Suivant →</button>
-                    <button type="submit" class="btn-primary" id="submitBtn" style="display:none;">✓ Valider l'inscription</button>
-                </div>
-            </form>
-
-            <div class="success-message" id="successMessage">
-                <div class="success-icon">✓</div>
-                <h2 style="font-size:1.3rem; color:#111827;">Inscription réussie !</h2>
-                <p style="margin: 10px 0; color:#4b5563; font-size:0.9rem;">
-                    Votre demande d'inscription a été envoyée. Elle sera vérifiée par l'équipe DIGIYLYFE.
-                </p>
-                <p style="color:#4b5563; font-size:0.9rem;">
-                    Votre ID unique : <strong id="generatedId" style="color:#111827;"></strong>
-                </p>
-                <p style="color:#6b7280; margin-top: 10px; font-size:0.85rem;">
-                    Vous recevrez un message (WhatsApp / Email) une fois votre compte validé.
-                </p>
-            </div>
+        <!-- Avantages -->
+        <div class="hub-pill-row">
+          <span class="hub-pill hub-pill--gold">0% commission garantie</span>
+          <span class="hub-pill">Paiement direct Wave / OM / Cash</span>
+          <span class="hub-pill">Made in Sénégal</span>
+          <span class="hub-pill">Écosystème connecté ∞</span>
         </div>
-    </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+        <!-- Stats / Promesses -->
+        <div class="hub-stats-row">
+          <div class="hub-stat">
+            <div class="hub-stat-label">Mode démo</div>
+            <div class="hub-stat-value">Actif</div>
+            <div class="hub-stat-note">Testez DIGIY sans risque.</div>
+          </div>
+          <div class="hub-stat">
+            <div class="hub-stat-label">Commission</div>
+            <div class="hub-stat-value">0%</div>
+            <div class="hub-stat-note">Vous encaissez, on n’y touche pas.</div>
+          </div>
+          <div class="hub-stat">
+            <div class="hub-stat-label">Modules</div>
+            <div class="hub-stat-value">9</div>
+            <div class="hub-stat-note">Transport, Loc, Resto, Market & plus.</div>
+          </div>
+        </div>
+      </section>
 
-    <script>
-        // ======= CONFIG FIREBASE (À REMPLACER PAR TA VRAIE CONFIG) =======
-        const firebaseConfig = {
-            apiKey: "REMPLACE-MOI",
-            authDomain: "REMPLACE-MOI.firebaseapp.com",
-            databaseURL: "https://REMPLACE-MOI-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "REMPLACE-MOI",
-            storageBucket: "REMPLACE-MOI.appspot.com",
-            messagingSenderId: "REMPLACE-MOI",
-            appId: "REMPLACE-MOI"
-        };
+      <!-- Colonne modules -->
+      <aside class="hub-side-card">
+        <h3 class="hub-side-title">Modules DIGIY disponibles</h3>
+        <p class="hub-side-sub">
+          Choisissez votre module à l’inscription. Vous pourrez activer d’autres services ensuite dans votre espace.
+        </p>
 
-        let database = null;
+        <div class="hub-mod-grid">
+          <!-- DRIVER -->
+          <article class="hub-mod">
+            <div class="hub-mod-header">
+              <div>
+                <div class="hub-mod-emoji">🚗</div>
+                <div class="hub-mod-name">DIGIY DRIVER</div>
+              </div>
+              <div class="hub-mod-tag">Transport</div>
+            </div>
+            <div class="hub-mod-meta">
+              <div class="hub-mod-price">Dès 9 900 F / mois</div>
+              <div class="hub-mod-note">0% sur vos courses</div>
+            </div>
+          </article>
 
-        try {
-            firebase.initializeApp(firebaseConfig);
-            database = firebase.database();
-            console.log("✅ Firebase initialisé");
-        } catch (e) {
-            console.error("❌ Erreur Firebase :", e);
-            alert("⚠️ Erreur de connexion. Vérifiez votre connexion internet.");
-        }
+          <!-- RESTO -->
+          <article class="hub-mod">
+            <div class="hub-mod-header">
+              <div>
+                <div class="hub-mod-emoji">🍽️</div>
+                <div class="hub-mod-name">DIGIY RESTO</div>
+              </div>
+              <div class="hub-mod-tag">Restaurant</div>
+            </div>
+            <div class="hub-mod-meta">
+              <div class="hub-mod-price">Dès 14 900 F / mois</div>
+              <div class="hub-mod-note">Plan de salle & résa</div>
+            </div>
+          </article>
 
-        let currentStep = 1;
-        let formData = {
-            module: '',
-            capacity: 0,
-            price: 0,
-            priceDetail: ''
-        };
+          <!-- LOC -->
+          <article class="hub-mod">
+            <div class="hub-mod-header">
+              <div>
+                <div class="hub-mod-emoji">🏠</div>
+                <div class="hub-mod-name">DIGIY LOC</div>
+              </div>
+              <div class="hub-mod-tag">Hébergements</div>
+            </div>
+            <div class="hub-mod-meta">
+              <div class="hub-mod-price">Dès 9 900 F / mois</div>
+              <div class="hub-mod-note">0% sur vos nuits</div>
+            </div>
+          </article>
 
-        const pricingTiers = {
-            driver: [
-                { min: 1, max: 1, unitPrice: 9900, label: "1 véhicule" },
-                { min: 2, max: 3, unitPrice: 8500, label: "2-3 véhicules" },
-                { min: 4, max: 10, unitPrice: 7500, label: "4-10 véhicules" },
-                { min: 11, max: 999, unitPrice: 6500, label: "10+ véhicules" }
-            ],
-            loc: [
-                { min: 0, max: 4, price: 9900, label: "< 5 chambres" },
-                { min: 5, max: 10, price: 18000, label: "5-10 chambres" },
-                { min: 11, max: 20, price: 30000, label: "11-20 chambres" },
-                { min: 21, max: 30, price: 50000, label: "21-30 chambres" },
-                { min: 31, max: 999, price: 100000, label: "30+ chambres" }
-            ],
-            resto: [
-                { min: 0, max: 19, price: 14900, label: "< 20 couverts" },
-                { min: 20, max: 50, price: 30000, label: "20-50 couverts" },
-                { min: 51, max: 999, price: 50000, label: "50+ couverts" }
-            ],
-            market: [
-                { min: 0, max: 20, price: 9900, label: "0-20 produits" },
-                { min: 21, max: 100, price: 19900, label: "21-100 produits" },
-                { min: 101, max: 9999, price: 39900, label: "100+ produits" }
-            ]
-        };
+          <!-- MARKET -->
+          <article class="hub-mod">
+            <div class="hub-mod-header">
+              <div>
+                <div class="hub-mod-emoji">🏪</div>
+                <div class="hub-mod-name">DIGIY MARKET</div>
+              </div>
+              <div class="hub-mod-tag">Marketplace</div>
+            </div>
+            <div class="hub-mod-meta">
+              <div class="hub-mod-price">Dès 9 900 F / mois</div>
+              <div class="hub-mod-note">Catalogue local premium</div>
+            </div>
+          </article>
 
-        const fixedPrices = {
-            resa: 9900,
-            pos: 9900,
-            build: 9900,
-            pay: 4900,
-            jobs: 7900
-        };
+          <!-- PAY -->
+          <article class="hub-mod">
+            <div class="hub-mod-header">
+              <div>
+                <div class="hub-mod-emoji">💳</div>
+                <div class="hub-mod-name">DIGIY PAY</div>
+              </div>
+              <div class="hub-mod-tag">Paiement</div>
+            </div>
+            <div class="hub-mod-meta">
+              <div class="hub-mod-price">4 900 F / mois</div>
+              <div class="hub-mod-note">QR, Wave, OM, Cash</div>
+            </div>
+          </article>
 
-        // ===== Sélection du module =====
-        document.querySelectorAll('.module-card').forEach(card => {
-            card.addEventListener('click', function() {
-                document.querySelectorAll('.module-card').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-                formData.module = this.dataset.module;
-                document.getElementById('selectedModule').value = this.dataset.module;
+          <!-- POS -->
+          <article class="hub-mod">
+            <div class="hub-mod-header">
+              <div>
+                <div class="hub-mod-emoji">🧾</div>
+                <div class="hub-mod-name">DIGIY POS</div>
+              </div>
+              <div class="hub-mod-tag">Boutique</div>
+            </div>
+            <div class="hub-mod-meta">
+              <div class="hub-mod-price">9 900 F / mois</div>
+              <div class="hub-mod-note">Caisse & stock léger</div>
+            </div>
+          </article>
 
-                if (this.dataset.hasTiers === 'false') {
-                    formData.price = fixedPrices[formData.module];
-                    formData.priceDetail = 'Prix fixe';
-                    formData.capacity = 0;
-                } else {
-                    formData.price = 0;
-                    formData.priceDetail = '';
-                    formData.capacity = 0;
-                }
-            });
-        });
+          <!-- JOBS -->
+          <article class="hub-mod">
+            <div class="hub-mod-header">
+              <div>
+                <div class="hub-mod-emoji">💼</div>
+                <div class="hub-mod-name">DIGIY JOBS</div>
+              </div>
+              <div class="hub-mod-tag">Emploi</div>
+            </div>
+            <div class="hub-mod-meta">
+              <div class="hub-mod-price">7 900 F / mois</div>
+              <div class="hub-mod-note">Annonces & profils</div>
+            </div>
+          </article>
 
-        document.getElementById('nextBtn').addEventListener('click', nextStep);
-        document.getElementById('prevBtn').addEventListener('click', prevStep);
+          <!-- BUILD -->
+          <article class="hub-mod">
+            <div class="hub-mod-header">
+              <div>
+                <div class="hub-mod-emoji">🏗️</div>
+                <div class="hub-mod-name">DIGIY BUILD</div>
+              </div>
+              <div class="hub-mod-tag">BTP / Services</div>
+            </div>
+            <div class="hub-mod-meta">
+              <div class="hub-mod-price">9 900 F / mois</div>
+              <div class="hub-mod-note">Artisans & chantiers</div>
+            </div>
+          </article>
+        </div>
+      </aside>
+    </main>
 
-        function nextStep() {
-            if (!validateCurrentStep()) return;
-            if (currentStep < 6) {
-                currentStep++;
-                updateStep();
-                loadStepContent();
-            }
-        }
-
-        function prevStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateStep();
-                loadStepContent();
-            }
-        }
-
-        function updateStep() {
-            document.querySelectorAll('.step').forEach((step, index) => {
-                step.classList.remove('active', 'completed');
-                if (index + 1 < currentStep) step.classList.add('completed');
-                else if (index + 1 === currentStep) step.classList.add('active');
-            });
-
-            document.querySelectorAll('.form-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.querySelector(`[data-section="${currentStep}"]`).classList.add('active');
-
-            document.getElementById('prevBtn').style.display = currentStep > 1 ? 'block' : 'none';
-            document.getElementById('nextBtn').style.display = currentStep < 6 ? 'block' : 'none';
-            document.getElementById('submitBtn').style.display = currentStep === 6 ? 'block' : 'none';
-        }
-
-        function loadStepContent() {
-            if (currentStep === 2) {
-                loadCapacityFields();
-            } else if (currentStep === 3) {
-                loadSpecificFields();
-            } else if (currentStep === 4) {
-                loadDocumentFields();
-            } else if (currentStep === 5) {
-                loadContentFields();
-            } else if (currentStep === 6) {
-                generateSummary();
-            }
-        }
-
-        function loadCapacityFields() {
-            const capacityFields = document.getElementById('capacityFields');
-            const module = formData.module;
-
-            if (!pricingTiers[module]) {
-                currentStep = 3;
-                updateStep();
-                loadStepContent();
-                return;
-            }
-
-            let html = '<div class="info-box"><strong>Tarification selon votre capacité</strong><br>Votre tarif sera calculé automatiquement selon les informations que vous fournirez.</div>';
-            html += '<div class="pricing-table"><table>';
-
-            if (module === 'driver') {
-                html += '<thead><tr><th>Nombre de véhicules</th><th>Prix unitaire/mois</th></tr></thead><tbody>';
-                pricingTiers.driver.forEach(t => {
-                    html += `<tr><td>${t.label}</td><td>${t.unitPrice.toLocaleString()} F</td></tr>`;
-                });
-                html += '</tbody></table></div>';
-                html += `
-                    <div class="form-group">
-                        <label>Combien de véhicules souhaitez-vous inscrire ? *</label>
-                        <input type="number" id="capacityInput" min="1" max="999" required>
-                        <p style="color:#4b5563;font-size:0.8rem;margin-top:4px;">Prix dégressif automatique selon le nombre</p>
-                    </div>
-                    <div id="pricePreview" style="display:none;margin-top:8px;"></div>
-                `;
-            } else if (module === 'loc') {
-                html += '<thead><tr><th>Capacité</th><th>Prix/mois</th></tr></thead><tbody>';
-                pricingTiers.loc.forEach(t => {
-                    html += `<tr><td>${t.label}</td><td>${t.price.toLocaleString()} F</td></tr>`;
-                });
-                html += '</tbody></table></div>';
-                html += `
-                    <div class="form-group">
-                        <label>Nombre total de chambres de votre établissement *</label>
-                        <input type="number" id="capacityInput" min="1" max="999" required>
-                    </div>
-                    <div id="pricePreview" style="display:none;margin-top:8px;"></div>
-                `;
-            } else if (module === 'resto') {
-                html += '<thead><tr><th>Capacité d\'accueil</th><th>Prix/mois</th></tr></thead><tbody>';
-                pricingTiers.resto.forEach(t => {
-                    html += `<tr><td>${t.label}</td><td>${t.price.toLocaleString()} F</td></tr>`;
-                });
-                html += '</tbody></table></div>';
-                html += `
-                    <div class="form-group">
-                        <label>Capacité maximale d'accueil (nombre de couverts) *</label>
-                        <input type="number" id="capacityInput" min="1" max="999" required>
-                    </div>
-                    <div id="pricePreview" style="display:none;margin-top:8px;"></div>
-                `;
-            } else if (module === 'market') {
-                html += '<thead><tr><th>Nombre de produits</th><th>Prix/mois</th></tr></thead><tbody>';
-                pricingTiers.market.forEach(t => {
-                    html += `<tr><td>${t.label}</td><td>${t.price.toLocaleString()} F</td></tr>`;
-                });
-                html += '</tbody></table></div>';
-                html += `
-                    <div class="form-group">
-                        <label>Nombre de produits dans votre catalogue *</label>
-                        <input type="number" id="capacityInput" min="1" max="9999" required>
-                        <p style="color:#4b5563;font-size:0.8rem;margin-top:4px;">Vous pourrez ajuster ce nombre plus tard depuis votre espace</p>
-                    </div>
-                    <div id="pricePreview" style="display:none;margin-top:8px;"></div>
-                `;
-            }
-
-            capacityFields.innerHTML = html;
-
-            const capacityInput = document.getElementById('capacityInput');
-            if (capacityInput) {
-                capacityInput.addEventListener('input', calculatePrice);
-            }
-        }
-
-        function calculatePrice() {
-            const capacityInput = document.getElementById('capacityInput');
-            if (!capacityInput) return;
-
-            const capacity = parseInt(capacityInput.value, 10);
-            const module = formData.module;
-            const pricePreview = document.getElementById('pricePreview');
-
-            if (!capacity || capacity < 1) {
-                pricePreview.style.display = 'none';
-                return;
-            }
-
-            formData.capacity = capacity;
-            let price = 0;
-            let detail = '';
-            const tiers = pricingTiers[module];
-
-            if (module === 'driver') {
-                const tier = tiers.find(t => capacity >= t.min && capacity <= t.max);
-                if (tier) {
-                    price = tier.unitPrice * capacity;
-                    detail = `${capacity} véhicule${capacity > 1 ? 's' : ''} × ${tier.unitPrice.toLocaleString()} F`;
-                }
-            } else {
-                const tier = tiers.find(t => capacity >= t.min && capacity <= t.max);
-                if (tier) {
-                    price = tier.price;
-                    detail = tier.label;
-                }
-            }
-
-            formData.price = price;
-            formData.priceDetail = detail;
-
-            pricePreview.innerHTML = `
-                <div class="price-display">
-                    <h3>Votre cotisation mensuelle</h3>
-                    <div class="amount">${price.toLocaleString()} F</div>
-                    <div class="detail">${detail}</div>
-                </div>
-            `;
-            pricePreview.style.display = 'block';
-        }
-
-        function loadSpecificFields() {
-            const specificFields = document.getElementById('specificFields');
-            const module = formData.module;
-            let html = '<h3>Informations spécifiques</h3>';
-
-            if (module === 'driver') {
-                html += `
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Marque du véhicule principal *</label>
-                            <input type="text" name="vehicleBrand" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Modèle *</label>
-                            <input type="text" name="vehicleModel" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Année *</label>
-                            <input type="number" name="vehicleYear" min="1990" max="2030" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Immatriculation *</label>
-                            <input type="text" name="vehiclePlate" required>
-                        </div>
-                    </div>
-                `;
-            } else if (module === 'resto') {
-                html += `
-                    <div class="form-group">
-                        <label>Nom du restaurant *</label>
-                        <input type="text" name="businessName" required>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Type de cuisine *</label>
-                            <select name="cuisineType" required>
-                                <option value="">Sélectionnez...</option>
-                                <option value="Africaine">Africaine</option>
-                                <option value="Sénégalaise">Sénégalaise</option>
-                                <option value="Française">Française</option>
-                                <option value="Italienne">Italienne</option>
-                                <option value="Fast-food">Fast-food</option>
-                                <option value="Autre">Autre</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Horaires d'ouverture *</label>
-                            <textarea name="openingHours" placeholder="Ex: Lun-Ven: 12h-23h" required></textarea>
-                        </div>
-                    </div>
-                `;
-            } else if (module === 'market') {
-                html += `
-                    <div class="form-group">
-                        <label>Nom de la boutique *</label>
-                        <input type="text" name="businessName" required>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Type de commerce *</label>
-                            <select name="businessType" required>
-                                <option value="">Sélectionnez...</option>
-                                <option value="Mode">Mode & Vêtements</option>
-                                <option value="Cosmétiques">Cosmétiques</option>
-                                <option value="Électronique">Électronique</option>
-                                <option value="Alimentation">Alimentation</option>
-                                <option value="Artisanat">Artisanat</option>
-                                <option value="Autre">Autre</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Horaires d'ouverture *</label>
-                            <textarea name="openingHours" placeholder="Ex: Lun-Sam: 9h-19h" required></textarea>
-                        </div>
-                    </div>
-                `;
-            } else if (module === 'loc') {
-                html += `
-                    <div class="form-group">
-                        <label>Nom de l'établissement *</label>
-                        <input type="text" name="businessName" required>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Type d'hébergement *</label>
-                            <select name="lodgingType" required>
-                                <option value="">Sélectionnez...</option>
-                                <option value="Hôtel">Hôtel</option>
-                                <option value="Appartement">Appartement</option>
-                                <option value="Villa">Villa</option>
-                                <option value="Maison d'hôtes">Maison d'hôtes</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Services inclus</label>
-                            <textarea name="services" placeholder="Ex: WiFi, Petit-déjeuner, Parking..."></textarea>
-                        </div>
-                    </div>
-                `;
-            }
-
-            specificFields.innerHTML = html;
-        }
-
-        function loadDocumentFields() {
-            const moduleDocuments = document.getElementById('moduleDocuments');
-            const module = formData.module;
-            let html = '';
-
-            if (module === 'driver') {
-                html = `
-                    <div class="form-group">
-                        <label>Permis de conduire *</label>
-                        <div class="file-upload" onclick="document.getElementById('driverLicense').click()">
-                            📄 Cliquez pour uploader
-                            <input type="file" id="driverLicense" name="driverLicense" accept=".pdf,.jpg,.jpeg,.png" required>
-                        </div>
-                        <div class="file-preview" id="driverLicensePreview"></div>
-                    </div>
-                    <div class="form-group">
-                        <label>Assurance véhicule *</label>
-                        <div class="file-upload" onclick="document.getElementById('insurance').click()">
-                            📄 Cliquez pour uploader
-                            <input type="file" id="insurance" name="insurance" accept=".pdf,.jpg,.jpeg,.png" required>
-                        </div>
-                        <div class="file-preview" id="insurancePreview"></div>
-                    </div>
-                    <div class="form-group">
-                        <label>Carte grise *</label>
-                        <div class="file-upload" onclick="document.getElementById('vehicleCard').click()">
-                            📄 Cliquez pour uploader
-                            <input type="file" id="vehicleCard" name="vehicleCard" accept=".pdf,.jpg,.jpeg,.png" required>
-                        </div>
-                        <div class="file-preview" id="vehicleCardPreview"></div>
-                    </div>
-                `;
-            } else if (['resto', 'market', 'loc'].includes(module)) {
-                html = `
-                    <div class="form-group">
-                        <label>Registre de commerce (si disponible)</label>
-                        <div class="file-upload" onclick="document.getElementById('businessReg').click()">
-                            📄 Cliquez pour uploader
-                            <input type="file" id="businessReg" name="businessReg" accept=".pdf,.jpg,.jpeg,.png">
-                        </div>
-                        <div class="file-preview" id="businessRegPreview"></div>
-                    </div>
-                `;
-            }
-
-            moduleDocuments.innerHTML = html;
-
-            setupFilePreview('idCard', 'idCardPreview');
-            if (module === 'driver') {
-                setupFilePreview('driverLicense', 'driverLicensePreview');
-                setupFilePreview('insurance', 'insurancePreview');
-                setupFilePreview('vehicleCard', 'vehicleCardPreview');
-            } else if (['resto', 'market', 'loc'].includes(module)) {
-                setupFilePreview('businessReg', 'businessRegPreview');
-            }
-        }
-
-        function loadContentFields() {
-            const contentFields = document.getElementById('contentFields');
-            const module = formData.module;
-
-            let html = `
-                <div class="info-box">
-                    <strong>Contenu de votre profil</strong><br>
-                    Vous pourrez compléter et modifier ces informations depuis votre espace client.
-                </div>
-                <div class="form-group">
-                    <label>Photo de couverture *</label>
-                    <div class="file-upload" onclick="document.getElementById('coverPhoto').click()">
-                        📸 Cliquez pour uploader
-                        <input type="file" id="coverPhoto" name="coverPhoto" accept="image/*" required>
-                    </div>
-                    <div class="file-preview" id="coverPhotoPreview"></div>
-                </div>
-                <div class="form-group">
-                    <label>Description ${module === 'driver' ? 'de vos services' : 'de votre établissement'} *</label>
-                    <textarea name="description" placeholder="Présentez-vous en quelques lignes..." required></textarea>
-                </div>
-            `;
-
-            contentFields.innerHTML = html;
-            setupFilePreview('coverPhoto', 'coverPhotoPreview');
-        }
-
-        function setupFilePreview(inputId, previewId) {
-            setTimeout(() => {
-                const input = document.getElementById(inputId);
-                if (input) {
-                    input.addEventListener('change', function(e) {
-                        const preview = document.getElementById(previewId);
-                        if (preview) {
-                            preview.innerHTML = '';
-                            Array.from(e.target.files).forEach(file => {
-                                const fileItem = document.createElement('div');
-                                fileItem.className = 'file-item';
-                                fileItem.textContent = `📄 ${file.name}`;
-                                preview.appendChild(fileItem);
-                            });
-                        }
-                    });
-                }
-            }, 60);
-        }
-
-        function validateCurrentStep() {
-            const currentSection = document.querySelector(`[data-section="${currentStep}"]`);
-
-            if (currentStep === 1) {
-                if (!formData.module) {
-                    alert('Veuillez sélectionner un module');
-                    return false;
-                }
-            } else if (currentStep === 2) {
-                if (pricingTiers[formData.module]) {
-                    const capacityInput = document.getElementById('capacityInput');
-                    if (!capacityInput || !capacityInput.value || parseInt(capacityInput.value, 10) < 1) {
-                        alert('Veuillez indiquer votre capacité');
-                        return false;
-                    }
-                }
-            } else {
-                const inputs = currentSection.querySelectorAll('input[required]:not([type="file"]), select[required], textarea[required]');
-                for (let input of inputs) {
-                    if (!input.value) {
-                        alert('Veuillez remplir tous les champs obligatoires');
-                        input.focus();
-                        return false;
-                    }
-                }
-                const fileInputs = currentSection.querySelectorAll('input[type="file"][required]');
-                for (let f of fileInputs) {
-                    if (!f.files || f.files.length === 0) {
-                        alert('Veuillez uploader tous les documents obligatoires');
-                        f.focus();
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        function getModuleName(module) {
-            const names = {
-                'driver': 'DIGIY DRIVER',
-                'resto': 'DIGIY RESTO PRO',
-                'market': 'DIGIY MARKET',
-                'loc': 'DIGIY LOC',
-                'resa': 'DIGIY RÉSA',
-                'pos': 'DIGIY POS',
-                'build': 'DIGIY BUILD',
-                'pay': 'DIGIY PAY',
-                'jobs': 'DIGIY JOBS'
-            };
-            return names[module] || module;
-        }
-
-        function generateSummary() {
-            const form = document.getElementById('inscriptionForm');
-            const fd = new FormData(form);
-
-            let summary = `
-                <div style="background:#eff6ff;padding:12px;border-radius:12px;color:#111827;">
-                    <h3 style="margin-bottom:6px;color:#111827;">Module sélectionné</h3>
-                    <p style="margin-bottom:4px;color:#374151;"><strong style="color:#111827;">${getModuleName(formData.module)}</strong></p>
-            `;
-
-            if (formData.capacity) {
-                summary += `<p style="margin-bottom:4px;color:#374151;">Capacité : <strong style="color:#111827;">${formData.capacity}</strong></p>`;
-            }
-
-            summary += `
-                    <h3 style="margin:10px 0 4px;color:#111827;">Informations personnelles</h3>
-                    <p style="margin-bottom:2px;color:#374151;"><strong style="color:#111827;">Nom:</strong> ${fd.get('fullName') || ''}</p>
-                    <p style="margin-bottom:2px;color:#374151;"><strong style="color:#111827;">Email:</strong> ${fd.get('email') || ''}</p>
-                    <p style="margin-bottom:2px;color:#374151;"><strong style="color:#111827;">Téléphone:</strong> ${fd.get('phone') || ''}</p>
-                    <p style="margin-bottom:2px;color:#374151;"><strong style="color:#111827;">Ville:</strong> ${fd.get('city') || ''}, ${fd.get('country') || ''}</p>
-                </div>
-            `;
-
-            document.getElementById('summary').innerHTML = summary;
-            document.getElementById('finalPrice').textContent = formData.price.toLocaleString();
-            document.getElementById('priceDetail').textContent = formData.priceDetail;
-        }
-
-        // ====== SOUMISSION RÉELLE (RTDB + Cloud Function Email) ======
-        document.getElementById('inscriptionForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            if (!validateCurrentStep()) return;
-
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Inscription en cours...';
-
-            if (!database) {
-                alert("⚠️ Service en cours de configuration. Réessayez plus tard.");
-                submitBtn.disabled = false;
-                submitBtn.textContent = '✓ Valider l\'inscription';
-                return;
-            }
-
-            try {
-                const fd = new FormData(this);
-                const clientId = 'DIGIY-' + Date.now().toString(36).toUpperCase();
-
-                const data = {
-                    id: clientId,
-                    module: formData.module,
-                    moduleName: getModuleName(formData.module),
-                    capacity: formData.capacity,
-                    price: formData.price,
-                    priceDetail: formData.priceDetail,
-                    status: 'pending',
-                    createdAt: new Date().toISOString(),
-                    personalInfo: {
-                        fullName: fd.get('fullName') || '',
-                        email: fd.get('email') || '',
-                        phone: fd.get('phone') || '',
-                        whatsapp: fd.get('whatsapp') || '',
-                        address: fd.get('address') || '',
-                        city: fd.get('city') || '',
-                        country: fd.get('country') || ''
-                    }
-                };
-
-                // 1️⃣ Sauvegarde dans RTDB
-                await database.ref('inscriptions_pro/' + clientId).set(data);
-
-                // 2️⃣ Appel Cloud Function (EMAIL ADMIN) → à remplacer par ta vraie URL
-                // Exemple : https://us-central1-TON_PROJECT.cloudfunctions.net/newProEmail
-                const cloudFunctionUrl = "https://us-central1-TON_PROJECT_ID.cloudfunctions.net/newProEmail";
-                try {
-                    await fetch(cloudFunctionUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-                } catch (errMail) {
-                    console.warn('⚠️ Erreur envoi email admin (Cloud Function) :', errMail);
-                    // On ne bloque pas l'utilisateur si l'email ne part pas
-                }
-
-                document.getElementById('generatedId').textContent = clientId;
-                this.style.display = 'none';
-                document.getElementById('successMessage').classList.add('show');
-
-            } catch (error) {
-                console.error('Erreur d\'inscription :', error);
-                alert("⚠️ Une erreur est survenue. Vérifiez votre connexion et réessayez.");
-                submitBtn.disabled = false;
-                submitBtn.textContent = '✓ Valider l\'inscription';
-            }
-        });
-
-        // Init
-        updateStep();
-        setupFilePreview('idCard', 'idCardPreview');
-    </script>
+    <!-- Footer -->
+    <footer class="hub-footer">
+      <div>Made in Sénégal • Pour l’Afrique et sa diaspora • <strong>0% commission</strong> — DIGIYLYFE ∞</div>
+    </footer>
+  </div>
 </body>
 </html>
