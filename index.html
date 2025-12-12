@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="DIGIY HUB — L'aigle qui survole toutes les apps. Argent, réservation, chauffeur, restaurant, boutique, logements, artisans, jobs, marketplace. 0% commission, paiement direct au pro.">
   <meta name="theme-color" content="#0A0E1A">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,28 +15,29 @@
     :root{
       --bg-dark:#020617;
       --bg-soft:#0B1120;
-      --card:#111827;
-      --card-alt:#1F2937;
+
+      /* Cartes + lisibilité */
+      --card:#0B1120;
+      --card2:rgba(15,23,42,0.98);
+      --cardBorder:rgba(148, 163, 184, 0.48);
+
+      /* Texte */
+      --ink:#F9FAFB;
+      --ink-soft:#E5E7EB;
+      --muted:#CBD5E1;
+
+      /* Accents DIGIY */
       --accent:#f97316;
       --accent-strong:#ea580c;
-      --accent-soft:#fed7aa;
-      --secondary:#22d3ee;
+      --gold:#facc15;
       --success:#22c55e;
-      --warning:#facc15;
       --danger:#ef4444;
-      --ink:#f9fafb;
-      --ink-soft:#f3f4f6;
-      --muted:#e5e7eb;
-      --border:rgba(148, 163, 184, 0.5);
+
       --glow-primary:rgba(249, 115, 22, 0.4);
       --glow-secondary:rgba(34, 211, 238, 0.35);
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
+    *{box-sizing:border-box;margin:0;padding:0;}
 
     body{
       font-family:'Manrope', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -49,7 +50,6 @@
       color:var(--ink);
       display:flex;
       justify-content:center;
-      padding:0;
       overflow-x:hidden;
       position:relative;
       -webkit-font-smoothing:antialiased;
@@ -60,16 +60,14 @@
       position:fixed;
       inset:0;
       background:
-        radial-gradient(ellipse at 15% 20%, rgba(249,115,22,0.25) 0%, transparent 55%),
-        radial-gradient(ellipse at 85% 80%, rgba(56,189,248,0.25) 0%, transparent 55%);
+        radial-gradient(ellipse at 15% 20%, rgba(249,115,22,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 80%, rgba(56,189,248,0.22) 0%, transparent 55%);
       opacity:0.55;
       z-index:0;
       pointer-events:none;
     }
 
-    strong{
-      font-weight:800;
-    }
+    strong{font-weight:800;}
 
     .app{
       width:100%;
@@ -77,8 +75,8 @@
       min-height:100vh;
       background:rgba(15,23,42,0.9);
       backdrop-filter:blur(40px);
-      border-left:1px solid rgba(148,163,184,0.5);
-      border-right:1px solid rgba(148,163,184,0.5);
+      border-left:1px solid rgba(148,163,184,0.45);
+      border-right:1px solid rgba(148,163,184,0.45);
       padding:2rem;
       display:flex;
       flex-direction:column;
@@ -86,263 +84,146 @@
       z-index:1;
     }
 
-    @media(max-width:768px){
-      .app{padding:1rem;}
-    }
+    @media(max-width:768px){ .app{padding:1rem;} }
 
-    @keyframes slideInUp{
-      from{opacity:0;transform:translateY(32px);}
-      to{opacity:1;transform:translateY(0);}
-    }
-
-    @keyframes float{
-      0%,100{transform:translateY(0);}
-      50%{transform:translateY(-8px);}
-    }
-
-    @keyframes pulse{
-      0%,100%{transform:scale(1);opacity:1;}
-      50%{transform:scale(0.97);opacity:0.7;}
-    }
-
-    @keyframes blink{
-      0%,100%{opacity:1;}
-      50%{opacity:0.3;}
-    }
+    @keyframes slideInUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);} }
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);} }
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(0.97);opacity:0.7;} }
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;} }
 
     /* HEADER */
     header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:1rem;
+      display:flex;justify-content:space-between;align-items:center;gap:1rem;
       margin-bottom:2rem;
       padding:1.25rem 1.75rem;
       background:linear-gradient(135deg, rgba(15,23,42,0.98), rgba(17,24,39,0.96));
       border-radius:24px;
-      border:1px solid var(--border);
+      border:1px solid rgba(148,163,184,0.55);
       box-shadow:0 14px 40px rgba(0,0,0,0.75);
       animation:slideInUp 0.5s ease-out;
-      position:relative;
-      overflow:hidden;
+      position:relative;overflow:hidden;
     }
 
     header::before{
       content:'';
-      position:absolute;
-      inset:0;
-      background:radial-gradient(circle at top left, rgba(249,115,22,0.22), transparent 60%);
-      opacity:0.9;
-      pointer-events:none;
+      position:absolute;inset:0;
+      background:radial-gradient(circle at top left, rgba(249,115,22,0.20), transparent 60%);
+      opacity:0.9;pointer-events:none;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:1rem;
-      text-decoration:none;
-      color:inherit;
-      position:relative;
-      z-index:1;
-    }
+    .brand{display:flex;align-items:center;gap:1rem;text-decoration:none;color:inherit;position:relative;z-index:1;}
 
     .brand-logo{
-      width:56px;
-      height:56px;
-      border-radius:18px;
+      width:56px;height:56px;border-radius:18px;
       background:radial-gradient(circle at 30% 20%,#fef3c7,#f97316);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:2rem;
-      font-weight:900;
-      color:#111827;
+      display:flex;align-items:center;justify-content:center;
+      font-size:2rem;font-weight:900;color:#111827;
       box-shadow:0 12px 32px rgba(249,115,22,0.7);
-      position:relative;
-      overflow:hidden;
+      position:relative;overflow:hidden;
     }
 
     .brand-logo::after{
       content:'';
-      position:absolute;
-      inset:-20%;
+      position:absolute;inset:-20%;
       background:conic-gradient(from 0deg,#f97316,#facc15,#22d3ee,#f97316);
-      mix-blend-mode:soft-light;
-      opacity:0.6;
+      mix-blend-mode:soft-light;opacity:0.55;
       animation:float 6s infinite ease-in-out;
     }
 
     .brand-text-title{
       font-family:'Outfit',sans-serif;
-      font-size:2rem;
-      font-weight:900;
-      letter-spacing:0.08em;
-      text-transform:uppercase;
+      font-size:2rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;
       background:linear-gradient(135deg,#f97316,#facc15,#22d3ee);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
 
     .brand-text-sub{
-      font-size:0.85rem;
-      text-transform:uppercase;
-      letter-spacing:0.16em;
-      color:var(--muted);
-      font-weight:700;
+      font-size:0.85rem;text-transform:uppercase;letter-spacing:0.16em;
+      color:var(--muted);font-weight:700;
     }
 
     .user-pill{
-      display:flex;
-      align-items:center;
-      gap:0.8rem;
+      display:flex;align-items:center;gap:0.8rem;
       padding:0.5rem 1.2rem;
       background:rgba(15,23,42,0.98);
       border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
+      border:1px solid rgba(148,163,184,0.65);
       box-shadow:0 10px 28px rgba(15,23,42,0.95);
-      position:relative;
-      z-index:1;
+      position:relative;z-index:1;
     }
 
     .user-avatar{
-      width:38px;
-      height:38px;
-      border-radius:999px;
+      width:38px;height:38px;border-radius:999px;
       background:radial-gradient(circle at 30% 20%,#fecaca,#f97316);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:1.1rem;
-      font-weight:800;
-      color:#111827;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.1rem;font-weight:800;color:#111827;
     }
 
-    .user-name{
-      font-family:'Outfit',sans-serif;
-      font-size:0.98rem;
-      font-weight:800;
-      color:var(--ink-soft);
-    }
+    .user-name{font-family:'Outfit',sans-serif;font-size:0.98rem;font-weight:800;color:var(--ink);}
+    .user-role{font-size:0.82rem;color:var(--muted);font-weight:600;}
 
-    .user-role{
-      font-size:0.82rem;
-      color:var(--muted);
-      font-weight:600;
-    }
-
-    .logout-btn{
-      border:none;
-      background:transparent;
-      color:var(--muted);
-      font-size:1.2rem;
-      cursor:pointer;
-      padding-left:0.4rem;
-    }
-
-    .logout-btn:hover{
-      color:var(--accent-soft);
-    }
+    .logout-btn{border:none;background:transparent;color:var(--muted);font-size:1.2rem;cursor:pointer;padding-left:0.4rem;}
+    .logout-btn:hover{color:#fff;}
 
     @media(max-width:768px){
       header{flex-direction:column;align-items:flex-start;}
       .brand-text-title{font-size:1.6rem;}
     }
 
-    /* HERO AIGLE ROYAL */
+    /* HERO */
     .hero{
       margin-bottom:2rem;
       padding:2.3rem 2.1rem;
       border-radius:26px;
-      border:1px solid rgba(148,163,184,0.55);
+      border:1px solid rgba(148,163,184,0.50);
       background:
-        radial-gradient(circle at top right,rgba(251,191,36,0.12),transparent 60%),
+        radial-gradient(circle at top right,rgba(251,191,36,0.10),transparent 60%),
         linear-gradient(135deg,rgba(15,23,42,0.98),rgba(15,23,42,0.94));
-      position:relative;
-      overflow:hidden;
+      position:relative;overflow:hidden;
       box-shadow:0 18px 60px rgba(0,0,0,0.85);
       animation:slideInUp 0.55s ease-out;
     }
 
     .hero::before{
       content:'🦅';
-      position:absolute;
-      right:-18px;
-      top:-20px;
-      font-size:7rem;
-      opacity:0.06;
-      transform:rotate(-15deg);
+      position:absolute;right:-18px;top:-20px;
+      font-size:7rem;opacity:0.06;transform:rotate(-15deg);
       animation:float 7s infinite ease-in-out;
     }
 
     .urgency-bar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:1rem;
+      display:flex;justify-content:space-between;align-items:center;gap:1rem;
       margin-bottom:1.8rem;
       padding:0.85rem 1.2rem;
       border-radius:999px;
-      border:1px solid rgba(250,204,21,0.9);
-      background:linear-gradient(90deg,rgba(249,115,22,0.25),rgba(250,204,21,0.22));
+      border:1px solid rgba(250,204,21,0.85);
+      background:linear-gradient(90deg,rgba(249,115,22,0.22),rgba(250,204,21,0.18));
       box-shadow:0 0 0 1px rgba(15,23,42,0.95);
-      font-size:0.9rem;
-      font-weight:700;
-      color:var(--ink-soft);
+      font-size:0.9rem;font-weight:700;color:var(--ink);
     }
 
-    .urgency-label{
-      display:flex;
-      align-items:center;
-      gap:0.6rem;
-    }
-
+    .urgency-label{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;}
     .blink{animation:blink 1.6s infinite;}
-
-    .urgency-strong{
-      color:var(--warning);
-      text-transform:uppercase;
-      letter-spacing:0.14em;
-      font-size:0.8rem;
-    }
-
-    .urgency-counter{
-      display:flex;
-      align-items:center;
-      gap:0.35rem;
-      font-family:'Outfit',sans-serif;
-      font-weight:900;
-      font-size:1.05rem;
-      color:var(--accent-soft);
-    }
-
-    .urgency-number{
-      font-size:1.4rem;
-      color:var(--danger);
-    }
+    .urgency-strong{color:var(--gold);text-transform:uppercase;letter-spacing:0.14em;font-size:0.8rem;}
+    .urgency-counter{display:flex;align-items:center;gap:0.35rem;font-family:'Outfit',sans-serif;font-weight:900;font-size:1.05rem;color:var(--ink);}
+    .urgency-number{font-size:1.4rem;color:var(--danger);}
 
     .hero-grid{
       display:grid;
-      grid-template-columns: minmax(0,2.2fr) minmax(0,1.4fr);
+      grid-template-columns:minmax(0,2.2fr) minmax(0,1.4fr);
       gap:2rem;
       align-items:flex-start;
     }
-
-    @media(max-width:900px){
-      .hero-grid{grid-template-columns:1fr;}
-    }
+    @media(max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
 
     .hero-title{
       font-family:'Outfit',sans-serif;
-      font-size:2.6rem;
-      line-height:1.12;
-      margin-bottom:1.1rem;
-      font-weight:900;
+      font-size:2.6rem;line-height:1.12;margin-bottom:1.1rem;font-weight:900;
+      color:var(--ink);
     }
-
     .hero-title span{
       background:linear-gradient(135deg,#f97316,#facc15,#22d3ee);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
 
     .hero-subtitle{
@@ -354,38 +235,22 @@
       font-weight:600;
     }
 
-    .domains-pills{
-      display:flex;
-      flex-wrap:wrap;
-      gap:0.45rem;
-      margin-bottom:1.8rem;
-    }
-
+    .domains-pills{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:1.8rem;}
     .pill{
-      padding:0.4rem 0.85rem;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.9);
-      font-size:0.78rem;
-      text-transform:uppercase;
-      letter-spacing:0.12em;
-      color:var(--muted);
+      padding:0.4rem 0.85rem;border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      font-size:0.78rem;text-transform:uppercase;letter-spacing:0.12em;
+      color:var(--ink-soft);
       background:rgba(15,23,42,0.98);
       font-weight:700;
     }
-
     .pill-strong{
       border-color:rgba(249,115,22,1);
-      color:#fefce8;
-      background:linear-gradient(135deg,rgba(249,115,22,0.3),rgba(15,23,42,0.98));
+      color:#fff;
+      background:linear-gradient(135deg,rgba(249,115,22,0.28),rgba(15,23,42,0.98));
     }
 
-    .hero-cta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:0.9rem;
-      align-items:center;
-    }
-
+    .hero-cta-row{display:flex;flex-wrap:wrap;gap:0.9rem;align-items:center;}
     .btn{
       border-radius:999px;
       padding:0.95rem 2rem;
@@ -400,64 +265,38 @@
       text-decoration:none;
       white-space:nowrap;
     }
-
     .btn-primary{
       background:linear-gradient(135deg,#f97316,#ea580c);
       color:#111827;
-      box-shadow:0 14px 40px rgba(249,115,22,0.8);
+      box-shadow:0 14px 40px rgba(249,115,22,0.75);
     }
-
-    .btn-primary span{
-      font-size:1.35rem;
-    }
-
+    .btn-primary span{font-size:1.35rem;}
     .btn-secondary{
       background:rgba(15,23,42,0.98);
-      color:var(--ink-soft);
-      border:1px solid rgba(148,163,184,0.9);
+      color:var(--ink);
+      border:1px solid rgba(148,163,184,0.7);
       font-weight:800;
     }
+    .btn-secondary:hover{border-color:#f97316;background:rgba(249,115,22,0.10);}
 
-    .btn-secondary:hover{
-      border-color:#f97316;
-      background:rgba(249,115,22,0.1);
-    }
-
-    .hero-meta{
-      font-size:0.85rem;
-      color:var(--muted);
-      margin-top:0.5rem;
-      font-weight:600;
-    }
+    .hero-meta{font-size:0.85rem;color:var(--muted);margin-top:0.5rem;font-weight:700;}
 
     .hero-right{
-      background:radial-gradient(circle at top,rgba(249,115,22,0.26),transparent 65%);
+      background:radial-gradient(circle at top,rgba(249,115,22,0.22),transparent 65%);
       border-radius:22px;
-      border:1px solid rgba(148,163,184,0.7);
+      border:1px solid rgba(148,163,184,0.55);
       padding:1.4rem 1.5rem;
       backdrop-filter:blur(22px);
     }
 
     .hero-right-title{
       font-family:'Outfit',sans-serif;
-      font-size:1.05rem;
-      text-transform:uppercase;
-      letter-spacing:0.16em;
-      color:var(--muted);
-      margin-bottom:0.6rem;
-      font-weight:700;
+      font-size:1.05rem;text-transform:uppercase;letter-spacing:0.16em;
+      color:var(--muted);margin-bottom:0.6rem;font-weight:800;
     }
 
-    .hero-right-main{
-      font-size:1.7rem;
-      font-weight:900;
-      line-height:1.3;
-      margin-bottom:1rem;
-    }
-
-    .hero-right-main span{
-      color:var(--accent-soft);
-    }
+    .hero-right-main{font-size:1.7rem;font-weight:900;line-height:1.3;margin-bottom:1rem;color:var(--ink);}
+    .hero-right-main span{color:#fff;}
 
     .hero-stats{
       display:grid;
@@ -470,7 +309,7 @@
       background:rgba(15,23,42,0.98);
       border-radius:16px;
       padding:0.9rem;
-      border:1px solid rgba(148,163,184,0.65);
+      border:1px solid rgba(148,163,184,0.55);
       text-align:center;
     }
 
@@ -478,14 +317,14 @@
       font-family:'Outfit',sans-serif;
       font-size:1.4rem;
       font-weight:900;
-      color:var(--ink-soft);
+      color:var(--ink);
     }
 
     .hero-stat-label{
       font-size:0.8rem;
       color:var(--muted);
       margin-top:0.25rem;
-      font-weight:600;
+      font-weight:700;
     }
 
     .hero-right-note{
@@ -503,29 +342,18 @@
       .urgency-bar{flex-direction:column;align-items:flex-start;}
     }
 
-    /* MODULES SECTION */
+    /* MODULES */
     .modules-section{
       background:linear-gradient(145deg,rgba(15,23,42,0.98),rgba(15,23,42,0.96));
       border-radius:26px;
-      border:1px solid rgba(148,163,184,0.55);
+      border:1px solid rgba(148,163,184,0.50);
       padding:2.1rem 2rem 2.4rem;
       margin-bottom:2rem;
       box-shadow:0 16px 52px rgba(0,0,0,0.9);
     }
 
-    .modules-title{
-      font-family:'Outfit',sans-serif;
-      font-size:1.9rem;
-      font-weight:900;
-      margin-bottom:0.45rem;
-    }
-
-    .modules-subtitle{
-      font-size:1rem;
-      color:var(--muted);
-      margin-bottom:1.7rem;
-      font-weight:600;
-    }
+    .modules-title{font-family:'Outfit',sans-serif;font-size:1.9rem;font-weight:900;margin-bottom:0.45rem;}
+    .modules-subtitle{font-size:1rem;color:var(--muted);margin-bottom:1.7rem;font-weight:650;}
 
     .modules-grid{
       display:grid;
@@ -536,9 +364,10 @@
     .module{
       position:relative;
       border-radius:20px;
-      border:1px solid rgba(148,163,184,0.65);
-      background:radial-gradient(circle at top left,rgba(249,115,22,0.22),transparent 60%),
-                 rgba(15,23,42,0.98);
+      border:1px solid rgba(148,163,184,0.50);
+      background:
+        radial-gradient(circle at top left,rgba(249,115,22,0.14),transparent 60%),
+        rgba(11,17,32,0.98);
       padding:1.35rem 1.25rem;
       overflow:hidden;
       cursor:pointer;
@@ -547,57 +376,31 @@
 
     .module::after{
       content:'';
-      position:absolute;
-      inset:0;
-      background:radial-gradient(circle at bottom right,rgba(34,211,238,0.2),transparent 60%);
+      position:absolute;inset:0;
+      background:radial-gradient(circle at bottom right,rgba(34,211,238,0.14),transparent 60%);
       opacity:0;
       transition:opacity 0.2s ease;
     }
 
-    .module-inner{
-      position:relative;
-      z-index:1;
-      display:flex;
-      flex-direction:column;
-      gap:0.7rem;
-    }
-
-    .module-header{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:0.6rem;
-    }
+    .module-inner{position:relative;z-index:1;display:flex;flex-direction:column;gap:0.7rem;}
+    .module-header{display:flex;align-items:flex-start;justify-content:space-between;gap:0.6rem;}
 
     .module-icon{
-      width:46px;
-      height:46px;
-      border-radius:16px;
+      width:46px;height:46px;border-radius:16px;
       background:rgba(15,23,42,0.98);
-      border:1px solid rgba(148,163,184,0.9);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      border:1px solid rgba(148,163,184,0.65);
+      display:flex;align-items:center;justify-content:center;
       font-size:1.5rem;
     }
 
-    .module-titles{
-      flex:1;
-    }
-
-    .module-name{
-      font-family:'Outfit',sans-serif;
-      font-size:1.05rem;
-      font-weight:900;
-      margin-bottom:0.1rem;
-    }
-
+    .module-titles{flex:1;}
+    .module-name{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:950;margin-bottom:0.1rem;color:var(--ink);}
     .module-tagline{
       font-size:0.8rem;
       color:var(--muted);
       text-transform:uppercase;
       letter-spacing:0.12em;
-      font-weight:700;
+      font-weight:800;
     }
 
     .module-badge{
@@ -605,90 +408,56 @@
       padding:0.32rem 0.8rem;
       border-radius:999px;
       border:1px solid rgba(34,197,94,1);
-      color:#bbf7d0;
-      background:rgba(22,163,74,0.25);
+      color:#dcfce7;
+      background:rgba(22,163,74,0.18);
       text-transform:uppercase;
       letter-spacing:0.13em;
-      font-weight:800;
+      font-weight:900;
       white-space:nowrap;
     }
 
     .badge-prio{
       border-color:rgba(250,204,21,1);
       color:#fef9c3;
-      background:rgba(250,204,21,0.22);
+      background:rgba(250,204,21,0.16);
     }
 
     .badge-soon{
-      border-color:rgba(148,163,184,1);
+      border-color:rgba(148,163,184,0.85);
       color:var(--muted);
       background:rgba(15,23,42,0.98);
     }
 
-    /* ACCÈS LIBRE DIGIY GO */
-    .badge-free{
-      border-color:rgba(34,197,94,1);
-      color:#bbf7d0;
-      background:rgba(22,163,74,0.4);
-    }
-
-    .module-free{
-      border-color:rgba(34,197,94,0.9) !important;
-      box-shadow:0 0 22px rgba(34,197,94,0.35),0 0 60px rgba(34,197,94,0.25) !important;
-    }
-
-    .module-free:hover{
-      transform:translateY(-5px) scale(1.02);
-      border-color:#4ade80 !important;
-      box-shadow:0 0 26px rgba(74,222,128,0.55);
-    }
-
     .module-body{
-      font-size:0.9rem;
+      font-size:0.92rem;
       color:var(--ink-soft);
-      line-height:1.6;
-      font-weight:600;
+      line-height:1.65;
+      font-weight:650;
     }
 
-    .module-foot{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:0.5rem;
-      margin-top:0.35rem;
-    }
+    .module-foot{display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-top:0.35rem;}
 
     .module-btn{
-      border-radius:999px;
-      border:none;
-      padding:0.5rem 1.1rem;
+      border-radius:999px;border:none;
+      padding:0.55rem 1.1rem;
       font-size:0.82rem;
-      font-weight:800;
+      font-weight:900;
       font-family:'Outfit',sans-serif;
       background:linear-gradient(135deg,#f97316,#ea580c);
       color:#111827;
-      display:inline-flex;
-      align-items:center;
-      gap:0.4rem;
+      display:inline-flex;align-items:center;gap:0.4rem;
       cursor:pointer;
-      box-shadow:0 8px 24px rgba(249,115,22,0.7);
+      box-shadow:0 8px 24px rgba(249,115,22,0.6);
     }
 
-    .module-meta{
-      font-size:0.78rem;
-      color:var(--muted);
-      font-weight:600;
-    }
+    .module-meta{font-size:0.78rem;color:var(--muted);font-weight:700;}
 
     .module:hover{
       transform:translateY(-5px);
-      border-color:#f97316;
+      border-color:rgba(249,115,22,0.95);
       box-shadow:0 18px 42px rgba(0,0,0,0.95);
     }
-
-    .module:hover::after{
-      opacity:1;
-    }
+    .module:hover::after{opacity:1;}
 
     @media(max-width:768px){
       .modules-section{padding:1.6rem 1.1rem 2rem;}
@@ -698,166 +467,71 @@
     .pricing{
       background:linear-gradient(140deg,rgba(15,23,42,0.98),rgba(15,23,42,0.95));
       border-radius:24px;
-      border:1px solid rgba(148,163,184,0.55);
+      border:1px solid rgba(148,163,184,0.50);
       padding:2rem 1.8rem 2.2rem;
       margin-bottom:2rem;
       box-shadow:0 16px 52px rgba(0,0,0,0.9);
     }
 
-    .pricing-title{
-      font-family:'Outfit',sans-serif;
-      font-size:1.8rem;
-      font-weight:900;
-      margin-bottom:0.4rem;
-    }
+    .pricing-title{font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:900;margin-bottom:0.4rem;}
+    .pricing-subtitle{font-size:1rem;color:var(--muted);margin-bottom:1.6rem;font-weight:650;}
 
-    .pricing-subtitle{
-      font-size:1rem;
-      color:var(--muted);
-      margin-bottom:1.6rem;
-      font-weight:600;
-    }
-
-    .pricing-row{
-      display:grid;
-      grid-template-columns: minmax(0,1.4fr) minmax(0,1.2fr);
-      gap:1.6rem;
-    }
-
-    @media(max-width:900px){
-      .pricing-row{grid-template-columns:1fr;}
-    }
+    .pricing-row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.2fr);gap:1.6rem;}
+    @media(max-width:900px){.pricing-row{grid-template-columns:1fr;}}
 
     .pricing-card{
       border-radius:18px;
-      border:1px solid rgba(249,115,22,0.8);
-      background:radial-gradient(circle at top left,rgba(249,115,22,0.24),transparent 60%),
+      border:1px solid rgba(249,115,22,0.75);
+      background:radial-gradient(circle at top left,rgba(249,115,22,0.18),transparent 60%),
                  rgba(15,23,42,0.98);
       padding:1.4rem 1.5rem;
-      box-shadow:0 14px 44px rgba(249,115,22,0.7);
+      box-shadow:0 14px 44px rgba(249,115,22,0.6);
     }
 
-    .pricing-label{
-      font-size:0.8rem;
-      text-transform:uppercase;
-      letter-spacing:0.16em;
-      color:var(--muted);
-      margin-bottom:0.35rem;
-      font-weight:700;
-    }
+    .pricing-label{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);margin-bottom:0.35rem;font-weight:800;}
+    .pricing-price{font-family:'Outfit',sans-serif;font-size:2.1rem;font-weight:950;color:#fff;}
+    .pricing-note{font-size:0.9rem;color:var(--ink-soft);margin-top:0.35rem;margin-bottom:0.9rem;font-weight:650;}
 
-    .pricing-price{
-      font-family:'Outfit',sans-serif;
-      font-size:2.1rem;
-      font-weight:900;
-      color:var(--accent-soft);
-    }
-
-    .pricing-note{
-      font-size:0.9rem;
-      color:var(--ink-soft);
-      margin-top:0.35rem;
-      margin-bottom:0.9rem;
-      font-weight:600;
-    }
-
-    .pricing-list{
-      list-style:none;
-      font-size:0.9rem;
-      color:var(--ink-soft);
-      display:flex;
-      flex-direction:column;
-      gap:0.45rem;
-      margin-bottom:0.9rem;
-      font-weight:600;
-    }
-
-    .pricing-list li::before{
-      content:'• ';
-      color:var(--accent-soft);
-    }
+    .pricing-list{list-style:none;font-size:0.9rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:0.45rem;margin-bottom:0.9rem;font-weight:650;}
+    .pricing-list li::before{content:'• ';color:var(--gold);}
 
     .pricing-cta{
-      display:inline-flex;
-      align-items:center;
-      gap:0.45rem;
-      border-radius:999px;
-      border:none;
+      display:inline-flex;align-items:center;gap:0.45rem;
+      border-radius:999px;border:none;
       padding:0.7rem 1.4rem;
-      font-size:0.9rem;
-      font-weight:900;
-      font-family:'Outfit',sans-serif;
+      font-size:0.9rem;font-weight:950;font-family:'Outfit',sans-serif;
       background:linear-gradient(135deg,#f97316,#ea580c);
-      color:#111827;
-      text-decoration:none;
-      cursor:pointer;
+      color:#111827;text-decoration:none;cursor:pointer;
     }
 
-    .pricing-text{
-      font-size:0.9rem;
-      color:var(--muted);
-      line-height:1.7;
-      font-weight:600;
-    }
+    .pricing-text{font-size:0.9rem;color:var(--muted);line-height:1.7;font-weight:650;}
 
     /* FOOTER */
     footer{
-      border-top:1px solid rgba(148,163,184,0.55);
+      border-top:1px solid rgba(148,163,184,0.45);
       padding-top:1.4rem;
       margin-top:0.8rem;
       text-align:center;
       font-size:0.85rem;
       color:var(--muted);
-      font-weight:600;
+      font-weight:650;
     }
 
-    .footer-tagline{
-      font-family:'Outfit',sans-serif;
-      font-size:1rem;
-      font-weight:800;
-      color:var(--accent-soft);
-      margin-bottom:0.5rem;
-    }
+    .footer-tagline{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:900;color:#fff;margin-bottom:0.5rem;}
+    .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:1.3rem;margin-bottom:0.7rem;}
+    .footer-link{color:var(--muted);text-decoration:none;font-weight:800;font-size:0.85rem;}
+    .footer-link:hover{color:#fff;}
 
-    .footer-links{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:1.3rem;
-      margin-bottom:0.7rem;
-    }
-
-    .footer-link{
-      color:var(--muted);
-      text-decoration:none;
-      font-weight:700;
-      font-size:0.85rem;
-    }
-
-    .footer-link:hover{
-      color:var(--accent-soft);
-    }
-
-    /* BULLES FLOTTANTES (RÉDUITES MOBILE) */
-    .tarif-bubble,
-    .chat-bubble,
-    .sos-bubble{
-      position:fixed;
-      z-index:60;
-      text-decoration:none;
-      display:flex;
-      align-items:center;
-      gap:0.4rem;
-      padding:0.55rem 0.8rem;
-      border-radius:999px;
-      font-family:'Outfit',sans-serif;
-      font-size:0.78rem;
-      font-weight:900;
+    /* BULLES */
+    .tarif-bubble,.chat-bubble,.sos-bubble{
+      position:fixed;z-index:60;text-decoration:none;
+      display:flex;align-items:center;gap:0.4rem;
+      padding:0.55rem 0.8rem;border-radius:999px;
+      font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:900;
     }
 
     .tarif-bubble{
-      right:0.8rem;
-      bottom:5rem;
+      right:0.8rem;bottom:5rem;
       background:linear-gradient(135deg,#f97316,#ea580c);
       color:#111827;
       box-shadow:0 10px 30px rgba(249,115,22,0.8);
@@ -865,105 +539,53 @@
     }
 
     .tarif-badge-icon{
-      width:22px;
-      height:22px;
-      border-radius:999px;
-      background:#111827;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:0.8rem;
-      color:#fed7aa;
-      font-weight:900;
+      width:22px;height:22px;border-radius:999px;background:#111827;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.8rem;color:#fed7aa;font-weight:900;
     }
 
     .chat-bubble{
-      left:50%;
-      bottom:1.4rem;
-      transform:translateX(-50%);
+      left:50%;bottom:1.4rem;transform:translateX(-50%);
       background:radial-gradient(circle at 20% 0,#fef3c7,#f97316);
       color:#111827;
       box-shadow:0 12px 34px rgba(249,115,22,0.95);
     }
 
     .chat-badge-icon{
-      width:24px;
-      height:24px;
-      border-radius:999px;
-      background:#111827;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:0.9rem;
-      color:#facc15;
-      font-weight:900;
+      width:24px;height:24px;border-radius:999px;background:#111827;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.9rem;color:#facc15;font-weight:900;
     }
 
-    .chat-bubble-text small{
-      display:block;
-      font-size:0.68rem;
-      font-weight:700;
-      opacity:0.9;
-    }
+    .chat-bubble-text small{display:block;font-size:0.68rem;font-weight:800;opacity:0.9;}
 
     .sos-bubble{
-      left:0.8rem;
-      bottom:1.4rem;
+      left:0.8rem;bottom:1.4rem;
       background:linear-gradient(135deg,#ef4444,#b91c1c);
       color:#fee2e2;
       box-shadow:0 12px 34px rgba(239,68,68,0.95);
     }
 
     .sos-badge-icon{
-      width:24px;
-      height:24px;
-      border-radius:999px;
-      background:#111827;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:1rem;
-      color:#fecaca;
-      font-weight:900;
+      width:24px;height:24px;border-radius:999px;background:#111827;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1rem;color:#fecaca;font-weight:900;
     }
 
-    .sos-bubble-text small{
-      display:block;
-      font-size:0.68rem;
-      font-weight:700;
-      opacity:0.95;
-    }
+    .sos-bubble-text small{display:block;font-size:0.68rem;font-weight:800;opacity:0.95;}
 
     @media(max-width:768px){
-      .tarif-bubble{
-        right:0.6rem;
-        bottom:4.6rem;
-        padding:0.45rem 0.7rem;
-        font-size:0.75rem;
-      }
-      .chat-bubble{
-        bottom:0.9rem;
-        padding:0.45rem 0.75rem;
-        font-size:0.75rem;
-      }
-      .sos-bubble{
-        left:0.6rem;
-        bottom:0.9rem;
-        padding:0.45rem 0.75rem;
-        font-size:0.75rem;
-      }
-      .chat-badge-icon,
-      .sos-badge-icon,
-      .tarif-badge-icon{
-        width:22px;
-        height:22px;
-      }
+      .tarif-bubble{right:0.6rem;bottom:4.6rem;padding:0.45rem 0.7rem;font-size:0.75rem;}
+      .chat-bubble{bottom:0.9rem;padding:0.45rem 0.75rem;font-size:0.75rem;}
+      .sos-bubble{left:0.6rem;bottom:0.9rem;padding:0.45rem 0.75rem;font-size:0.75rem;}
+      .chat-badge-icon,.sos-badge-icon,.tarif-badge-icon{width:22px;height:22px;}
     }
   </style>
 </head>
-<body>
 
+<body>
 <div class="app">
+
   <!-- HEADER -->
   <header>
     <a href="#" class="brand">
@@ -973,12 +595,12 @@
         <div class="brand-text-sub">L'AIGLE ROYAL — 0% COMMISSION</div>
       </div>
     </a>
+
     <div style="display:flex;align-items:center;gap:1rem;">
-      <!-- BOUTON SE CONNECTER → MON ESPACE (GitHub) -->
-      <a href="https://beauville.github.io/mon-espace-digiy/" class="btn btn-secondary" style="padding:0.6rem 1.2rem;font-size:0.9rem;text-decoration:none;">
+      <a href="https://beauville.github.io/mon-espace-digiy/" class="btn btn-secondary" style="padding:0.6rem 1.2rem;font-size:0.9rem;">
         🔐 Se connecter
       </a>
-      
+
       <div class="user-pill">
         <div class="user-avatar">👤</div>
         <div>
@@ -990,7 +612,7 @@
     </div>
   </header>
 
-  <!-- HERO AIGLE ROYAL -->
+  <!-- HERO -->
   <section class="hero">
     <div class="urgency-bar">
       <div class="urgency-label">
@@ -1006,34 +628,31 @@
 
     <div class="hero-grid">
       <div>
-        <h1 class="hero-title">
-          DIGIY — <span>L'aigle qui survole toutes les apps.</span>
-        </h1>
+        <h1 class="hero-title">DIGIY — <span>L'aigle qui survole toutes les apps.</span></h1>
+
         <p class="hero-subtitle">
           Tu tiens dans ta main <strong>tout ton business</strong> : argent, réservation, chauffeur,
-          restaurant, boutique, logements, artisans, jobs, marketplace.  
+          restaurant, boutique, logements, artisans, jobs, marketplace.
           0% commission • Paiement direct au pro • Données souveraines.
         </p>
 
+        <!-- ✅ Ajout des 2 manquants: NOTABLE + EXPLORE -->
         <div class="domains-pills">
-  <span class="pill pill-strong" onclick="openModule('pay')">ARGENT — DIGIY PAY</span>
-  <span class="pill" onclick="openModule('go')">CLIENT — DIGIY GO</span>
-  <span class="pill" onclick="openModule('resa')">RÉSERVATION — DIGIY RÉSA</span>
-  <span class="pill" onclick="openModule('driver')">CHAUFFEUR — DIGIY DRIVER</span>
-  <span class="pill" onclick="openModule('resto')">RESTAURANT — DIGIY RESTO</span>
-  <span class="pill" onclick="openModule('pos')">BOUTIQUE — DIGIY POS / MARKET</span>
-  <span class="pill" onclick="openModule('loc')">LOGEMENTS — DIGIY LOC</span>
-  <span class="pill" onclick="openModule('build')">ARTISANS — DIGIY BUILD</span>
-  <span class="pill" onclick="openModule('job')">JOBS — DIGIY JOBS</span>
-  <span class="pill" onclick="openModule('market')">MARKETPLACE — DIGIY MARKET</span>
-
-  <!-- ✅ les 2 manquants -->
-  <span class="pill" onclick="openModule('notable')">NOTABLE — DIGIY NOTABLE</span>
-  <span class="pill" onclick="openModule('explore')">EXPLORE — DIGIY EXPLORE</span>
-</div>
+          <span class="pill pill-strong">ARGENT — DIGIY PAY</span>
+          <span class="pill">CLIENT — DIGIY GO</span>
+          <span class="pill">RÉSERVATION — DIGIY RÉSA</span>
+          <span class="pill">CHAUFFEUR — DIGIY DRIVER</span>
+          <span class="pill">RESTAURANT — DIGIY RESTO</span>
+          <span class="pill">BOUTIQUE — DIGIY POS / MARKET</span>
+          <span class="pill">LOGEMENTS — DIGIY LOC</span>
+          <span class="pill">ARTISANS — DIGIY BUILD</span>
+          <span class="pill">JOBS — DIGIY JOBS</span>
+          <span class="pill">MARKETPLACE — DIGIY MARKET</span>
+          <span class="pill">RECO — DIGIY NOTABLE</span>
+          <span class="pill">SORTIES — DIGIY EXPLORE</span>
+        </div>
 
         <div class="hero-cta-row">
-          <!-- LIEN PRINCIPAL VERS L'INSCRIPTION (GitHub) -->
           <a href="https://beauville.github.io/inscription-digiy/" class="btn btn-primary">
             ACTION — Je veux mon HUB <span>→</span>
           </a>
@@ -1041,6 +660,7 @@
             Parler à DIGIY (+221 77 134 2889)
           </a>
         </div>
+
         <div class="hero-meta">
           <strong>0% commission</strong> • Paiement direct • Les premiers à entrer sont les premiers à gagner.
         </div>
@@ -1086,8 +706,8 @@
 
     <div class="modules-grid">
 
-      <!-- DIGIY GO (CLIENTS) — ACCÈS GRATUIT -->
-      <div class="module module-free" onclick="openModule('go')">
+      <!-- DIGIY GO (CLIENTS) -->
+      <div class="module" onclick="openModule('go')">
         <div class="module-inner">
           <div class="module-header">
             <div class="module-icon">🧍‍♂️</div>
@@ -1095,37 +715,37 @@
               <div class="module-name">DIGIY GO</div>
               <div class="module-tagline">ESPACE CLIENT GLOBAL</div>
             </div>
-            <div class="module-badge badge-free">ACCÈS LIBRE</div>
+            <div class="module-badge">LIVE</div>
           </div>
           <div class="module-body">
-            L’espace <strong>100% gratuit</strong> pour tous les clients DIGIY.  
-            Réserver, commander, contacter les pros, suivre tes demandes, explorer l’écosystème.  
-            Aucune inscription obligatoire, aucune commission.
+            L’accès côté client : une porte unique pour réserver, commander, contacter les pros,
+            voir les offres et suivre ses demandes DIGIY.
           </div>
           <div class="module-foot">
-            <button class="module-btn">Entrer gratuitement →</button>
-            <div class="module-meta">Accès client</div>
+            <button class="module-btn">Ouvrir DIGIY GO →</button>
+            <div class="module-meta">Clients & usagers</div>
           </div>
         </div>
       </div>
 
+      <!-- DRIVER (côté client) -->
       <div class="module" onclick="openModule('driver')">
         <div class="module-inner">
           <div class="module-header">
             <div class="module-icon">🚗</div>
             <div class="module-titles">
               <div class="module-name">DIGIY DRIVER</div>
-              <div class="module-tagline">VTC 0% COMMISSION</div>
+              <div class="module-tagline">CHAUFFEUR EN DIRECT</div>
             </div>
             <div class="module-badge">LIVE</div>
           </div>
           <div class="module-body">
-            Le chauffeur travaille en direct avec son client. <strong>0% commission</strong>, paiement direct,
-            fiche professionnelle, image soignée, contact humain.
+            Réserve un chauffeur en direct. Pas d’intermédiaire : contact humain, prix clair,
+            paiement direct au chauffeur, profil propre et vérifié.
           </div>
           <div class="module-foot">
-            <button class="module-btn">Ouvrir DRIVER →</button>
-            <div class="module-meta">GO GO GO !</div>
+            <button class="module-btn">Trouver un chauffeur →</button>
+            <div class="module-meta">0% commission</div>
           </div>
         </div>
       </div>
@@ -1151,23 +771,24 @@
         </div>
       </div>
 
+      <!-- RESTO (vitrine) -->
       <div class="module" onclick="openModule('resto')">
         <div class="module-inner">
           <div class="module-header">
             <div class="module-icon">🍽️</div>
             <div class="module-titles">
               <div class="module-name">DIGIY RESTO</div>
-              <div class="module-tagline">GESTION RESTAURANT</div>
+              <div class="module-tagline">VITRINE RESTAURANT</div>
             </div>
             <div class="module-badge">LIVE</div>
           </div>
           <div class="module-body">
-            Plan de salle, prises de commande, cuisine (KDS), addition, caisse. Le restaurant modernisé,
-            sans perdre son âme ni ses marges.
+            Découvre les restaurants : menu, photos, horaires, localisation, contact.
+            Réservation / commande en direct avec le restaurant.
           </div>
           <div class="module-foot">
-            <button class="module-btn">Ouvrir RESTO →</button>
-            <div class="module-meta">Restaurants & bars</div>
+            <button class="module-btn">Voir les restos →</button>
+            <div class="module-meta">Sans intermédiaire</div>
           </div>
         </div>
       </div>
@@ -1183,8 +804,8 @@
             <div class="module-badge">LIVE</div>
           </div>
           <div class="module-body">
-            Un système unique pour gérer réservations de tables, services, activités, rendez-vous :
-            vos clients réservent, vous contrôlez.
+            Réserve tables, services, activités, rendez-vous : tes réservations sont claires,
+            et le pro garde le contrôle.
           </div>
           <div class="module-foot">
             <button class="module-btn">Ouvrir RÉSA →</button>
@@ -1199,13 +820,13 @@
             <div class="module-icon">🧾</div>
             <div class="module-titles">
               <div class="module-name">DIGIY POS</div>
-              <div class="module-tagline">CAISSE BOUTIQUE</div>
+              <div class="module-tagline">VITRINE BOUTIQUE</div>
             </div>
             <div class="module-badge">LIVE</div>
           </div>
           <div class="module-body">
-            Caisse pro pour boutiques, vitrine en ligne, ventes terrain. Votre boutique devient visible
-            et organisée sans changer vos habitudes.
+            Caisse pro pour boutiques, vitrine en ligne, ventes terrain.
+            Votre boutique devient visible et organisée sans changer vos habitudes.
           </div>
           <div class="module-foot">
             <button class="module-btn">Ouvrir POS →</button>
@@ -1225,11 +846,10 @@
             <div class="module-badge badge-prio">PRIORITÉ</div>
           </div>
           <div class="module-body">
-            Encaissements par Wave, OM, CB. Historique, suivi, vision claire de votre position financière.
-            Démo active, moteur en préparation.
+            Encaissements Wave / OM / CB. Historique et suivi. Moteur en construction.
           </div>
           <div class="module-foot">
-            <button class="module-btn">Ouvrir PAY (démo) →</button>
+            <button class="module-btn">Ouvrir PAY →</button>
             <div class="module-meta">Argent</div>
           </div>
         </div>
@@ -1246,8 +866,7 @@
             <div class="module-badge">LIVE</div>
           </div>
           <div class="module-body">
-            Pour les ouvriers du bâtiment, artisans, maîtres d'œuvre. Devis, chantiers, galerie,
-            visibilité digitale propre et claire.
+            Trouve des artisans et pros BTP : devis, galerie, contact, prestations.
           </div>
           <div class="module-foot">
             <button class="module-btn">Ouvrir BUILD →</button>
@@ -1267,8 +886,7 @@
             <div class="module-badge badge-prio">PRIORITÉ</div>
           </div>
           <div class="module-body">
-            Une marketplace locale pour vendre et acheter sans commission, avec des fiches propres,
-            des annonces claires et des vendeurs vérifiés.
+            Acheter/vendre local, annonces propres, vendeurs vérifiés, sans commission.
           </div>
           <div class="module-foot">
             <button class="module-btn">Ouvrir MARKET →</button>
@@ -1288,8 +906,7 @@
             <div class="module-badge badge-prio">PRIORITÉ</div>
           </div>
           <div class="module-body">
-            Offres d'emploi, candidatures, profils vérifiés. Pour connecter travailleurs et entreprises
-            sans filtres inutiles.
+            Offres, candidatures, profils. Un pont propre entre talents et employeurs.
           </div>
           <div class="module-foot">
             <button class="module-btn">Ouvrir JOBS →</button>
@@ -1298,6 +915,48 @@
         </div>
       </div>
 
+      <div class="module" onclick="openModule('notable')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">⭐</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY NOTABLE</div>
+              <div class="module-tagline">PERSONNES & LIEUX</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Les meilleurs profils et adresses du coin : confiance, avis, contact direct.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir NOTABLE →</button>
+            <div class="module-meta">Recommandations</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('explore')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🧭</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY EXPLORE</div>
+              <div class="module-tagline">SORTIES & VISITES</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Découvre quoi faire autour de toi : plages, restos, événements, activités.
+            Tu appelles et tu réserves en direct.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir EXPLORE →</button>
+            <div class="module-meta">Explorer</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ BON PLAN (corrigé + lien OK) -->
       <div class="module" onclick="openModule('bonPlan')">
         <div class="module-inner">
           <div class="module-header">
@@ -1319,7 +978,6 @@
         </div>
       </div>
 
-      <!-- MODULE INSCRIPTION DIGIY -->
       <div class="module" onclick="openModule('inscription')">
         <div class="module-inner">
           <div class="module-header">
@@ -1331,17 +989,15 @@
             <div class="module-badge badge-prio">NOUVEAU</div>
           </div>
           <div class="module-body">
-            Inscription intelligente en 6 étapes. Choisissez votre module, le système calcule 
-            automatiquement votre tarif selon votre capacité. Tarifs dégressifs disponibles.
+            Inscription intelligente. Choisis ton module, on calcule ton tarif selon tes paliers.
           </div>
           <div class="module-foot">
-            <button class="module-btn">S'inscrire maintenant →</button>
-            <div class="module-meta">Calcul auto • Paliers</div>
+            <button class="module-btn">S'inscrire →</button>
+            <div class="module-meta">Calcul auto</div>
           </div>
         </div>
       </div>
 
-      <!-- MODULE ESPACE PRO -->
       <div class="module" onclick="openModule('dashboard')">
         <div class="module-inner">
           <div class="module-header">
@@ -1353,12 +1009,11 @@
             <div class="module-badge">LIVE</div>
           </div>
           <div class="module-body">
-            Gérez votre profil, menu/catalogue, photos, horaires en toute autonomie.
-            Statistiques en temps réel, modifications instantanées, 100% contrôle.
+            Ton profil, tes infos, tes contenus, ton contrôle. (Espace pro.)
           </div>
           <div class="module-foot">
-            <button class="module-btn">Mon Dashboard →</button>
-            <div class="module-meta">Autonomie totale</div>
+            <button class="module-btn">Mon Espace →</button>
+            <div class="module-meta">Autonomie</div>
           </div>
         </div>
       </div>
@@ -1379,27 +1034,25 @@
         <div class="pricing-label">Offre Pionniers</div>
         <div class="pricing-price">29,900 FCFA / mois</div>
         <div class="pricing-note">
-          Prix bloqué <strong>À VIE</strong> pour les premiers abonnés HUB DIGIY.  
-          Au lieu de 49,900 FCFA/mois.
+          Prix bloqué <strong>À VIE</strong> pour les premiers abonnés HUB DIGIY.
         </div>
         <ul class="pricing-list">
           <li>Accès à tous les modules DIGIY</li>
           <li>0% de commission sur les transactions</li>
           <li>Support humain par WhatsApp</li>
-          <li>Mises à jour & nouvelles fonctionnalités incluses</li>
+          <li>Mises à jour incluses</li>
         </ul>
-        <!-- LIEN RÉSERVER MA PLACE PIONNIER → FORMULAIRE GITHUB -->
         <a href="https://beauville.github.io/inscription-digiy/" class="pricing-cta" target="_blank" rel="noopener">
           Réserver ma place Pionnier →
         </a>
       </div>
+
       <div class="pricing-text">
-        DIGIYLYFE est conçu pour les travailleurs, commerçants, artisans, chauffeurs,
-        restaurateurs, hébergeurs et toutes celles et ceux qui vivent de leur activité.
+        DIGILYFE est conçu pour les travailleurs, commerçants, artisans, chauffeurs,
+        restaurateurs, hébergeurs.
         <br><br>
-        Les plateformes traditionnelles gardent une part de votre sueur à chaque transaction.
-        DIGIY fait l'inverse :  
-        <strong>vous payez un HUB, vous gardez tout le reste.</strong>
+        Les plateformes traditionnelles prennent une part de votre sueur.
+        DIGIY fait l'inverse : <strong>vous payez un HUB, vous gardez tout le reste.</strong>
       </div>
     </div>
   </section>
@@ -1413,22 +1066,23 @@
       <a href="https://beauville.github.io/mon-espace-digiy/" class="footer-link" target="_blank" rel="noopener">Se connecter</a>
       <a href="https://beauville.github.io/mon-espace-digiy/" class="footer-link" target="_blank" rel="noopener">Mon Espace</a>
       <a href="https://wa.me/221771342889" class="footer-link" target="_blank" rel="noopener">Contact WhatsApp</a>
-      <a href="https://beauville.github.io/digiy-aiglehub-/" class="footer-link" target="_blank" rel="noopener">Tarifs détaillés</a>
+      <a href="https://beauville.github.io/DIGIY/" class="footer-link" target="_blank" rel="noopener">Tarifs détaillés</a>
     </div>
     <p>© 2024 DIGIYLYFE — Tous droits réservés • Made in Sénégal • 0% commission • Paiement direct au pro</p>
     <p style="font-size:0.7rem;opacity:0.5;margin-top:0.5rem;">
       <a href="/admin/migration.html" style="color:inherit;text-decoration:none;">⚙️</a>
     </p>
   </footer>
+
 </div>
 
 <!-- BULLE TARIFS DIGIY -->
-<a href="https://beauville.github.io/DIGIY/" class="tarif-bubble" target="_blank" rel="noopener">
+<a href="https://beauville.github.io/digiy/" class="tarif-bubble" target="_blank" rel="noopener">
   <div class="tarif-badge-icon">F</div>
   <div>Tarifs DIGIY</div>
 </a>
 
-<!-- BULLE DIGIY CHAT PRO (CENTRÉE) -->
+<!-- BULLE DIGIY CHAT PRO -->
 <a href="https://beauville.github.io/digiy-chat-pro/" class="chat-bubble" target="_blank" rel="noopener">
   <div class="chat-badge-icon">💬</div>
   <div class="chat-bubble-text">
@@ -1448,28 +1102,35 @@
 
 <script>
   const LINKS = {
-  go: "https://beauville.github.io/digiy-espace-client/",
-  driver: "https://beauville.github.io/digiy-driver-client/",
-  loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",
-  pos: "https://digiylyfe.com/vitrine-boutique/",
-  resto: "https://digiylyfe.com/vitrine-resto/",
-  resa: "https://digiylyfe.com/vitrine-resa-table/",
-  inscription: "https://beauville.github.io/inscription-digiy/",
-  dashboard: "https://beauville.github.io/mon-espace-digiy/",
-  pay: "https://beauville.github.io/digiy-pay/",
-  build: "https://beauville.github.io/DIGIY-BUILD---Professionnel-du-b-timent/",
-  market: "https://beauville.github.io/digiy-market/",
-  job: "https://digiylyfe.com/digiy-jobs/",
-  bonPlan: "https://beauville.github.io/DIGIY-BONNE-AFFAIRE/",
-  notable: "https://beauville.github.io/digiy-notable/",
-  explore: "https://beauville.github.io/digiy-explore/"
-};
+    go: "https://beauville.github.io/digiy-espace-client/",
+    driver: "https://beauville.github.io/digiy-driver-client/",
+    loc: "https://beauville.github.io/digiy-loc/",
+    resto: "https://beauville.github.io/digiy-resto/",
+    resa: "https://beauville.github.io/digiy-resa-table/",
+    pos: "https://beauville.github.io/caisse-boutique/",
+    pay: "https://beauville.github.io/digiy-pay/",
+    build: "https://beauville.github.io/digiy-build/",
+    market: "https://beauville.github.io/digiy-market/",
+    job: "https://beauville.github.io/digiy-jobs/",
+    notable: "https://beauville.github.io/digiy-notable/",
+    explore: "https://beauville.github.io/digiy-explore/",
+    bonPlan: "https://beauville.github.io/digiy-bonne-affaire/",
+    inscription: "https://beauville.github.io/inscription-digiy/",
+    dashboard: "https://beauville.github.io/mon-espace-digiy/"
+  };
 
   function openModule(key){
     const url = LINKS[key];
-    if(url){
-      window.location.href = url;
+    if(!url){
+      console.warn("Module inconnu:", key);
+      alert("Module en préparation.");
+      return;
     }
+    // même onglet:
+    window.location.href = url;
+
+    // si tu veux nouvel onglet à la place:
+    // window.open(url, "_blank", "noopener");
   }
 
   // Compteur offre pionniers
