@@ -96,7 +96,7 @@
     }
 
     @keyframes float{
-      0%,100%{transform:translateY(0);}
+      0%,100{transform:translateY(0);}
       50%{transform:translateY(-8px);}
     }
 
@@ -625,6 +625,24 @@
       background:rgba(15,23,42,0.98);
     }
 
+    /* ACCÈS LIBRE DIGIY GO */
+    .badge-free{
+      border-color:rgba(34,197,94,1);
+      color:#bbf7d0;
+      background:rgba(22,163,74,0.4);
+    }
+
+    .module-free{
+      border-color:rgba(34,197,94,0.9) !important;
+      box-shadow:0 0 22px rgba(34,197,94,0.35),0 0 60px rgba(34,197,94,0.25) !important;
+    }
+
+    .module-free:hover{
+      transform:translateY(-5px) scale(1.02);
+      border-color:#4ade80 !important;
+      box-shadow:0 0 26px rgba(74,222,128,0.55);
+    }
+
     .module-body{
       font-size:0.9rem;
       color:var(--ink-soft);
@@ -1064,8 +1082,8 @@
 
     <div class="modules-grid">
 
-      <!-- DIGIY GO (CLIENTS) -->
-      <div class="module" onclick="openModule('go')">
+      <!-- DIGIY GO (CLIENTS) — ACCÈS GRATUIT -->
+      <div class="module module-free" onclick="openModule('go')">
         <div class="module-inner">
           <div class="module-header">
             <div class="module-icon">🧍‍♂️</div>
@@ -1073,15 +1091,16 @@
               <div class="module-name">DIGIY GO</div>
               <div class="module-tagline">ESPACE CLIENT GLOBAL</div>
             </div>
-            <div class="module-badge">LIVE</div>
+            <div class="module-badge badge-free">ACCÈS LIBRE</div>
           </div>
           <div class="module-body">
-            L’accès côté client : une porte unique pour réserver, commander, contacter les pros,
-            voir les offres et suivre ses demandes DIGIY.
+            L’espace <strong>100% gratuit</strong> pour tous les clients DIGIY.  
+            Réserver, commander, contacter les pros, suivre tes demandes, explorer l’écosystème.  
+            Aucune inscription obligatoire, aucune commission.
           </div>
           <div class="module-foot">
-            <button class="module-btn">Ouvrir DIGIY GO →</button>
-            <div class="module-meta">Clients & usagers</div>
+            <button class="module-btn">Entrer gratuitement →</button>
+            <div class="module-meta">Accès client</div>
           </div>
         </div>
       </div>
@@ -1318,7 +1337,7 @@
         </div>
       </div>
 
-      <!-- MODULE ESPACE CLIENT -->
+      <!-- MODULE ESPACE PRO -->
       <div class="module" onclick="openModule('dashboard')">
         <div class="module-inner">
           <div class="module-header">
@@ -1425,20 +1444,20 @@
 
 <script>
   const LINKS = {
-  go: "https://beauville.github.io/digiy-espace-client/",
-  driver: "https://beauville.github.io/digiy-driver-client/",
-  loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",
-  pos: "https://digiylyfe.com/vitrine-boutique/",
-  resto: "https://digiylyfe.com/vitrine-resto/",
-  resa: "https://digiylyfe.com/vitrine-resa-table/",
-  pay: "https://beauville.github.io/digiy-pay/",
-  build: "https://beauville.github.io/DIGIY-BUILD---Professionnel-du-b-timent/",
-  market: "https://beauville.github.io/digiy-market/",
-  jobs: "https://digiylyfe.com/digiy-jobs/",
-  bonplan: "https://beauville.github.io/DIGIY-BONNE-AFFAIRE/",
-  inscription: "https://beauville.github.io/inscription-digiy/",
-  dashboard: "https://beauville.github.io/mon-espace-digiy/"
-};
+    go: "https://beauville.github.io/digiy-espace-client/",
+    driver: "https://beauville.github.io/digiy-driver-client/",
+    loc: "https://beauville.github.io/chez-baptiste-digiy-loc/",
+    pos: "https://digiylyfe.com/vitrine-boutique/",
+    resto: "https://digiylyfe.com/vitrine-resto/",
+    resa: "https://digiylyfe.com/vitrine-resa-table/",
+    inscription: "https://beauville.github.io/inscription-digiy/",
+    dashboard: "https://beauville.github.io/mon-espace-digiy/",
+    pay: "https://beauville.github.io/digiy-pay/",
+    build: "https://beauville.github.io/DIGIY-BUILD---Professionnel-du-b-timent/",
+    market: "https://beauville.github.io/digiy-market/",
+    job: "https://digiylyfe.com/digiy-jobs/",
+    bonPlan: "https://beauville.github.io/DIGIY-BONNE-AFFAIRE/"
+  };
 
   function openModule(key){
     const url = LINKS[key];
