@@ -1137,23 +1137,68 @@
 </a>
 
 <script>
-  const LINKS = {
-    go: "https://beauville.github.io/digiy-espace-client/",
-    driver: "https://beauville.github.io/digiy-driver-client/",
-    loc: "https://beauville.github.io/digiy-loc/",
-    resto: "https://beauville.github.io/digiy-resto/",
-    resa: "https://beauville.github.io/digiy-resa-table/",
-    pos: "https://beauville.github.io/caisse-boutique/",
-    pay: "https://beauville.github.io/digiy-pay/",
-    build: "https://beauville.github.io/digiy-build/",
-    market: "https://beauville.github.io/digiy-market/",
-    job: "https://beauville.github.io/digiy-jobs/",
-    notable: "https://beauville.github.io/digiy-notable/",
-    explore: "https://beauville.github.io/digiy-explore/",
-    bonPlan: "https://beauville.github.io/digiy-bonne-affaire/",
-    inscription: "https://beauville.github.io/inscription-digiy/",
-    dashboard: "https://beauville.github.io/mon-espace-digiy/"
-  };
+  const catalog = {
+  driver: {
+    label: "🚗 DIGIY DRIVER",
+    desc: "Chauffeurs • courses • terrain",
+    url: LINKS.driver
+  },
+  loc: {
+    label: "🏠 DIGIY LOC",
+    desc: "Logements • réservations directes",
+    url: LINKS.loc
+  },
+  resto: {
+    label: "🍽️ DIGIY RESTO",
+    desc: "Restaurants • gestion • commandes",
+    url: LINKS.resto
+  },
+  resa: {
+    label: "📅 DIGIY RÉSA TABLE",
+    desc: "Réservations simples & directes",
+    url: LINKS.resa
+  },
+  pos: {
+    label: "🏪 DIGIY POS",
+    desc: "Caisse • boutique • ventes",
+    url: LINKS.pos
+  },
+  pay: {
+    label: "💳 DIGIY PAY",
+    desc: "Paiement direct • Wave • souverain",
+    url: LINKS.pay
+  },
+  build: {
+    label: "🛠️ DIGIY BUILD",
+    desc: "Artisans • dépannages • chantiers",
+    url: LINKS.build
+  },
+  market: {
+    label: "🛒 DIGIY MARKET",
+    desc: "Marketplace produits & services",
+    url: LINKS.market
+  },
+  job: {
+    label: "💼 DIGIY JOBS",
+    desc: "Emplois & services terrain",
+    url: LINKS.job
+  },
+  explore: {
+    label: "🧭 DIGIY EXPLORE",
+    desc: "Sorties • plages • expériences",
+    url: LINKS.explore
+  },
+  bonplan: {
+    label: "🔥 DIGIY BONNE AFFAIRE",
+    desc: "Deals • seconde main • opportunités",
+    url: LINKS.bonPlan
+  },
+  notable: {
+    label: "⭐ DIGIY NOTABLE",
+    desc: "Profils • visibilité • réputation",
+    url: LINKS.notable
+  }
+};
 
   function openModule(key){
     const url = LINKS[key];
