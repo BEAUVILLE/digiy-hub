@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -1233,5 +1234,64 @@
 </script>
 <script src="https://beauville.github.io/digiy-chat-pro/js/digiy-chat-pro.js"></script>
 
+<script>
+  /* =========================
+     DIGIY HUB — ROUTES MODULES
+     ========================= */
+
+  const LINKS = {
+    go:        "https://beauville.github.io/digiy-go/",
+    driver:    "https://beauville.github.io/digiy-driver/",
+    loc:       "https://beauville.github.io/digiy-loc/",
+    resto:     "https://beauville.github.io/digiy-resto/",
+    resa:      "https://beauville.github.io/digiy-resa/",
+    pos:       "https://beauville.github.io/digiy-pos/",
+    pay:       "https://beauville.github.io/digiy-pay/",
+    build:     "https://beauville.github.io/digiy-build/",
+    market:    "https://beauville.github.io/digiy-market/",
+    job:       "https://beauville.github.io/digiy-jobs/",
+    explore:   "https://beauville.github.io/digiy-explore/",
+    notable:   "https://beauville.github.io/digiy-notable/",
+    bonPlan:   "https://beauville.github.io/digiy-bon-plan/",
+    inscription:"https://beauville.github.io/inscription-digiy/",
+    dashboard: "https://beauville.github.io/mon-espace-digiy/"
+  };
+
+  // ✅ Ouvre un module (utilisé par onclick="openModule('xxx')")
+  function openModule(key){
+    const url = LINKS[key];
+    if(!url){
+      console.warn("Module inconnu:", key);
+      alert("Module en préparation.");
+      return;
+    }
+    window.location.href = url;
+  }
+
+  // ✅ Empêche les <button> dans .module de casser le clic (au cas où)
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".module-btn");
+    if(!btn) return;
+    const moduleCard = e.target.closest(".module");
+    if(moduleCard) moduleCard.click();
+  });
+
+  // ✅ Compteur offre pionniers (safe)
+  (function(){
+    const pioneersEl = document.getElementById("pioneersLeft");
+    if(!pioneersEl) return;
+
+    let pioneersLeft = parseInt(pioneersEl.textContent, 10);
+    if(Number.isNaN(pioneersLeft)) pioneersLeft = 87;
+
+    setInterval(() => {
+      if(pioneersLeft > 83 && Math.random() > 0.7){
+        pioneersLeft--;
+        pioneersEl.textContent = pioneersLeft;
+      }
+    }, 30000);
+  })();
+</script>
+
  </body>
-</html>
+  </html>
