@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,24 +15,17 @@
     :root{
       --bg-dark:#020617;
       --bg-soft:#0B1120;
-
-      /* Cartes + lisibilité */
       --card:#0B1120;
       --card2:rgba(15,23,42,0.98);
       --cardBorder:rgba(148, 163, 184, 0.48);
-
-      /* Texte */
       --ink:#F9FAFB;
       --ink-soft:#E5E7EB;
       --muted:#CBD5E1;
-
-      /* Accents DIGIY */
       --accent:#f97316;
       --accent-strong:#ea580c;
       --gold:#facc15;
       --success:#22c55e;
       --danger:#ef4444;
-
       --glow-primary:rgba(249, 115, 22, 0.4);
       --glow-secondary:rgba(34, 211, 238, 0.35);
     }
@@ -92,7 +84,6 @@
     @keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(0.97);opacity:0.7;} }
     @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;} }
 
-    /* HEADER */
     header{
       display:flex;justify-content:space-between;align-items:center;gap:1rem;
       margin-bottom:2rem;
@@ -166,7 +157,6 @@
     .logout-btn{border:none;background:transparent;color:var(--muted);font-size:1.2rem;cursor:pointer;padding-left:0.4rem;}
     .logout-btn:hover{color:#fff;}
 
-    /* ✅ BOUTON MENU TOP RIGHT */
     .menu-top{
       display:inline-flex;
       align-items:center;
@@ -202,7 +192,6 @@
       .brand-text-title{font-size:1.6rem;}
     }
 
-    /* HERO */
     .hero{
       margin-bottom:2rem;
       padding:2.3rem 2.1rem;
@@ -374,7 +363,6 @@
       .urgency-bar{flex-direction:column;align-items:flex-start;}
     }
 
-    /* MODULES */
     .modules-section{
       background:linear-gradient(145deg,rgba(15,23,42,0.98),rgba(15,23,42,0.96));
       border-radius:26px;
@@ -495,7 +483,6 @@
       .modules-section{padding:1.6rem 1.1rem 2rem;}
     }
 
-    /* PRICING */
     .pricing{
       background:linear-gradient(140deg,rgba(15,23,42,0.98),rgba(15,23,42,0.95));
       border-radius:24px;
@@ -538,7 +525,6 @@
 
     .pricing-text{font-size:0.9rem;color:var(--muted);line-height:1.7;font-weight:650;}
 
-    /* FOOTER */
     footer{
       border-top:1px solid rgba(148,163,184,0.45);
       padding-top:1.4rem;
@@ -554,7 +540,6 @@
     .footer-link{color:var(--muted);text-decoration:none;font-weight:800;font-size:0.85rem;}
     .footer-link:hover{color:#fff;}
 
-    /* BULLES */
     .tarif-bubble,.chat-bubble,.sos-bubble{
       position:fixed;z-index:60;text-decoration:none;
       display:flex;align-items:center;gap:0.4rem;
@@ -618,7 +603,6 @@
 <body>
 <div class="app">
 
-  <!-- HEADER -->
   <header>
     <a href="#" class="brand">
       <div class="brand-logo">∞</div>
@@ -629,17 +613,12 @@
     </a>
 
     <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:flex-end;">
-      
-      <!-- ✅ MENU TOP RIGHT -->
       <a class="menu-top" href="https://digiylyfe.com/menus-pages" aria-label="Menu DIGIY">
         <span class="icon">☰</span> MENU
       </a>
-
-      <!-- Connexion -->
       <a href="https://beauville.github.io/mon-espace-digiy/" class="btn btn-secondary" style="padding:0.6rem 1.2rem;font-size:0.9rem;">
         🔐 Se connecter
       </a>
-
       <div class="user-pill">
         <div class="user-avatar">👤</div>
         <div>
@@ -651,7 +630,6 @@
     </div>
   </header>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="urgency-bar">
       <div class="urgency-label">
@@ -668,13 +646,11 @@
     <div class="hero-grid">
       <div>
         <h1 class="hero-title">DIGIY — <span>L'aigle qui survole toutes les apps.</span></h1>
-
         <p class="hero-subtitle">
           Tu tiens dans ta main <strong>tout ton business</strong> : argent, réservation, chauffeur,
           restaurant, boutique, logements, artisans, jobs, marketplace.
           0% commission • Paiement direct au pro • Données souveraines.
         </p>
-
         <div class="domains-pills">
           <span class="pill pill-strong">ARGENT — DIGIY PAY</span>
           <span class="pill">CLIENT — DIGIY GO</span>
@@ -689,7 +665,6 @@
           <span class="pill">RECO — DIGIY NOTABLE</span>
           <span class="pill">SORTIES — DIGIY EXPLORE</span>
         </div>
-
         <div class="hero-cta-row">
           <a href="https://beauville.github.io/inscription-digiy/" class="btn btn-primary">
             ACTION — Je veux mon HUB <span>→</span>
@@ -698,7 +673,6 @@
             Parler à DIGIY (+221 77 134 2889)
           </a>
         </div>
-
         <div class="hero-meta">
           <strong>0% commission</strong> • Paiement direct • Les premiers à entrer sont les premiers à gagner.
         </div>
@@ -710,7 +684,6 @@
           <strong>1 HUB.</strong> <span>11 métiers.</span><br>
           <strong>1 abonnement.</strong> <span>0% commission.</span>
         </div>
-
         <div class="hero-stats">
           <div class="hero-stat">
             <div class="hero-stat-number">+40,100 F</div>
@@ -725,7 +698,6 @@
             <div class="hero-stat-label">De vos revenus dans votre poche</div>
           </div>
         </div>
-
         <div class="hero-right-note">
           DIGIY HUB est fait pour les chauffeurs, restaurateurs, hébergeurs, commerçants, artisans,
           indépendants, PME… Tous réunis sur une seule base, sous votre nom, sans intermédiaire.
@@ -734,7 +706,6 @@
     </div>
   </section>
 
-  <!-- MODULES -->
   <section class="modules-section">
     <h2 class="modules-title">Vos modules DIGIY, dans un seul HUB</h2>
     <p class="modules-subtitle">
@@ -744,7 +715,6 @@
 
     <div class="modules-grid">
 
-      <!-- DIGIY GO (CLIENTS) -->
       <div class="module" onclick="openModule('go')">
         <div class="module-inner">
           <div class="module-header">
@@ -766,7 +736,6 @@
         </div>
       </div>
 
-      <!-- DRIVER (côté client) -->
       <div class="module" onclick="openModule('driver')">
         <div class="module-inner">
           <div class="module-header">
@@ -784,6 +753,28 @@
           <div class="module-foot">
             <button class="module-btn">Trouver un chauffeur →</button>
             <div class="module-meta">0% commission</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ NOUVEAU : DIGIY DRIVER CLIENT -->
+      <div class="module" onclick="openModule('driverClient')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🚕</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY DRIVER CLIENT</div>
+              <div class="module-tagline">RÉSERVER UN CHAUFFEUR</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Version client de l'app chauffeur. Réserve ta course en direct,
+            contact direct avec le chauffeur, prix transparents sans commission.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Réserver une course →</button>
+            <div class="module-meta">Passagers</div>
           </div>
         </div>
       </div>
@@ -809,7 +800,6 @@
         </div>
       </div>
 
-      <!-- RESTO (vitrine) -->
       <div class="module" onclick="openModule('resto')">
         <div class="module-inner">
           <div class="module-header">
@@ -1058,7 +1048,7 @@
     </div>
   </section>
 
-  <!-- PRICING -->
+  <!-- ✅ PRICING SECTION CORRIGÉE -->
   <section class="pricing">
     <h2 class="pricing-title">Un seul abonnement. Tout votre écosystème.</h2>
     <p class="pricing-subtitle">
@@ -1066,42 +1056,39 @@
       Vous payez une seule fois par mois, et vous gardez <strong>100% de vos revenus.</strong>
     </p>
 
-    <div class="pricing-card">
-  <div class="pricing-label">Offre Pionniers</div>
-  <div class="pricing-price">29,900 FCFA / mois</div>
-  <div class="pricing-note">
-    Prix bloqué <strong>À VIE</strong> pour les premiers abonnés HUB DIGIY.
-    
-  </div>
-  <ul class="pricing-list">
-    <li>Accès à tous les modules DIGIY</li>
-    <li>0% de commission sur les transactions</li>
-    <li>Support humain par WhatsApp</li>
-    <li>Mises à jour incluses</li>
-  </ul>
-  
-  <!-- ✅ BOUTON PRINCIPAL -->
-  <a href="packs.html" class="pricing-cta" style="margin-bottom:10px;">
-    Voir tous les packs DIGIY →
-  </a>
-  
-  <!-- ✅ BOUTON SECONDAIRE (inscription complète) -->
-  <a href="https://beauville.github.io/inscription-digiy/" class="btn btn-secondary" style="width:100%;padding:0.7rem 1.4rem;font-size:0.9rem;text-align:center;display:inline-block;margin-top:10px;" target="_blank" rel="noopener">
-    Inscription complète →
-  </a>
-</div>
+    <div class="pricing-row">
+      <div class="pricing-card">
+        <div class="pricing-label">Offre Pionniers</div>
+        <div class="pricing-price">29,900 FCFA / mois</div>
+        <div class="pricing-note">
+          Prix bloqué <strong>À VIE</strong> pour les premiers abonnés HUB DIGIY.
+        </div>
+        <ul class="pricing-list">
+          <li>Accès à tous les modules DIGIY</li>
+          <li>0% de commission sur les transactions</li>
+          <li>Support humain par WhatsApp</li>
+          <li>Mises à jour incluses</li>
+        </ul>
+        
+        <a href="packs.html" class="pricing-cta" style="margin-bottom:10px;display:block;text-align:center;">
+          Voir tous les packs DIGIY →
+        </a>
+        
+        <a href="https://beauville.github.io/inscription-digiy/" class="btn btn-secondary" style="width:100%;padding:0.7rem 1.4rem;font-size:0.9rem;text-align:center;display:inline-block;margin-top:10px;" target="_blank" rel="noopener">
+          Inscription complète →
+        </a>
+      </div>
 
-    <div class="pricing-text">
-      DIGILYFE est conçu pour les travailleurs, commerçants, artisans, chauffeurs,
-      restaurateurs, hébergeurs.
-      <br><br>
-      Les plateformes traditionnelles prennent une part de votre sueur.
-      DIGIY fait l'inverse : <strong>vous payez un HUB, vous gardez tout le reste.</strong>
+      <div class="pricing-text">
+        DIGILYFE est conçu pour les travailleurs, commerçants, artisans, chauffeurs,
+        restaurateurs, hébergeurs.
+        <br><br>
+        Les plateformes traditionnelles prennent une part de votre sueur.
+        DIGIY fait l'inverse : <strong>vous payez un HUB, vous gardez tout le reste.</strong>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-tagline">L'Afrique enracinée, connectée au monde — DIGIYLYFE 🦅</div>
     <div class="footer-links">
@@ -1120,13 +1107,11 @@
 
 </div>
 
-<!-- BULLE TARIFS DIGIY -->
 <a href="https://beauville.github.io/digiy/" class="tarif-bubble" target="_blank" rel="noopener">
   <div class="tarif-badge-icon">F</div>
   <div>Tarifs DIGIY</div>
 </a>
 
-<!-- BULLE DIGIY CHAT PRO -->
 <a href="https://beauville.github.io/digiy-chat-pro/" class="chat-bubble" target="_blank" rel="noopener">
   <div class="chat-badge-icon">💬</div>
   <div class="chat-bubble-text">
@@ -1135,7 +1120,6 @@
   </div>
 </a>
 
-<!-- BULLE SOS DIGIY -->
 <a href="https://wa.me/221771342889?text=SOS%20DIGIY%20HUB%20%E2%80%94%20J%27ai%20besoin%20d%27aide" class="sos-bubble" target="_blank" rel="noopener">
   <div class="sos-badge-icon">SOS</div>
   <div class="sos-bubble-text">
@@ -1144,93 +1128,6 @@
   </div>
 </a>
 
-<script>
-  const catalog = {
-  driver: {
-    label: "🚗 DIGIY DRIVER",
-    desc: "Chauffeurs • courses • terrain",
-    url: LINKS.driver
-  },
-  loc: {
-    label: "🏠 DIGIY LOC",
-    desc: "Logements • réservations directes",
-    url: LINKS.loc
-  },
-  resto: {
-    label: "🍽️ DIGIY RESTO",
-    desc: "Restaurants • gestion • commandes",
-    url: LINKS.resto
-  },
-  resa: {
-    label: "📅 DIGIY RÉSA TABLE",
-    desc: "Réservations simples & directes",
-    url: LINKS.resa
-  },
-  pos: {
-    label: "🏪 DIGIY POS",
-    desc: "Caisse • boutique • ventes",
-    url: LINKS.pos
-  },
-  pay: {
-    label: "💳 DIGIY PAY",
-    desc: "Paiement direct • Wave • souverain",
-    url: LINKS.pay
-  },
-  build: {
-    label: "🛠️ DIGIY BUILD",
-    desc: "Artisans • dépannages • chantiers",
-    url: LINKS.build
-  },
-  market: {
-    label: "🛒 DIGIY MARKET",
-    desc: "Marketplace produits & services",
-    url: LINKS.market
-  },
-  job: {
-    label: "💼 DIGIY JOBS",
-    desc: "Emplois & services terrain",
-    url: LINKS.job
-  },
-  explore: {
-    label: "🧭 DIGIY EXPLORE",
-    desc: "Sorties • plages • expériences",
-    url: LINKS.explore
-  },
-  bonplan: {
-    label: "🔥 DIGIY BONNE AFFAIRE",
-    desc: "Deals • seconde main • opportunités",
-    url: LINKS.bonPlan
-  },
-  notable: {
-    label: "⭐ DIGIY NOTABLE",
-    desc: "Profils • visibilité • réputation",
-    url: LINKS.notable
-  }
-};
-
-  function openModule(key){
-    const url = LINKS[key];
-    if(!url){
-      console.warn("Module inconnu:", key);
-      alert("Module en préparation.");
-      return;
-    }
-    window.location.href = url;
-  }
-
-  // Compteur offre pionniers
-  let pioneersLeft = 87;
-  const pioneersEl = document.getElementById('pioneersLeft');
-
-  setInterval(() => {
-    if(pioneersLeft > 83 && Math.random() > 0.7){
-      pioneersLeft--;
-      pioneersEl.textContent = pioneersLeft;
-    }
-  }, 30000);
-</script>
-
-<!-- DIGIY CHAT PRO SCRIPT -->
 <script>
   window.DIGIY_CHAT_OPTIONS = {
     proChatUrl: "https://beauville.github.io/digiy-chat-pro/",
@@ -1242,29 +1139,25 @@
 <script src="https://beauville.github.io/digiy-chat-pro/js/digiy-chat-pro.js"></script>
 
 <script>
-  /* =========================
-     DIGIY HUB — ROUTES MODULES
-     ========================= */
-
   const LINKS = {
-    go:        "https://beauville.github.io/digiy-go/",
-    driver:    "https://beauville.github.io/digiy-driver/",
-    loc:       "https://beauville.github.io/digiy-loc/",
-    resto:     "https://beauville.github.io/digiy-resto/",
-    resa:      "https://beauville.github.io/digiy-resa/",
-    pos:       "https://beauville.github.io/digiy-pos/",
-    pay:       "https://beauville.github.io/digiy-pay/",
-    build:     "https://beauville.github.io/digiy-build/",
-    market:    "https://beauville.github.io/digiy-market/",
-    job:       "https://beauville.github.io/digiy-jobs/",
-    explore:   "https://beauville.github.io/digiy-explore/",
-    notable:   "https://beauville.github.io/digiy-notable/",
-    bonPlan:   "https://beauville.github.io/digiy-bon-plan/",
-    inscription:"https://beauville.github.io/inscription-digiy/",
-    dashboard: "https://beauville.github.io/mon-espace-digiy/"
+    go:           "https://beauville.github.io/digiy-go/",
+    driver:       "https://beauville.github.io/digiy-driver/",
+    driverClient: "https://beauville.github.io/digiy-driver-client/",
+    loc:          "https://beauville.github.io/digiy-loc/",
+    resto:        "https://beauville.github.io/digiy-resto/",
+    resa:         "https://beauville.github.io/digiy-resa/",
+    pos:          "https://beauville.github.io/digiy-pos/",
+    pay:          "https://beauville.github.io/digiy-pay/",
+    build:        "https://beauville.github.io/digiy-build/",
+    market:       "https://beauville.github.io/digiy-market/",
+    job:          "https://beauville.github.io/digiy-jobs/",
+    explore:      "https://beauville.github.io/digiy-explore/",
+    notable:      "https://beauville.github.io/digiy-notable/",
+    bonPlan:      "https://beauville.github.io/digiy-bon-plan/",
+    inscription:  "https://beauville.github.io/inscription-digiy/",
+    dashboard:    "https://beauville.github.io/mon-espace-digiy/"
   };
 
-  // ✅ Ouvre un module (utilisé par onclick="openModule('xxx')")
   function openModule(key){
     const url = LINKS[key];
     if(!url){
@@ -1275,7 +1168,6 @@
     window.location.href = url;
   }
 
-  // ✅ Empêche les <button> dans .module de casser le clic (au cas où)
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".module-btn");
     if(!btn) return;
@@ -1283,7 +1175,6 @@
     if(moduleCard) moduleCard.click();
   });
 
-  // ✅ Compteur offre pionniers (safe)
   (function(){
     const pioneersEl = document.getElementById("pioneersLeft");
     if(!pioneersEl) return;
@@ -1300,5 +1191,5 @@
   })();
 </script>
 
- </body>
+</body>
   </html>
