@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIGIY Packs - Abonnements Souverains</title>
+  <meta name="theme-color" content="#0A0E1A">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: radial-gradient(circle at top left, rgba(249,115,22,0.14), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(34,211,238,0.18), transparent 60%),
+                  #020617;
+      color: #F9FAFB;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(11,17,32,0.95);
+      backdrop-filter: blur(40px);
+      border: 1px solid rgba(148,163,184,0.45);
+      border-radius: 24px;
+      padding: 40px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .header h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #f97316, #facc15, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    
+    .header p {
+      font-size: 1.2rem;
+      color: #CBD5E1;
+      font-weight: 600;
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #CBD5E1;
+      text-decoration: none;
+      font-weight: 700;
+      margin-bottom: 30px;
+      padding: 10px 20px;
+      border: 1px solid rgba(148,163,184,0.5);
+      border-radius: 999px;
+      transition: all 0.2s;
+    }
+    
+    .back-link:hover {
+      border-color: #f97316;
+      color: #fff;
+    }
+    
+    .packs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .pack {
+      background: linear-gradient(135deg, rgba(15,23,42,0.98), rgba(17,24,39,0.96));
+      border: 2px solid rgba(148,163,184,0.3);
+      border-radius: 24px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    
+    .pack::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(249,115,22,0.15), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .pack:hover {
+      transform: translateY(-10px);
+      border-color: #f97316;
+      box-shadow: 0 20px 60px rgba(249,115,22,0.4);
+    }
+    
+    .pack:hover::before {
+      opacity: 1;
+    }
+    
+    .pack-icon {
+      font-size: 4rem;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pack h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pack .tagline {
+      text-align: center;
+      color: #CBD5E1;
+      font-size: 1rem;
+      margin-bottom: 25px;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pack .price {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #f97316, #facc15);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 25px 0;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pack .period {
+      text-align: center;
+      color: #94A3B8;
+      font-size: 0.9rem;
+      margin-top: -15px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pack .economy {
+      text-align: center;
+      color: #22c55e;
+      font-weight: 700;
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pack .features {
+      list-style: none;
+      margin: 25px 0;
+      padding: 25px;
+      background: rgba(15,23,42,0.6);
+      border-radius: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pack .features li {
+      padding: 10px 0;
+      color: #E5E7EB;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .pack .features li::before {
+      content: "✓";
+      color: #22c55e;
+      font-weight: 900;
+      font-size: 1.2rem;
+    }
+    
+    .pack button {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 999px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #111827;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 10px 30px rgba(249,115,22,0.5);
+    }
+    
+    .pack button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(249,115,22,0.7);
+    }
+    
+    .pack .badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      z-index: 2;
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 20px; }
+      .header h1 { font-size: 2rem; }
+      .packs { grid-template-columns: 1fr; }
+      .pack .price { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Retour au HUB DIGIY</a>
+    
+    <div class="header">
+      <h1>🦅 DIGIY PACKS</h1>
+      <p>Choisissez votre pack et devenez souverain. 0% commission.</p>
+    </div>
+
+    <div class="packs">
+      <!-- PACK MOBILITY -->
+      <div class="pack">
+        <span class="badge">🔥 OFFRE PIONNIERS</span>
+        <div class="pack-icon">🚗</div>
+        <h2>Pack Mobilité</h2>
+        <p class="tagline">Transport + Location + Paiement Direct</p>
+        <div class="price">19 900 F</div>
+        <p class="period">par mois</p>
+        <p class="economy">Économisez 9 800 FCFA (33%)</p>
+        
+        <ul class="features">
+          <li>DIGIY DRIVER - Transport</li>
+          <li>DIGIY LOC - Location</li>
+          <li>DIGIY PAY - Paiement 0%</li>
+          <li>Support prioritaire</li>
+          <li>Mises à jour incluses</li>
+        </ul>
+        
+        <button onclick="commanderPack('PACK_MOBILITY', 'Pack Mobilité', 19900)">
+          Commander via WhatsApp
+        </button>
+      </div>
+
+      <!-- PACK COMMERCE -->
+      <div class="pack">
+        <span class="badge">🔥 OFFRE LANCEMENT</span>
+        <div class="pack-icon">🍽️</div>
+        <h2>Pack Commerce</h2>
+        <p class="tagline">Resto + Market + Paiement</p>
+        <div class="price">19 900 F</div>
+        <p class="period">par mois</p>
+        <p class="economy">Économisez 9 800 FCFA (33%)</p>
+        
+        <ul class="features">
+          <li>DIGIY RESTO - Restaurant</li>
+          <li>DIGIY MARKET - Boutique</li>
+          <li>DIGIY PAY - Paiement 0%</li>
+          <li>Support prioritaire</li>
+          <li>Mises à jour incluses</li>
+        </ul>
+        
+        <button onclick="commanderPack('PACK_COMMERCE', 'Pack Commerce', 19900)">
+          Commander via WhatsApp
+        </button>
+      </div>
+
+      <!-- PACK HUB -->
+      <div class="pack">
+        <span class="badge">🦅 SOUVERAINETÉ</span>
+        <div class="pack-icon">🦅</div>
+        <h2>DIGIY HUB Complet</h2>
+        <p class="tagline">Tous les modules DIGIY ∞</p>
+        <div class="price">49 900 F</div>
+        <p class="period">par mois</p>
+        <p class="economy">Économisez 29 300 FCFA (37%)</p>
+        
+        <ul class="features">
+          <li>TOUS les modules inclus</li>
+          <li>Accès anticipé nouvelles features</li>
+          <li>Support VIP 24/7</li>
+          <li>Formation personnalisée</li>
+          <li>Prix bloqué à vie</li>
+        </ul>
+        
+        <button onclick="commanderPack('PACK_HUB', 'DIGIY HUB Complet', 49900)">
+          Commander via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function commanderPack(packCode, packName, prix) {
+      const message = `🦅 DIGIY - Nouvelle commande
+
+📦 Pack : ${packName}
+💰 Prix : ${prix.toLocaleString('fr-FR')} FCFA/mois
+📱 Code : ${packCode}
+
+Je souhaite souscrire à ce pack.
+
+Mes informations :
+━━━━━━━━━━━━━━━━━━━━
+Nom complet : 
+Téléphone : 
+Email : 
+Ville : 
+
+Mode de paiement souhaité :
+[ ] Wave Money
+[ ] Orange Money  
+[ ] Free Money
+[ ] Autre`;
+
+      const whatsappURL = `https://wa.me/221771342889?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, '_blank');
+    }
+  </script>
+</body>
+</html>
