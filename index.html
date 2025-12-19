@@ -772,7 +772,6 @@
         </div>
       </div>
 
-      <!-- ✨ MODULE VAS CHEZ DIGIY - VIDÉO MANIFESTE (APRÈS DIGIY GO) -->
       <div class="module" onclick="window.open('https://beauville.github.io/vas-chez-digiy/', '_blank')">
         <div class="module-inner">
           <div class="module-header">
@@ -815,7 +814,6 @@
         </div>
       </div>
 
-      <!-- ✅ NOUVEAU : DIGIY DRIVER CLIENT -->
       <div class="module" onclick="openModule('driverClient')">
         <div class="module-inner">
           <div class="module-header">
@@ -1106,7 +1104,6 @@
     </div>
   </section>
 
-  <!-- ✅ PRICING SECTION CORRIGÉE -->
   <section class="pricing">
     <h2 class="pricing-title">Un seul abonnement. Tout votre écosystème.</h2>
     <p class="pricing-subtitle">
@@ -1127,11 +1124,11 @@
           <li>Support humain par WhatsApp</li>
           <li>Mises à jour incluses</li>
         </ul>
-        
+
         <a href="packs.html" class="pricing-cta" style="margin-bottom:10px;display:block;text-align:center;">
           Voir tous les packs DIGIY →
         </a>
-        
+
         <a href="https://beauville.github.io/inscription-digiy/" class="btn btn-secondary" style="width:100%;padding:0.7rem 1.4rem;font-size:0.9rem;text-align:center;display:inline-block;margin-top:10px;" target="_blank" rel="noopener">
           Inscription complète →
         </a>
@@ -1226,6 +1223,7 @@
     window.location.href = url;
   }
 
+  // Click sur le bouton = click sur la carte
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".module-btn");
     if(!btn) return;
@@ -1247,13 +1245,17 @@
       }
     }, 30000);
   })();
-</<script>
+</script>
+
+<!-- ✅ TON SCRIPT “RECHERCHE RESTO” (SAFE: ne casse rien si les champs n'existent pas) -->
+<script>
   (function () {
     const btn = document.getElementById("btn");
     const qInput = document.getElementById("q");
     const cityInput = document.getElementById("city");
     const status = document.getElementById("status");
 
+    // Si le bloc recherche n'est pas sur cette page, on sort sans rien casser
     if (!btn || !qInput) return;
 
     btn.addEventListener("click", () => {
@@ -1261,16 +1263,11 @@
       const city = (cityInput?.value || "").trim();
 
       if (q.length < 2) {
-        if (status) {
-          status.textContent = "Tape au moins 2 lettres frérot 🙂";
-        } else {
-          alert("Tape au moins 2 lettres frérot 🙂");
-        }
+        if (status) status.textContent = "Tape au moins 2 lettres frérot 🙂";
+        else alert("Tape au moins 2 lettres frérot 🙂");
         return;
       }
 
-      // 👉 on garde TOUT ton système de navigation intact
-      // 👉 on redirige simplement vers la page search
       const url =
         "search-resto.html" +
         "?q=" + encodeURIComponent(q) +
@@ -1280,5 +1277,6 @@
     });
   })();
 </script>
+
 </body>
 </html>
