@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>DIGIY RESTO — Recherche</title>
+  <title>DIGIY RESTO — Recherche Intelligente</title>
   <meta name="theme-color" content="#0A0E1A" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@
     }
 
     .wrap{
-      max-width:1100px;
+      max-width:1200px;
       margin:0 auto;
       padding:22px 16px 60px;
     }
@@ -112,24 +112,30 @@
       box-shadow:0 10px 28px rgba(249,115,22,0.35);
     }
     .btn-primary:hover{transform:translateY(-2px);}
+    .btn-geo{
+      background:linear-gradient(135deg,#22d3ee,#06b6d4);
+      color:#111827;
+      border:1px solid rgba(34,211,238,0.85);
+    }
 
     .card{
       border-radius:24px;
       border:1px solid rgba(148,163,184,0.50);
       background:linear-gradient(145deg,rgba(15,23,42,0.98),rgba(15,23,42,0.95));
       box-shadow:0 16px 52px rgba(0,0,0,0.75);
-      padding:16px;
+      padding:18px;
       margin-bottom:14px;
     }
 
-    .row{
+    .search-row{
       display:grid;
-      grid-template-columns: 1.4fr .8fr auto;
+      grid-template-columns: 1.6fr .8fr auto auto;
       gap:10px;
       align-items:center;
+      margin-bottom:12px;
     }
     @media(max-width:900px){
-      .row{grid-template-columns:1fr; }
+      .search-row{grid-template-columns:1fr; }
     }
 
     input, select{
@@ -141,14 +147,19 @@
       color:var(--ink);
       outline:none;
       font-weight:650;
+      font-size:.95rem;
     }
     input::placeholder{color:rgba(203,213,225,0.75);}
+    input:focus, select:focus{
+      border-color:rgba(249,115,22,0.85);
+      box-shadow:0 0 0 3px rgba(249,115,22,0.15);
+    }
 
     .filters{
       display:grid;
       grid-template-columns:repeat(4, minmax(0,1fr));
       gap:10px;
-      margin-top:10px;
+      margin-bottom:12px;
     }
     @media(max-width:900px){
       .filters{grid-template-columns:1fr 1fr;}
@@ -180,6 +191,7 @@
     }
     .pill-live{border-color:rgba(34,197,94,0.9); color:#dcfce7; background:rgba(22,163,74,0.14);}
     .pill-warn{border-color:rgba(250,204,21,0.95); color:#fef9c3; background:rgba(250,204,21,0.12);}
+    .pill-geo{border-color:rgba(34,211,238,0.9); color:#cffafe; background:rgba(34,211,238,0.12);}
 
     .results-head{
       display:flex;
@@ -192,7 +204,7 @@
     .results-title{
       font-family:'Outfit',sans-serif;
       font-weight:950;
-      font-size:1.2rem;
+      font-size:1.3rem;
       letter-spacing:.04em;
     }
     .small{
@@ -204,8 +216,8 @@
     .grid{
       margin-top:12px;
       display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
-      gap:12px;
+      grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+      gap:14px;
     }
 
     .item{
@@ -214,26 +226,28 @@
       background:
         radial-gradient(circle at top left,rgba(249,115,22,0.10),transparent 60%),
         rgba(11,17,32,0.98);
-      padding:14px 14px 12px;
-      transition:transform .16s ease, border-color .16s ease;
+      padding:16px;
+      transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease;
       cursor:pointer;
       position:relative;
       overflow:hidden;
-      min-height:140px;
+      min-height:160px;
     }
     .item:hover{
-      transform:translateY(-3px);
+      transform:translateY(-4px);
       border-color:rgba(249,115,22,0.85);
+      box-shadow:0 12px 40px rgba(249,115,22,0.25);
     }
     .item-top{
       display:flex;justify-content:space-between;gap:8px;align-items:flex-start;
-      margin-bottom:8px;
+      margin-bottom:10px;
     }
     .name{
       font-family:'Outfit',sans-serif;
       font-weight:950;
-      font-size:1.02rem;
+      font-size:1.05rem;
       line-height:1.2;
+      flex:1;
     }
     .badge{
       font-size:.72rem;
@@ -246,36 +260,44 @@
       color:var(--muted);
       background:rgba(15,23,42,0.98);
       white-space:nowrap;
+      flex-shrink:0;
     }
     .badge-premium{
       border-color:rgba(250,204,21,0.95);
       color:#111827;
       background:linear-gradient(135deg,#facc15,#fde68a);
+      box-shadow:0 4px 12px rgba(250,204,21,0.35);
     }
 
     .meta{
       display:flex;flex-wrap:wrap;gap:8px;
-      font-size:.85rem;
+      font-size:.86rem;
       color:var(--ink-soft);
       font-weight:650;
-      margin-bottom:8px;
+      margin-bottom:10px;
+    }
+    .meta span{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
     }
     .desc{
       font-size:.88rem;
       color:var(--muted);
       line-height:1.5;
       font-weight:650;
-      min-height:40px;
+      min-height:42px;
+      margin-bottom:12px;
     }
     .foot{
       display:flex;justify-content:space-between;align-items:center;
-      margin-top:10px;
+      margin-top:auto;
       gap:8px;
     }
     .cta{
       border:none;
       border-radius:999px;
-      padding:.6rem .95rem;
+      padding:.65rem 1.05rem;
       background:linear-gradient(135deg,#f97316,#ea580c);
       color:#111827;
       font-family:'Outfit',sans-serif;
@@ -285,6 +307,11 @@
       font-size:.75rem;
       cursor:pointer;
       white-space:nowrap;
+      transition:transform .15s ease;
+    }
+    .cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 20px rgba(249,115,22,0.45);
     }
     .muted{
       color:var(--muted);
@@ -293,23 +320,59 @@
     }
 
     .empty{
-      padding:16px;
+      padding:24px;
       border-radius:18px;
       border:1px dashed rgba(148,163,184,0.55);
       color:var(--muted);
       font-weight:650;
       background:rgba(2,6,23,0.35);
       margin-top:12px;
+      text-align:center;
+      line-height:1.6;
     }
+    .empty strong{color:#fff;}
 
     .debug{
-      margin-top:10px;
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      margin-top:12px;
+      padding:12px;
+      border-radius:12px;
+      background:rgba(2,6,23,0.75);
+      border:1px solid rgba(148,163,184,0.35);
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size:.82rem;
       color:rgba(203,213,225,0.85);
       line-height:1.45;
       white-space:pre-wrap;
       word-break:break-word;
+      max-height:200px;
+      overflow-y:auto;
+    }
+
+    .mode-tabs{
+      display:flex;
+      gap:8px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+    .mode-tab{
+      padding:.6rem 1.1rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.55);
+      background:rgba(15,23,42,0.98);
+      color:var(--muted);
+      font-family:'Outfit',sans-serif;
+      font-weight:800;
+      font-size:.8rem;
+      cursor:pointer;
+      transition:all .15s ease;
+    }
+    .mode-tab.active{
+      border-color:rgba(249,115,22,0.9);
+      background:rgba(249,115,22,0.18);
+      color:var(--ink);
+    }
+    .mode-tab:hover{
+      border-color:rgba(249,115,22,0.7);
     }
   </style>
 </head>
@@ -322,7 +385,7 @@
         <div class="brand-logo">∞</div>
         <div>
           <div class="brand-title">DIGIY RESTO</div>
-          <div class="brand-sub">RECHERCHE — DÉCOUVRIR LES RESTOS</div>
+          <div class="brand-sub">RECHERCHE INTELLIGENTE — 0% COMMISSION</div>
         </div>
       </a>
 
@@ -334,53 +397,81 @@
     </header>
 
     <div class="card">
-      <!-- TEXTE EN PREMIER ✅ -->
-      <div class="row">
-        <input id="q" placeholder='Ex: "fatou plateau dakar" (min 2 lettres)' />
-        <input id="city" placeholder="Ville (optionnel) : Dakar" />
-        <button class="cta" id="btn">Rechercher →</button>
+      <div class="mode-tabs">
+        <button class="mode-tab active" id="tabText" onclick="setMode('text', this)">🔍 Recherche textuelle</button>
+        <button class="mode-tab" id="tabGeo" onclick="setMode('geo', this)">📍 Autour de moi</button>
       </div>
 
-      <div class="filters">
-        <select id="minRating">
-          <option value="">Note min (optionnel)</option>
-          <option value="3.5">≥ 3.5</option>
-          <option value="4">≥ 4.0</option>
-          <option value="4.5">≥ 4.5</option>
-        </select>
+      <!-- MODE TEXTE -->
+      <div id="textMode">
+        <div class="search-row">
+          <input id="q" placeholder='Ex: "fatou plateau" ou "thieboudienne dakar"' />
+          <input id="city" placeholder="Ville : Dakar, Thiès..." />
+          <button class="btn btn-primary" id="btnSearch">Chercher →</button>
+          <button class="btn btn-geo" id="btnGeo">📍 Géo</button>
+        </div>
 
-        <select id="maxPrice">
-          <option value="">Budget max (optionnel)</option>
-          <option value="1">€ (1)</option>
-          <option value="2">€€ (2)</option>
-          <option value="3">€€€ (3)</option>
-          <option value="4">€€€€ (4)</option>
-        </select>
+        <div class="filters">
+          <select id="minRating">
+            <option value="">Note minimum</option>
+            <option value="3.5">⭐ 3.5+</option>
+            <option value="4">⭐ 4.0+</option>
+            <option value="4.5">⭐ 4.5+</option>
+          </select>
 
-        <select id="sortBy">
-          <option value="ranking">Tri : pertinence</option>
-          <option value="rating">Tri : note</option>
-          <option value="price">Tri : prix</option>
-          <option value="new">Tri : récent</option>
-        </select>
+          <select id="maxPrice">
+            <option value="">Budget max</option>
+            <option value="1">€ - Économique</option>
+            <option value="2">€€ - Modéré</option>
+            <option value="3">€€€ - Élevé</option>
+            <option value="4">€€€€ - Luxe</option>
+          </select>
 
-        <select id="pack">
-          <option value="">Pack (optionnel)</option>
-          <option value="premium">premium</option>
-          <option value="standard">standard</option>
-          <option value="basic">basic</option>
-        </select>
-      </div>
+          <select id="sortBy">
+            <option value="ranking">Tri : Pertinence</option>
+            <option value="rating">Tri : Meilleures notes</option>
+            <option value="price">Tri : Prix croissant</option>
+            <option value="new">Tri : Plus récents</option>
+          </select>
 
-      <div class="hint" id="status">
-        Tape un mot-clé et lance la recherche. <strong>Objectif : discovery</strong> (trouver les fiches PRO).
-        <div>
-          <span class="pill pill-live">LIVE</span>
-          <span class="pill pill-warn">RESTO</span>
+          <select id="pack">
+            <option value="">Tous les packs</option>
+            <option value="premium">⭐ Premium</option>
+            <option value="standard">Standard</option>
+            <option value="basic">Basic</option>
+          </select>
         </div>
       </div>
 
-      <div class="debug" id="debug"></div>
+      <!-- MODE GÉO -->
+      <div id="geoMode" style="display:none;">
+        <div class="search-row" style="grid-template-columns: 1fr auto;">
+          <select id="radiusKm">
+            <option value="3">Rayon : 3 km</option>
+            <option value="5">Rayon : 5 km</option>
+            <option value="10" selected>Rayon : 10 km</option>
+            <option value="15">Rayon : 15 km</option>
+            <option value="25">Rayon : 25 km</option>
+          </select>
+          <button class="btn btn-geo" id="btnGeoRun">📍 Lancer la recherche</button>
+        </div>
+        <div class="hint">
+          📍 On utilise ta position réelle (PostGIS) pour remonter les restos proches.
+          Si ton téléphone demande l’autorisation, accepte, sinon… pas de magie 😄
+        </div>
+      </div>
+
+      <div class="hint" id="status">
+        🔥 <strong>Full-text search PostgreSQL</strong> + géolocalisation PostGIS.
+        Tape un mot-clé, cherche par ville, ou géolocalise-toi !
+        <div>
+          <span class="pill pill-live">LIVE</span>
+          <span class="pill pill-warn">SUPABASE</span>
+          <span class="pill pill-geo">POSTGIS</span>
+        </div>
+      </div>
+
+      <div class="debug" id="debug" style="display:none;"></div>
     </div>
 
     <div class="results-head">
@@ -388,105 +479,72 @@
         <div class="results-title">Résultats</div>
         <div class="small" id="count">0 résultat</div>
       </div>
-      <div class="small" id="dataset">Dataset: —</div>
+      <div class="small" id="info">—</div>
     </div>
 
     <div id="results" class="grid"></div>
-    <div id="empty" class="empty" style="display:none;">Aucun résultat. Essaie : <strong>“fatou dakar”</strong> ou enlève les filtres.</div>
+    <div id="empty" class="empty" style="display:none;">
+      😕 <strong>Aucun résultat trouvé.</strong><br>
+      Essaie : <strong>"fatou dakar"</strong> ou <strong>"thieboudienne plateau"</strong><br>
+      Ou clique sur <strong>📍 Géo</strong> pour trouver les restos autour de toi !
+    </div>
 
   </div>
 
   <script>
-    /* 🔐 SUPABASE — DÉJÀ POSÉ */
+    /* 🔐 SUPABASE CONFIG */
     const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    const SUPABASE_ANON_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-
-    // Si tu veux, colle ici exactement ta ANON KEY (tu l'as déjà dans ton code HUB)
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // UI
+    // UI Elements
     const elQ = document.getElementById("q");
     const elCity = document.getElementById("city");
-    const elBtn = document.getElementById("btn");
+    const elBtnSearch = document.getElementById("btnSearch");
+    const elBtnGeo = document.getElementById("btnGeo");
+    const elBtnGeoRun = document.getElementById("btnGeoRun");
+
     const elStatus = document.getElementById("status");
     const elDebug = document.getElementById("debug");
     const elResults = document.getElementById("results");
     const elEmpty = document.getElementById("empty");
     const elCount = document.getElementById("count");
-    const elDataset = document.getElementById("dataset");
+    const elInfo = document.getElementById("info");
 
     const elMinRating = document.getElementById("minRating");
     const elMaxPrice = document.getElementById("maxPrice");
     const elSortBy = document.getElementById("sortBy");
     const elPack = document.getElementById("pack");
+    const elRadiusKm = document.getElementById("radiusKm");
+
+    const elTextMode = document.getElementById("textMode");
+    const elGeoMode = document.getElementById("geoMode");
+
+    let currentMode = 'text';
+
+    function setMode(mode, el){
+      currentMode = mode;
+
+      // tabs
+      document.querySelectorAll('.mode-tab').forEach(tab => tab.classList.remove('active'));
+      if(el) el.classList.add('active');
+
+      // blocks
+      elTextMode.style.display = (mode === 'text') ? 'block' : 'none';
+      elGeoMode.style.display  = (mode === 'geo')  ? 'block' : 'none';
+
+      // auto behavior
+      if(mode === 'geo'){
+        geoSearch(); // terrain: on lance direct
+      } else {
+        // focus input
+        setTimeout(() => elQ && elQ.focus(), 50);
+      }
+    }
 
     function safeText(v){
       if(v === null || v === undefined) return "";
       return String(v);
-    }
-
-    function pick(obj, keys){
-      for(const k of keys){
-        if(obj && obj[k] !== undefined && obj[k] !== null) return obj[k];
-      }
-      return null;
-    }
-
-    function normalizePack(v){
-      if(!v) return null;
-      return String(v).toLowerCase();
-    }
-
-    function render(rows){
-      elResults.innerHTML = "";
-      elEmpty.style.display = rows.length ? "none" : "block";
-      elCount.textContent = rows.length + (rows.length > 1 ? " résultats" : " résultat");
-
-      rows.forEach(r => {
-        const name = pick(r, ["business_name","name","title","nom","nom_entreprise"]) || "Sans nom";
-        const city = pick(r, ["city","ville"]) || "";
-        const category = pick(r, ["category","categorie","cuisine"]) || "";
-        const rating = pick(r, ["rating","note"]) || "";
-        const price = pick(r, ["price_range","price","budget","price_level"]) || "";
-        const pack = normalizePack(pick(r, ["subscription_pack","pack","plan","subscription","tier"])) || "";
-        const desc = pick(r, ["description","about","bio","resume"]) || "";
-
-        const badge = pack === "premium" ? "badge badge-premium" : "badge";
-        const badgeText = pack ? pack : "resto";
-
-        const card = document.createElement("div");
-        card.className = "item";
-        card.innerHTML = `
-          <div class="item-top">
-            <div class="name">${escapeHtml(name)}</div>
-            <div class="${badge}">${escapeHtml(badgeText)}</div>
-          </div>
-          <div class="meta">
-            ${city ? `<span>📍 ${escapeHtml(city)}</span>` : ""}
-            ${category ? `<span>🍽️ ${escapeHtml(category)}</span>` : ""}
-            ${rating !== "" ? `<span>⭐ ${escapeHtml(rating)}</span>` : ""}
-            ${price !== "" ? `<span>💰 ${escapeHtml(price)}</span>` : ""}
-          </div>
-          <div class="desc">${escapeHtml(desc).slice(0, 140)}${safeText(desc).length > 140 ? "…" : ""}</div>
-          <div class="foot">
-            <button class="cta">Voir →</button>
-            <div class="muted">Fiche</div>
-          </div>
-        `;
-
-        // Clique → plus tard tu mettras la page détail /pro/:id
-        card.addEventListener("click", () => {
-          const id = pick(r, ["id","pro_id","uuid"]);
-          if(id){
-            alert("Page détail à brancher: pro_id = " + id);
-          } else {
-            alert("OK. Page détail à brancher (id manquant dans la ligne).");
-          }
-        });
-
-        elResults.appendChild(card);
-      });
     }
 
     function escapeHtml(str){
@@ -498,163 +556,250 @@
         .replaceAll("'","&#039;");
     }
 
-    async function tryQuery(tableName){
+    function formatPrice(range){
+      if(!range) return "";
+      return "€".repeat(Math.min(range, 4));
+    }
+
+    function formatRating(rating){
+      if(!rating) return "";
+      return "⭐".repeat(Math.floor(rating)) + (rating % 1 >= 0.5 ? "½" : "");
+    }
+
+    function render(rows){
+      elResults.innerHTML = "";
+      elEmpty.style.display = rows.length ? "none" : "block";
+      elCount.textContent = rows.length + (rows.length > 1 ? " résultats" : " résultat");
+
+      rows.forEach(r => {
+        const name = r.business_name || r.name || "Sans nom";
+        const city = r.city || "";
+        const category = r.category || "";
+        const rating = r.rating || 0;
+        const price = r.price_range || 0;
+        const pack = (r.subscription_pack || "").toLowerCase();
+        const desc = r.description || "";
+        const distance = r.distance_km !== undefined ? r.distance_km : null;
+
+        const badge = pack === "premium" ? "badge badge-premium" : "badge";
+        const badgeText = pack === "premium" ? "⭐ PREMIUM" : (pack || "resto");
+
+        const card = document.createElement("div");
+        card.className = "item";
+        card.innerHTML = `
+          <div class="item-top">
+            <div class="name">${escapeHtml(name)}</div>
+            <div class="${badge}">${escapeHtml(badgeText).toUpperCase()}</div>
+          </div>
+          <div class="meta">
+            ${city ? `<span>📍 ${escapeHtml(city)}</span>` : ""}
+            ${distance !== null ? `<span>🚶 ${escapeHtml(distance)} km</span>` : ""}
+            ${category ? `<span>🍽️ ${escapeHtml(category)}</span>` : ""}
+            ${rating > 0 ? `<span>${formatRating(rating)} ${Number(rating).toFixed(1)}</span>` : ""}
+            ${price > 0 ? `<span>💰 ${formatPrice(price)}</span>` : ""}
+          </div>
+          <div class="desc">${escapeHtml(desc).slice(0, 120)}${safeText(desc).length > 120 ? "…" : ""}</div>
+          <div class="foot">
+            <button class="cta">Voir le resto →</button>
+            <div class="muted">Fiche détail</div>
+          </div>
+        `;
+
+        card.addEventListener("click", () => {
+          const id = r.id || r.pro_id;
+          if(id){
+            window.location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
+          } else {
+            alert("ID manquant pour ce resto");
+          }
+        });
+
+        elResults.appendChild(card);
+      });
+    }
+
+    /* 🔍 RECHERCHE TEXTUELLE (FULL-TEXT POSTGRESQL) */
+    async function textSearch(){
       const q = safeText(elQ.value).trim();
       const city = safeText(elCity.value).trim();
 
-      const minRating = elMinRating.value ? parseFloat(elMinRating.value) : null;
-      const maxPrice = elMaxPrice.value ? parseFloat(elMaxPrice.value) : null;
-      const sortBy = elSortBy.value || "ranking";
-      const pack = normalizePack(elPack.value);
-
-      // Base query
-      let query = supabase.from(tableName).select("*").limit(40);
-
-      // On force RESTO si la table a une colonne de type
-      // (selon ton schéma ça peut être: listing_type / type / module / kind)
-      // -> on applique plus bas via "or" textSearch-like (fallback)
-      // Ici on fait simple: si colonne "listing_type" existe: on tente eq('listing_type','resto')
-      // Si ça échoue, la requête renverra une erreur => on catch et on passe au prochain dataset.
-
-      // Filtres city (si colonne existe)
-      if(city){
-        // on essaye city/ville, si ça casse => dataset suivant
-        query = query.or(`city.ilike.%${city}%,ville.ilike.%${city}%`);
-      }
-
-      // Texte: on fait un OR sur plusieurs champs typiques (sans dépendre du SQL)
-      if(q.length >= 2){
-        const qq = q.replaceAll(",", " ").split(/\s+/).filter(Boolean).slice(0, 6);
-        // on construit une recherche "ilike" multi-mots
-        // => AND approximatif en répétant des OR
-        qq.forEach(word => {
-          const w = word.replaceAll("%","").replaceAll("_","");
-          query = query.or(
-            [
-              `business_name.ilike.%${w}%`,
-              `name.ilike.%${w}%`,
-              `title.ilike.%${w}%`,
-              `city.ilike.%${w}%`,
-              `ville.ilike.%${w}%`,
-              `category.ilike.%${w}%`,
-              `categorie.ilike.%${w}%`,
-              `description.ilike.%${w}%`,
-              `about.ilike.%${w}%`,
-              `tags.cs.{${w}}`,
-              `modules.cs.{${w}}`
-            ].join(",")
-          );
-        });
-      }
-
-      // Rating
-      if(minRating !== null){
-        query = query.or(`rating.gte.${minRating},note.gte.${minRating}`);
-      }
-
-      // Price range max
-      if(maxPrice !== null){
-        query = query.or(`price_range.lte.${maxPrice},price_level.lte.${maxPrice},budget.lte.${maxPrice}`);
-      }
-
-      // Pack
-      if(pack){
-        query = query.or(
-          `subscription_pack.eq.${pack},pack.eq.${pack},tier.eq.${pack},plan.eq.${pack},subscription.eq.${pack}`
-        );
-      }
-
-      // Tri
-      if(sortBy === "rating"){
-        query = query.order("rating", { ascending:false, nullsFirst:false });
-      } else if(sortBy === "price"){
-        // prix croissant
-        query = query.order("price_range", { ascending:true, nullsFirst:false });
-      } else if(sortBy === "new"){
-        query = query.order("created_at", { ascending:false, nullsFirst:false });
-      } else {
-        // pertinence
-        query = query.order("ranking_score", { ascending:false, nullsFirst:false });
-      }
-
-      // RESTO constraint (tentative multi-colonnes)
-      query = query.or("listing_type.eq.resto,type.eq.resto,module.eq.resto,kind.eq.resto");
-
-      const { data, error } = await query;
-      if(error) throw error;
-      return data || [];
-    }
-
-    async function runSearch(){
-      const q = safeText(elQ.value).trim();
       if(q.length && q.length < 2){
-        elStatus.innerHTML = `⛔ Tape au moins <strong>2 lettres</strong>.`;
+        elStatus.innerHTML = `⛔ Tape au moins <strong>2 lettres</strong> frérot.`;
         return;
       }
 
       elStatus.innerHTML = `⏳ Recherche en cours...`;
-      elDebug.textContent = "";
+      elDebug.style.display = "none";
 
-      const datasetsToTry = [
-        "public_listings",
-        "listings",
-        "pros"
-      ];
+      const minRating = elMinRating.value ? parseFloat(elMinRating.value) : null;
+      const maxPrice = elMaxPrice.value ? parseInt(elMaxPrice.value, 10) : null;
+      const sortBy = elSortBy.value || "ranking";
+      const pack = elPack.value ? elPack.value.toLowerCase() : null;
 
-      let lastErr = null;
+      try {
+        // ✅ Pour le verrouillage SQL, tu remplaceras plus tard 'pros' par ta vue publique:
+        // .from('v_public_resto_search')
+        let query = supabase
+          .from('pros')
+          .select('*')
+          .eq('type', 'resto')
+          .eq('is_active', true)
+          .limit(40);
 
-      for(const ds of datasetsToTry){
-        try{
-          const rows = await tryQuery(ds);
-          elDataset.textContent = "Dataset: " + ds;
-          elStatus.innerHTML = `✅ OK — ${rows.length} résultat(s).`;
-          render(rows);
-          return;
-        }catch(err){
-          lastErr = err;
-          // on tente le prochain dataset
-          console.warn("Dataset failed:", ds, err);
+        // FULL-TEXT SEARCH (si query)
+        if(q.length >= 2){
+          query = query.textSearch('search_vector', q, {
+            type: 'websearch',
+            config: 'french'
+          });
         }
+
+        // Filtres (ville souple)
+        if(city){
+          query = query.ilike('city', `%${city}%`);
+        }
+
+        if(minRating !== null){
+          query = query.gte('rating', minRating);
+        }
+
+        if(maxPrice !== null){
+          query = query.lte('price_range', maxPrice);
+        }
+
+        if(pack){
+          query = query.eq('subscription_pack', pack);
+        }
+
+        // Tri
+        switch(sortBy){
+          case "rating":
+            query = query.order('rating', { ascending: false });
+            break;
+          case "price":
+            query = query.order('price_range', { ascending: true });
+            break;
+          case "new":
+            query = query.order('created_at', { ascending: false });
+            break;
+          default:
+            query = query.order('ranking_score', { ascending: false });
+        }
+
+        const { data, error } = await query;
+        if(error) throw error;
+
+        elInfo.textContent = `Mode: Full-text search`;
+        elStatus.innerHTML = `✅ ${data.length} résultat(s) trouvé(s).`;
+        render(data);
+
+      } catch(err){
+        console.error('Erreur:', err);
+        elStatus.innerHTML = `❌ Erreur: ${escapeHtml(err.message || String(err))}`;
+        elDebug.textContent = JSON.stringify(err, null, 2);
+        elDebug.style.display = "block";
+        elResults.innerHTML = "";
+        elEmpty.style.display = "block";
+      }
+    }
+
+    /* 📍 RECHERCHE GÉO (POSTGIS) */
+    async function geoSearch(){
+      if(!navigator.geolocation){
+        alert("❌ Géolocalisation non disponible sur cet appareil.");
+        return;
       }
 
-      // Si tout échoue
-      elDataset.textContent = "Dataset: aucun";
-      elStatus.innerHTML = `❌ Impossible de lire les données (RLS / table / colonnes).`;
-      elResults.innerHTML = "";
-      elEmpty.style.display = "block";
-      elCount.textContent = "0 résultat";
+      elStatus.innerHTML = `⏳ Localisation en cours...`;
+      elDebug.style.display = "none";
 
-      // Debug visible (tu vas comprendre DIRECT)
-      elDebug.textContent =
-        "DEBUG (à copier-coller ici si ça bloque) :\n" +
-        (lastErr ? JSON.stringify(lastErr, null, 2) : "Erreur inconnue");
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+
+          const radiusKm = elRadiusKm ? parseFloat(elRadiusKm.value) : 10;
+
+          try {
+            // Utilise la fonction PostgreSQL search_pros_nearby
+            const { data, error } = await supabase.rpc('search_pros_nearby', {
+              p_type: 'resto',
+              p_lat: lat,
+              p_lng: lng,
+              p_radius_km: radiusKm,
+              p_limit: 40
+            });
+
+            if(error) throw error;
+
+            elInfo.textContent = `Mode: Géolocalisation (${radiusKm}km)`;
+            elStatus.innerHTML = `✅ ${data.length} resto(s) trouvé(s) dans ${radiusKm}km.`;
+            render(data);
+
+          } catch(err){
+            console.error('Erreur géo:', err);
+            elStatus.innerHTML = `❌ Erreur géo: ${escapeHtml(err.message || String(err))}`;
+            elDebug.textContent = JSON.stringify(err, null, 2);
+            elDebug.style.display = "block";
+            elResults.innerHTML = "";
+            elEmpty.style.display = "block";
+          }
+        },
+        (err) => {
+          alert(`❌ Impossible de te localiser: ${err.message}`);
+          elStatus.innerHTML = `❌ Géolocalisation refusée.`;
+        },
+        { enableHighAccuracy: true, timeout: 12000, maximumAge: 5000 }
+      );
     }
 
-    // Debounce tape
-    let t = null;
+    /* EVENTS */
+    elBtnSearch.addEventListener("click", () => {
+      setMode('text', document.getElementById('tabText'));
+      textSearch();
+    });
+
+    elBtnGeo.addEventListener("click", () => {
+      setMode('geo', document.getElementById('tabGeo'));
+    });
+
+    if(elBtnGeoRun){
+      elBtnGeoRun.addEventListener("click", () => {
+        setMode('geo', document.getElementById('tabGeo'));
+        geoSearch();
+      });
+    }
+
+    // Debounce pour recherche auto
+    let debounceTimer = null;
     function debounceSearch(){
-      clearTimeout(t);
-      t = setTimeout(runSearch, 380);
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        if(currentMode === 'text') textSearch();
+      }, 400);
     }
 
-    elBtn.addEventListener("click", runSearch);
     elQ.addEventListener("input", debounceSearch);
     elCity.addEventListener("input", debounceSearch);
-    [elMinRating, elMaxPrice, elSortBy, elPack].forEach(el => el.addEventListener("change", runSearch));
+    [elMinRating, elMaxPrice, elSortBy, elPack].forEach(el => {
+      el.addEventListener("change", () => {
+        if(currentMode === 'text') textSearch();
+      });
+    });
 
     // Enter = recherche
     elQ.addEventListener("keydown", (e) => {
-      if(e.key === "Enter") runSearch();
+      if(e.key === "Enter" && currentMode === 'text') textSearch();
     });
     elCity.addEventListener("keydown", (e) => {
-      if(e.key === "Enter") runSearch();
+      if(e.key === "Enter" && currentMode === 'text') textSearch();
     });
 
     // Auto-focus
     elQ.focus();
 
-    // Petite recherche à vide (ça ne fait rien si q est vide)
-    // runSearch();
+    // Recherche initiale vide (affiche tout)
+    // textSearch();
   </script>
 
 </body>
