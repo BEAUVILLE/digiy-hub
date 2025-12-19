@@ -1,203 +1,393 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>DIGIY RESTO — Recherche</title>
+  <meta name="theme-color" content="#0A0E1A" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#020617; --card:#0b1120; --border:rgba(148,163,184,.45);
-      --ink:#f9fafb; --muted:#cbd5e1; --accent:#f97316; --gold:#facc15;
+      --bg:#020617;
+      --card:rgba(15,23,42,0.92);
+      --border:rgba(148,163,184,0.48);
+      --ink:#F9FAFB;
+      --muted:#CBD5E1;
+      --gold:#facc15;
+      --accent:#f97316;
+      --accent2:#22d3ee;
+      --danger:#ef4444;
+      --ok:#22c55e;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{
-      font-family:Manrope,system-ui,sans-serif;
-      background:radial-gradient(circle at top left, rgba(249,115,22,0.16), transparent 60%), #020617;
-      color:var(--ink);
-      padding:18px;
+      font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       min-height:100vh;
+      background:
+        radial-gradient(circle at top left, rgba(249,115,22,0.14), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(34,211,238,0.16), transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      overflow-x:hidden;
     }
-    .wrap{max-width:980px;margin:0 auto}
-    .top{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      margin-bottom:14px;
+    .wrap{max-width:1100px;margin:0 auto;padding:1.2rem}
+    header{
+      display:flex;justify-content:space-between;align-items:center;gap:1rem;
+      padding:1rem 1.2rem;border-radius:22px;
+      background:linear-gradient(135deg, rgba(15,23,42,0.98), rgba(17,24,39,0.96));
+      border:1px solid var(--border);
+      box-shadow:0 14px 40px rgba(0,0,0,0.65);
+      margin-bottom:1.2rem;
+    }
+    .brand{display:flex;align-items:center;gap:.9rem;text-decoration:none;color:inherit}
+    .logo{
+      width:52px;height:52px;border-radius:16px;
+      background:radial-gradient(circle at 30% 20%,#fef3c7,#f97316);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.9rem;font-weight:900;color:#111827;
+      box-shadow:0 12px 32px rgba(249,115,22,0.6);
     }
     .title{
-      font-family:Outfit,system-ui,sans-serif;
-      font-weight:900;font-size:1.35rem;
-      letter-spacing:.02em;
+      font-family:'Outfit',sans-serif;
+      font-weight:900;letter-spacing:.08em;text-transform:uppercase;
+      font-size:1.15rem;
+      background:linear-gradient(135deg,#f97316,#facc15,#22d3ee);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
+    .subtitle{color:var(--muted);font-weight:800;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase}
+
+    .top-actions{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:flex-end}
     .btn{
-      border-radius:999px;border:1px solid var(--border);
-      background:rgba(15,23,42,.85); color:var(--ink);
-      padding:.6rem 1rem; font-weight:900; cursor:pointer;
-      text-decoration:none; display:inline-flex; align-items:center; gap:.5rem;
+      border:none;cursor:pointer;text-decoration:none;
+      padding:.7rem 1.05rem;border-radius:999px;
+      font-family:'Outfit',sans-serif;font-weight:950;
+      letter-spacing:.10em;text-transform:uppercase;font-size:.78rem;
+      display:inline-flex;align-items:center;gap:.5rem;
+      white-space:nowrap;
     }
-    .card{
-      background:rgba(11,17,32,.92);
+    .btn-gold{
+      color:#111827;background:linear-gradient(135deg,#facc15,#fde68a);
+      border:1px solid rgba(250,204,21,.9);
+      box-shadow:0 10px 28px rgba(250,204,21,0.22);
+    }
+    .btn-dark{
+      color:var(--ink);background:rgba(15,23,42,0.98);
       border:1px solid var(--border);
-      border-radius:18px;
-      padding:14px;
-      margin-bottom:12px;
     }
-    .row{display:grid;grid-template-columns:1fr 180px 160px;gap:10px}
-    @media(max-width:760px){ .row{grid-template-columns:1fr} }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:1.1rem;
+      box-shadow:0 16px 52px rgba(0,0,0,0.75);
+      margin-bottom:1rem;
+    }
+    .h1{
+      font-family:'Outfit',sans-serif;
+      font-size:1.6rem;
+      font-weight:950;
+      margin-bottom:.25rem;
+    }
+    .p{color:var(--muted);font-weight:650;line-height:1.6;margin-bottom:1rem}
+    .row{
+      display:grid;
+      grid-template-columns: 1.7fr 1fr auto;
+      gap:.7rem;
+      align-items:center;
+    }
+    @media(max-width:820px){
+      .row{grid-template-columns: 1fr; }
+    }
     input{
       width:100%;
-      padding:.85rem 1rem;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:rgba(15,23,42,.85);
+      padding:.95rem 1rem;
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.55);
+      background:rgba(2,6,23,0.55);
       color:var(--ink);
       outline:none;
-      font-weight:800;
+      font-weight:750;
     }
+    input::placeholder{color:rgba(203,213,225,0.7);font-weight:650}
     .cta{
-      border:none; border-radius:14px;
-      background:linear-gradient(135deg,var(--accent),#ea580c);
-      color:#111827; font-weight:950;
-      padding:.9rem 1rem;
+      padding:.95rem 1.1rem;
+      border-radius:16px;
+      border:none;
       cursor:pointer;
-      box-shadow:0 10px 26px rgba(249,115,22,.45);
+      font-family:'Outfit',sans-serif;
+      font-weight:950;
+      letter-spacing:.06em;
+      background:linear-gradient(135deg,var(--accent),#ea580c);
+      color:#111827;
+      box-shadow:0 12px 32px rgba(249,115,22,0.5);
+      white-space:nowrap;
     }
-    .hint{color:var(--muted);font-weight:700;margin-top:8px;font-size:.92rem}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+    .hint{
+      margin-top:.75rem;
+      font-size:.92rem;
+      color:var(--muted);
+      font-weight:700;
+      display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:rgba(203,213,225,0.45)}
+    .dot.ok{background:rgba(34,197,94,0.9)}
+    .dot.bad{background:rgba(239,68,68,0.9)}
+    .dot.busy{background:rgba(250,204,21,0.95)}
+
+    .results{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+      gap:.9rem;
+      margin-top:.9rem;
+    }
     .item{
-      padding:14px;
       border-radius:18px;
-      border:1px solid var(--border);
-      background:radial-gradient(circle at top left, rgba(249,115,22,0.10), transparent 60%), rgba(11,17,32,.92);
+      border:1px solid rgba(148,163,184,0.50);
+      background:
+        radial-gradient(circle at top left, rgba(249,115,22,0.12), transparent 60%),
+        rgba(11,17,32,0.96);
+      padding:1rem;
+      cursor:pointer;
+      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+      position:relative;
+      overflow:hidden;
     }
-    .item h3{font-family:Outfit,system-ui,sans-serif;font-weight:900;font-size:1.05rem}
-    .meta{color:var(--muted);font-weight:750;margin-top:6px}
+    .item:hover{
+      transform:translateY(-3px);
+      border-color:rgba(249,115,22,0.9);
+      box-shadow:0 18px 42px rgba(0,0,0,0.75);
+    }
+    .item-title{
+      font-family:'Outfit',sans-serif;
+      font-weight:950;
+      font-size:1.06rem;
+      margin-bottom:.25rem;
+    }
+    .item-meta{color:var(--muted);font-weight:750;font-size:.9rem;line-height:1.45}
     .badge{
-      display:inline-block;margin-top:10px;
-      padding:.25rem .65rem;border-radius:999px;
-      border:1px solid rgba(250,204,21,1);
-      background:rgba(250,204,21,.14);
-      color:#fef9c3; font-weight:950; font-size:.72rem;
-      letter-spacing:.12em; text-transform:uppercase;
+      position:absolute;top:.85rem;right:.85rem;
+      font-size:.72rem;
+      padding:.28rem .7rem;
+      border-radius:999px;
+      border:1px solid rgba(250,204,21,0.9);
+      background:rgba(250,204,21,0.14);
+      color:#fef9c3;
+      font-weight:950;
+      letter-spacing:.12em;
+      text-transform:uppercase;
     }
-    .err{border-color:rgba(239,68,68,.6);background:rgba(239,68,68,.10)}
+    .small{font-size:.82rem;color:var(--muted);font-weight:700;margin-top:.5rem}
+    .empty{
+      padding:1rem;
+      border-radius:18px;
+      border:1px dashed rgba(148,163,184,0.55);
+      color:var(--muted);
+      font-weight:750;
+      margin-top:.9rem;
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
+    <header>
+      <a class="brand" href="index.html" title="Retour DIGIY HUB">
+        <div class="logo">∞</div>
+        <div>
+          <div class="title">DIGIY RESTO</div>
+          <div class="subtitle">Recherche • Découverte • 0% commission</div>
+        </div>
+      </a>
 
-    <div class="top">
-      <div class="title">🔎 DIGIY RESTO — Recherche</div>
-      <a class="btn" href="./index.html">← Retour HUB</a>
-    </div>
+      <div class="top-actions">
+        <a class="btn btn-dark" href="index.html">← HUB</a>
+        <a class="btn btn-gold" href="https://digiylyfe.com/menus-pages" target="_blank" rel="noopener">☰ Menu</a>
+      </div>
+    </header>
 
-    <div class="card">
+    <section class="card">
+      <div class="h1">Trouver un restaurant</div>
+      <div class="p">Tape d’abord le <strong>nom</strong>, le <strong>quartier</strong> ou un mot-clé (ex: “fatou plateau dakar”). Ensuite, ville si tu veux.</div>
+
       <div class="row">
-        <input id="q" placeholder='Ex: "fatou plateau dakar" (min 2 lettres)' />
-        <input id="city" placeholder="Ville (optionnel) : Dakar" />
+        <!-- ✅ TEXTE EN PREMIER -->
+        <input id="q" placeholder='Ex: "fatou plateau dakar" (min 2 lettres)' autocomplete="off" />
+        <input id="city" placeholder="Ville (optionnel) : Dakar" autocomplete="off" />
         <button class="cta" id="btn">Rechercher →</button>
       </div>
-      <div class="hint" id="status">Tape et lance la recherche.</div>
-    </div>
 
-    <div id="results" class="grid"></div>
+      <div class="hint" id="status">
+        <span class="dot" id="dot"></span>
+        <span id="statusText">Tape et lance la recherche.</span>
+      </div>
 
+      <div id="out"></div>
+    </section>
+
+    <div class="small">Astuce : si tu veux plus tard, on ajoute “autour de moi” (géoloc + rayon) avec PostGIS.</div>
   </div>
 
-  <!-- Supabase JS -->
+  <!-- Supabase JS (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    /* 🔐 SUPABASE — DÉJÀ POSÉ */
+    /* 🔐 SUPABASE — DÉJÀ POSÉ (tu peux garder exactement tes valeurs) */
     const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
     const SUPABASE_ANON_KEY =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-    const statusEl = document.getElementById("status");
-    const resultsEl = document.getElementById("results");
-    const qEl = document.getElementById("q");
-    const cityEl = document.getElementById("city");
-    const btnEl = document.getElementById("btn");
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const $q = document.getElementById("q");
+    const $city = document.getElementById("city");
+    const $btn = document.getElementById("btn");
+    const $out = document.getElementById("out");
 
-    function escapeHTML(str){
-      return String(str).replace(/[&<>"']/g, s => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-      }[s]));
+    const $dot = document.getElementById("dot");
+    const $statusText = document.getElementById("statusText");
+
+    function setStatus(state, text){
+      $statusText.textContent = text || "";
+      $dot.className = "dot";
+      if(state === "ok") $dot.classList.add("ok");
+      if(state === "bad") $dot.classList.add("bad");
+      if(state === "busy") $dot.classList.add("busy");
     }
 
-    function formatPriceRange(n){
-      if(!n) return "—";
-      const c = Math.max(1, Math.min(4, Number(n)));
-      return "€".repeat(c);
+    function esc(s){
+      return String(s ?? "").replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+      }[m]));
     }
 
-    function cardHTML(r){
-      const pack = (r.subscription_pack || "basic").toUpperCase();
-      return `
-        <div class="item">
-          <h3>${escapeHTML(r.title || "Sans titre")}</h3>
-          <div class="meta">${escapeHTML(r.city || "")}${r.category ? " • " + escapeHTML(r.category) : ""}</div>
-          <div class="meta">💸 ${formatPriceRange(r.price_range)} • Score ${Math.round(Number(r.ranking_score||0))}</div>
-          <div class="badge">${escapeHTML(pack)}</div>
-        </div>
-      `;
+    function renderResults(rows){
+      if(!rows || rows.length === 0){
+        $out.innerHTML = `<div class="empty">Aucun resto trouvé. Essaie un autre mot (ex: “dakar”, “plateau”, “fatou”).</div>`;
+        return;
+      }
+
+      const cards = rows.map(r => {
+        const name = r.business_name || r.display_name || "Restaurant";
+        const city = r.city || "";
+        const country = r.country || "SN";
+        const phone = r.phone || "";
+        const email = r.email || "";
+        const modules = Array.isArray(r.modules) ? r.modules : [];
+        const activeMods = Array.isArray(r.active_modules) ? r.active_modules : [];
+        const isPremium = (String(r.payment_status || "").toLowerCase() === "premium") ||
+                          (activeMods.includes("premium")) || (modules.includes("premium"));
+
+        return `
+          <div class="item" data-id="${esc(r.id)}">
+            ${isPremium ? `<div class="badge">Premium</div>` : ``}
+            <div class="item-title">${esc(name)}</div>
+            <div class="item-meta">
+              📍 ${esc(city)} • ${esc(country)}<br>
+              ${phone ? `📞 ${esc(phone)}<br>` : ``}
+              ${email ? `✉️ ${esc(email)}<br>` : ``}
+              <span style="opacity:.85">ID: ${esc(String(r.id).slice(0,8))}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      $out.innerHTML = `<div class="results">${cards}</div>`;
+
+      // clic (plus tard: ouvrir page détail / fiche)
+      $out.querySelectorAll(".item").forEach(el => {
+        el.addEventListener("click", () => {
+          const id = el.getAttribute("data-id");
+          alert("Fiche RESTO (à brancher) — PRO ID: " + id);
+          // Exemple futur:
+          // window.location.href = "resto-details.html?id=" + encodeURIComponent(id);
+        });
+      });
     }
 
     async function runSearch(){
-      const q = (qEl.value || "").trim();
-      const city = (cityEl.value || "").trim();
+      const q = ($q.value || "").trim();
+      const city = ($city.value || "").trim();
 
       if(q.length < 2 && city.length < 2){
-        statusEl.textContent = "⚠️ Mets au moins 2 lettres (ou une ville).";
-        resultsEl.innerHTML = "";
+        setStatus("", "Tape au moins 2 lettres (ou une ville).");
+        $out.innerHTML = "";
         return;
       }
 
-      statusEl.textContent = "⏳ Recherche...";
-      resultsEl.innerHTML = "";
+      setStatus("busy", "Recherche en cours…");
+      $out.innerHTML = "";
 
-      // ✅ IMPORTANT : ici on vise TA table pro_listings et TON champ listing_type
-      let query = sb
-        .from("pro_listings")
-        .select("id, title, city, category, price_range, subscription_pack, ranking_score")
-        .eq("is_active", true)
-        .eq("listing_type", "resto")
-        .order("ranking_score", { ascending: false })
-        .limit(24);
+      try{
+        // Base query: table pros
+        let query = supabase
+          .from("pros")
+          .select("id,business_name,display_name,city,country,phone,email,modules,active_modules,is_active,created_at,payment_status,status")
+          .eq("is_active", true);
 
-      if(city.length >= 2){
-        query = query.ilike("city", city);
+        // ✅ RESTO = modules OU active_modules contient "resto"
+        // PostgREST: operator cs works with array/jsonb -> {resto}
+        query = query.or("modules.cs.{resto},active_modules.cs.{resto}");
+
+        // Ville optionnel
+        if(city.length >= 2){
+          query = query.ilike("city", `%${city}%`);
+        }
+
+        // Texte : on cherche dans business_name, display_name, city (simple mais efficace)
+        if(q.length >= 2){
+          const safe = q.replace(/[,]/g, " ").trim();
+          // OR sur 3 champs (PostgREST)
+          query = query.or(
+            `business_name.ilike.%${safe}%,display_name.ilike.%${safe}%,city.ilike.%${safe}%`
+          );
+        }
+
+        // Tri: récent d'abord (on améliorera par ranking plus tard)
+        query = query.order("created_at", { ascending: false }).limit(30);
+
+        const { data, error } = await query;
+
+        if(error){
+          console.error(error);
+          setStatus("bad", "Erreur Supabase: " + (error.message || "inconnue"));
+          $out.innerHTML = `<div class="empty">Erreur: ${esc(error.message || "inconnue")}</div>`;
+          return;
+        }
+
+        setStatus("ok", `${data.length} résultat(s)`);
+        renderResults(data);
+
+      }catch(err){
+        console.error(err);
+        setStatus("bad", "Crash JS: " + (err.message || err));
+        $out.innerHTML = `<div class="empty">Crash JS: ${esc(err.message || err)}</div>`;
       }
-
-      if(q.length >= 2){
-        query = query.textSearch("search_vector", q, { config: "french" });
-      }
-
-      const { data, error } = await query;
-
-      if(error){
-        statusEl.textContent = "❌ " + error.message;
-        return;
-      }
-
-      const rows = Array.isArray(data) ? data : [];
-      statusEl.textContent = `✅ ${rows.length} résultat(s)`;
-
-      resultsEl.innerHTML = rows.map(cardHTML).join("");
     }
 
-    btnEl.addEventListener("click", runSearch);
-    qEl.addEventListener("keydown", (e)=>{ if(e.key==="Enter") runSearch(); });
-    cityEl.addEventListener("keydown", (e)=>{ if(e.key==="Enter") runSearch(); });
+    // bouton
+    $btn.addEventListener("click", runSearch);
 
-    // test rapide
-    qEl.value = "fatou";
+    // Enter
+    [$q, $city].forEach(inp => {
+      inp.addEventListener("keydown", (e) => {
+        if(e.key === "Enter") runSearch();
+      });
+    });
+
+    // Debounce (tape → recherche douce)
+    let t = null;
+    $q.addEventListener("input", () => {
+      clearTimeout(t);
+      t = setTimeout(runSearch, 450);
+    });
+
+    // focus direct sur le texte
+    setTimeout(() => $q.focus(), 150);
   </script>
 </body>
 </html>
