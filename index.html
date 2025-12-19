@@ -1223,7 +1223,6 @@
     window.location.href = url;
   }
 
-  // Click sur le bouton = click sur la carte
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".module-btn");
     if(!btn) return;
@@ -1247,7 +1246,6 @@
   })();
 </script>
 
-<!-- ✅ TON SCRIPT “RECHERCHE RESTO” (SAFE: ne casse rien si les champs n'existent pas) -->
 <script>
   (function () {
     const btn = document.getElementById("btn");
@@ -1255,7 +1253,6 @@
     const cityInput = document.getElementById("city");
     const status = document.getElementById("status");
 
-    // Si le bloc recherche n'est pas sur cette page, on sort sans rien casser
     if (!btn || !qInput) return;
 
     btn.addEventListener("click", () => {
@@ -1263,8 +1260,11 @@
       const city = (cityInput?.value || "").trim();
 
       if (q.length < 2) {
-        if (status) status.textContent = "Tape au moins 2 lettres frérot 🙂";
-        else alert("Tape au moins 2 lettres frérot 🙂");
+        if (status) {
+          status.textContent = "Tape au moins 2 lettres frérot 🙂";
+        } else {
+          alert("Tape au moins 2 lettres frérot 🙂");
+        }
         return;
       }
 
