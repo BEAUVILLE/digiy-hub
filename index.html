@@ -1247,7 +1247,38 @@
       }
     }, 30000);
   })();
-</script>
+</<script>
+  (function () {
+    const btn = document.getElementById("btn");
+    const qInput = document.getElementById("q");
+    const cityInput = document.getElementById("city");
+    const status = document.getElementById("status");
 
+    if (!btn || !qInput) return;
+
+    btn.addEventListener("click", () => {
+      const q = (qInput.value || "").trim();
+      const city = (cityInput?.value || "").trim();
+
+      if (q.length < 2) {
+        if (status) {
+          status.textContent = "Tape au moins 2 lettres frérot 🙂";
+        } else {
+          alert("Tape au moins 2 lettres frérot 🙂");
+        }
+        return;
+      }
+
+      // 👉 on garde TOUT ton système de navigation intact
+      // 👉 on redirige simplement vers la page search
+      const url =
+        "search-resto.html" +
+        "?q=" + encodeURIComponent(q) +
+        "&city=" + encodeURIComponent(city);
+
+      window.location.href = url;
+    });
+  })();
+</script>
 </body>
 </html>
