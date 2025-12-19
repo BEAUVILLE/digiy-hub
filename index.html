@@ -134,6 +134,22 @@
       color:var(--muted);font-weight:700;
     }
 
+    /* ✅ TOP ACTIONS (fix wrap + layout cassé) */
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      justify-content:flex-end;
+      flex-wrap:nowrap;
+      position:relative;
+      z-index:1;
+    }
+    @media(max-width:768px){
+      header{flex-direction:column;align-items:flex-start;}
+      .brand-text-title{font-size:1.6rem;}
+      .top-actions{width:100%;justify-content:flex-end;flex-wrap:wrap;}
+    }
+
     .user-pill{
       display:flex;align-items:center;gap:0.8rem;
       padding:0.5rem 1.2rem;
@@ -141,7 +157,6 @@
       border-radius:999px;
       border:1px solid rgba(148,163,184,0.65);
       box-shadow:0 10px 28px rgba(15,23,42,0.95);
-      position:relative;z-index:1;
     }
 
     .user-avatar{
@@ -185,11 +200,6 @@
     .menu-top .icon{
       font-size:1.05rem;
       line-height:1;
-    }
-
-    @media(max-width:768px){
-      header{flex-direction:column;align-items:flex-start;}
-      .brand-text-title{font-size:1.6rem;}
     }
 
     .hero{
@@ -603,6 +613,7 @@
 <body>
 <div class="app">
 
+  <!-- ✅ HEADER PROPRE -->
   <header>
     <a href="#" class="brand">
       <div class="brand-logo">∞</div>
@@ -612,30 +623,18 @@
       </div>
     </a>
 
-   <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:flex-end;">
-  
-  <a class="menu-top" href="https://digiylyfe.com/menus-pages" aria-label="Menu DIGIY">
-    <span class="icon">☰</span> MENU
-  </a>
+    <div class="top-actions">
+      <a class="menu-top" href="https://digiylyfe.com/menus-pages" aria-label="Menu DIGIY">
+        <span class="icon">☰</span> MENU
+      </a>
 
-  <a href="./search-resto.html" class="btn btn-secondary" style="padding:0.6rem 1.2rem;font-size:0.9rem;">
-    🔍 DIGIY RESTO
-  </a>
+      <a href="./search-resto.html" class="btn btn-secondary" style="padding:0.6rem 1.2rem;font-size:0.9rem;">
+        🔍 DIGIY RESTO
+      </a>
 
-  <a href="https://beauville.github.io/mon-espace-digiy/" class="btn btn-secondary" style="padding:0.6rem 1.2rem;font-size:0.9rem;">
-    🔐 Se connecter
-  </a>
-
-  <div class="user-pill">
-    <div class="user-avatar">👤</div>
-    <div>
-      <div class="user-name">Invité</div>
-      <div class="user-role">Connecté à DIGIYLYFE</div>
-    </div>
-    <button class="logout-btn" onclick="alert('Changement de compte à venir')">⏏</button>
-  </div>
-
-</div>
+      <a href="https://beauville.github.io/mon-espace-digiy/" class="btn btn-secondary" style="padding:0.6rem 1.2rem;font-size:0.9rem;">
+        🔐 Se connecter
+      </a>
 
       <div class="user-pill">
         <div class="user-avatar">👤</div>
@@ -1226,7 +1225,7 @@
     job:          "https://beauville.github.io/digiy-jobs/",
     explore:      "https://beauville.github.io/digiy-explore/",
     notable:      "https://beauville.github.io/digiy-notable/",
-    bonPlan:      "https://beauville.github.io/digiy-bonne-affaire/",
+    bonPlan:      "https://beauville.github.io/digiy-bonne_affaire/" , /* ⚠️ garde ton URL exacte si différente */
     inscription:  "https://beauville.github.io/inscription-digiy/",
     dashboard:    "https://beauville.github.io/mon-espace-digiy/"
   };
@@ -1261,38 +1260,6 @@
         pioneersEl.textContent = pioneersLeft;
       }
     }, 30000);
-  })();
-</script>
-
-<script>
-  (function () {
-    const btn = document.getElementById("btn");
-    const qInput = document.getElementById("q");
-    const cityInput = document.getElementById("city");
-    const status = document.getElementById("status");
-
-    if (!btn || !qInput) return;
-
-    btn.addEventListener("click", () => {
-      const q = (qInput.value || "").trim();
-      const city = (cityInput?.value || "").trim();
-
-      if (q.length < 2) {
-        if (status) {
-          status.textContent = "Tape au moins 2 lettres frérot 🙂";
-        } else {
-          alert("Tape au moins 2 lettres frérot 🙂");
-        }
-        return;
-      }
-
-      const url =
-        "search-resto.html" +
-        "?q=" + encodeURIComponent(q) +
-        "&city=" + encodeURIComponent(city);
-
-      window.location.href = url;
-    });
   })();
 </script>
 
