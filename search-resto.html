@@ -127,6 +127,7 @@
       margin-bottom:14px;
     }
 
+    /* 4 colonnes desktop (comme toi), module dans filters */
     .search-row{
       display:grid;
       grid-template-columns: 1.6fr .8fr auto auto;
@@ -412,6 +413,14 @@
         </div>
 
         <div class="filters">
+          <!-- ✅ MODULE (réel chez toi = modules[]) -->
+          <select id="module">
+            <option value="resto" selected>🍽️ RESTO</option>
+            <option value="loc">🏠 LOC</option>
+            <option value="chauffeur">🚗 CHAUFFEUR</option>
+            <option value="all">🦅 Tous</option>
+          </select>
+
           <select id="minRating">
             <option value="">Note minimum</option>
             <option value="3.5">⭐ 3.5+</option>
@@ -456,7 +465,7 @@
           <button class="btn btn-geo" id="btnGeoRun">📍 Lancer la recherche</button>
         </div>
         <div class="hint">
-          📍 On utilise ta position réelle (PostGIS) pour remonter les restos proches.
+          📍 On utilise ta position réelle (PostGIS) pour remonter les pros proches.
           Si ton téléphone demande l’autorisation, accepte, sinon… pas de magie 😄
         </div>
       </div>
@@ -486,7 +495,7 @@
     <div id="empty" class="empty" style="display:none;">
       😕 <strong>Aucun résultat trouvé.</strong><br>
       Essaie : <strong>"fatou dakar"</strong> ou <strong>"thieboudienne plateau"</strong><br>
-      Ou clique sur <strong>📍 Géo</strong> pour trouver les restos autour de toi !
+      Ou clique sur <strong>📍 Géo</strong> pour trouver les pros autour de toi !
     </div>
 
   </div>
@@ -500,6 +509,8 @@
     // UI Elements
     const elQ = document.getElementById("q");
     const elCity = document.getElementById("city");
+    const elModule = document.getElementById("module");
+
     const elBtnSearch = document.getElementById("btnSearch");
     const elBtnGeo = document.getElementById("btnGeo");
     const elBtnGeoRun = document.getElementById("btnGeoRun");
@@ -525,19 +536,15 @@
     function setMode(mode, el){
       currentMode = mode;
 
-      // tabs
       document.querySelectorAll('.mode-tab').forEach(tab => tab.classList.remove('active'));
       if(el) el.classList.add('active');
 
-      // blocks
       elTextMode.style.display = (mode === 'text') ? 'block' : 'none';
       elGeoMode.style.display  = (mode === 'geo')  ? 'block' : 'none';
 
-      // auto behavior
       if(mode === 'geo'){
-        geoSearch(); // terrain: on lance direct
+        geoSearch();
       } else {
-        // focus input
         setTimeout(() => elQ && elQ.focus(), 50);
       }
     }
@@ -566,15 +573,29 @@
       return "⭐".repeat(Math.floor(rating)) + (rating % 1 >= 0.5 ? "½" : "");
     }
 
+    function moduleBadgeText(currentModule, pack){
+      if(pack === "premium") return "⭐ PREMIUM";
+      if(currentModule && currentModule !== "all"){
+        if(currentModule === "resto") return "🍽️ RESTO";
+        if(currentModule === "loc") return "🏠 LOC";
+        if(currentModule === "chauffeur") return "🚗 CHAUFFEUR";
+        return currentModule.toUpperCase();
+      }
+      return "PRO";
+    }
+
     function render(rows){
+      rows = Array.isArray(rows) ? rows : [];
       elResults.innerHTML = "";
       elEmpty.style.display = rows.length ? "none" : "block";
       elCount.textContent = rows.length + (rows.length > 1 ? " résultats" : " résultat");
 
+      const currentModule = elModule ? elModule.value : "resto";
+
       rows.forEach(r => {
         const name = r.business_name || r.name || "Sans nom";
         const city = r.city || "";
-        const category = r.category || "";
+        const quartier = r.quartier || "";
         const rating = r.rating || 0;
         const price = r.price_range || 0;
         const pack = (r.subscription_pack || "").toLowerCase();
@@ -582,7 +603,7 @@
         const distance = r.distance_km !== undefined ? r.distance_km : null;
 
         const badge = pack === "premium" ? "badge badge-premium" : "badge";
-        const badgeText = pack === "premium" ? "⭐ PREMIUM" : (pack || "resto");
+        const badgeText = moduleBadgeText(currentModule, pack);
 
         const card = document.createElement("div");
         card.className = "item";
@@ -592,15 +613,14 @@
             <div class="${badge}">${escapeHtml(badgeText).toUpperCase()}</div>
           </div>
           <div class="meta">
-            ${city ? `<span>📍 ${escapeHtml(city)}</span>` : ""}
+            ${city ? `<span>📍 ${escapeHtml(city)}${quartier ? " • " + escapeHtml(quartier) : ""}</span>` : ""}
             ${distance !== null ? `<span>🚶 ${escapeHtml(distance)} km</span>` : ""}
-            ${category ? `<span>🍽️ ${escapeHtml(category)}</span>` : ""}
             ${rating > 0 ? `<span>${formatRating(rating)} ${Number(rating).toFixed(1)}</span>` : ""}
             ${price > 0 ? `<span>💰 ${formatPrice(price)}</span>` : ""}
           </div>
           <div class="desc">${escapeHtml(desc).slice(0, 120)}${safeText(desc).length > 120 ? "…" : ""}</div>
           <div class="foot">
-            <button class="cta">Voir le resto →</button>
+            <button class="cta">${currentModule === "resto" ? "Voir le resto →" : "Voir le pro →"}</button>
             <div class="muted">Fiche détail</div>
           </div>
         `;
@@ -610,7 +630,7 @@
           if(id){
             window.location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
           } else {
-            alert("ID manquant pour ce resto");
+            alert("ID manquant pour ce pro");
           }
         });
 
@@ -618,10 +638,11 @@
       });
     }
 
-    /* 🔍 RECHERCHE TEXTUELLE (FULL-TEXT POSTGRESQL) */
+    /* 🔍 RECHERCHE TEXTUELLE — via RPC (modules[] + full-text) */
     async function textSearch(){
       const q = safeText(elQ.value).trim();
       const city = safeText(elCity.value).trim();
+      const module = elModule ? safeText(elModule.value).trim() : "resto";
 
       if(q.length && q.length < 2){
         elStatus.innerHTML = `⛔ Tape au moins <strong>2 lettres</strong> frérot.`;
@@ -631,67 +652,33 @@
       elStatus.innerHTML = `⏳ Recherche en cours...`;
       elDebug.style.display = "none";
 
-      const minRating = elMinRating.value ? parseFloat(elMinRating.value) : null;
-      const maxPrice = elMaxPrice.value ? parseInt(elMaxPrice.value, 10) : null;
       const sortBy = elSortBy.value || "ranking";
-      const pack = elPack.value ? elPack.value.toLowerCase() : null;
 
       try {
-        // ✅ Pour le verrouillage SQL, tu remplaceras plus tard 'pros' par ta vue publique:
-        // .from('v_public_resto_search')
-        let query = supabase
-          .from('pros')
-          .select('*')
-          .eq('type', 'resto')
-          .eq('is_active', true)
-          .limit(40);
-
-        // FULL-TEXT SEARCH (si query)
-        if(q.length >= 2){
-          query = query.textSearch('search_vector', q, {
-            type: 'websearch',
-            config: 'french'
-          });
-        }
-
-        // Filtres (ville souple)
-        if(city){
-          query = query.ilike('city', `%${city}%`);
-        }
-
-        if(minRating !== null){
-          query = query.gte('rating', minRating);
-        }
-
-        if(maxPrice !== null){
-          query = query.lte('price_range', maxPrice);
-        }
-
-        if(pack){
-          query = query.eq('subscription_pack', pack);
-        }
-
-        // Tri
-        switch(sortBy){
-          case "rating":
-            query = query.order('rating', { ascending: false });
-            break;
-          case "price":
-            query = query.order('price_range', { ascending: true });
-            break;
-          case "new":
-            query = query.order('created_at', { ascending: false });
-            break;
-          default:
-            query = query.order('ranking_score', { ascending: false });
-        }
-
-        const { data, error } = await query;
+        // 🔥 RPC universelle: filtre par modules[] côté DB
+        const { data, error } = await supabase.rpc('search_pros_universal', {
+          q: q || null,
+          p_module: (module === "all") ? null : module,
+          p_city: city || null,
+          p_quartier: null,
+          p_limit: 80
+        });
         if(error) throw error;
 
-        elInfo.textContent = `Mode: Full-text search`;
-        elStatus.innerHTML = `✅ ${data.length} résultat(s) trouvé(s).`;
-        render(data);
+        let rows = Array.isArray(data) ? data : [];
+
+        // Tri basique (rank natif sinon)
+        if(sortBy === "rating"){
+          rows = rows.sort((a,b) => (b.rating||0) - (a.rating||0));
+        } else if(sortBy === "new"){
+          rows = rows.sort((a,b) => safeText(b.created_at).localeCompare(safeText(a.created_at)));
+        } else {
+          rows = rows.sort((a,b) => (b.rank||0) - (a.rank||0));
+        }
+
+        elInfo.textContent = `Mode: ${module === "all" ? "Tous" : module.toUpperCase()} (RPC)`;
+        elStatus.innerHTML = `✅ ${rows.length} résultat(s) trouvé(s).`;
+        render(rows);
 
       } catch(err){
         console.error('Erreur:', err);
@@ -703,7 +690,7 @@
       }
     }
 
-    /* 📍 RECHERCHE GÉO (POSTGIS) */
+    /* 📍 RECHERCHE GÉO (POSTGIS) — garde ton RPC existant */
     async function geoSearch(){
       if(!navigator.geolocation){
         alert("❌ Géolocalisation non disponible sur cet appareil.");
@@ -719,11 +706,17 @@
           const lng = pos.coords.longitude;
 
           const radiusKm = elRadiusKm ? parseFloat(elRadiusKm.value) : 10;
+          const module = elModule ? safeText(elModule.value).trim() : "resto";
 
           try {
-            // Utilise la fonction PostgreSQL search_pros_nearby
+            // ⚠️ Ici, ta RPC s'appelle search_pros_nearby et prend p_type.
+            // Chez toi, le vrai filtre est modules[].
+            // Pour l'instant on mappe: resto/loc/chauffeur => p_type (si ta fonction l'attend).
+            // Si ta fonction est déjà "type", on pourra la convertir en "module via any(modules)".
+            const pType = (module === "all") ? "resto" : module;
+
             const { data, error } = await supabase.rpc('search_pros_nearby', {
-              p_type: 'resto',
+              p_type: pType,
               p_lat: lat,
               p_lng: lng,
               p_radius_km: radiusKm,
@@ -733,7 +726,7 @@
             if(error) throw error;
 
             elInfo.textContent = `Mode: Géolocalisation (${radiusKm}km)`;
-            elStatus.innerHTML = `✅ ${data.length} resto(s) trouvé(s) dans ${radiusKm}km.`;
+            elStatus.innerHTML = `✅ ${data.length} résultat(s) trouvé(s) dans ${radiusKm}km.`;
             render(data);
 
           } catch(err){
@@ -781,7 +774,8 @@
 
     elQ.addEventListener("input", debounceSearch);
     elCity.addEventListener("input", debounceSearch);
-    [elMinRating, elMaxPrice, elSortBy, elPack].forEach(el => {
+    [elModule, elMinRating, elMaxPrice, elSortBy, elPack].forEach(el => {
+      if(!el) return;
       el.addEventListener("change", () => {
         if(currentMode === 'text') textSearch();
       });
@@ -798,7 +792,7 @@
     // Auto-focus
     elQ.focus();
 
-    // Recherche initiale vide (affiche tout)
+    // Option: recherche initiale
     // textSearch();
   </script>
 
