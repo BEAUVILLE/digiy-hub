@@ -607,6 +607,79 @@
       .sos-bubble{left:0.6rem;bottom:0.9rem;padding:0.45rem 0.75rem;font-size:0.75rem;}
       .chat-badge-icon,.sos-badge-icon,.tarif-badge-icon{width:22px;height:22px;}
     }
+
+    /* ✅ MODAL styles (light inline) */
+    .digiy-modal-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      background:rgba(0,0,0,.65);
+    }
+    .digiy-modal{
+      max-width:1100px;
+      margin:24px auto;
+      padding:16px;
+    }
+    .digiy-modal-card{
+      border:1px solid rgba(148,163,184,.45);
+      border-radius:22px;
+      background:rgba(15,23,42,.98);
+      box-shadow:0 18px 60px rgba(0,0,0,.7);
+      padding:16px;
+    }
+    .digiy-modal-row{
+      display:grid;
+      grid-template-columns: 1.5fr .8fr .7fr auto;
+      gap:10px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    @media(max-width:900px){
+      .digiy-modal-row{grid-template-columns:1fr;}
+    }
+    .digiy-input, .digiy-select{
+      width:100%;
+      border-radius:14px;
+      padding:12px;
+      border:1px solid rgba(148,163,184,.55);
+      background:rgba(2,6,23,.55);
+      color:#fff;
+      font-weight:650;
+      outline:none;
+    }
+    .digiy-input:focus, .digiy-select:focus{
+      border-color:rgba(249,115,22,.85);
+      box-shadow:0 0 0 3px rgba(249,115,22,0.15);
+    }
+    .digiy-results-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+    .digiy-result{
+      border:1px solid rgba(148,163,184,.45);
+      border-radius:18px;
+      background:rgba(11,17,32,.98);
+      padding:14px;
+      cursor:pointer;
+      transition:transform .15s ease, border-color .15s ease;
+    }
+    .digiy-result:hover{
+      transform:translateY(-3px);
+      border-color:rgba(249,115,22,.85);
+    }
+    .digiy-pill{
+      font-size:.72rem;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.35);
+      color:#cbd5e1;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
   </style>
 </head>
 
@@ -767,6 +840,28 @@
     </p>
 
     <div class="modules-grid">
+
+      <!-- ✅ AJOUT : RECHERCHE PRO UNIVERSELLE (MÉTIERS) -->
+      <div class="module" id="openSearchPro">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🔎</div>
+            <div class="module-titles">
+              <div class="module-name">RECHERCHE PRO</div>
+              <div class="module-tagline">GOOGLE DES MÉTIERS DIGIY</div>
+            </div>
+            <div class="module-badge badge-prio">NOUVEAU</div>
+          </div>
+          <div class="module-body">
+            Un seul moteur pour trouver un pro par activité, ville, quartier, nom. (Resto, Loc, Chauffeur…)
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Chercher →</button>
+            <div class="module-meta">Universel</div>
+          </div>
+        </div>
+      </div>
+      <!-- ✅ FIN AJOUT -->
 
       <div class="module" onclick="openModule('go')">
         <div class="module-inner">
@@ -1261,6 +1356,192 @@
       }
     }, 30000);
   })();
+</script>
+
+<!-- ✅ AJOUT : SUPABASE JS (pour le moteur universel dans le HUB) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- ✅ AJOUT : MODAL RECHERCHE PRO (UNIVERSEL MÉTIERS) -->
+<div id="searchProModal" class="digiy-modal-overlay" aria-hidden="true">
+  <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="Recherche PRO DIGIY">
+    <div class="digiy-modal-card">
+
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px;">
+        <div style="font-family:Outfit,sans-serif; font-weight:950; letter-spacing:.06em; text-transform:uppercase;">
+          🔎 Recherche PRO — Métiers DIGIY
+        </div>
+        <button id="closeSearchPro" class="btn btn-secondary" type="button" style="padding:.6rem 1.1rem;font-size:.85rem;">
+          ✖ Fermer
+        </button>
+      </div>
+
+      <div class="digiy-modal-row">
+        <input id="sp_q" class="digiy-input" placeholder='Ex: "fatou plateau" / "chauffeur dakar"' />
+        <input id="sp_city" class="digiy-input" placeholder="Ville : Dakar, Thiès..." />
+        <select id="sp_module" class="digiy-select">
+          <option value="all" selected>🦅 Tous métiers</option>
+          <option value="resto">🍽️ Resto</option>
+          <option value="loc">🏠 Loc</option>
+          <option value="chauffeur">🚗 Chauffeur</option>
+          <option value="market">🛍️ Boutique</option>
+          <option value="build">🏗️ Artisan</option>
+          <option value="job">💼 Jobs</option>
+        </select>
+        <button id="sp_btn" class="btn btn-primary" type="button" style="padding:.85rem 1.2rem;font-size:.85rem;">
+          Chercher →
+        </button>
+      </div>
+
+      <div id="sp_status" style="color:#cbd5e1; font-weight:650; margin:8px 2px;">—</div>
+
+      <div id="sp_results" class="digiy-results-grid"></div>
+
+      <div id="sp_empty" style="display:none; margin-top:12px; padding:18px; border-radius:16px; border:1px dashed rgba(148,163,184,.45); color:#cbd5e1;">
+        😕 Aucun résultat. Essaie “dakar”, “plateau”, “fatou”, “chauffeur”.
+      </div>
+
+      <div id="sp_debug" style="display:none; margin-top:10px; padding:10px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(2,6,23,.55); color:#cbd5e1; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:.82rem; white-space:pre-wrap;"></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ✅ AJOUT : JS RECHERCHE PRO (RPC search_pros_universal) -->
+<script>
+  //* 🔐 SUPABASE — DÉJÀ POSÉ */
+    const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const modal = document.getElementById('searchProModal');
+  const openCard = document.getElementById('openSearchPro');
+  const closeBtn = document.getElementById('closeSearchPro');
+
+  const spQ = document.getElementById('sp_q');
+  const spCity = document.getElementById('sp_city');
+  const spModule = document.getElementById('sp_module');
+  const spBtn = document.getElementById('sp_btn');
+  const spStatus = document.getElementById('sp_status');
+  const spResults = document.getElementById('sp_results');
+  const spEmpty = document.getElementById('sp_empty');
+  const spDebug = document.getElementById('sp_debug');
+
+  function esc(s){
+    return String(s ?? '')
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'","&#039;");
+  }
+
+  function openModal(){
+    modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
+    spDebug.style.display = 'none';
+    spDebug.textContent = '';
+    spStatus.textContent = '—';
+    spResults.innerHTML = '';
+    spEmpty.style.display = 'none';
+    setTimeout(()=> spQ?.focus(), 50);
+  }
+  function closeModal(){
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  openCard?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && modal.style.display === 'block') closeModal(); });
+
+  function renderResults(rows){
+    spResults.innerHTML = '';
+    if(!rows.length){
+      spEmpty.style.display = 'block';
+      return;
+    }
+    spEmpty.style.display = 'none';
+
+    rows.forEach(r => {
+      const name = r.business_name || r.full_name || 'Sans nom';
+      const city = r.city || '';
+      const quartier = r.quartier || '';
+      const modules = Array.isArray(r.modules) ? r.modules : [];
+      const id = r.id || r.pro_id || null;
+
+      const card = document.createElement('div');
+      card.className = 'digiy-result';
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; gap:8px; align-items:flex-start; margin-bottom:8px;">
+          <div style="font-family:Outfit,sans-serif; font-weight:950;">${esc(name)}</div>
+          <div class="digiy-pill" style="font-weight:950; letter-spacing:.12em; text-transform:uppercase;">🦅 PRO</div>
+        </div>
+        <div style="color:#e5e7eb; font-weight:650; font-size:.9rem;">
+          ${city ? '📍 '+esc(city) : ''}${quartier ? ' • '+esc(quartier) : ''}
+        </div>
+        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:6px;">
+          ${modules.slice(0,6).map(m => `<span class="digiy-pill">${esc(m)}</span>`).join('')}
+        </div>
+      `;
+
+      card.addEventListener('click', ()=>{
+        if(!id){
+          alert("ID manquant pour ce pro.");
+          return;
+        }
+        // 👉 Tu peux adapter ici vers ta page fiche PRO universelle
+        window.location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
+      });
+
+      spResults.appendChild(card);
+    });
+  }
+
+  async function searchPros(){
+    const q = (spQ.value || '').trim();
+    const city = (spCity.value || '').trim();
+    const moduleKey = spModule.value;
+
+    if(q.length && q.length < 2){
+      spStatus.textContent = '⛔ Mets au moins 2 lettres.';
+      return;
+    }
+
+    spStatus.textContent = '⏳ Recherche...';
+    spResults.innerHTML = '';
+    spEmpty.style.display = 'none';
+    spDebug.style.display = 'none';
+    spDebug.textContent = '';
+
+    try{
+      // ✅ RPC universel (métiers)
+      const { data, error } = await supabase.rpc('search_pros_universal', {
+        q: q || null,
+        p_module: (moduleKey === 'all') ? null : moduleKey,
+        p_city: city || null,
+        p_quartier: null,
+        p_limit: 80
+      });
+
+      if(error) throw error;
+
+      const rows = Array.isArray(data) ? data : [];
+      spStatus.textContent = `✅ ${rows.length} résultat(s)`;
+      renderResults(rows);
+
+    }catch(err){
+      spStatus.textContent = `❌ ${err?.message || 'Erreur'}`;
+      spDebug.textContent = JSON.stringify(err, null, 2);
+      spDebug.style.display = 'block';
+      spEmpty.style.display = 'block';
+    }
+  }
+
+  spBtn?.addEventListener('click', searchPros);
+  spQ?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
+  spCity?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
 </script>
 
 </body>
