@@ -134,7 +134,6 @@
       color:var(--muted);font-weight:700;
     }
 
-    /* ✅ TOP ACTIONS (fix wrap + layout cassé) */
     .top-actions{
       display:flex;
       align-items:center;
@@ -608,7 +607,6 @@
       .chat-badge-icon,.sos-badge-icon,.tarif-badge-icon{width:22px;height:22px;}
     }
 
-    /* ✅ MODAL styles (light inline) */
     .digiy-modal-overlay{
       display:none;
       position:fixed;
@@ -686,7 +684,6 @@
 <body>
 <div class="app">
 
-  <!-- ✅ HEADER PROPRE -->
   <header>
     <a href="#" class="brand">
       <div class="brand-logo">∞</div>
@@ -754,6 +751,7 @@
           <span class="pill">MARKETPLACE — DIGIY MARKET</span>
           <span class="pill">RECO — DIGIY NOTABLE</span>
           <span class="pill">SORTIES — DIGIY EXPLORE</span>
+          <span class="pill pill-strong">FRET — DIGIY TRANSPORT</span>
         </div>
         <div class="hero-cta-row">
           <a href="https://beauville.github.io/inscription-digiy/" class="btn btn-primary">
@@ -796,7 +794,6 @@
     </div>
   </section>
 
-  <!-- ✨ VAS CHEZ DIGIY — SECTION MANIFESTE (TOP VISIBILITÉ) -->
   <section style="background:linear-gradient(145deg,rgba(15,23,42,0.98),rgba(15,23,42,0.96)); border-radius:26px; border:1px solid rgba(250,204,21,0.6); padding:2.5rem 2rem; margin-bottom:2rem; box-shadow:0 16px 52px rgba(250,204,21,0.3); position:relative; overflow:hidden;">
     <div style="position:absolute; right:-20px; top:-30px; font-size:8rem; opacity:0.08; transform:rotate(-15deg);">💡</div>
 
@@ -841,7 +838,6 @@
 
     <div class="modules-grid">
 
-      <!-- ✅ AJOUT : RECHERCHE PRO UNIVERSELLE (MÉTIERS) -->
       <div class="module" id="openSearchPro">
         <div class="module-inner">
           <div class="module-header">
@@ -861,7 +857,50 @@
           </div>
         </div>
       </div>
-      <!-- ✅ FIN AJOUT -->
+
+      <!-- ✅ NOUVEAU : DIGIY FRET CHAUFFEUR -->
+      <div class="module" onclick="window.open('https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver', '_blank')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🚚</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY FRET CHAUFFEUR</div>
+              <div class="module-tagline">TRANSPORT & LOGISTIQUE</div>
+            </div>
+            <div class="module-badge badge-prio">NOUVEAU</div>
+          </div>
+          <div class="module-body">
+            Transport de marchandises 0% commission. 4 paliers : Local (14,900 F), Régional, National, International. 
+            GPS temps réel, paiements directs, courses illimitées.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Choisir mon palier →</button>
+            <div class="module-meta">Chauffeurs FRET</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ NOUVEAU : DIGIY FRET CLIENT -->
+      <div class="module" onclick="window.open('https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CLIENT&role=client', '_blank')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">📦</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY FRET CLIENT</div>
+              <div class="module-tagline">EXPÉDITIONS & ENVOIS</div>
+            </div>
+            <div class="module-badge badge-prio">NOUVEAU</div>
+          </div>
+          <div class="module-body">
+            Envoie tes colis sans limite. 4 paliers : Local (4,900 F), Régional, National, International. 
+            Suivi GPS, assurance, paiements Wave/Orange Money.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Choisir mon palier →</button>
+            <div class="module-meta">Clients FRET</div>
+          </div>
+        </div>
+      </div>
 
       <div class="module" onclick="openModule('go')">
         <div class="module-inner">
@@ -1320,7 +1359,7 @@
     job:          "https://beauville.github.io/digiy-jobs/",
     explore:      "https://beauville.github.io/digiy-explore/",
     notable:      "https://beauville.github.io/digiy-notable/",
-    bonPlan:      "https://beauville.github.io/digiy-bonne_affaire/" , /* ⚠️ garde ton URL exacte si différente */
+    bonPlan:      "https://beauville.github.io/digiy-bonne_affaire/",
     inscription:  "https://beauville.github.io/inscription-digiy/",
     dashboard:    "https://beauville.github.io/mon-espace-digiy/"
   };
@@ -1358,10 +1397,8 @@
   })();
 </script>
 
-<!-- ✅ AJOUT : SUPABASE JS (pour le moteur universel dans le HUB) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- ✅ AJOUT : MODAL RECHERCHE PRO (UNIVERSEL MÉTIERS) -->
 <div id="searchProModal" class="digiy-modal-overlay" aria-hidden="true">
   <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="Recherche PRO DIGIY">
     <div class="digiy-modal-card">
@@ -1397,7 +1434,7 @@
       <div id="sp_results" class="digiy-results-grid"></div>
 
       <div id="sp_empty" style="display:none; margin-top:12px; padding:18px; border-radius:16px; border:1px dashed rgba(148,163,184,.45); color:#cbd5e1;">
-        😕 Aucun résultat. Essaie “dakar”, “plateau”, “fatou”, “chauffeur”.
+        😕 Aucun résultat. Essaie "dakar", "plateau", "fatou", "chauffeur".
       </div>
 
       <div id="sp_debug" style="display:none; margin-top:10px; padding:10px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(2,6,23,.55); color:#cbd5e1; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:.82rem; white-space:pre-wrap;"></div>
@@ -1406,12 +1443,10 @@
   </div>
 </div>
 
-<!-- ✅ AJOUT : JS RECHERCHE PRO (RPC search_pros_universal) -->
 <script>
-  //* 🔐 SUPABASE — DÉJÀ POSÉ */
-    const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    const SUPABASE_ANON_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const modal = document.getElementById('searchProModal');
@@ -1491,7 +1526,6 @@
           alert("ID manquant pour ce pro.");
           return;
         }
-        // 👉 Tu peux adapter ici vers ta page fiche PRO universelle
         window.location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
       });
 
@@ -1516,7 +1550,6 @@
     spDebug.textContent = '';
 
     try{
-      // ✅ RPC universel (métiers)
       const { data, error } = await supabase.rpc('search_pros_universal', {
         q: q || null,
         p_module: (moduleKey === 'all') ? null : moduleKey,
