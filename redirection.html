@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>DIGIY Redirect</title>
+</head>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+const SUPABASE_ANON_KEY = ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function go() {
+  const { data } = await supabase.auth.getSession();
+  const user = data.session?.user;
+  if (!user) {
+    location.href = "index.html";
+    return;
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role_auto, pro_type, active_modules")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile) {
+    location.href = "client.html";
+    return;
+  }
+
+  if (profile.pro_type === "driver") {
+    location.href = "espace-chauffeur.html";
+    return;
+  }
+
+  if (profile.pro_type === "fret") {
+    location.href = "douane.html";
+    return;
+  }
+
+  if (profile.role_auto === "pro") {
+    location.href = "digiy-hub.html";
+    return;
+  }
+
+  location.href = "client.html";
+}
+
+go();
+</script>
+
+</body>
+</html>
