@@ -1645,28 +1645,23 @@
   // ESC ferme
   document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
 })();
-<!-- =========================
-     DIGIY NDIMBAL — V1 (CLEAN)
-     À coller juste avant </body>
-========================= -->
 
-<button id="digiy-help-btn" aria-label="Besoin d'aide">Besoin d’aide ?</button>
+</script>
+  <!-- DIGIY NDIMBAL — SAFE INSERT -->
+<button id="digiy-help-btn">Besoin d’aide ?</button>
 
 <div id="digiy-ndimbal" aria-hidden="true">
-  <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
+  <div class="digiy-box">
     <div class="digiy-title">♾️ NDIMBAL</div>
     <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br/>Je suis là pour t’aider simplement.</p>
-
     <button class="digiy-act" data-action="sell">🛒 Vendre / Encaisser</button>
     <button class="digiy-act" data-action="job">💼 Trouver du travail</button>
     <button class="digiy-act" data-action="info">📱 Comprendre DIGIY</button>
-
     <button class="digiy-close" id="digiy-close">❌ Quitter</button>
   </div>
 </div>
 
 <style>
-  /* BOUTON — au-dessus de TOUT */
   #digiy-help-btn{
     position:fixed !important;
     right:20px !important;
@@ -1676,19 +1671,18 @@
     visibility:visible !important;
     opacity:1 !important;
     pointer-events:auto !important;
+    cursor:pointer !important;
 
     border:none !important;
     border-radius:999px !important;
     padding:14px 18px !important;
     font-weight:950 !important;
     font-size:15px !important;
-    color:#052e16 !important;
-    background:linear-gradient(135deg,#16a34a,#22c55e) !important;
+    background:#16a34a !important;
+    color:#fff !important;
     box-shadow:0 16px 40px rgba(0,0,0,.35) !important;
-    cursor:pointer !important;
   }
 
-  /* MODAL */
   #digiy-ndimbal{
     display:none;
     position:fixed; inset:0;
@@ -1705,7 +1699,6 @@
     border-radius:18px;
     padding:16px;
     box-shadow:0 18px 40px rgba(0,0,0,.25);
-    border:1px solid rgba(2,6,23,.08);
     text-align:center;
   }
   .digiy-title{ font-weight:950; letter-spacing:.08em; color:#16a34a; margin-bottom:6px; }
@@ -1737,48 +1730,51 @@
 
 <script>
 (function(){
-  const btn = document.getElementById("digiy-help-btn");
-  const modal = document.getElementById("digiy-ndimbal");
-  const closeBtn = document.getElementById("digiy-close");
+  function initDigiy(){
+    const btn = document.getElementById("digiy-help-btn");
+    const modal = document.getElementById("digiy-ndimbal");
+    const closeBtn = document.getElementById("digiy-close");
 
-  if(!btn || !modal || !closeBtn){
-    console.warn("DIGIY NDIMBAL: éléments manquants");
-    return;
-  }
+    if(!btn || !modal || !closeBtn){
+      console.warn("DIGIY NDIMBAL: éléments manquants");
+      return;
+    }
 
-  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
-  const routes = {
-    sell: basePath + "digiy-pay.html",
-    job:  basePath + "digiy-jobs.html",
-    info: basePath + "digiylyfe.html"
-  };
+    const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+    const routes = {
+      sell: basePath + "digiy-pay.html",
+      job:  basePath + "digiy-jobs.html",
+      info: basePath + "digiylyfe.html"
+    };
 
-  function openDigiy(){
-    modal.classList.add("show");
-    modal.setAttribute("aria-hidden","false");
-  }
-  function closeDigiy(){
-    modal.classList.remove("show");
-    modal.setAttribute("aria-hidden","true");
-  }
+    function openDigiy(){ modal.classList.add("show"); modal.setAttribute("aria-hidden","false"); }
+    function closeDigiy(){ modal.classList.remove("show"); modal.setAttribute("aria-hidden","true"); }
 
-  // ✅ Click ultra fiable (capture)
-  btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
-  closeBtn.addEventListener("click", closeDigiy);
+    btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
+    closeBtn.addEventListener("click", closeDigiy);
+    modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
 
-  modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
-  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
-
-  document.querySelectorAll(".digiy-act").forEach(b=>{
-    b.addEventListener("click", ()=>{
-      const action = b.getAttribute("data-action");
-      closeDigiy();
-      const url = routes[action];
-      if(url) location.href = url;
+    document.querySelectorAll(".digiy-act").forEach(b=>{
+      b.addEventListener("click", ()=>{
+        const action = b.getAttribute("data-action");
+        closeDigiy();
+        const url = routes[action];
+        if(url) location.href = url;
+      });
     });
-  });
+
+    console.log("DIGIY NDIMBAL: prêt ✅");
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", initDigiy);
+  }else{
+    initDigiy();
+  }
 })();
 </script>
+<!-- /DIGIY NDIMBAL — SAFE INSERT -->
 
 <!-- ========================= END NDIMBAL ========================= -->
 <div style="position:fixed;top:10px;left:10px;z-index:2147483647;background:red;color:white;padding:10px;font-weight:900">
