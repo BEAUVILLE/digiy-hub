@@ -2,23 +2,245 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>DIGIY JOBS — Missions</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>DIGIY JËF — Jobs & Missions</title>
   <meta name="theme-color" content="#16a34a"/>
   <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#071a14;color:#ecfff5}
-    header{padding:16px;font-weight:950;letter-spacing:.08em}
-    .card{max-width:720px;margin:16px auto;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:16px}
-    a{color:#86efac;text-decoration:none;font-weight:900}
-    .btn{display:inline-block;margin-top:10px;background:#16a34a;color:#052e16;padding:12px 14px;border-radius:14px;font-weight:950}
+    :root{
+      --green:#16a34a; --bg:#061b14; --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.12); --text:#eafff1; --muted:rgba(234,255,241,.75);
+      --dark:#052e16; --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%), var(--bg); color:var(--text)}
+    header{
+      position:sticky; top:0; z-index:10;
+      background:rgba(6,27,20,.72);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+      padding:14px 14px 10px;
+    }
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      max-width:980px; margin:0 auto;
+    }
+    .brand{font-weight:950; letter-spacing:.08em}
+    .brand small{display:block; font-weight:800; letter-spacing:0; opacity:.8; margin-top:2px}
+    .btn{
+      border:none; border-radius:14px; padding:10px 12px;
+      font-weight:950; cursor:pointer;
+    }
+    .btn-primary{background:linear-gradient(135deg,#16a34a,#22c55e); color:var(--dark)}
+    .btn-ghost{background:transparent; color:var(--text); border:1px solid var(--line)}
+    main{max-width:980px; margin:0 auto; padding:14px}
+    .grid{display:grid; gap:12px}
+    .card{
+      background:var(--card); border:1px solid var(--line);
+      border-radius:var(--radius); padding:14px;
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between}
+    .muted{color:var(--muted); font-weight:700}
+    input,select{
+      width:100%; padding:12px 12px; border-radius:14px;
+      border:1px solid var(--line); background:rgba(0,0,0,.18); color:var(--text);
+      outline:none; font-weight:800;
+    }
+    .filters{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media(max-width:700px){ .filters{grid-template-columns:1fr} }
+    .list{display:grid; gap:10px; margin-top:10px}
+    .mission{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:12px;
+    }
+    .m-title{font-weight:950; font-size:15px}
+    .m-meta{margin-top:6px; display:flex; gap:10px; flex-wrap:wrap; color:var(--muted); font-weight:800; font-size:13px}
+    .m-actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
+    .pill{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:7px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.14);
+      font-weight:900; font-size:12px;
+    }
+    .footer{
+      text-align:center; color:rgba(234,255,241,.65);
+      font-weight:800; padding:20px 10px;
+    }
+    a{color:#86efac; text-decoration:none; font-weight:950}
   </style>
 </head>
 <body>
-  <header>♾️ DIGIY JOBS</header>
-  <div class="card">
-    <h2 style="margin:0 0 8px">Trouver du travail — V1</h2>
-    <p style="margin:0 0 10px;opacity:.9">Ici on mettra la liste des missions, publication rapide, WhatsApp direct.</p>
-    <a class="btn" href="/digiy-hub/">← Retour au HUB</a>
+
+<header>
+  <div class="top">
+    <div class="brand">♾️ DIGIY JËF
+      <small>Jobs & Missions — direct, simple, terrain.</small>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <button class="btn btn-ghost" id="btn-home">← HUB</button>
+      <button class="btn btn-primary" id="btn-new">+ Publier</button>
+    </div>
   </div>
+</header>
+
+<main>
+  <div class="grid">
+    <div class="card">
+      <div class="row">
+        <div>
+          <div style="font-weight:950">Trouver une mission</div>
+          <div class="muted" style="margin-top:3px">Filtre simple + WhatsApp direct.</div>
+        </div>
+        <div class="pill" id="countPill">0 mission</div>
+      </div>
+
+      <div class="filters" style="margin-top:12px">
+        <div>
+          <div class="muted" style="margin:0 0 6px">Recherche</div>
+          <input id="q" placeholder="Ex: livraison, ménage, peinture, dépannage..."/>
+        </div>
+        <div>
+          <div class="muted" style="margin:0 0 6px">Zone</div>
+          <select id="zone">
+            <option value="">Toutes</option>
+            <option value="Saly">Saly</option>
+            <option value="Dakar">Dakar</option>
+            <option value="Mbour">Mbour</option>
+            <option value="Thiès">Thiès</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="list" id="list"></div>
+
+      <div class="muted" style="margin-top:12px">
+        Astuce: publie 3 missions réelles au début pour lancer la machine.
+      </div>
+    </div>
+
+    <div class="footer">
+      DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a href="/digiy-hub/">Retour HUB</a>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+  const LS_KEY = "digiy_jef_missions"; // JSON array
+
+  const $list = document.getElementById("list");
+  const $q = document.getElementById("q");
+  const $zone = document.getElementById("zone");
+  const $count = document.getElementById("countPill");
+
+  document.getElementById("btn-home").onclick = ()=> location.href = basePath;
+  document.getElementById("btn-new").onclick = ()=> location.href = basePath + "publish-mission.html";
+
+  function loadMissions(){
+    try{
+      const raw = localStorage.getItem(LS_KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    }catch(e){ return []; }
+  }
+
+  function seedIfEmpty(){
+    const arr = loadMissions();
+    if(arr.length) return;
+
+    const demo = [
+      {id: crypto.randomUUID(), title:"Besoin d’un livreur (2h)", zone:"Saly", phone:"+22177XXXXXXX", note:"Départ Saly Centre, petite course.", ts: Date.now()},
+      {id: crypto.randomUUID(), title:"Peinture chambre (1 jour)", zone:"Dakar", phone:"+22178XXXXXXX", note:"Matériel sur place.", ts: Date.now()-86400000},
+      {id: crypto.randomUUID(), title:"Dépannage plomberie", zone:"Saly", phone:"+22170XXXXXXX", note:"Fuite légère, urgent.", ts: Date.now()-172800000},
+    ];
+    localStorage.setItem(LS_KEY, JSON.stringify(demo));
+  }
+
+  function save(arr){
+    localStorage.setItem(LS_KEY, JSON.stringify(arr));
+  }
+
+  function norm(s){ return (s||"").toString().trim().toLowerCase(); }
+
+  function render(){
+    const q = norm($q.value);
+    const zone = $zone.value;
+
+    const arr = loadMissions().sort((a,b)=> (b.ts||0)-(a.ts||0));
+
+    const filtered = arr.filter(m=>{
+      const okQ = !q || (norm(m.title).includes(q) || norm(m.note).includes(q));
+      const okZ = !zone || m.zone === zone;
+      return okQ && okZ;
+    });
+
+    $count.textContent = filtered.length + (filtered.length>1 ? " missions" : " mission");
+    $list.innerHTML = "";
+
+    if(filtered.length === 0){
+      $list.innerHTML = `
+        <div class="mission">
+          <div class="m-title">Aucune mission trouvée</div>
+          <div class="m-meta">Essaie un autre mot ou publie une mission.</div>
+          <div class="m-actions">
+            <button class="btn btn-primary" onclick="location.href='${basePath}publish-mission.html'">+ Publier</button>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    filtered.forEach(m=>{
+      const wa = `https://wa.me/${(m.phone||"").replace(/[^\d]/g,"")}?text=${encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + m.title)}`;
+      const div = document.createElement("div");
+      div.className = "mission";
+      div.innerHTML = `
+        <div class="m-title">${escapeHtml(m.title||"Mission")}</div>
+        <div class="m-meta">
+          <span class="pill">📍 ${escapeHtml(m.zone||"Zone")}</span>
+          <span class="pill">📞 ${escapeHtml(m.phone||"")}</span>
+        </div>
+        ${m.note ? `<div class="m-meta" style="opacity:.9">📝 ${escapeHtml(m.note)}</div>` : ``}
+        <div class="m-actions">
+          <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp direct</a>
+          <button class="btn btn-ghost" data-del="${m.id}">Supprimer</button>
+        </div>
+      `;
+      $list.appendChild(div);
+    });
+
+    // delete handlers
+    document.querySelectorAll("[data-del]").forEach(b=>{
+      b.onclick = ()=>{
+        const id = b.getAttribute("data-del");
+        const arr = loadMissions().filter(x=>x.id !== id);
+        save(arr);
+        render();
+      };
+    });
+  }
+
+  function escapeHtml(str){
+    return (str||"").toString()
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  seedIfEmpty();
+  render();
+
+  $q.addEventListener("input", render);
+  $zone.addEventListener("change", render);
+})();
+</script>
+
 </body>
 </html>
