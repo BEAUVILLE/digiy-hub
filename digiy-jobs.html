@@ -6,7 +6,7 @@
   <title>DIGIY JËF — Jobs & Missions</title>
   <meta name="theme-color" content="#16a34a"/>
 
-  <!-- Supabase -->
+  <!-- ✅ Supabase (1 seule fois) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -41,9 +41,7 @@
       display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
     .brand{font-weight:950; letter-spacing:.08em}
-    .brand small{
-      display:block; font-weight:800; letter-spacing:0; opacity:.8; margin-top:2px
-    }
+    .brand small{display:block; font-weight:800; letter-spacing:0; opacity:.8; margin-top:2px}
     .btn{
       border:none; border-radius:14px; padding:10px 12px;
       font-weight:950; cursor:pointer;
@@ -163,8 +161,8 @@
       <small>Missions rapides • terrain • WhatsApp direct</small>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
-      <button class="btn btn-ghost" id="btn-home">← HUB</button>
-      <button class="btn btn-primary" id="btn-new">+ Publier</button>
+      <button class="btn btn-ghost" id="btn-home" type="button">← HUB</button>
+      <button class="btn btn-primary" id="btn-new" type="button">+ Publier</button>
     </div>
   </div>
 </header>
@@ -188,7 +186,7 @@
       </div>
       <div class="digiy-clarify-actions">
         <a class="digiy-clarify-btn" id="btn-jobs-pro" href="#">Ouvrir DIGIY JOBS PRO</a>
-        <button class="digiy-clarify-link" id="btn-why">Pourquoi deux ?</button>
+        <button class="digiy-clarify-link" id="btn-why" type="button">Pourquoi deux ?</button>
       </div>
       <div class="digiy-clarify-faq" id="clarify-faq">
         <div><b>Quand j’utilise JËF ?</b> Pour du ponctuel : 2h, 1 jour, urgence.</div>
@@ -217,81 +215,76 @@
   </div>
 
   <div class="footer">
-    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a id="footerHub" href="#">Retour HUB</a>
+    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a href="/digiy-hub/">Retour HUB</a>
   </div>
 </main>
 
 <script>
-/* =========================
-   🔐 SUPABASE — SINGLETON
-   (évite: "Identifier 'supabase' has already been declared")
-========================= */
+/* ======================================================
+   ✅ SUPABASE — 1 SEULE FOIS (ANTI "already declared")
+   - On utilise window.digiySupabase pour éviter collisions
+====================================================== */
 (function initSupabaseOnce(){
   const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
   const SUPABASE_ANON_KEY =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-  if(!window.digiySupabase){
+  if (!window.supabase || !window.supabase.createClient) {
+    console.error("Supabase SDK introuvable. Vérifie le script CDN.");
+    return;
+  }
+
+  if (!window.digiySupabase) {
     window.digiySupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
 })();
-const supabase = window.digiySupabase;
-</script>
 
-<script>
+/* ======================================================
+   DIGIY JËF — PUBLIC LIST (stable)
+   Table: public.jef_missions
+   Colonnes attendues: title, zone, phone, note, status, created_at
+====================================================== */
 (function(){
-  // HUB URL béton (GitHub Pages)
-  const HUB_URL = location.origin + "/digiy-hub/";
+  const supabase = window.digiySupabase;
 
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
   const list = document.getElementById("list");
   const q = document.getElementById("q");
   const zone = document.getElementById("zone");
   const count = document.getElementById("countPill");
   const toast = document.getElementById("toast");
 
-  // liens / boutons
-  document.getElementById("btn-home").onclick = ()=> { location.href = HUB_URL; };
-  document.getElementById("btn-new").onclick  = ()=> { location.href = HUB_URL + "publish-mission.html"; };
-  document.getElementById("btn-jobs-pro").href = HUB_URL + "digiy-jobs-pro.html";
-  document.getElementById("footerHub").href = HUB_URL;
+  // ✅ Boutons (et ça marche même sur GitHub Pages)
+  document.getElementById("btn-home").addEventListener("click", ()=> {
+    location.href = basePath;
+  });
+
+  document.getElementById("btn-new").addEventListener("click", ()=> {
+    // Page de publication (à toi de créer si pas encore)
+    location.href = basePath + "publish-mission.html";
+  });
+
+  // Lien JOBS PRO (placeholder)
+  document.getElementById("btn-jobs-pro").href = basePath + "digiy-jobs-pro.html";
 
   // FAQ toggle
-  document.getElementById("btn-why").onclick = ()=>{
+  document.getElementById("btn-why").addEventListener("click", ()=>{
     const faq = document.getElementById("clarify-faq");
-    const open = faq.style.display === "none" || !faq.style.display;
+    const open = (faq.style.display === "none" || !faq.style.display);
     faq.style.display = open ? "block" : "none";
-  };
+  });
 
   let cache = [];
 
   function norm(s){ return (s||"").toLowerCase(); }
   function esc(s){
-    return (s||"").toString().replace(/[&<>"']/g, m => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    return String(s ?? "").replace(/[&<>"']/g, m => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      "\"":"&quot;",
+      "'":"&#039;"
     }[m]));
-  }
-
-  function timeAgo(iso){
-    try{
-      const d = new Date(iso);
-      const now = new Date();
-      const diff = Math.max(0, now - d);
-      const min = Math.floor(diff/60000);
-      const hr  = Math.floor(min/60);
-      const day = Math.floor(hr/24);
-
-      // même jour ?
-      const sameDay = d.toDateString() === now.toDateString();
-      if(sameDay){
-        if(min < 2) return "à l’instant";
-        if(min < 60) return `il y a ${min} min`;
-        return `il y a ${hr} h`;
-      }
-      if(day === 1) return "hier";
-      return `il y a ${day} jours`;
-    }catch(e){
-      return "";
-    }
   }
 
   function render(){
@@ -304,7 +297,7 @@ const supabase = window.digiySupabase;
       return okQ && okZ;
     });
 
-    count.textContent = filtered.length + (filtered.length>1?" missions":" mission");
+    count.textContent = filtered.length + (filtered.length>1 ? " missions" : " mission");
     list.innerHTML = "";
 
     if(!filtered.length){
@@ -315,10 +308,17 @@ const supabase = window.digiySupabase;
       return;
     }
 
+    // ✅ dédup simple (évite doublons visuels)
+    const seen = new Set();
+
     filtered.forEach(m=>{
-      const phoneDigits = (m.phone||"").replace(/[^\d]/g,"");
+      const key = `${(m.title||"").trim()}|${(m.zone||"").trim()}|${(m.phone||"").trim()}|${(m.note||"").trim()}`;
+      if(seen.has(key)) return;
+      seen.add(key);
+
+      const phoneDigits = String(m.phone||"").replace(/[^\d]/g,"");
       const wa = phoneDigits
-        ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: "+m.title)}`
+        ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + (m.title||""))}`
         : "#";
 
       const div = document.createElement("div");
@@ -326,13 +326,16 @@ const supabase = window.digiySupabase;
       div.innerHTML = `
         <div class="m-title">${esc(m.title)}</div>
         <div class="m-meta">
-          <span class="pill">📍 ${esc(m.zone||"—")}</span>
-          <span class="pill">📞 ${esc(m.phone||"—")}</span>
-          <span class="pill">⏱️ ${esc(timeAgo(m.created_at)||"")}</span>
+          <span class="pill">📍 ${esc(m.zone || "—")}</span>
+          <span class="pill">📞 ${esc(m.phone || "—")}</span>
+          ${m.created_at ? `<span class="pill">🕒 ${esc(new Date(m.created_at).toLocaleString("fr-FR"))}</span>` : ``}
         </div>
         ${m.note ? `<div class="m-meta">📝 ${esc(m.note)}</div>` : ""}
         <div class="m-actions">
-          <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener" ${phoneDigits ? "" : 'onclick="return false"'}>WhatsApp direct</a>
+          ${phoneDigits
+            ? `<a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp direct</a>`
+            : `<button class="btn btn-ghost" type="button" onclick="alert('Numéro manquant sur cette mission')">WhatsApp</button>`
+          }
         </div>
       `;
       list.appendChild(div);
@@ -340,8 +343,15 @@ const supabase = window.digiySupabase;
   }
 
   async function load(){
-    toast.textContent = "Chargement…";
     try{
+      if(!supabase || typeof supabase.from !== "function"){
+        toast.textContent = "Erreur: Supabase client KO";
+        console.error("Supabase client invalid:", supabase);
+        return;
+      }
+
+      toast.textContent = "Chargement…";
+
       const { data, error } = await supabase
         .from("jef_missions")
         .select("title,zone,phone,note,status,created_at")
@@ -351,30 +361,16 @@ const supabase = window.digiySupabase;
 
       if(error){
         toast.textContent = "Erreur Supabase";
-        console.error("Supabase error:", error);
+        console.error(error);
         return;
       }
 
-      // petit garde-fou anti-doublon côté UI (au cas où)
-      const seen = new Set();
-      cache = (data||[]).filter(m=>{
-        const key = [
-          (m.title||"").trim(),
-          (m.zone||"").trim(),
-          (m.phone||"").trim(),
-          (m.note||"").trim(),
-          (m.status||"").trim(),
-          (m.created_at||"").slice(0,10)
-        ].join("|");
-        if(seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      });
-
-      toast.textContent = "OK";
+      cache = data || [];
+      toast.textContent = "OK ✅";
       render();
+
     }catch(e){
-      toast.textContent = "Erreur Supabase";
+      toast.textContent = "Erreur chargement";
       console.error("Load exception:", e);
     }
   }
@@ -382,6 +378,7 @@ const supabase = window.digiySupabase;
   q.addEventListener("input", render);
   zone.addEventListener("change", render);
 
+  // ✅ charge au démarrage
   load();
 })();
 </script>
