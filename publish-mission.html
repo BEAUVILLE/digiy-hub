@@ -5,21 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>Publier une mission — DIGIY JËF</title>
   <meta name="theme-color" content="#16a34a"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root{
-      --green:#16a34a; --bg:#061b14; --card:rgba(255,255,255,.06);
-      --line:rgba(255,255,255,.12); --text:#eafff1; --muted:rgba(234,255,241,.75);
-      --dark:#052e16; --radius:18px;
-    }
+    :root{--green:#16a34a;--bg:#061b14;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--text:#eafff1;--muted:rgba(234,255,241,.75);--dark:#052e16;--radius:18px}
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%), var(--bg); color:var(--text)}
-    header{
-      position:sticky; top:0; z-index:10;
-      background:rgba(6,27,20,.72);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--line);
-      padding:14px 14px 10px;
-    }
+    header{position:sticky;top:0;z-index:10;background:rgba(6,27,20,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px}
     .top{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:820px;margin:0 auto}
     .brand{font-weight:950;letter-spacing:.08em}
     .btn{border:none;border-radius:14px;padding:10px 12px;font-weight:950;cursor:pointer}
@@ -28,16 +19,13 @@
     main{max-width:820px;margin:0 auto;padding:14px}
     .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.18)}
     label{display:block;font-weight:900;margin:10px 0 6px}
-    input,select,textarea{
-      width:100%; padding:12px 12px; border-radius:14px;
-      border:1px solid var(--line); background:rgba(0,0,0,.18); color:var(--text);
-      outline:none; font-weight:800;
-    }
-    textarea{min-height:90px; resize:vertical}
+    input,select,textarea{width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--text);outline:none;font-weight:800}
+    textarea{min-height:90px;resize:vertical}
     .muted{color:var(--muted);font-weight:800}
     .row{display:flex;gap:10px;flex-wrap:wrap}
-    .row > div{flex:1; min-width:220px}
-    .footer{margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .row>div{flex:1;min-width:220px}
+    .footer{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .toast{margin-top:10px;font-weight:900}
   </style>
 </head>
 <body>
@@ -54,7 +42,7 @@
 
 <main>
   <div class="card">
-    <div class="muted">3 champs max, simple. WhatsApp direct ensuite.</div>
+    <div class="muted">Publication simple. La mission passe en validation.</div>
 
     <label>Mission (titre)</label>
     <input id="title" placeholder="Ex: Livreur 2h • Ménage • Réparation • Peinture..."/>
@@ -83,64 +71,61 @@
       <button class="btn btn-ghost" id="btn-clear">Effacer</button>
       <button class="btn btn-primary" id="btn-save">Publier</button>
     </div>
+
+    <div class="toast" id="toast"></div>
   </div>
 </main>
 
 <script>
+/* 🔐 SUPABASE — COLLE TES CLÉS ICI */
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 (function(){
   const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
-  const LS_KEY = "digiy_jef_missions";
-
   const $title = document.getElementById("title");
-  const $zone = document.getElementById("zone");
+  const $zone  = document.getElementById("zone");
   const $phone = document.getElementById("phone");
-  const $note = document.getElementById("note");
+  const $note  = document.getElementById("note");
+  const $toast = document.getElementById("toast");
 
   document.getElementById("btn-back").onclick = ()=> history.back();
   document.getElementById("btn-hub").onclick = ()=> location.href = basePath;
   document.getElementById("btn-clear").onclick = ()=>{
     $title.value=""; $phone.value=""; $note.value=""; $zone.value="Saly";
-    $title.focus();
+    $title.focus(); $toast.textContent="";
   };
 
-  function load(){
-    try{
-      const raw = localStorage.getItem(LS_KEY);
-      const arr = raw ? JSON.parse(raw) : [];
-      return Array.isArray(arr) ? arr : [];
-    }catch(e){ return []; }
-  }
-  function save(arr){
-    localStorage.setItem(LS_KEY, JSON.stringify(arr));
-  }
-  function uuid(){
-    return (crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now()+"-"+Math.random().toString(16).slice(2));
-  }
-  function cleanPhone(p){
-    return (p||"").toString().trim();
-  }
+  function clean(s){ return (s||"").toString().trim(); }
 
-  document.getElementById("btn-save").onclick = ()=>{
-    const title = ($title.value||"").trim();
-    const zone = $zone.value;
-    const phone = cleanPhone($phone.value);
-    const note = ($note.value||"").trim();
+  document.getElementById("btn-save").onclick = async ()=>{
+    const title = clean($title.value);
+    const zone  = clean($zone.value);
+    const phone = clean($phone.value);
+    const note  = clean($note.value);
 
-    if(title.length < 3){
-      alert("Mets un titre clair (ex: Livreur 2h)");
-      $title.focus(); return;
-    }
-    if(phone.length < 8){
-      alert("Mets un téléphone WhatsApp");
-      $phone.focus(); return;
+    if(title.length < 3){ $toast.textContent="Mets un titre clair (ex: Livreur 2h)"; $title.focus(); return; }
+    if(phone.length < 8){ $toast.textContent="Mets un numéro WhatsApp"; $phone.focus(); return; }
+
+    $toast.textContent="Envoi…";
+
+    const payload = {
+      title, zone, phone, note,
+      status: "pending",
+      submit_ua: navigator.userAgent
+    };
+
+    const { error } = await supabase.from("jef_missions").insert(payload);
+
+    if(error){
+      console.error(error);
+      $toast.textContent="Erreur (vérifie RLS/policies).";
+      return;
     }
 
-    const arr = load();
-    arr.unshift({ id: uuid(), title, zone, phone, note, ts: Date.now() });
-    save(arr);
-
-    // Retour liste
-    location.href = basePath + "digiy-jobs.html";
+    $toast.textContent="Reçu ✅ (en validation)";
+    setTimeout(()=> location.href = basePath + "digiy-jobs.html", 900);
   };
 })();
 </script>
