@@ -6,6 +6,7 @@
   <title>DIGIY JËF — Admin</title>
   <meta name="theme-color" content="#16a34a"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root{--green:#16a34a;--bg:#071019;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--text:#eef2ff;--muted:rgba(238,242,255,.75);--radius:18px}
     *{box-sizing:border-box}
@@ -37,7 +38,9 @@
 
 <header>
   <div class="top">
-    <div class="brand">♾️ DIGIY JËF — Admin <small style="display:block;opacity:.8;letter-spacing:0;font-weight:800;margin-top:2px">Validation missions</small></div>
+    <div class="brand">♾️ DIGIY JËF — Admin
+      <small style="display:block;opacity:.8;letter-spacing:0;font-weight:800;margin-top:2px">Validation missions</small>
+    </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
       <button class="btn btn-ghost" id="btn-home">← HUB</button>
       <button class="btn btn-ghost" id="btn-logout" style="display:none">Se déconnecter</button>
@@ -105,10 +108,22 @@
 </main>
 
 <script>
-/* 🔐 SUPABASE — COLLE TES CLÉS ICI */
-const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+/* =========================
+   ✅ SUPABASE — GLOBAL UNIQUE (ANTI "already declared")
+========================= */
+const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsIm
+V mIjoid2VzcW13amp0c2VmeWpubHVvc2oiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc2NTE3ODg4MiwiZXhwIjoyMDgwNzU0ODgyfQ.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+
+window.DIGIY_SUPABASE =
+  window.DIGIY_SUPABASE ||
+  window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const sb = window.DIGIY_SUPABASE;
+
+/* ✅ TABLE OFFICIELLE */
+const JEF_TABLE = "digiy_jef_missions";
 
 (function(){
   const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
@@ -124,7 +139,7 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const btnLogout = document.getElementById("btn-logout");
   btnLogout.onclick = async ()=>{
-    await supabase.auth.signOut();
+    await sb.auth.signOut();
     location.reload();
   };
 
@@ -135,11 +150,11 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
 
   async function isAdmin(){
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await sb.auth.getUser();
     if(!user) return false;
 
-    // Check table admin_users
-    const { data, error } = await supabase
+    // Table admin_users: user_id uuid
+    const { data, error } = await sb
       .from("admin_users")
       .select("user_id")
       .eq("user_id", user.id)
@@ -153,8 +168,9 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const status = document.getElementById("status").value;
     const zone = document.getElementById("zone").value;
 
-    let q = supabase.from("jef_missions")
-      .select("id,title,zone,phone,note,status,created_at")
+    let q = sb
+      .from(JEF_TABLE)
+      .select("id,title,zone,phone,note,status,created_at,approved_at,approved_by")
       .eq("status", status)
       .order("created_at", { ascending:false })
       .limit(200);
@@ -164,13 +180,13 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const { data, error } = await q;
     if(error){
       console.error(error);
-      toast.textContent = "Erreur chargement (admin/RLS).";
+      toast.textContent = "Erreur chargement (RLS / permissions).";
       list.innerHTML = "";
       return;
     }
 
     const arr = data || [];
-    countPill.textContent = arr.length;
+    countPill.textContent = String(arr.length);
 
     list.innerHTML = "";
     if(arr.length === 0){
@@ -180,7 +196,11 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
 
     arr.forEach(m=>{
-      const wa = `https://wa.me/${(m.phone||"").replace(/[^\d]/g,"")}?text=${encodeURIComponent("DIGIY JËF ♾️ — Concernant: " + m.title)}`;
+      const waNum = (m.phone||"").replace(/[^\d]/g,"");
+      const wa = waNum
+        ? `https://wa.me/${waNum}?text=${encodeURIComponent("DIGIY JËF ♾️ — Concernant: " + (m.title||""))}`
+        : "#";
+
       const div = document.createElement("div");
       div.className = "item";
       div.innerHTML = `
@@ -201,12 +221,12 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       list.appendChild(div);
     });
 
-    // handlers
+    // handlers approve
     document.querySelectorAll("[data-approve]").forEach(b=>{
       b.onclick = async ()=>{
         const id = b.getAttribute("data-approve");
-        const { data: { user } } = await supabase.auth.getUser();
-        await supabase.from("jef_missions").update({
+        const { data: { user } } = await sb.auth.getUser();
+        await sb.from(JEF_TABLE).update({
           status:"approved",
           approved_at: new Date().toISOString(),
           approved_by: user?.id || null
@@ -215,19 +235,21 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       };
     });
 
+    // handlers reject
     document.querySelectorAll("[data-reject]").forEach(b=>{
       b.onclick = async ()=>{
         const id = b.getAttribute("data-reject");
-        await supabase.from("jef_missions").update({ status:"rejected" }).eq("id", id);
+        await sb.from(JEF_TABLE).update({ status:"rejected" }).eq("id", id);
         loadMissions();
       };
     });
 
+    // handlers delete
     document.querySelectorAll("[data-del]").forEach(b=>{
       b.onclick = async ()=>{
         const id = b.getAttribute("data-del");
         if(!confirm("Supprimer définitivement ?")) return;
-        await supabase.from("jef_missions").delete().eq("id", id);
+        await sb.from(JEF_TABLE).delete().eq("id", id);
         loadMissions();
       };
     });
@@ -242,7 +264,8 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     loginToast.textContent = "Connexion…";
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    const { error } = await sb.auth.signInWithPassword({ email, password });
     if(error){
       console.error(error);
       loginToast.textContent = "Erreur login. Vérifie email/mot de passe.";
@@ -252,7 +275,7 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   };
 
   (async ()=>{
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await sb.auth.getUser();
 
     if(!user){
       loginCard.style.display="block";
