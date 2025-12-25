@@ -1462,9 +1462,7 @@
         😕 Aucun résultat. Essaie "dakar", "plateau", "fatou", "chauffeur".
       </div>
 
-<!-- =========================
-     DIGIY JOBS — SCRIPT UNIQUE FINAL
-========================= -->
+<!-- ✅ SUPABASE (1 seule fois) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -1475,13 +1473,10 @@ const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* =========================
-   🧪 DEBUG (OPTIONNEL)
+   🧪 DEBUG (optionnel)
 ========================= */
 const spDebug = document.getElementById("sp_debug");
 function dbg(msg){
@@ -1489,7 +1484,6 @@ function dbg(msg){
   spDebug.style.display = "block";
   spDebug.textContent += msg + "\n";
 }
-dbg("Supabase client OK ✅");
 
 /* =========================
    🔎 SEARCH PRO — ELEMENTS
@@ -1506,6 +1500,8 @@ const spStatus  = document.getElementById('sp_status');
 const spResults = document.getElementById('sp_results');
 const spEmpty   = document.getElementById('sp_empty');
 
+let userPos = null; // {lat, lon}
+
 /* =========================
    🧼 UTILS
 ========================= */
@@ -1517,27 +1513,37 @@ function esc(s){
     .replaceAll('"','&quot;')
     .replaceAll("'","&#039;");
 }
+function setStatus(txt){
+  if(spStatus) spStatus.textContent = txt;
+}
+function clearResults(){
+  if(spResults) spResults.innerHTML = '';
+  if(spEmpty) spEmpty.style.display = 'none';
+}
+function showEmpty(){
+  if(spEmpty) spEmpty.style.display = 'block';
+}
 
 /* =========================
-   🪟 MODAL
+   🪟 MODAL OPEN/CLOSE
 ========================= */
 function openModal(){
   if(!modal) return;
   modal.style.display = 'block';
   modal.setAttribute('aria-hidden','false');
-  if(spResults) spResults.innerHTML = '';
-  if(spEmpty) spEmpty.style.display = 'none';
-  if(spStatus) spStatus.textContent = '—';
+  clearResults();
+  setStatus('—');
   if(spDebug){ spDebug.style.display='none'; spDebug.textContent=''; }
   setTimeout(()=> spQ?.focus(), 50);
-}
 
+  // auto: tente de récupérer position (si user accepte)
+  tryGetGeolocSilently();
+}
 function closeModal(){
   if(!modal) return;
   modal.style.display = 'none';
   modal.setAttribute('aria-hidden','true');
 }
-
 openCard?.addEventListener('click', openModal);
 closeBtn?.addEventListener('click', closeModal);
 modal?.addEventListener('click', e => { if(e.target === modal) closeModal(); });
@@ -1546,17 +1552,66 @@ document.addEventListener('keydown', e => {
 });
 
 /* =========================
-   📋 RENDER RESULTS
+   📍 GEOLOC (silencieux)
+========================= */
+function tryGetGeolocSilently(){
+  if(userPos) return;
+  if(!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(
+    (pos)=>{
+      userPos = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      dbg(`📍 Position OK: ${userPos.lat.toFixed(5)}, ${userPos.lon.toFixed(5)}`);
+    },
+    (err)=>{
+      dbg(`📍 Position refusée / indispo (${err.code})`);
+    },
+    { enableHighAccuracy:false, timeout:4000, maximumAge:600000 }
+  );
+}
+
+/* =========================
+   🧭 DISTANCE (approx, sans PostGIS)
+========================= */
+function kmBetween(lat1, lon1, lat2, lon2){
+  const toRad = x => (x*Math.PI)/180;
+  const R = 6371;
+  const dLat = toRad(lat2-lat1);
+  const dLon = toRad(lon2-lon1);
+  const a =
+    Math.sin(dLat/2)**2 +
+    Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+
+/* =========================
+   🧱 RENDER
 ========================= */
 function renderResults(rows){
   if(!spResults) return;
   spResults.innerHTML = '';
 
   if(!rows || !rows.length){
-    if(spEmpty) spEmpty.style.display = 'block';
+    showEmpty();
     return;
   }
-  if(spEmpty) spEmpty.style.display = 'none';
+
+  // si userPos et rows ont lat/lon → tri par distance
+  if(userPos){
+    rows = rows.map(r=>{
+      const lat = Number(r.lat ?? r.latitude ?? null);
+      const lon = Number(r.lon ?? r.lng ?? r.longitude ?? null);
+      if(Number.isFinite(lat) && Number.isFinite(lon)){
+        const d = kmBetween(userPos.lat, userPos.lon, lat, lon);
+        return { ...r, _km: d };
+      }
+      return { ...r, _km: null };
+    }).sort((a,b)=>{
+      if(a._km === null && b._km === null) return 0;
+      if(a._km === null) return 1;
+      if(b._km === null) return -1;
+      return a._km - b._km;
+    });
+  }
 
   rows.forEach(r=>{
     const name = r.business_name || r.full_name || 'Sans nom';
@@ -1564,17 +1619,23 @@ function renderResults(rows){
     const quartier = r.quartier || '';
     const modules = Array.isArray(r.modules) ? r.modules : [];
     const id = r.id || r.pro_id;
+    const km = (r._km !== null && Number.isFinite(r._km)) ? `${r._km.toFixed(1)} km` : '';
 
     const card = document.createElement('div');
     card.className = 'digiy-result';
     card.innerHTML = `
-      <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px">
+      <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;align-items:flex-start">
         <div style="font-weight:950">${esc(name)}</div>
-        <div class="digiy-pill">🦅 PRO</div>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+          ${km ? `<span class="digiy-pill">📍 ${esc(km)}</span>` : ``}
+          <span class="digiy-pill">🦅 PRO</span>
+        </div>
       </div>
+
       <div style="font-size:.9rem;opacity:.85">
         ${city ? '📍 '+esc(city) : ''}${quartier ? ' • '+esc(quartier) : ''}
       </div>
+
       <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
         ${modules.slice(0,6).map(m=>`<span class="digiy-pill">${esc(m)}</span>`).join('')}
       </div>
@@ -1590,38 +1651,77 @@ function renderResults(rows){
 }
 
 /* =========================
-   🔍 SEARCH ACTION
+   🚀 SEARCH V2
+   - Mode TURBO: RPC full-text (si SQL posé)
+   - Fallback: ilike/or sur champs classiques
 ========================= */
 async function searchPros(){
-  if(spStatus) spStatus.textContent = 'Recherche…';
-  if(spResults) spResults.innerHTML = '';
-  if(spEmpty) spEmpty.style.display = 'none';
+  clearResults();
+  setStatus('Recherche…');
 
-  let query = supabase.from('pros_public')
-    .select('*')
-    .limit(50);
+  const q = (spQ?.value || '').trim();
+  const city = (spCity?.value || '').trim();
+  const mod = (spModule?.value || 'all');
 
-  if(spQ?.value) query = query.ilike('search_text', `%${spQ.value}%`);
-  if(spCity?.value) query = query.eq('city', spCity.value);
-  if(spModule?.value) query = query.contains('modules', [spModule.value]);
+  // 1) TURBO: RPC full-text (si tu poses le SQL V2)
+  // Note: on essaye, si ça échoue → fallback
+  try{
+    const payload = {
+      p_q: q || null,
+      p_city: city || null,
+      p_module: (mod && mod !== 'all') ? mod : null,
+      p_limit: 50,
+      p_lat: userPos?.lat ?? null,
+      p_lon: userPos?.lon ?? null,
+      p_radius_km: 25
+    };
+
+    const { data, error } = await supabase.rpc('search_pros_v2', payload);
+
+    if(!error && Array.isArray(data)){
+      setStatus(`${data.length} résultat(s)`);
+      renderResults(data);
+      return;
+    }
+    if(error){
+      dbg("RPC search_pros_v2 indispo → fallback");
+      dbg(error.message || String(error));
+    }
+  }catch(e){
+    dbg("RPC exception → fallback");
+    dbg(String(e));
+  }
+
+  // 2) FALLBACK: table pros_public (sans SQL)
+  let query = supabase.from('pros_public').select('*').limit(50);
+
+  if(q){
+    // fallback multi-champs (évite le champ search_text si pas sûr)
+    query = query.or(
+      `business_name.ilike.%${q}%,full_name.ilike.%${q}%,phone.ilike.%${q}%,quartier.ilike.%${q}%`
+    );
+  }
+  if(city) query = query.eq('city', city);
+  if(mod && mod !== 'all') query = query.contains('modules', [mod]);
 
   const { data, error } = await query;
 
   if(error){
-    dbg(error.message);
-    if(spStatus) spStatus.textContent = 'Erreur';
+    dbg(error.message || String(error));
+    setStatus('Erreur');
     return;
   }
 
-  if(spStatus) spStatus.textContent = `${data.length} résultat(s)`;
-  renderResults(data);
+  setStatus(`${(data||[]).length} résultat(s)`);
+  renderResults(data || []);
 }
 
 spBtn?.addEventListener('click', searchPros);
 spQ?.addEventListener('keydown', e => { if(e.key === 'Enter') searchPros(); });
 
-dbg("Script DIGIY JOBS prêt 🚀");
+dbg("Search PRO V2 prêt ✅");
 </script>
+
 <!-- ========================= END SCRIPT ========================= -->
 
  <!-- =========================
