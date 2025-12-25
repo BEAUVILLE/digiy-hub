@@ -1600,6 +1600,51 @@
   spBtn?.addEventListener('click', searchPros);
   spQ?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
   spCity?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
+
+(function(){
+  const btn = document.getElementById("digiy-help-btn");
+  const modal = document.getElementById("digiy-ndimbal");
+  const closeBtn = document.getElementById("digiy-close");
+
+  // ✅ Base URL GitHub Pages (important)
+  // Si tu es sur /digiy-hub/, on construit les liens depuis là.
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+
+  // ✅ Mets ici les vrais fichiers quand tu les crées
+  const routes = {
+    sell: basePath + "digiy-pay.html",
+    job:  basePath + "digiy-jobs.html",
+    info: basePath + "digiylyfe.html"
+  };
+
+  function openDigiy(){
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden","false");
+  }
+  function closeDigiy(){
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden","true");
+  }
+
+  btn.addEventListener("click", openDigiy);
+  closeBtn.addEventListener("click", closeDigiy);
+
+  // clic dehors ferme
+  modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
+
+  // actions
+  document.querySelectorAll(".digiy-act").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      const action = b.getAttribute("data-action");
+      closeDigiy();
+      const url = routes[action];
+      if(url) location.href = url;
+    });
+  });
+
+  // ESC ferme
+  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
+})();
 <!-- =========================
      DIGIY NDIMBAL — V1 (GitHub Pages)
      À coller juste avant </body>
@@ -1737,6 +1782,9 @@
   // ESC ferme
   document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
 })();
+</script>
+<!-- ========================= END NDIMBAL ========================= -->
+  
 <!-- ========================= END NDIMBAL ========================= -->  
 </script>
   <!-- DIGIY HELP (FORCE TOP) -->
