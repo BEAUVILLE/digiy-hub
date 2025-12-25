@@ -607,7 +607,6 @@
       .chat-badge-icon,.sos-badge-icon,.tarif-badge-icon{width:22px;height:22px;}
     }
 
-    /* ===== SEARCH PRO MODAL ===== */
     .digiy-modal-overlay{
       display:none;
       position:fixed;
@@ -795,16 +794,544 @@
     </div>
   </section>
 
-  <!-- ... (TON CONTENU APRÈS ICI RESTE IDENTIQUE) ... -->
-  <!-- Tu as déjà tout : VAS CHEZ DIGIY / modules / pricing / footer, je garde exactement comme tu as mis -->
-  <!-- === JE LE LAISSE TEL QUEL (pas besoin de répéter 1000 lignes) === -->
+  <section style="background:linear-gradient(145deg,rgba(15,23,42,0.98),rgba(15,23,42,0.96)); border-radius:26px; border:1px solid rgba(250,204,21,0.6); padding:2.5rem 2rem; margin-bottom:2rem; box-shadow:0 16px 52px rgba(250,204,21,0.3); position:relative; overflow:hidden;">
+    <div style="position:absolute; right:-20px; top:-30px; font-size:8rem; opacity:0.08; transform:rotate(-15deg);">💡</div>
 
-  <!-- ✅ IMPORTANT : JE NE TOUCHE PAS AU RESTE DE TON HTML -->
-  <!-- (Dans ton cas, tu colles ton bloc modules/pricing/footer exactement comme tu l'as envoyé) -->
+    <div style="position:relative; z-index:1; text-align:center;">
+      <div style="font-size:4rem; margin-bottom:1rem; animation:float 3s infinite ease-in-out;">💡</div>
 
-</div><!-- /.app -->
+      <h2 style="font-family:'Outfit',sans-serif; font-size:2.6rem; font-weight:900; margin-bottom:1rem;">
+        <span style="background:linear-gradient(135deg,#f97316,#facc15,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+          VAS CHEZ DIGIY
+        </span>
+      </h2>
 
-<!-- ===== FLOATING BUBBLES (inchangés) ===== -->
+      <p style="font-size:1.15rem; color:#E5E7EB; margin-bottom:1.5rem; max-width:750px; margin-left:auto; margin-right:auto; line-height:1.8; font-weight:600;">
+        Découvre <strong>la vidéo manifeste</strong> du grand village digital africain.
+        Une seule expression pour tout : <strong style="color:#facc15;">VAS CHEZ DIGIY !</strong>
+      </p>
+
+      <div style="display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
+        <span class="pill pill-strong">🦅 Le grand village</span>
+        <span class="pill">0% commission</span>
+        <span class="pill">Économie circulaire</span>
+        <span class="pill">Souveraineté digitale</span>
+      </div>
+
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; align-items:center;">
+        <a href="https://beauville.github.io/vas-chez-digiy/" class="btn btn-primary" target="_blank" rel="noopener" style="font-size:1.1rem; padding:1.1rem 2.5rem;">
+          🎬 Voir la vidéo manifeste →
+        </a>
+        <div style="font-size:0.9rem; color:#CBD5E1; font-weight:700;">
+          ⏱️ 28 secondes • 🔥 Viral
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modules-section">
+    <h2 class="modules-title">Vos modules DIGIY, dans un seul HUB</h2>
+    <p class="modules-subtitle">
+      Cliquez sur un module pour ouvrir l'app correspondante. Un seul HUB pour tout gérer :
+      <strong>argent, réservation, chauffeur, restaurant, boutique, logements, artisans, jobs, marketplace.</strong>
+    </p>
+
+    <div class="modules-grid">
+
+      <div class="module" onclick="openModule('inscriptionClient')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🦅</div>
+            <div class="module-titles">
+              <div class="module-name">ACCÈS CLIENT DIGIY</div>
+              <div class="module-tagline">INSCRIPTION GRATUITE</div>
+            </div>
+            <div class="module-badge badge-prio">GRATUIT</div>
+          </div>
+          <div class="module-body">
+            Crée ton compte gratuitement et accède aux applications clients DIGIY.
+            Certains services sont payants selon l'usage.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn" type="button">Créer un compte →</button>
+            <div class="module-meta">Clients</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" id="openSearchPro">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🔎</div>
+            <div class="module-titles">
+              <div class="module-name">RECHERCHE PRO</div>
+              <div class="module-tagline">GOOGLE DES MÉTIERS DIGIY</div>
+            </div>
+            <div class="module-badge badge-prio">NOUVEAU</div>
+          </div>
+          <div class="module-body">
+            Un seul moteur pour trouver un pro par activité, ville, quartier, nom. (Resto, Loc, Chauffeur…)
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Chercher →</button>
+            <div class="module-meta">Universel</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="window.open('https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver', '_blank')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🚚</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY FRET CHAUFFEUR</div>
+              <div class="module-tagline">TRANSPORT & LOGISTIQUE</div>
+            </div>
+            <div class="module-badge badge-prio">NOUVEAU</div>
+          </div>
+          <div class="module-body">
+            Transport de marchandises 0% commission. 4 paliers : Local (14,900 F), Régional, National, International.
+            GPS temps réel, paiements directs, courses illimitées.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Choisir mon palier →</button>
+            <div class="module-meta">Chauffeurs FRET</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="window.open('https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CLIENT&role=client', '_blank')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">📦</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY FRET CLIENT</div>
+              <div class="module-tagline">EXPÉDITIONS & ENVOIS</div>
+            </div>
+            <div class="module-badge badge-prio">NOUVEAU</div>
+          </div>
+          <div class="module-body">
+            Envoie tes colis sans limite. 4 paliers : Local (4,900 F), Régional, National, International.
+            Suivi GPS, assurance, paiements Wave/Orange Money.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Choisir mon palier →</button>
+            <div class="module-meta">Clients FRET</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('go')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🧍‍♂️</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY GO</div>
+              <div class="module-tagline">ESPACE CLIENT GLOBAL</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            L'accès côté client : une porte unique pour réserver, commander, contacter les pros,
+            voir les offres et suivre ses demandes DIGIY.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir DIGIY GO →</button>
+            <div class="module-meta">Clients & usagers</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="window.open('https://beauville.github.io/vas-chez-digiy/', '_blank')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">💡</div>
+            <div class="module-titles">
+              <div class="module-name">VAS CHEZ DIGIY</div>
+              <div class="module-tagline">MANIFESTE VIDÉO</div>
+            </div>
+            <div class="module-badge badge-prio">NOUVEAU</div>
+          </div>
+          <div class="module-body">
+            Découvre la vidéo manifeste : le grand village digital africain.
+            Une seule expression pour tout. 0% commission, économie circulaire, souveraineté digitale.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Voir la vidéo →</button>
+            <div class="module-meta">28 secondes</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('driver')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🚗</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY DRIVER</div>
+              <div class="module-tagline">CHAUFFEUR EN DIRECT</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Réserve un chauffeur en direct. Pas d'intermédiaire : contact humain, prix clair,
+            paiement direct au chauffeur, profil propre et vérifié.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Trouver un chauffeur →</button>
+            <div class="module-meta">0% commission</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('driverClient')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🚕</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY DRIVER CLIENT</div>
+              <div class="module-tagline">RÉSERVER UN CHAUFFEUR</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Version client de l'app chauffeur. Réserve ta course en direct,
+            contact direct avec le chauffeur, prix transparents sans commission.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Réserver une course →</button>
+            <div class="module-meta">Passagers</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('loc')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🏠</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY LOC</div>
+              <div class="module-tagline">LOCATION SANS OTA</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Pour les villas, appartements, maisons d'hôtes. Alternative à Booking/Airbnb,
+            sans commission, en direct propriétaire–client.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir LOC →</button>
+            <div class="module-meta">Hébergements</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('resto')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🍽️</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY RESTO</div>
+              <div class="module-tagline">VITRINE RESTAURANT</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Découvre les restaurants : menu, photos, horaires, localisation, contact.
+            Réservation / commande en direct avec le restaurant.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Voir les restos →</button>
+            <div class="module-meta">Sans intermédiaire</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('resa')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">📅</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY RÉSA</div>
+              <div class="module-tagline">RÉSERVATIONS & PLANNING</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Réserve tables, services, activités, rendez-vous : tes réservations sont claires,
+            et le pro garde le contrôle.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir RÉSA →</button>
+            <div class="module-meta">Réservation</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('pos')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🧾</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY POS</div>
+              <div class="module-tagline">VITRINE BOUTIQUE</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Caisse pro pour boutiques, vitrine en ligne, ventes terrain.
+            Votre boutique devient visible et organisée sans changer vos habitudes.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir POS →</button>
+            <div class="module-meta">Boutiques</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('pay')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">💳</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY PAY</div>
+              <div class="module-tagline">WALLET UNIFIÉ</div>
+            </div>
+            <div class="module-badge badge-prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">
+            Encaissements Wave / OM / CB. Historique et suivi. Moteur en construction.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir PAY →</button>
+            <div class="module-meta">Argent</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('build')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🏗️</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY BUILD</div>
+              <div class="module-tagline">ARTISANS & BTP</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Trouve des artisans et pros BTP : devis, galerie, contact, prestations.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir BUILD →</button>
+            <div class="module-meta">Artisans</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('market')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🛍️</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY MARKET</div>
+              <div class="module-tagline">MARKETPLACE LOCALE</div>
+            </div>
+            <div class="module-badge badge-prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">
+            Acheter/vendre local, annonces propres, vendeurs vérifiés, sans commission.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir MARKET →</button>
+            <div class="module-meta">Marketplace</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('job')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">💼</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY JOBS</div>
+              <div class="module-tagline">EMPLOI & TALENTS</div>
+            </div>
+            <div class="module-badge badge-prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">
+            Offres, candidatures, profils. Un pont propre entre talents et employeurs.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir JOBS →</button>
+            <div class="module-meta">Jobs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('notable')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">⭐</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY NOTABLE</div>
+              <div class="module-tagline">PERSONNES & LIEUX</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Les meilleurs profils et adresses du coin : confiance, avis, contact direct.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir NOTABLE →</button>
+            <div class="module-meta">Recommandations</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('explore')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🧭</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY EXPLORE</div>
+              <div class="module-tagline">SORTIES & VISITES</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Découvre quoi faire autour de toi : plages, restos, événements, activités.
+            Tu appelles et tu réserves en direct.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Ouvrir EXPLORE →</button>
+            <div class="module-meta">Explorer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('bonPlan')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">💡</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY BON PLAN</div>
+              <div class="module-tagline">PROMOS & DEALS</div>
+            </div>
+            <div class="module-badge badge-soon">Bientôt</div>
+          </div>
+          <div class="module-body">
+            Les bonnes affaires locales, sélectionnées, humaines. Remises, coupons, bons plans avec
+            transparence et proximité.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Aperçu →</button>
+            <div class="module-meta">Bons plans</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('inscription')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">📝</div>
+            <div class="module-titles">
+              <div class="module-name">INSCRIPTION DIGIY</div>
+              <div class="module-tagline">NOUVEAU COMPTE PRO</div>
+            </div>
+            <div class="module-badge badge-prio">NOUVEAU</div>
+          </div>
+          <div class="module-body">
+            Inscription intelligente. Choisis ton module, on calcule ton tarif selon tes paliers.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">S'inscrire →</button>
+            <div class="module-meta">Calcul auto</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" onclick="openModule('dashboard')">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">🎯</div>
+            <div class="module-titles">
+              <div class="module-name">MON ESPACE DIGIY</div>
+              <div class="module-tagline">ESPACE ABONNÉ</div>
+            </div>
+            <div class="module-badge">LIVE</div>
+          </div>
+          <div class="module-body">
+            Ton profil, tes infos, tes contenus, ton contrôle. (Espace pro.)
+          </div>
+          <div class="module-foot">
+            <button class="module-btn">Mon Espace →</button>
+            <div class="module-meta">Autonomie</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="pricing">
+    <h2 class="pricing-title">Un seul abonnement. Tout votre écosystème.</h2>
+    <p class="pricing-subtitle">
+      Vous ne payez pas sur chaque course, chaque réservation ou chaque vente.
+      Vous payez une seule fois par mois, et vous gardez <strong>100% de vos revenus.</strong>
+    </p>
+
+    <div class="pricing-row">
+      <div class="pricing-card">
+        <div class="pricing-label">Offre Pionniers</div>
+        <div class="pricing-price">29,900 FCFA / mois</div>
+        <div class="pricing-note">
+          Prix bloqué <strong>À VIE</strong> pour les premiers abonnés HUB DIGIY.
+        </div>
+        <ul class="pricing-list">
+          <li>Accès à tous les modules DIGIY</li>
+          <li>0% de commission sur les transactions</li>
+          <li>Support humain par WhatsApp</li>
+          <li>Mises à jour incluses</li>
+        </ul>
+
+        <a href="packs.html" class="pricing-cta" style="margin-bottom:10px;display:block;text-align:center;">
+          Voir tous les packs DIGIY →
+        </a>
+
+        <a href="https://beauville.github.io/inscription-digiy/" class="btn btn-secondary" style="width:100%;padding:0.7rem 1.4rem;font-size:0.9rem;text-align:center;display:inline-block;margin-top:10px;" target="_blank" rel="noopener">
+          Inscription complète →
+        </a>
+      </div>
+
+      <div class="pricing-text">
+        DIGILYFE est conçu pour les travailleurs, commerçants, artisans, chauffeurs,
+        restaurateurs, hébergeurs.
+        <br><br>
+        Les plateformes traditionnelles prennent une part de votre sueur.
+        DIGIY fait l'inverse : <strong>vous payez un HUB, vous gardez tout le reste.</strong>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-tagline">L'Afrique enracinée, connectée au monde — DIGIYLYFE 🦅</div>
+    <div class="footer-links">
+      <a href="https://digiylyfe.com" class="footer-link">Accueil DIGIYLYFE</a>
+      <a href="https://beauville.github.io/inscription-digiy/" class="footer-link" target="_blank" rel="noopener">Commander le HUB</a>
+      <a href="https://beauville.github.io/mon-espace-digiy/" class="footer-link" target="_blank" rel="noopener">Se connecter</a>
+      <a href="https://beauville.github.io/mon-espace-digiy/" class="footer-link" target="_blank" rel="noopener">Mon Espace</a>
+      <a href="https://wa.me/221771342889" class="footer-link" target="_blank" rel="noopener">Contact WhatsApp</a>
+      <a href="https://beauville.github.io/DIGIY/" class="footer-link" target="_blank" rel="noopener">Tarifs détaillés</a>
+    </div>
+    <p>© 2024 DIGIYLYFE — Tous droits réservés • Made in Sénégal • 0% commission • Paiement direct au pro</p>
+    <p style="font-size:0.7rem;opacity:0.5;margin-top:0.5rem;">
+      <a href="/admin/migration.html" style="color:inherit;text-decoration:none;">⚙️</a>
+    </p>
+  </footer>
+
+</div>
+
 <a href="https://beauville.github.io/digiy/" class="tarif-bubble" target="_blank" rel="noopener">
   <div class="tarif-badge-icon">F</div>
   <div>Tarifs DIGIY</div>
@@ -831,12 +1358,11 @@
     proChatUrl: "https://beauville.github.io/digiy-chat-pro/",
     whatsappNumber: "+221771342889",
     callNumber: "+221771342889",
-    businessName: "DIGIY HUB — Aigle Royal"
+    businessName: "DIGIY HUB — ∞"
   };
 </script>
 <script src="https://beauville.github.io/digiy-chat-pro/js/digiy-chat-pro.js"></script>
 
-<!-- ✅ LINKS + NAV modules (inchangés) -->
 <script>
   const LINKS = {
     go:           "https://beauville.github.io/digiy-go/",
@@ -891,10 +1417,9 @@
   })();
 </script>
 
-<!-- ✅ 1 SEUL import Supabase (ici, global) -->
+<!-- ✅ Supabase (garanti avant createClient) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- ===== SEARCH PRO MODAL (HTML SEUL, SANS SCRIPT DEDANS) ===== -->
 <div id="searchProModal" class="digiy-modal-overlay" aria-hidden="true">
   <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="Recherche PRO DIGIY">
     <div class="digiy-modal-card">
@@ -926,493 +1451,182 @@
       </div>
 
       <div id="sp_status" style="color:#cbd5e1; font-weight:650; margin:8px 2px;">—</div>
+
       <div id="sp_results" class="digiy-results-grid"></div>
 
       <div id="sp_empty" style="display:none; margin-top:12px; padding:18px; border-radius:16px; border:1px dashed rgba(148,163,184,.45); color:#cbd5e1;">
         😕 Aucun résultat. Essaie "dakar", "plateau", "fatou", "chauffeur".
       </div>
 
-      <!-- (debug optionnel si tu veux voir ce que ça fait) -->
-      <pre id="sp_debug" style="display:none; white-space:pre-wrap; margin-top:10px; color:#94a3b8;"></pre>
+      <div id="sp_debug" style="display:none; margin-top:10px; padding:10px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(2,6,23,.55); color:#cbd5e1; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:.82rem; white-space:pre-wrap;"></div>
 
     </div>
   </div>
 </div>
 
-<!-- ===== SEARCH PRO V2 (SCRIPT PROPRE, HORS MODAL) ===== -->
 <script>
-/* =========================
-   🔐 SUPABASE — CLIENT UNIQUE
-========================= */
-const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-/* =========================
-   🧪 DEBUG
-========================= */
-const spDebug = document.getElementById("sp_debug");
-function dbg(msg){
-  if(!spDebug) return;
-  spDebug.style.display = "block";
-  spDebug.textContent += msg + "\n";
-}
-
-/* =========================
-   🔎 ELEMENTS
-========================= */
-const modal     = document.getElementById('searchProModal');
-const openCard  = document.getElementById('openSearchPro');
-const closeBtn  = document.getElementById('closeSearchPro');
-
-const spQ       = document.getElementById('sp_q');
-const spCity    = document.getElementById('sp_city');
-const spModule  = document.getElementById('sp_module');
-const spBtn     = document.getElementById('sp_btn');
-const spStatus  = document.getElementById('sp_status');
-const spResults = document.getElementById('sp_results');
-const spEmpty   = document.getElementById('sp_empty');
-
-let userPos = null;
-
-/* =========================
-   🧼 UTILS
-========================= */
-function esc(s){
-  return String(s ?? '')
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'","&#039;");
-}
-function setStatus(txt){
-  if(spStatus) spStatus.textContent = txt;
-}
-function clearResults(){
-  if(spResults) spResults.innerHTML = '';
-  if(spEmpty) spEmpty.style.display = 'none';
-}
-function showEmpty(){
-  if(spEmpty) spEmpty.style.display = 'block';
-}
-
-/* =========================
-   🪟 MODAL OPEN/CLOSE
-========================= */
-function openModal(){
-  if(!modal) return;
-  modal.style.display = 'block';
-  modal.setAttribute('aria-hidden','false');
-  clearResults();
-  setStatus('—');
-  if(spDebug){ spDebug.style.display='none'; spDebug.textContent=''; }
-  setTimeout(()=> spQ?.focus(), 50);
-  tryGetGeolocSilently();
-}
-function closeModal(){
-  if(!modal) return;
-  modal.style.display = 'none';
-  modal.setAttribute('aria-hidden','true');
-}
-
-openCard?.addEventListener('click', openModal);
-closeBtn?.addEventListener('click', closeModal);
-modal?.addEventListener('click', e => { if(e.target === modal) closeModal(); });
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape' && modal?.style.display === 'block') closeModal();
-});
-
-/* =========================
-   📍 GEOLOC (silencieux)
-========================= */
-function tryGetGeolocSilently(){
-  if(userPos) return;
-  if(!navigator.geolocation) return;
-  navigator.geolocation.getCurrentPosition(
-    (pos)=>{
-      userPos = { lat: pos.coords.latitude, lon: pos.coords.longitude };
-      dbg(`📍 Position OK: ${userPos.lat.toFixed(5)}, ${userPos.lon.toFixed(5)}`);
-    },
-    (err)=>{
-      dbg(`📍 Position refusée / indispo (${err.code})`);
-    },
-    { enableHighAccuracy:false, timeout:4000, maximumAge:600000 }
-  );
-}
-
-/* =========================
-   🧭 DISTANCE (approx)
-========================= */
-function kmBetween(lat1, lon1, lat2, lon2){
-  const toRad = x => (x*Math.PI)/180;
-  const R = 6371;
-  const dLat = toRad(lat2-lat1);
-  const dLon = toRad(lon2-lon1);
-  const a =
-    Math.sin(dLat/2)**2 +
-    Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
-  return 2*R*Math.asin(Math.sqrt(a));
-}
-
-/* =========================
-   🧱 RENDER
-========================= */
-function renderResults(rows){
-  if(!spResults) return;
-  spResults.innerHTML = '';
-
-  if(!rows || !rows.length){
-    showEmpty();
-    return;
+  // ✅ safety: si le CDN est lent / bloqué
+  if(!window.supabase){
+    alert("Supabase n'a pas chargé (CDN). Vérifie ta connexion ou réessaie.");
   }
 
-  if(userPos){
-    rows = rows.map(r=>{
-      const lat = Number(r.lat ?? r.latitude ?? null);
-      const lon = Number(r.lon ?? r.lng ?? r.longitude ?? null);
-      if(Number.isFinite(lat) && Number.isFinite(lon)){
-        const d = kmBetween(userPos.lat, userPos.lon, lat, lon);
-        return { ...r, _km: d };
-      }
-      return { ...r, _km: null };
-    }).sort((a,b)=>{
-      if(a._km === null && b._km === null) return 0;
-      if(a._km === null) return 1;
-      if(b._km === null) return -1;
-      return a._km - b._km;
-    });
+  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const modal = document.getElementById('searchProModal');
+  const openCard = document.getElementById('openSearchPro');
+  const closeBtn = document.getElementById('closeSearchPro');
+
+  const spQ = document.getElementById('sp_q');
+  const spCity = document.getElementById('sp_city');
+  const spModule = document.getElementById('sp_module');
+  const spBtn = document.getElementById('sp_btn');
+  const spStatus = document.getElementById('sp_status');
+  const spResults = document.getElementById('sp_results');
+  const spEmpty = document.getElementById('sp_empty');
+  const spDebug = document.getElementById('sp_debug');
+
+  function esc(s){
+    return String(s ?? '')
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'","&#039;");
   }
 
-  rows.forEach(r=>{
-    const name = r.business_name || r.full_name || 'Sans nom';
-    const city = r.city || '';
-    const quartier = r.quartier || '';
-    const modules = Array.isArray(r.modules) ? r.modules : [];
-    const id = r.id || r.pro_id;
-    const km = (r._km !== null && Number.isFinite(r._km)) ? `${r._km.toFixed(1)} km` : '';
+  function openModal(){
+    modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
+    spDebug.style.display = 'none';
+    spDebug.textContent = '';
+    spStatus.textContent = '—';
+    spResults.innerHTML = '';
+    spEmpty.style.display = 'none';
+    setTimeout(()=> spQ?.focus(), 50);
+  }
+  function closeModal(){
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
 
-    const card = document.createElement('div');
-    card.className = 'digiy-result';
-    card.innerHTML = `
-      <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;align-items:flex-start">
-        <div style="font-weight:950">${esc(name)}</div>
-        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
-          ${km ? `<span class="digiy-pill">📍 ${esc(km)}</span>` : ``}
-          <span class="digiy-pill">🦅 PRO</span>
+  openCard?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && modal.style.display === 'block') closeModal(); });
+
+  function renderResults(rows){
+    spResults.innerHTML = '';
+    if(!rows.length){
+      spEmpty.style.display = 'block';
+      return;
+    }
+    spEmpty.style.display = 'none';
+
+    rows.forEach(r => {
+      const name = r.business_name || r.full_name || 'Sans nom';
+      const city = r.city || '';
+      const quartier = r.quartier || '';
+      const modules = Array.isArray(r.modules) ? r.modules : [];
+      const id = r.id || r.pro_id || null;
+
+      const card = document.createElement('div');
+      card.className = 'digiy-result';
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; gap:8px; align-items:flex-start; margin-bottom:8px;">
+          <div style="font-family:Outfit,sans-serif; font-weight:950;">${esc(name)}</div>
+          <div class="digiy-pill" style="font-weight:950; letter-spacing:.12em; text-transform:uppercase;">🦅 PRO</div>
         </div>
-      </div>
+        <div style="color:#e5e7eb; font-weight:650; font-size:.9rem;">
+          ${city ? '📍 '+esc(city) : ''}${quartier ? ' • '+esc(quartier) : ''}
+        </div>
+        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:6px;">
+          ${modules.slice(0,6).map(m => `<span class="digiy-pill">${esc(m)}</span>`).join('')}
+        </div>
+      `;
 
-      <div style="font-size:.9rem;opacity:.85">
-        ${city ? '📍 '+esc(city) : ''}${quartier ? ' • '+esc(quartier) : ''}
-      </div>
-
-      <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
-        ${modules.slice(0,6).map(m=>`<span class="digiy-pill">${esc(m)}</span>`).join('')}
-      </div>
-    `;
-
-    card.onclick = ()=>{
-      if(!id) return alert("ID manquant");
-      location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
-    };
-
-    spResults.appendChild(card);
-  });
-}
-
-/* =========================
-   🚀 SEARCH V2
-========================= */
-async function searchPros(){
-  clearResults();
-  setStatus('Recherche…');
-
-  const q = (spQ?.value || '').trim();
-  const city = (spCity?.value || '').trim();
-  const mod = (spModule?.value || 'all');
-
-  try{
-    const payload = {
-      p_q: q || null,
-      p_city: city || null,
-      p_module: (mod && mod !== 'all') ? mod : null,
-      p_limit: 50,
-      p_lat: userPos?.lat ?? null,
-      p_lon: userPos?.lon ?? null,
-      p_radius_km: 25
-    };
-
-    const { data, error } = await supabase.rpc('search_pros_v2', payload);
-
-    if(!error && Array.isArray(data)){
-      setStatus(`${data.length} résultat(s)`);
-      renderResults(data);
-      return;
-    }
-    if(error){
-      dbg("RPC search_pros_v2 indispo → fallback");
-      dbg(error.message || String(error));
-    }
-  }catch(e){
-    dbg("RPC exception → fallback");
-    dbg(String(e));
-  }
-
-  // Fallback direct table
-  let query = supabase.from('pros_public').select('*').limit(50);
-
-  if(q){
-    query = query.or(
-      `business_name.ilike.%${q}%,full_name.ilike.%${q}%,phone.ilike.%${q}%,quartier.ilike.%${q}%`
-    );
-  }
-  if(city) query = query.eq('city', city);
-  if(mod && mod !== 'all') query = query.contains('modules', [mod]);
-
-  const { data, error } = await query;
-  if(error){
-    dbg(error.message || String(error));
-    setStatus('Erreur');
-    return;
-  }
-
-  setStatus(`${(data||[]).length} résultat(s)`);
-  renderResults(data || []);
-}
-
-spBtn?.addEventListener('click', searchPros);
-spQ?.addEventListener('keydown', e => { if(e.key === 'Enter') searchPros(); });
-
-dbg("Search PRO V2 prêt ✅");
-</script>
-
-<!-- =========================
-     DIGIY NDIMBAL — V1.2 (FULL CLEAN)
-========================= -->
-
-<button id="digiy-help-btn" aria-label="Besoin d'aide">Besoin d’aide ?</button>
-
-<div id="digiy-ndimbal" aria-hidden="true">
-  <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
-    <div class="digiy-title">♾️ NDIMBAL</div>
-    <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br/>Je suis là pour t’aider simplement.</p>
-
-    <div id="digiy-last" style="display:none;margin:10px 0 6px"></div>
-
-    <div id="digiy-actions">
-      <button class="digiy-act" data-action="sell">🛒 Vendre / Encaisser</button>
-      <button class="digiy-act" data-action="job">💼 Trouver du travail</button>
-      <button class="digiy-act" data-action="info">📱 Comprendre DIGIY</button>
-    </div>
-
-    <button class="digiy-close" id="digiy-close">❌ Quitter</button>
-  </div>
-</div>
-
-<style>
-  #digiy-help-btn{
-    position:fixed !important;
-    right:20px !important;
-    bottom:20px !important;
-    z-index:2147483647 !important;
-    display:block !important;
-    visibility:visible !important;
-    opacity:1 !important;
-    pointer-events:auto !important;
-    cursor:pointer !important;
-
-    border:none !important;
-    border-radius:999px !important;
-    padding:14px 18px !important;
-    font-weight:950 !important;
-    font-size:15px !important;
-    color:#052e16 !important;
-    background:linear-gradient(135deg,#16a34a,#22c55e) !important;
-    box-shadow:0 16px 40px rgba(0,0,0,.35) !important;
-  }
-  #digiy-help-btn:active{ transform:translateY(1px); }
-
-  #digiy-ndimbal{
-    display:none;
-    position:fixed; inset:0;
-    z-index:2147483646;
-    background:rgba(0,0,0,.55);
-    padding:18px;
-  }
-  #digiy-ndimbal.show{ display:block; }
-
-  .digiy-box{
-    max-width:360px;
-    margin:18vh auto 0;
-    background:#fff;
-    border-radius:18px;
-    padding:16px;
-    box-shadow:0 18px 40px rgba(0,0,0,.25);
-    border:1px solid rgba(2,6,23,.08);
-    text-align:center;
-  }
-
-  .digiy-title{
-    font-weight:950;
-    letter-spacing:.08em;
-    color:#16a34a;
-    margin-bottom:6px;
-  }
-  .digiy-text{
-    margin:8px 0 12px;
-    color:#0f172a;
-    line-height:1.35;
-  }
-
-  .digiy-act{
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:11px 12px;
-    margin:6px 0;
-    font-weight:900;
-    cursor:pointer;
-    background:#f1f5f9;
-    color:#0f172a;
-  }
-  .digiy-act:hover{ filter:brightness(.98); }
-
-  .digiy-close{
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:10px 12px;
-    margin-top:8px;
-    font-weight:900;
-    cursor:pointer;
-    background:#0f172a;
-    color:#fff;
-  }
-</style>
-
-<script>
-(function(){
-  function initDigiy(){
-    const btn = document.getElementById("digiy-help-btn");
-    const modal = document.getElementById("digiy-ndimbal");
-    const closeBtn = document.getElementById("digiy-close");
-    const lastBox = document.getElementById("digiy-last");
-    const actionsBox = document.getElementById("digiy-actions");
-
-    if(!btn || !modal || !closeBtn){
-      console.warn("DIGIY NDIMBAL: éléments manquants");
-      return;
-    }
-
-    const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
-
-    const routes = {
-      sell: basePath + "digiy-pay.html",
-      job:  basePath + "digiy-jobs.html",
-      info: basePath + "digiylyfe.html"
-    };
-
-    const labels = {
-      sell: "🛒 Vendre / Encaisser",
-      job:  "💼 Trouver du travail",
-      info: "📱 Comprendre DIGIY"
-    };
-
-    const LS_KEY = "digiy_ndimbal_last_action";
-
-    function getLast(){
-      try { return localStorage.getItem(LS_KEY) || ""; }
-      catch(e){ return ""; }
-    }
-    function setLast(action){
-      try { localStorage.setItem(LS_KEY, action); }
-      catch(e){}
-    }
-
-    function openDigiy(){
-      modal.classList.add("show");
-      modal.setAttribute("aria-hidden","false");
-
-      if(actionsBox) actionsBox.style.display = "block";
-
-      if(lastBox){
-        const last = getLast();
-        if(last && routes[last]){
-          lastBox.style.display = "block";
-          lastBox.innerHTML = `
-            <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:10px">
-              <div style="font-weight:950;color:#065f46;margin-bottom:6px">Reprendre ?</div>
-
-              <button id="digiy-continue" style="
-                width:100%;border:none;border-radius:12px;padding:10px 12px;
-                font-weight:950;cursor:pointer;background:#16a34a;color:#052e16">
-                Continuer : ${labels[last]}
-              </button>
-
-              <button id="digiy-reset" style="
-                width:100%;border:none;border-radius:12px;padding:10px 12px;margin-top:6px;
-                font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a">
-                Non, autre chose
-              </button>
-            </div>
-          `;
-
-          if(actionsBox) actionsBox.style.display = "none";
-
-          const cont = document.getElementById("digiy-continue");
-          const reset = document.getElementById("digiy-reset");
-
-          if(cont) cont.onclick = ()=>{
-            closeDigiy();
-            location.href = routes[last];
-          };
-
-          if(reset) reset.onclick = ()=>{
-            lastBox.style.display="none";
-            lastBox.innerHTML="";
-            if(actionsBox) actionsBox.style.display="block";
-          };
-
-        }else{
-          lastBox.style.display="none";
-          lastBox.innerHTML="";
-          if(actionsBox) actionsBox.style.display="block";
+      card.addEventListener('click', ()=>{
+        if(!id){
+          alert("ID manquant pour ce pro.");
+          return;
         }
+        window.location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
+      });
+
+      spResults.appendChild(card);
+    });
+  }
+
+  async function searchPros(){
+    const q = (spQ.value || '').trim();
+    const city = (spCity.value || '').trim();
+    const moduleKey = spModule.value;
+
+    if(q.length && q.length < 2){
+      spStatus.textContent = '⛔ Mets au moins 2 lettres.';
+      return;
+    }
+
+    spStatus.textContent = '⏳ Recherche...';
+    spResults.innerHTML = '';
+    spEmpty.style.display = 'none';
+    spDebug.style.display = 'none';
+    spDebug.textContent = '';
+
+    // 1) RPC principale (ta version)
+    try{
+      const { data, error } = await supabase.rpc('search_pros_universal', {
+        q: q || null,
+        p_module: (moduleKey === 'all') ? null : moduleKey,
+        p_city: city || null,
+        p_quartier: null,
+        p_limit: 80
+      });
+      if(error) throw error;
+
+      const rows = Array.isArray(data) ? data : [];
+      spStatus.textContent = `✅ ${rows.length} résultat(s)`;
+      renderResults(rows);
+      return;
+
+    }catch(err){
+      // 2) fallback table (si RPC pas dispo)
+      try{
+        spDebug.textContent = `RPC indispo → fallback table pros_public\n${err?.message || String(err)}`;
+        spDebug.style.display = 'block';
+
+        let query = supabase.from('pros_public').select('*').limit(80);
+
+        if(q){
+          query = query.or(
+            `business_name.ilike.%${q}%,full_name.ilike.%${q}%,phone.ilike.%${q}%,quartier.ilike.%${q}%`
+          );
+        }
+        if(city) query = query.eq('city', city);
+        if(moduleKey && moduleKey !== 'all') query = query.contains('modules', [moduleKey]);
+
+        const { data, error } = await query;
+        if(error) throw error;
+
+        const rows = Array.isArray(data) ? data : [];
+        spStatus.textContent = `✅ ${rows.length} résultat(s)`;
+        renderResults(rows);
+        return;
+
+      }catch(err2){
+        spStatus.textContent = `❌ ${err2?.message || 'Erreur'}`;
+        spDebug.textContent = (spDebug.textContent ? (spDebug.textContent + "\n\n") : "") + JSON.stringify(err2, null, 2);
+        spDebug.style.display = 'block';
+        spEmpty.style.display = 'block';
       }
     }
-
-    function closeDigiy(){
-      modal.classList.remove("show");
-      modal.setAttribute("aria-hidden","true");
-    }
-
-    btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
-    closeBtn.addEventListener("click", closeDigiy);
-
-    modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
-    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
-
-    document.querySelectorAll(".digiy-act").forEach(b=>{
-      b.addEventListener("click", ()=>{
-        const action = b.getAttribute("data-action");
-        if(action && routes[action]) setLast(action);
-        closeDigiy();
-        const url = routes[action];
-        if(url) location.href = url;
-      });
-    });
-
-    console.log("DIGIY NDIMBAL V1.2: prêt ✅");
   }
 
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", initDigiy);
-  }else{
-    initDigiy();
-  }
-})();
+  spBtn?.addEventListener('click', searchPros);
+  spQ?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
+  spCity?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
 </script>
 
 </body>
