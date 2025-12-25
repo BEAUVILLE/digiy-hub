@@ -607,6 +607,7 @@
       .chat-badge-icon,.sos-badge-icon,.tarif-badge-icon{width:22px;height:22px;}
     }
 
+    /* ===== MODAL SEARCH PRO ===== */
     .digiy-modal-overlay{
       display:none;
       position:fixed;
@@ -677,6 +678,19 @@
       display:inline-flex;
       align-items:center;
       gap:6px;
+    }
+
+    /* Debug box (invisible by default) */
+    #sp_debug{
+      display:none;
+      white-space:pre-wrap;
+      margin-top:10px;
+      padding:10px;
+      border-radius:14px;
+      border:1px dashed rgba(148,163,184,.45);
+      color:#cbd5e1;
+      font-size:12px;
+      opacity:.9;
     }
   </style>
 </head>
@@ -838,6 +852,7 @@
 
     <div class="modules-grid">
 
+      <!-- MODULE : INSCRIPTION CLIENT GRATUITE -->
       <div class="module" onclick="openModule('inscriptionClient')">
         <div class="module-inner">
           <div class="module-header">
@@ -848,10 +863,12 @@
             </div>
             <div class="module-badge badge-prio">GRATUIT</div>
           </div>
+
           <div class="module-body">
             Crée ton compte gratuitement et accède aux applications clients DIGIY.
             Certains services sont payants selon l'usage.
           </div>
+
           <div class="module-foot">
             <button class="module-btn" type="button">Créer un compte →</button>
             <div class="module-meta">Clients</div>
@@ -859,6 +876,7 @@
         </div>
       </div>
 
+      <!-- OPEN SEARCH PRO -->
       <div class="module" id="openSearchPro">
         <div class="module-inner">
           <div class="module-header">
@@ -879,6 +897,7 @@
         </div>
       </div>
 
+      <!-- ✅ NOUVEAU : DIGIY FRET CHAUFFEUR -->
       <div class="module" onclick="window.open('https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver', '_blank')">
         <div class="module-inner">
           <div class="module-header">
@@ -900,6 +919,7 @@
         </div>
       </div>
 
+      <!-- ✅ NOUVEAU : DIGIY FRET CLIENT -->
       <div class="module" onclick="window.open('https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CLIENT&role=client', '_blank')">
         <div class="module-inner">
           <div class="module-header">
@@ -1332,6 +1352,7 @@
 
 </div>
 
+<!-- Floating bubbles -->
 <a href="https://beauville.github.io/digiy/" class="tarif-bubble" target="_blank" rel="noopener">
   <div class="tarif-badge-icon">F</div>
   <div>Tarifs DIGIY</div>
@@ -1353,12 +1374,166 @@
   </div>
 </a>
 
+<!-- =========================
+   MODAL SEARCH PRO (HTML ONLY)
+========================= -->
+<div id="searchProModal" class="digiy-modal-overlay" aria-hidden="true">
+  <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="Recherche PRO DIGIY">
+    <div class="digiy-modal-card">
+
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px;">
+        <div style="font-family:Outfit,sans-serif; font-weight:950; letter-spacing:.06em; text-transform:uppercase;">
+          🔎 Recherche PRO — Métiers DIGIY
+        </div>
+        <button id="closeSearchPro" class="btn btn-secondary" type="button" style="padding:.6rem 1.1rem;font-size:.85rem;">
+          ✖ Fermer
+        </button>
+      </div>
+
+      <div class="digiy-modal-row">
+        <input id="sp_q" class="digiy-input" placeholder='Ex: "fatou plateau" / "chauffeur dakar"' />
+        <input id="sp_city" class="digiy-input" placeholder="Ville : Dakar, Thiès..." />
+        <select id="sp_module" class="digiy-select">
+          <option value="all" selected>🦅 Tous métiers</option>
+          <option value="resto">🍽️ Resto</option>
+          <option value="loc">🏠 Loc</option>
+          <option value="chauffeur">🚗 Chauffeur</option>
+          <option value="market">🛍️ Boutique</option>
+          <option value="build">🏗️ Artisan</option>
+          <option value="job">💼 Jobs</option>
+        </select>
+        <button id="sp_btn" class="btn btn-primary" type="button" style="padding:.85rem 1.2rem;font-size:.85rem;">
+          Chercher →
+        </button>
+      </div>
+
+      <div id="sp_status" style="color:#cbd5e1; font-weight:650; margin:8px 2px;">—</div>
+
+      <div id="sp_results" class="digiy-results-grid"></div>
+
+      <div id="sp_empty" style="display:none; margin-top:12px; padding:18px; border-radius:16px; border:1px dashed rgba(148,163,184,.45); color:#cbd5e1;">
+        😕 Aucun résultat. Essaie "dakar", "plateau", "fatou", "chauffeur".
+      </div>
+
+      <div id="sp_debug"></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- =========================
+   NDIMBAL — V1.2 (FULL CLEAN)
+========================= -->
+<button id="digiy-help-btn" aria-label="Besoin d'aide">Besoin d’aide ?</button>
+
+<div id="digiy-ndimbal" aria-hidden="true">
+  <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
+    <div class="digiy-title">♾️ NDIMBAL</div>
+    <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br/>Je suis là pour t’aider simplement.</p>
+
+    <div id="digiy-last" style="display:none;margin:10px 0 6px"></div>
+
+    <div id="digiy-actions">
+      <button class="digiy-act" data-action="sell">🛒 Vendre / Encaisser</button>
+      <button class="digiy-act" data-action="job">💼 Trouver du travail</button>
+      <button class="digiy-act" data-action="info">📱 Comprendre DIGIY</button>
+    </div>
+
+    <button class="digiy-close" id="digiy-close">❌ Quitter</button>
+  </div>
+</div>
+
+<style>
+  #digiy-help-btn{
+    position:fixed !important;
+    right:20px !important;
+    bottom:20px !important;
+    z-index:2147483647 !important;
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    cursor:pointer !important;
+
+    border:none !important;
+    border-radius:999px !important;
+    padding:14px 18px !important;
+    font-weight:950 !important;
+    font-size:15px !important;
+    color:#052e16 !important;
+    background:linear-gradient(135deg,#16a34a,#22c55e) !important;
+    box-shadow:0 16px 40px rgba(0,0,0,.35) !important;
+  }
+  #digiy-help-btn:active{ transform:translateY(1px); }
+
+  #digiy-ndimbal{
+    display:none;
+    position:fixed; inset:0;
+    z-index:2147483646;
+    background:rgba(0,0,0,.55);
+    padding:18px;
+  }
+  #digiy-ndimbal.show{ display:block; }
+
+  .digiy-box{
+    max-width:360px;
+    margin:18vh auto 0;
+    background:#fff;
+    border-radius:18px;
+    padding:16px;
+    box-shadow:0 18px 40px rgba(0,0,0,.25);
+    border:1px solid rgba(2,6,23,.08);
+    text-align:center;
+  }
+
+  .digiy-title{
+    font-weight:950;
+    letter-spacing:.08em;
+    color:#16a34a;
+    margin-bottom:6px;
+  }
+  .digiy-text{
+    margin:8px 0 12px;
+    color:#0f172a;
+    line-height:1.35;
+  }
+
+  .digiy-act{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:11px 12px;
+    margin:6px 0;
+    font-weight:900;
+    cursor:pointer;
+    background:#f1f5f9;
+    color:#0f172a;
+  }
+  .digiy-act:hover{ filter:brightness(.98); }
+
+  .digiy-close{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:10px 12px;
+    margin-top:8px;
+    font-weight:900;
+    cursor:pointer;
+    background:#0f172a;
+    color:#fff;
+  }
+</style>
+
+<!-- =========================
+   SCRIPTS (CLEAN ORDER)
+========================= -->
+
 <script>
   window.DIGIY_CHAT_OPTIONS = {
     proChatUrl: "https://beauville.github.io/digiy-chat-pro/",
     whatsappNumber: "+221771342889",
     callNumber: "+221771342889",
-    businessName: "DIGIY HUB — ∞"
+    businessName: "DIGIY HUB — Aigle Royal"
   };
 </script>
 <script src="https://beauville.github.io/digiy-chat-pro/js/digiy-chat-pro.js"></script>
@@ -1417,216 +1592,360 @@
   })();
 </script>
 
-<!-- ✅ Supabase (garanti avant createClient) -->
+<!-- ✅ SUPABASE (UNE SEULE FOIS) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<div id="searchProModal" class="digiy-modal-overlay" aria-hidden="true">
-  <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="Recherche PRO DIGIY">
-    <div class="digiy-modal-card">
-
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px;">
-        <div style="font-family:Outfit,sans-serif; font-weight:950; letter-spacing:.06em; text-transform:uppercase;">
-          🔎 Recherche PRO — Métiers DIGIY
-        </div>
-        <button id="closeSearchPro" class="btn btn-secondary" type="button" style="padding:.6rem 1.1rem;font-size:.85rem;">
-          ✖ Fermer
-        </button>
-      </div>
-
-      <div class="digiy-modal-row">
-        <input id="sp_q" class="digiy-input" placeholder='Ex: "fatou plateau" / "chauffeur dakar"' />
-        <input id="sp_city" class="digiy-input" placeholder="Ville : Dakar, Thiès..." />
-        <select id="sp_module" class="digiy-select">
-          <option value="all" selected>🦅 Tous métiers</option>
-          <option value="resto">🍽️ Resto</option>
-          <option value="loc">🏠 Loc</option>
-          <option value="chauffeur">🚗 Chauffeur</option>
-          <option value="market">🛍️ Boutique</option>
-          <option value="build">🏗️ Artisan</option>
-          <option value="job">💼 Jobs</option>
-        </select>
-        <button id="sp_btn" class="btn btn-primary" type="button" style="padding:.85rem 1.2rem;font-size:.85rem;">
-          Chercher →
-        </button>
-      </div>
-
-      <div id="sp_status" style="color:#cbd5e1; font-weight:650; margin:8px 2px;">—</div>
-
-      <div id="sp_results" class="digiy-results-grid"></div>
-
-      <div id="sp_empty" style="display:none; margin-top:12px; padding:18px; border-radius:16px; border:1px dashed rgba(148,163,184,.45); color:#cbd5e1;">
-        😕 Aucun résultat. Essaie "dakar", "plateau", "fatou", "chauffeur".
-      </div>
-
-      <div id="sp_debug" style="display:none; margin-top:10px; padding:10px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(2,6,23,.55); color:#cbd5e1; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:.82rem; white-space:pre-wrap;"></div>
-
-    </div>
-  </div>
-</div>
+<script>
+/* =========================
+   🔐 SUPABASE — CLIENT UNIQUE
+========================= */
+const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
 
 <script>
-  // ✅ safety: si le CDN est lent / bloqué
-  if(!window.supabase){
-    alert("Supabase n'a pas chargé (CDN). Vérifie ta connexion ou réessaie.");
+/* =========================
+   🔎 SEARCH PRO — V2 (CLEAN)
+========================= */
+const spDebug = document.getElementById("sp_debug");
+function dbg(msg){
+  if(!spDebug) return;
+  spDebug.style.display = "block";
+  spDebug.textContent += msg + "\n";
+}
+
+const modal     = document.getElementById('searchProModal');
+const openCard  = document.getElementById('openSearchPro');
+const closeBtn  = document.getElementById('closeSearchPro');
+
+const spQ       = document.getElementById('sp_q');
+const spCity    = document.getElementById('sp_city');
+const spModule  = document.getElementById('sp_module');
+const spBtn     = document.getElementById('sp_btn');
+const spStatus  = document.getElementById('sp_status');
+const spResults = document.getElementById('sp_results');
+const spEmpty   = document.getElementById('sp_empty');
+
+let userPos = null; // {lat, lon}
+
+function esc(s){
+  return String(s ?? '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'","&#039;");
+}
+function setStatus(txt){
+  if(spStatus) spStatus.textContent = txt;
+}
+function clearResults(){
+  if(spResults) spResults.innerHTML = '';
+  if(spEmpty) spEmpty.style.display = 'none';
+}
+function showEmpty(){
+  if(spEmpty) spEmpty.style.display = 'block';
+}
+
+function openModal(){
+  if(!modal) return;
+  modal.style.display = 'block';
+  modal.setAttribute('aria-hidden','false');
+  clearResults();
+  setStatus('—');
+  if(spDebug){ spDebug.style.display='none'; spDebug.textContent=''; }
+  setTimeout(()=> spQ?.focus(), 50);
+  tryGetGeolocSilently();
+}
+function closeModal(){
+  if(!modal) return;
+  modal.style.display = 'none';
+  modal.setAttribute('aria-hidden','true');
+}
+openCard?.addEventListener('click', openModal);
+closeBtn?.addEventListener('click', closeModal);
+modal?.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && modal?.style.display === 'block') closeModal();
+});
+
+function tryGetGeolocSilently(){
+  if(userPos) return;
+  if(!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(
+    (pos)=>{
+      userPos = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      dbg(`📍 Position OK: ${userPos.lat.toFixed(5)}, ${userPos.lon.toFixed(5)}`);
+    },
+    (err)=>{
+      dbg(`📍 Position refusée / indispo (${err.code})`);
+    },
+    { enableHighAccuracy:false, timeout:4000, maximumAge:600000 }
+  );
+}
+
+function kmBetween(lat1, lon1, lat2, lon2){
+  const toRad = x => (x*Math.PI)/180;
+  const R = 6371;
+  const dLat = toRad(lat2-lat1);
+  const dLon = toRad(lon2-lon1);
+  const a =
+    Math.sin(dLat/2)**2 +
+    Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+
+function renderResults(rows){
+  if(!spResults) return;
+  spResults.innerHTML = '';
+
+  if(!rows || !rows.length){
+    showEmpty();
+    return;
   }
 
-  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-  const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  const modal = document.getElementById('searchProModal');
-  const openCard = document.getElementById('openSearchPro');
-  const closeBtn = document.getElementById('closeSearchPro');
-
-  const spQ = document.getElementById('sp_q');
-  const spCity = document.getElementById('sp_city');
-  const spModule = document.getElementById('sp_module');
-  const spBtn = document.getElementById('sp_btn');
-  const spStatus = document.getElementById('sp_status');
-  const spResults = document.getElementById('sp_results');
-  const spEmpty = document.getElementById('sp_empty');
-  const spDebug = document.getElementById('sp_debug');
-
-  function esc(s){
-    return String(s ?? '')
-      .replaceAll('&','&amp;')
-      .replaceAll('<','&lt;')
-      .replaceAll('>','&gt;')
-      .replaceAll('"','&quot;')
-      .replaceAll("'","&#039;");
-  }
-
-  function openModal(){
-    modal.style.display = 'block';
-    modal.setAttribute('aria-hidden', 'false');
-    spDebug.style.display = 'none';
-    spDebug.textContent = '';
-    spStatus.textContent = '—';
-    spResults.innerHTML = '';
-    spEmpty.style.display = 'none';
-    setTimeout(()=> spQ?.focus(), 50);
-  }
-  function closeModal(){
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  openCard?.addEventListener('click', openModal);
-  closeBtn?.addEventListener('click', closeModal);
-  modal?.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && modal.style.display === 'block') closeModal(); });
-
-  function renderResults(rows){
-    spResults.innerHTML = '';
-    if(!rows.length){
-      spEmpty.style.display = 'block';
-      return;
-    }
-    spEmpty.style.display = 'none';
-
-    rows.forEach(r => {
-      const name = r.business_name || r.full_name || 'Sans nom';
-      const city = r.city || '';
-      const quartier = r.quartier || '';
-      const modules = Array.isArray(r.modules) ? r.modules : [];
-      const id = r.id || r.pro_id || null;
-
-      const card = document.createElement('div');
-      card.className = 'digiy-result';
-      card.innerHTML = `
-        <div style="display:flex; justify-content:space-between; gap:8px; align-items:flex-start; margin-bottom:8px;">
-          <div style="font-family:Outfit,sans-serif; font-weight:950;">${esc(name)}</div>
-          <div class="digiy-pill" style="font-weight:950; letter-spacing:.12em; text-transform:uppercase;">🦅 PRO</div>
-        </div>
-        <div style="color:#e5e7eb; font-weight:650; font-size:.9rem;">
-          ${city ? '📍 '+esc(city) : ''}${quartier ? ' • '+esc(quartier) : ''}
-        </div>
-        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:6px;">
-          ${modules.slice(0,6).map(m => `<span class="digiy-pill">${esc(m)}</span>`).join('')}
-        </div>
-      `;
-
-      card.addEventListener('click', ()=>{
-        if(!id){
-          alert("ID manquant pour ce pro.");
-          return;
-        }
-        window.location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
-      });
-
-      spResults.appendChild(card);
+  if(userPos){
+    rows = rows.map(r=>{
+      const lat = Number(r.lat ?? r.latitude ?? null);
+      const lon = Number(r.lon ?? r.lng ?? r.longitude ?? null);
+      if(Number.isFinite(lat) && Number.isFinite(lon)){
+        const d = kmBetween(userPos.lat, userPos.lon, lat, lon);
+        return { ...r, _km: d };
+      }
+      return { ...r, _km: null };
+    }).sort((a,b)=>{
+      if(a._km === null && b._km === null) return 0;
+      if(a._km === null) return 1;
+      if(b._km === null) return -1;
+      return a._km - b._km;
     });
   }
 
-  async function searchPros(){
-    const q = (spQ.value || '').trim();
-    const city = (spCity.value || '').trim();
-    const moduleKey = spModule.value;
+  rows.forEach(r=>{
+    const name = r.business_name || r.full_name || 'Sans nom';
+    const city = r.city || '';
+    const quartier = r.quartier || '';
+    const modules = Array.isArray(r.modules) ? r.modules : [];
+    const id = r.id || r.pro_id;
+    const km = (r._km !== null && Number.isFinite(r._km)) ? `${r._km.toFixed(1)} km` : '';
 
-    if(q.length && q.length < 2){
-      spStatus.textContent = '⛔ Mets au moins 2 lettres.';
+    const card = document.createElement('div');
+    card.className = 'digiy-result';
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;align-items:flex-start">
+        <div style="font-weight:950">${esc(name)}</div>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+          ${km ? `<span class="digiy-pill">📍 ${esc(km)}</span>` : ``}
+          <span class="digiy-pill">🦅 PRO</span>
+        </div>
+      </div>
+
+      <div style="font-size:.9rem;opacity:.85">
+        ${city ? '📍 '+esc(city) : ''}${quartier ? ' • '+esc(quartier) : ''}
+      </div>
+
+      <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
+        ${modules.slice(0,6).map(m=>`<span class="digiy-pill">${esc(m)}</span>`).join('')}
+      </div>
+    `;
+
+    card.onclick = ()=>{
+      if(!id) return alert("ID manquant");
+      location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
+    };
+
+    spResults.appendChild(card);
+  });
+}
+
+async function searchPros(){
+  clearResults();
+  setStatus('Recherche…');
+
+  const q = (spQ?.value || '').trim();
+  const city = (spCity?.value || '').trim();
+  const mod = (spModule?.value || 'all');
+
+  // TURBO RPC (si posé)
+  try{
+    const payload = {
+      p_q: q || null,
+      p_city: city || null,
+      p_module: (mod && mod !== 'all') ? mod : null,
+      p_limit: 50,
+      p_lat: userPos?.lat ?? null,
+      p_lon: userPos?.lon ?? null,
+      p_radius_km: 25
+    };
+
+    const { data, error } = await supabase.rpc('search_pros_v2', payload);
+    if(!error && Array.isArray(data)){
+      setStatus(`${data.length} résultat(s)`);
+      renderResults(data);
       return;
     }
-
-    spStatus.textContent = '⏳ Recherche...';
-    spResults.innerHTML = '';
-    spEmpty.style.display = 'none';
-    spDebug.style.display = 'none';
-    spDebug.textContent = '';
-
-    // 1) RPC principale (ta version)
-    try{
-      const { data, error } = await supabase.rpc('search_pros_universal', {
-        q: q || null,
-        p_module: (moduleKey === 'all') ? null : moduleKey,
-        p_city: city || null,
-        p_quartier: null,
-        p_limit: 80
-      });
-      if(error) throw error;
-
-      const rows = Array.isArray(data) ? data : [];
-      spStatus.textContent = `✅ ${rows.length} résultat(s)`;
-      renderResults(rows);
-      return;
-
-    }catch(err){
-      // 2) fallback table (si RPC pas dispo)
-      try{
-        spDebug.textContent = `RPC indispo → fallback table pros_public\n${err?.message || String(err)}`;
-        spDebug.style.display = 'block';
-
-        let query = supabase.from('pros_public').select('*').limit(80);
-
-        if(q){
-          query = query.or(
-            `business_name.ilike.%${q}%,full_name.ilike.%${q}%,phone.ilike.%${q}%,quartier.ilike.%${q}%`
-          );
-        }
-        if(city) query = query.eq('city', city);
-        if(moduleKey && moduleKey !== 'all') query = query.contains('modules', [moduleKey]);
-
-        const { data, error } = await query;
-        if(error) throw error;
-
-        const rows = Array.isArray(data) ? data : [];
-        spStatus.textContent = `✅ ${rows.length} résultat(s)`;
-        renderResults(rows);
-        return;
-
-      }catch(err2){
-        spStatus.textContent = `❌ ${err2?.message || 'Erreur'}`;
-        spDebug.textContent = (spDebug.textContent ? (spDebug.textContent + "\n\n") : "") + JSON.stringify(err2, null, 2);
-        spDebug.style.display = 'block';
-        spEmpty.style.display = 'block';
-      }
+    if(error){
+      dbg("RPC search_pros_v2 indispo → fallback");
+      dbg(error.message || String(error));
     }
+  }catch(e){
+    dbg("RPC exception → fallback");
+    dbg(String(e));
   }
 
-  spBtn?.addEventListener('click', searchPros);
-  spQ?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
-  spCity?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
+  // FALLBACK table pros_public
+  let query = supabase.from('pros_public').select('*').limit(50);
+
+  if(q){
+    query = query.or(
+      `business_name.ilike.%${q}%,full_name.ilike.%${q}%,phone.ilike.%${q}%,quartier.ilike.%${q}%`
+    );
+  }
+  if(city) query = query.eq('city', city);
+  if(mod && mod !== 'all') query = query.contains('modules', [mod]);
+
+  const { data, error } = await query;
+  if(error){
+    dbg(error.message || String(error));
+    setStatus('Erreur');
+    return;
+  }
+
+  setStatus(`${(data||[]).length} résultat(s)`);
+  renderResults(data || []);
+}
+
+spBtn?.addEventListener('click', searchPros);
+spQ?.addEventListener('keydown', e => { if(e.key === 'Enter') searchPros(); });
+dbg("Search PRO V2 prêt ✅");
+</script>
+
+<script>
+/* =========================
+   NDIMBAL — V1.2 (CLEAN)
+========================= */
+(function(){
+  function initDigiy(){
+    const btn = document.getElementById("digiy-help-btn");
+    const modal = document.getElementById("digiy-ndimbal");
+    const closeBtn = document.getElementById("digiy-close");
+    const lastBox = document.getElementById("digiy-last");
+    const actionsBox = document.getElementById("digiy-actions");
+
+    if(!btn || !modal || !closeBtn){
+      console.warn("DIGIY NDIMBAL: éléments manquants");
+      return;
+    }
+
+    const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+
+    const routes = {
+      sell: basePath + "digiy-pay.html",
+      job:  basePath + "digiy-jobs.html",
+      info: basePath + "digiylyfe.html"
+    };
+
+    const labels = {
+      sell: "🛒 Vendre / Encaisser",
+      job:  "💼 Trouver du travail",
+      info: "📱 Comprendre DIGIY"
+    };
+
+    const LS_KEY = "digiy_ndimbal_last_action";
+
+    function getLast(){
+      try { return localStorage.getItem(LS_KEY) || ""; }
+      catch(e){ return ""; }
+    }
+    function setLast(action){
+      try { localStorage.setItem(LS_KEY, action); }
+      catch(e){}
+    }
+
+    function openDigiy(){
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden","false");
+
+      if(actionsBox) actionsBox.style.display = "block";
+
+      if(lastBox){
+        const last = getLast();
+        if(last && routes[last]){
+          lastBox.style.display = "block";
+          lastBox.innerHTML = `
+            <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:10px">
+              <div style="font-weight:950;color:#065f46;margin-bottom:6px">Reprendre ?</div>
+
+              <button id="digiy-continue" style="
+                width:100%;border:none;border-radius:12px;padding:10px 12px;
+                font-weight:950;cursor:pointer;background:#16a34a;color:#052e16">
+                Continuer : ${labels[last]}
+              </button>
+
+              <button id="digiy-reset" style="
+                width:100%;border:none;border-radius:12px;padding:10px 12px;margin-top:6px;
+                font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a">
+                Non, autre chose
+              </button>
+            </div>
+          `;
+
+          if(actionsBox) actionsBox.style.display = "none";
+
+          const cont = document.getElementById("digiy-continue");
+          const reset = document.getElementById("digiy-reset");
+
+          if(cont) cont.onclick = ()=>{
+            closeDigiy();
+            location.href = routes[last];
+          };
+
+          if(reset) reset.onclick = ()=>{
+            lastBox.style.display="none";
+            lastBox.innerHTML="";
+            if(actionsBox) actionsBox.style.display="block";
+          };
+
+        }else{
+          lastBox.style.display="none";
+          lastBox.innerHTML="";
+          if(actionsBox) actionsBox.style.display="block";
+        }
+      }
+    }
+
+    function closeDigiy(){
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden","true");
+    }
+
+    btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
+    closeBtn.addEventListener("click", closeDigiy);
+
+    modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
+
+    document.querySelectorAll(".digiy-act").forEach(b=>{
+      b.addEventListener("click", ()=>{
+        const action = b.getAttribute("data-action");
+        if(action && routes[action]) setLast(action);
+        closeDigiy();
+        const url = routes[action];
+        if(url) location.href = url;
+      });
+    });
+
+    console.log("DIGIY NDIMBAL V1.2: prêt ✅");
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", initDigiy);
+  }else{
+    initDigiy();
+  }
+})();
 </script>
 
 </body>
