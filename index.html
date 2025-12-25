@@ -1358,6 +1358,7 @@
   <div>Tarifs DIGIY</div>
 </a>
 
+<!-- ✅ Chat bubble = lien direct (ne dépend d'aucun script externe) -->
 <a href="https://beauville.github.io/digiy-chat-pro/" class="chat-bubble" target="_blank" rel="noopener">
   <div class="chat-badge-icon">💬</div>
   <div class="chat-bubble-text">
@@ -1529,16 +1530,6 @@
 ========================= -->
 
 <script>
-  window.DIGIY_CHAT_OPTIONS = {
-    proChatUrl: "https://beauville.github.io/digiy-chat-pro/",
-    whatsappNumber: "+221771342889",
-    callNumber: "+221771342889",
-    businessName: "DIGIY HUB — Aigle Royal"
-  };
-</script>
-<script src="https://beauville.github.io/digiy-chat-pro/js/digiy-chat-pro.js"></script>
-
-<script>
   const LINKS = {
     go:           "https://beauville.github.io/digiy-go/",
     driver:       "https://beauville.github.io/digiy-driver/",
@@ -1598,16 +1589,21 @@
 <script>
 /* =========================
    🔐 SUPABASE — CLIENT UNIQUE
+   ✅ FIX: on n'utilise PAS le nom "supabase"
+   -> on utilise "sb" (évite "already been declared")
 ========================= */
 const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ⚠️ IMPORTANT
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 </script>
 
 <script>
 /* =========================
    🔎 SEARCH PRO — V2 (CLEAN)
+   ✅ FIX: remplace supabase -> sb
 ========================= */
 const spDebug = document.getElementById("sp_debug");
 function dbg(msg){
@@ -1780,7 +1776,7 @@ async function searchPros(){
       p_radius_km: 25
     };
 
-    const { data, error } = await supabase.rpc('search_pros_v2', payload);
+    const { data, error } = await sb.rpc('search_pros_v2', payload);
     if(!error && Array.isArray(data)){
       setStatus(`${data.length} résultat(s)`);
       renderResults(data);
@@ -1796,7 +1792,7 @@ async function searchPros(){
   }
 
   // FALLBACK table pros_public
-  let query = supabase.from('pros_public').select('*').limit(50);
+  let query = sb.from('pros_public').select('*').limit(50);
 
   if(q){
     query = query.or(
