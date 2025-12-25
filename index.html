@@ -1735,6 +1735,7 @@
     const btn = document.getElementById("digiy-help-btn");
     const modal = document.getElementById("digiy-ndimbal");
     const closeBtn = document.getElementById("digiy-close");
+    const lastBox = document.getElementById("digiy-last");
 
     if(!btn || !modal || !closeBtn){
       console.warn("DIGIY NDIMBAL: éléments manquants");
@@ -1748,24 +1749,83 @@
       info: basePath + "digiylyfe.html"
     };
 
-    function openDigiy(){ modal.classList.add("show"); modal.setAttribute("aria-hidden","false"); }
-    function closeDigiy(){ modal.classList.remove("show"); modal.setAttribute("aria-hidden","true"); }
+    const labels = {
+      sell: "🛒 Vendre / Encaisser",
+      job:  "💼 Trouver du travail",
+      info: "📱 Comprendre DIGIY"
+    };
 
+    const LS_KEY = "digiy_ndimbal_last_action";
+
+    function getLast(){
+      try { return localStorage.getItem(LS_KEY) || ""; }
+      catch(e){ return ""; }
+    }
+    function setLast(action){
+      try { localStorage.setItem(LS_KEY, action); }
+      catch(e){}
+    }
+
+    function openDigiy(){
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden","false");
+
+      // ✅ Affiche “Continuer ?” si on a un dernier choix
+      if(lastBox){
+        const last = getLast();
+        if(last && routes[last]){
+          lastBox.style.display = "block";
+          lastBox.innerHTML = `
+            <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:10px">
+              <div style="font-weight:950;color:#065f46;margin-bottom:6px">Reprendre ?</div>
+              <button id="digiy-continue" style="
+                width:100%;border:none;border-radius:12px;padding:10px 12px;
+                font-weight:950;cursor:pointer;background:#16a34a;color:#052e16">
+                Continuer : ${labels[last]}
+              </button>
+              <button id="digiy-reset" style="
+                width:100%;border:none;border-radius:12px;padding:10px 12px;margin-top:6px;
+                font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a">
+                Non, autre chose
+              </button>
+            </div>
+          `;
+
+          // events
+          const cont = document.getElementById("digiy-continue");
+          const reset = document.getElementById("digiy-reset");
+          if(cont) cont.onclick = ()=>{ closeDigiy(); location.href = routes[last]; };
+          if(reset) reset.onclick = ()=>{ lastBox.style.display="none"; lastBox.innerHTML=""; };
+        }else{
+          lastBox.style.display="none";
+          lastBox.innerHTML="";
+        }
+      }
+    }
+
+    function closeDigiy(){
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden","true");
+    }
+
+    // ✅ Click fiable
     btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
     closeBtn.addEventListener("click", closeDigiy);
     modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
     document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
 
+    // ✅ actions + mémorisation
     document.querySelectorAll(".digiy-act").forEach(b=>{
       b.addEventListener("click", ()=>{
         const action = b.getAttribute("data-action");
+        if(action && routes[action]) setLast(action);
         closeDigiy();
         const url = routes[action];
         if(url) location.href = url;
       });
     });
 
-    console.log("DIGIY NDIMBAL: prêt ✅");
+    console.log("DIGIY NDIMBAL V1.1: prêt ✅");
   }
 
   if(document.readyState === "loading"){
