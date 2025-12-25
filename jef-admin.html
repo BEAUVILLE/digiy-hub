@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>DIGIY JËF — Admin</title>
+  <meta name="theme-color" content="#16a34a"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root{--green:#16a34a;--bg:#071019;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--text:#eef2ff;--muted:rgba(238,242,255,.75);--radius:18px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.18), transparent 60%), var(--bg); color:var(--text)}
+    header{position:sticky;top:0;z-index:10;background:rgba(7,16,25,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:980px;margin:0 auto}
+    .brand{font-weight:950;letter-spacing:.08em}
+    .btn{border:none;border-radius:14px;padding:10px 12px;font-weight:950;cursor:pointer}
+    .btn-primary{background:linear-gradient(135deg,#16a34a,#22c55e);color:#052e16}
+    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+    .btn-danger{background:#ef4444;color:#fff}
+    .btn-ok{background:#22c55e;color:#052e16}
+    main{max-width:980px;margin:0 auto;padding:14px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+    input,select{width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--text);outline:none;font-weight:800}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:800px){.grid{grid-template-columns:1fr}}
+    .list{display:grid;gap:10px;margin-top:12px}
+    .item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:12px}
+    .title{font-weight:950}
+    .meta{margin-top:6px;color:var(--muted);font-weight:800;font-size:13px;display:flex;gap:8px;flex-wrap:wrap}
+    .actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.14);font-weight:900;font-size:12px}
+    .toast{margin-top:10px;font-weight:900;color:rgba(238,242,255,.85)}
+    a{color:#86efac;text-decoration:none;font-weight:950}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="top">
+    <div class="brand">♾️ DIGIY JËF — Admin <small style="display:block;opacity:.8;letter-spacing:0;font-weight:800;margin-top:2px">Validation missions</small></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <button class="btn btn-ghost" id="btn-home">← HUB</button>
+      <button class="btn btn-ghost" id="btn-logout" style="display:none">Se déconnecter</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="card" id="loginCard">
+    <div style="font-weight:950">Connexion admin</div>
+    <div class="toast">Connecte-toi avec ton compte Supabase Auth (email + mot de passe).</div>
+    <div class="grid" style="margin-top:10px">
+      <div>
+        <div class="toast" style="margin:0 0 6px">Email</div>
+        <input id="email" placeholder="email"/>
+      </div>
+      <div>
+        <div class="toast" style="margin:0 0 6px">Mot de passe</div>
+        <input id="password" type="password" placeholder="mot de passe"/>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:10px">
+      <button class="btn btn-primary" id="btn-login">Se connecter</button>
+    </div>
+    <div class="toast" id="loginToast"></div>
+  </div>
+
+  <div class="card" id="adminCard" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+      <div>
+        <div style="font-weight:950">Missions</div>
+        <div class="toast" id="toast">Chargement…</div>
+      </div>
+      <div class="pill" id="countPill">0</div>
+    </div>
+
+    <div class="grid" style="margin-top:10px">
+      <div>
+        <div class="toast" style="margin:0 0 6px">Filtre statut</div>
+        <select id="status">
+          <option value="pending">pending</option>
+          <option value="approved">approved</option>
+          <option value="rejected">rejected</option>
+        </select>
+      </div>
+      <div>
+        <div class="toast" style="margin:0 0 6px">Zone</div>
+        <select id="zone">
+          <option value="">Toutes</option>
+          <option value="Saly">Saly</option>
+          <option value="Dakar">Dakar</option>
+          <option value="Mbour">Mbour</option>
+          <option value="Thiès">Thiès</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="list" id="list"></div>
+  </div>
+
+  <div style="text-align:center;color:rgba(238,242,255,.65);font-weight:800;padding:20px 10px">
+    DIGIYLYFE ♾️ — Admin • <a href="/digiy-hub/digiy-jobs.html">Voir la liste publique</a>
+  </div>
+</main>
+
+<script>
+/* 🔐 SUPABASE — COLLE TES CLÉS ICI */
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+(function(){
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+
+  const loginCard = document.getElementById("loginCard");
+  const adminCard = document.getElementById("adminCard");
+  const loginToast = document.getElementById("loginToast");
+  const toast = document.getElementById("toast");
+  const list = document.getElementById("list");
+  const countPill = document.getElementById("countPill");
+
+  document.getElementById("btn-home").onclick = ()=> location.href = basePath;
+
+  const btnLogout = document.getElementById("btn-logout");
+  btnLogout.onclick = async ()=>{
+    await supabase.auth.signOut();
+    location.reload();
+  };
+
+  function esc(s){
+    return (s||"").toString()
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  async function isAdmin(){
+    const { data: { user } } = await supabase.auth.getUser();
+    if(!user) return false;
+
+    // Check table admin_users
+    const { data, error } = await supabase
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    return !!data && !error;
+  }
+
+  async function loadMissions(){
+    toast.textContent = "Chargement…";
+    const status = document.getElementById("status").value;
+    const zone = document.getElementById("zone").value;
+
+    let q = supabase.from("jef_missions")
+      .select("id,title,zone,phone,note,status,created_at")
+      .eq("status", status)
+      .order("created_at", { ascending:false })
+      .limit(200);
+
+    if(zone) q = q.eq("zone", zone);
+
+    const { data, error } = await q;
+    if(error){
+      console.error(error);
+      toast.textContent = "Erreur chargement (admin/RLS).";
+      list.innerHTML = "";
+      return;
+    }
+
+    const arr = data || [];
+    countPill.textContent = arr.length;
+
+    list.innerHTML = "";
+    if(arr.length === 0){
+      list.innerHTML = `<div class="item"><div class="title">Aucune mission</div><div class="meta">Rien ici pour ce filtre.</div></div>`;
+      toast.textContent = "OK ✅";
+      return;
+    }
+
+    arr.forEach(m=>{
+      const wa = `https://wa.me/${(m.phone||"").replace(/[^\d]/g,"")}?text=${encodeURIComponent("DIGIY JËF ♾️ — Concernant: " + m.title)}`;
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <div class="title">${esc(m.title||"")}</div>
+        <div class="meta">
+          <span class="pill">📍 ${esc(m.zone||"")}</span>
+          <span class="pill">📞 ${esc(m.phone||"")}</span>
+          <span class="pill">🟣 ${esc(m.status||"")}</span>
+        </div>
+        ${m.note ? `<div class="meta" style="opacity:.9">📝 ${esc(m.note)}</div>` : ``}
+        <div class="actions">
+          ${m.status !== "approved" ? `<button class="btn btn-ok" data-approve="${m.id}">Approuver</button>` : ``}
+          ${m.status !== "rejected" ? `<button class="btn btn-ghost" data-reject="${m.id}">Rejeter</button>` : ``}
+          <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>
+          <button class="btn btn-danger" data-del="${m.id}">Supprimer</button>
+        </div>
+      `;
+      list.appendChild(div);
+    });
+
+    // handlers
+    document.querySelectorAll("[data-approve]").forEach(b=>{
+      b.onclick = async ()=>{
+        const id = b.getAttribute("data-approve");
+        const { data: { user } } = await supabase.auth.getUser();
+        await supabase.from("jef_missions").update({
+          status:"approved",
+          approved_at: new Date().toISOString(),
+          approved_by: user?.id || null
+        }).eq("id", id);
+        loadMissions();
+      };
+    });
+
+    document.querySelectorAll("[data-reject]").forEach(b=>{
+      b.onclick = async ()=>{
+        const id = b.getAttribute("data-reject");
+        await supabase.from("jef_missions").update({ status:"rejected" }).eq("id", id);
+        loadMissions();
+      };
+    });
+
+    document.querySelectorAll("[data-del]").forEach(b=>{
+      b.onclick = async ()=>{
+        const id = b.getAttribute("data-del");
+        if(!confirm("Supprimer définitivement ?")) return;
+        await supabase.from("jef_missions").delete().eq("id", id);
+        loadMissions();
+      };
+    });
+
+    toast.textContent = "OK ✅";
+  }
+
+  document.getElementById("status").addEventListener("change", loadMissions);
+  document.getElementById("zone").addEventListener("change", loadMissions);
+
+  document.getElementById("btn-login").onclick = async ()=>{
+    loginToast.textContent = "Connexion…";
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if(error){
+      console.error(error);
+      loginToast.textContent = "Erreur login. Vérifie email/mot de passe.";
+      return;
+    }
+    location.reload();
+  };
+
+  (async ()=>{
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if(!user){
+      loginCard.style.display="block";
+      adminCard.style.display="none";
+      btnLogout.style.display="none";
+      return;
+    }
+
+    const ok = await isAdmin();
+    if(!ok){
+      loginCard.style.display="block";
+      adminCard.style.display="none";
+      btnLogout.style.display="none";
+      loginToast.textContent = "Connecté, mais pas admin (ajoute ton user_id dans admin_users).";
+      return;
+    }
+
+    // admin OK
+    loginCard.style.display="none";
+    adminCard.style.display="block";
+    btnLogout.style.display="inline-block";
+    loadMissions();
+  })();
+
+})();
+</script>
+
+</body>
+</html>
