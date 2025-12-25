@@ -24,7 +24,9 @@
     body{
       margin:0;
       font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      background: radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%), var(--bg);
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%),
+        var(--bg);
       color:var(--text);
     }
     header{
@@ -39,11 +41,20 @@
       display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
     .brand{font-weight:950; letter-spacing:.08em}
-    .brand small{display:block;font-weight:800;letter-spacing:0;opacity:.8;margin-top:2px}
-    .btn{border:none;border-radius:14px;padding:10px 12px;font-weight:950;cursor:pointer}
-    .btn-primary{background:linear-gradient(135deg,#16a34a,#22c55e);color:var(--dark)}
-    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-    main{max-width:980px;margin:0 auto;padding:14px}
+    .brand small{display:block; font-weight:800; letter-spacing:0; opacity:.8; margin-top:2px}
+    .btn{
+      border:none; border-radius:14px; padding:10px 12px;
+      font-weight:950; cursor:pointer;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,#16a34a,#22c55e);
+      color:var(--dark);
+    }
+    .btn-ghost{
+      background:transparent; color:var(--text);
+      border:1px solid var(--line);
+    }
+    main{max-width:980px; margin:0 auto; padding:14px}
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -51,15 +62,19 @@
       padding:14px;
       box-shadow:0 18px 40px rgba(0,0,0,.18);
     }
-    .row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .row{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
+    }
     .pill{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:7px 10px;border-radius:999px;
+      display:inline-flex; align-items:center; gap:6px;
+      padding:7px 10px; border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
       background:rgba(0,0,0,.14);
-      font-weight:900;font-size:12px;
+      font-weight:900; font-size:12px;
     }
 
+    /* ===== Clarification JËF vs JOBS PRO ===== */
     .digiy-clarify{
       margin-top:12px;
       background:rgba(236,253,245,.10);
@@ -67,19 +82,34 @@
       border-radius:16px;
       padding:12px;
     }
-    .digiy-clarify-title{font-weight:950;letter-spacing:.06em;color:rgba(134,239,172,.95)}
-    .digiy-clarify-text{margin-top:6px;color:rgba(234,255,241,.88);font-weight:800;line-height:1.35}
-    .digiy-clarify-actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .digiy-clarify-title{
+      font-weight:950;
+      letter-spacing:.06em;
+      color:rgba(134,239,172,.95);
+    }
+    .digiy-clarify-text{
+      margin-top:6px;
+      color:rgba(234,255,241,.88);
+      font-weight:800;
+      line-height:1.35;
+    }
+    .digiy-clarify-actions{
+      margin-top:10px;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
     .digiy-clarify-btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:10px 12px;border-radius:14px;font-weight:950;text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 12px; border-radius:14px;
+      font-weight:950; text-decoration:none;
       background:linear-gradient(135deg,#16a34a,#22c55e);
       color:#052e16;
     }
     .digiy-clarify-link{
-      background:transparent;border:1px solid rgba(255,255,255,.14);
+      background:transparent;
+      border:1px solid rgba(255,255,255,.14);
       color:rgba(234,255,241,.9);
-      padding:10px 12px;border-radius:14px;font-weight:900;cursor:pointer;
+      padding:10px 12px; border-radius:14px;
+      font-weight:900; cursor:pointer;
     }
     .digiy-clarify-faq{
       margin-top:10px;
@@ -93,40 +123,46 @@
       display:none;
     }
 
-    .filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+    .filters{
+      display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;
+    }
     @media(max-width:700px){ .filters{grid-template-columns:1fr} }
     input,select{
-      width:100%;padding:12px;border-radius:14px;
+      width:100%; padding:12px; border-radius:14px;
       border:1px solid var(--line);
       background:rgba(0,0,0,.18);
-      color:var(--text);
-      outline:none;
-      font-weight:800;
+      color:var(--text); outline:none; font-weight:800;
     }
-    .list{display:grid;gap:10px;margin-top:12px}
+    .list{display:grid; gap:10px; margin-top:12px}
     .mission{
       background:rgba(255,255,255,.05);
       border:1px solid rgba(255,255,255,.10);
       border-radius:16px;
       padding:12px;
     }
-    .m-title{font-weight:950;font-size:15px}
-    .m-meta{margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-weight:800;font-size:13px}
-    .m-actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
-    a{color:#86efac;text-decoration:none;font-weight:950}
-    .footer{text-align:center;color:rgba(234,255,241,.65);font-weight:800;padding:20px 10px}
+    .m-title{font-weight:950; font-size:15px}
+    .m-meta{
+      margin-top:6px; display:flex; gap:10px; flex-wrap:wrap;
+      color:var(--muted); font-weight:800; font-size:13px;
+    }
+    .m-actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
+    a{color:#86efac; text-decoration:none; font-weight:950}
+    .footer{
+      text-align:center; color:rgba(234,255,241,.65);
+      font-weight:800; padding:20px 10px;
+    }
   </style>
 </head>
-
 <body>
+
 <header>
   <div class="top">
     <div class="brand">♾️ DIGIY JËF
       <small>Missions rapides • terrain • WhatsApp direct</small>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
-      <button class="btn btn-ghost" id="btn-home">← HUB</button>
-      <button class="btn btn-primary" id="btn-new">+ Publier</button>
+      <button class="btn btn-ghost" id="btn-home" type="button">← HUB</button>
+      <button class="btn btn-primary" id="btn-new" type="button">+ Publier</button>
     </div>
   </div>
 </header>
@@ -141,6 +177,7 @@
       <div class="pill" id="countPill">0 mission</div>
     </div>
 
+    <!-- 🔎 Clarification -->
     <div class="digiy-clarify">
       <div class="digiy-clarify-title">♾️ DIGIY JËF vs DIGIY JOBS PRO</div>
       <div class="digiy-clarify-text">
@@ -149,7 +186,7 @@
       </div>
       <div class="digiy-clarify-actions">
         <a class="digiy-clarify-btn" id="btn-jobs-pro" href="#">Ouvrir DIGIY JOBS PRO</a>
-        <button class="digiy-clarify-link" id="btn-why">Pourquoi deux ?</button>
+        <button class="digiy-clarify-link" id="btn-why" type="button">Pourquoi deux ?</button>
       </div>
       <div class="digiy-clarify-faq" id="clarify-faq">
         <div><b>Quand j’utilise JËF ?</b> Pour du ponctuel : 2h, 1 jour, urgence.</div>
@@ -157,8 +194,11 @@
       </div>
     </div>
 
+    <!-- 🔍 Filtres -->
     <div class="filters">
-      <div><input id="q" placeholder="Ex: livraison, ménage, peinture, dépannage…"/></div>
+      <div>
+        <input id="q" placeholder="Ex: livraison, ménage, peinture, dépannage…"/>
+      </div>
       <div>
         <select id="zone">
           <option value="">Toutes zones</option>
@@ -180,44 +220,65 @@
 </main>
 
 <script>
-/* =========================
-   ✅ SUPABASE — GLOBAL UNIQUE
-========================= */
-const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+/* ======================================================
+   ✅ SUPABASE — 1 SEULE FOIS (ANTI "already declared")
+   - On utilise window.digiySupabase pour éviter collisions
+====================================================== */
+(function initSupabaseOnce(){
+  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-window.DIGIY_SUPABASE =
-  window.DIGIY_SUPABASE ||
-  window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  if (!window.supabase || !window.supabase.createClient) {
+    console.error("Supabase SDK introuvable. Vérifie le script CDN.");
+    return;
+  }
 
-const sb = window.DIGIY_SUPABASE;
+  if (!window.digiySupabase) {
+    window.digiySupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+})();
 
+/* ======================================================
+   DIGIY JËF — PUBLIC LIST (stable)
+   Table: public.jef_missions
+   Colonnes attendues: title, zone, phone, note, status, created_at
+====================================================== */
 (function(){
-  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+  const supabase = window.digiySupabase;
 
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
   const list = document.getElementById("list");
   const q = document.getElementById("q");
   const zone = document.getElementById("zone");
   const count = document.getElementById("countPill");
   const toast = document.getElementById("toast");
 
-  document.getElementById("btn-home").onclick = ()=> location.href = basePath;
-  document.getElementById("btn-new").onclick  = ()=> location.href = basePath + "publish-mission.html";
+  // ✅ Boutons (et ça marche même sur GitHub Pages)
+  document.getElementById("btn-home").addEventListener("click", ()=> {
+    location.href = basePath;
+  });
 
+  document.getElementById("btn-new").addEventListener("click", ()=> {
+    // Page de publication (à toi de créer si pas encore)
+    location.href = basePath + "publish-mission.html";
+  });
+
+  // Lien JOBS PRO (placeholder)
   document.getElementById("btn-jobs-pro").href = basePath + "digiy-jobs-pro.html";
 
-  document.getElementById("btn-why").onclick = ()=>{
+  // FAQ toggle
+  document.getElementById("btn-why").addEventListener("click", ()=>{
     const faq = document.getElementById("clarify-faq");
     const open = (faq.style.display === "none" || !faq.style.display);
     faq.style.display = open ? "block" : "none";
-  };
+  });
 
   let cache = [];
 
   function norm(s){ return (s||"").toLowerCase(); }
   function esc(s){
-    return String(s||"").replace(/[&<>"']/g, m => ({
+    return String(s ?? "").replace(/[&<>"']/g, m => ({
       "&":"&amp;",
       "<":"&lt;",
       ">":"&gt;",
@@ -240,31 +301,41 @@ const sb = window.DIGIY_SUPABASE;
     list.innerHTML = "";
 
     if(!filtered.length){
-      list.innerHTML = `
-        <div class="mission">
-          <div class="m-title">Aucune mission</div>
-          <div class="m-meta">Publie une mission ou change le filtre.</div>
-        </div>`;
+      list.innerHTML = `<div class="mission">
+        <div class="m-title">Aucune mission</div>
+        <div class="m-meta">Publie une mission ou change le filtre.</div>
+      </div>`;
       return;
     }
 
+    // ✅ dédup simple (évite doublons visuels)
+    const seen = new Set();
+
     filtered.forEach(m=>{
-      const wa = `https://wa.me/${String(m.phone||"").replace(/[^\d]/g,"")}?text=${
-        encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + (m.title||""))
-      }`;
+      const key = `${(m.title||"").trim()}|${(m.zone||"").trim()}|${(m.phone||"").trim()}|${(m.note||"").trim()}`;
+      if(seen.has(key)) return;
+      seen.add(key);
+
+      const phoneDigits = String(m.phone||"").replace(/[^\d]/g,"");
+      const wa = phoneDigits
+        ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + (m.title||""))}`
+        : "#";
 
       const div = document.createElement("div");
       div.className = "mission";
       div.innerHTML = `
         <div class="m-title">${esc(m.title)}</div>
         <div class="m-meta">
-          <span class="pill">📍 ${esc(m.zone)}</span>
-          <span class="pill">📞 ${esc(m.phone)}</span>
-          ${m.category ? `<span class="pill">🏷️ ${esc(m.category)}</span>` : ``}
+          <span class="pill">📍 ${esc(m.zone || "—")}</span>
+          <span class="pill">📞 ${esc(m.phone || "—")}</span>
+          ${m.created_at ? `<span class="pill">🕒 ${esc(new Date(m.created_at).toLocaleString("fr-FR"))}</span>` : ``}
         </div>
-        ${m.note ? `<div class="m-meta">📝 ${esc(m.note)}</div>` : ``}
+        ${m.note ? `<div class="m-meta">📝 ${esc(m.note)}</div>` : ""}
         <div class="m-actions">
-          <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp direct</a>
+          ${phoneDigits
+            ? `<a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp direct</a>`
+            : `<button class="btn btn-ghost" type="button" onclick="alert('Numéro manquant sur cette mission')">WhatsApp</button>`
+          }
         </div>
       `;
       list.appendChild(div);
@@ -272,34 +343,42 @@ const sb = window.DIGIY_SUPABASE;
   }
 
   async function load(){
-    toast.textContent = "Chargement…";
+    try{
+      if(!supabase || typeof supabase.from !== "function"){
+        toast.textContent = "Erreur: Supabase client KO";
+        console.error("Supabase client invalid:", supabase);
+        return;
+      }
 
-    const { data, error } = await sb
-      .from("jef_missions")
-      .select("title,zone,phone,note,category,created_at,status")
-      .eq("status","approved")
-      .order("created_at",{ascending:false})
-      .limit(200);
+      toast.textContent = "Chargement…";
 
-    if(error){
-      console.error(error);
-      toast.textContent = "Erreur Supabase";
-      list.innerHTML = `
-        <div class="mission">
-          <div class="m-title">Erreur</div>
-          <div class="m-meta">Vérifie la table <b>jef_missions</b> + policy SELECT approved.</div>
-        </div>`;
-      return;
+      const { data, error } = await supabase
+        .from("jef_missions")
+        .select("title,zone,phone,note,status,created_at")
+        .eq("status","approved")
+        .order("created_at",{ascending:false})
+        .limit(200);
+
+      if(error){
+        toast.textContent = "Erreur Supabase";
+        console.error(error);
+        return;
+      }
+
+      cache = data || [];
+      toast.textContent = "OK ✅";
+      render();
+
+    }catch(e){
+      toast.textContent = "Erreur chargement";
+      console.error("Load exception:", e);
     }
-
-    cache = data || [];
-    toast.textContent = "OK";
-    render();
   }
 
   q.addEventListener("input", render);
   zone.addEventListener("change", render);
 
+  // ✅ charge au démarrage
   load();
 })();
 </script>
