@@ -1462,191 +1462,167 @@
         😕 Aucun résultat. Essaie "dakar", "plateau", "fatou", "chauffeur".
       </div>
 
-      <div id="sp_debug" style="display:none; margin-top:10px; padding:10px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:rgba(2,6,23,.55); color:#cbd5e1; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:.82rem; white-space:pre-wrap;"></div>
-
-    </div>
-  </div>
-</div>
+<!-- =========================
+     DIGIY JOBS — SCRIPT UNIQUE FINAL
+========================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-  const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+/* =========================
+   🔐 SUPABASE — CLIENT UNIQUE
+========================= */
+const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-  const modal = document.getElementById('searchProModal');
-  const openCard = document.getElementById('openSearchPro');
-  const closeBtn = document.getElementById('closeSearchPro');
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
-  const spQ = document.getElementById('sp_q');
-  const spCity = document.getElementById('sp_city');
-  const spModule = document.getElementById('sp_module');
-  const spBtn = document.getElementById('sp_btn');
-  const spStatus = document.getElementById('sp_status');
-  const spResults = document.getElementById('sp_results');
-  const spEmpty = document.getElementById('sp_empty');
-  const spDebug = document.getElementById('sp_debug');
+/* =========================
+   🧪 DEBUG (OPTIONNEL)
+========================= */
+const spDebug = document.getElementById("sp_debug");
+function dbg(msg){
+  if(!spDebug) return;
+  spDebug.style.display = "block";
+  spDebug.textContent += msg + "\n";
+}
+dbg("Supabase client OK ✅");
 
-  function esc(s){
-    return String(s ?? '')
-      .replaceAll('&','&amp;')
-      .replaceAll('<','&lt;')
-      .replaceAll('>','&gt;')
-      .replaceAll('"','&quot;')
-      .replaceAll("'","&#039;");
+/* =========================
+   🔎 SEARCH PRO — ELEMENTS
+========================= */
+const modal     = document.getElementById('searchProModal');
+const openCard  = document.getElementById('openSearchPro');
+const closeBtn  = document.getElementById('closeSearchPro');
+
+const spQ       = document.getElementById('sp_q');
+const spCity    = document.getElementById('sp_city');
+const spModule  = document.getElementById('sp_module');
+const spBtn     = document.getElementById('sp_btn');
+const spStatus  = document.getElementById('sp_status');
+const spResults = document.getElementById('sp_results');
+const spEmpty   = document.getElementById('sp_empty');
+
+/* =========================
+   🧼 UTILS
+========================= */
+function esc(s){
+  return String(s ?? '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'","&#039;");
+}
+
+/* =========================
+   🪟 MODAL
+========================= */
+function openModal(){
+  if(!modal) return;
+  modal.style.display = 'block';
+  modal.setAttribute('aria-hidden','false');
+  if(spResults) spResults.innerHTML = '';
+  if(spEmpty) spEmpty.style.display = 'none';
+  if(spStatus) spStatus.textContent = '—';
+  if(spDebug){ spDebug.style.display='none'; spDebug.textContent=''; }
+  setTimeout(()=> spQ?.focus(), 50);
+}
+
+function closeModal(){
+  if(!modal) return;
+  modal.style.display = 'none';
+  modal.setAttribute('aria-hidden','true');
+}
+
+openCard?.addEventListener('click', openModal);
+closeBtn?.addEventListener('click', closeModal);
+modal?.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && modal?.style.display === 'block') closeModal();
+});
+
+/* =========================
+   📋 RENDER RESULTS
+========================= */
+function renderResults(rows){
+  if(!spResults) return;
+  spResults.innerHTML = '';
+
+  if(!rows || !rows.length){
+    if(spEmpty) spEmpty.style.display = 'block';
+    return;
   }
+  if(spEmpty) spEmpty.style.display = 'none';
 
-  function openModal(){
-    modal.style.display = 'block';
-    modal.setAttribute('aria-hidden', 'false');
-    spDebug.style.display = 'none';
-    spDebug.textContent = '';
-    spStatus.textContent = '—';
-    spResults.innerHTML = '';
-    spEmpty.style.display = 'none';
-    setTimeout(()=> spQ?.focus(), 50);
-  }
-  function closeModal(){
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden', 'true');
-  }
+  rows.forEach(r=>{
+    const name = r.business_name || r.full_name || 'Sans nom';
+    const city = r.city || '';
+    const quartier = r.quartier || '';
+    const modules = Array.isArray(r.modules) ? r.modules : [];
+    const id = r.id || r.pro_id;
 
-  openCard?.addEventListener('click', openModal);
-  closeBtn?.addEventListener('click', closeModal);
-  modal?.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && modal.style.display === 'block') closeModal(); });
+    const card = document.createElement('div');
+    card.className = 'digiy-result';
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px">
+        <div style="font-weight:950">${esc(name)}</div>
+        <div class="digiy-pill">🦅 PRO</div>
+      </div>
+      <div style="font-size:.9rem;opacity:.85">
+        ${city ? '📍 '+esc(city) : ''}${quartier ? ' • '+esc(quartier) : ''}
+      </div>
+      <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
+        ${modules.slice(0,6).map(m=>`<span class="digiy-pill">${esc(m)}</span>`).join('')}
+      </div>
+    `;
 
-  function renderResults(rows){
-    spResults.innerHTML = '';
-    if(!rows.length){
-      spEmpty.style.display = 'block';
-      return;
-    }
-    spEmpty.style.display = 'none';
+    card.onclick = ()=>{
+      if(!id) return alert("ID manquant");
+      location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
+    };
 
-    rows.forEach(r => {
-      const name = r.business_name || r.full_name || 'Sans nom';
-      const city = r.city || '';
-      const quartier = r.quartier || '';
-      const modules = Array.isArray(r.modules) ? r.modules : [];
-      const id = r.id || r.pro_id || null;
-
-      const card = document.createElement('div');
-      card.className = 'digiy-result';
-      card.innerHTML = `
-        <div style="display:flex; justify-content:space-between; gap:8px; align-items:flex-start; margin-bottom:8px;">
-          <div style="font-family:Outfit,sans-serif; font-weight:950;">${esc(name)}</div>
-          <div class="digiy-pill" style="font-weight:950; letter-spacing:.12em; text-transform:uppercase;">🦅 PRO</div>
-        </div>
-        <div style="color:#e5e7eb; font-weight:650; font-size:.9rem;">
-          ${city ? '📍 '+esc(city) : ''}${quartier ? ' • '+esc(quartier) : ''}
-        </div>
-        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:6px;">
-          ${modules.slice(0,6).map(m => `<span class="digiy-pill">${esc(m)}</span>`).join('')}
-        </div>
-      `;
-
-      card.addEventListener('click', ()=>{
-        if(!id){
-          alert("ID manquant pour ce pro.");
-          return;
-        }
-        window.location.href = `pro-detail.html?id=${encodeURIComponent(id)}`;
-      });
-
-      spResults.appendChild(card);
-    });
-  }
-
-  async function searchPros(){
-    const q = (spQ.value || '').trim();
-    const city = (spCity.value || '').trim();
-    const moduleKey = spModule.value;
-
-    if(q.length && q.length < 2){
-      spStatus.textContent = '⛔ Mets au moins 2 lettres.';
-      return;
-    }
-
-    spStatus.textContent = '⏳ Recherche...';
-    spResults.innerHTML = '';
-    spEmpty.style.display = 'none';
-    spDebug.style.display = 'none';
-    spDebug.textContent = '';
-
-    try{
-      const { data, error } = await supabase.rpc('search_pros_universal', {
-        q: q || null,
-        p_module: (moduleKey === 'all') ? null : moduleKey,
-        p_city: city || null,
-        p_quartier: null,
-        p_limit: 80
-      });
-
-      if(error) throw error;
-
-      const rows = Array.isArray(data) ? data : [];
-      spStatus.textContent = `✅ ${rows.length} résultat(s)`;
-      renderResults(rows);
-
-    }catch(err){
-      spStatus.textContent = `❌ ${err?.message || 'Erreur'}`;
-      spDebug.textContent = JSON.stringify(err, null, 2);
-      spDebug.style.display = 'block';
-      spEmpty.style.display = 'block';
-    }
-  }
-
-  spBtn?.addEventListener('click', searchPros);
-  spQ?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
-  spCity?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
-
-(function(){
-  const btn = document.getElementById("digiy-help-btn");
-  const modal = document.getElementById("digiy-ndimbal");
-  const closeBtn = document.getElementById("digiy-close");
-
-  // ✅ Base URL GitHub Pages (important)
-  // Si tu es sur /digiy-hub/, on construit les liens depuis là.
-  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
-
-  // ✅ Mets ici les vrais fichiers quand tu les crées
-  const routes = {
-    sell: basePath + "digiy-pay.html",
-    job:  basePath + "digiy-jobs.html",
-    info: basePath + "digiylyfe.html"
-  };
-
-  function openDigiy(){
-    modal.classList.add("show");
-    modal.setAttribute("aria-hidden","false");
-  }
-  function closeDigiy(){
-    modal.classList.remove("show");
-    modal.setAttribute("aria-hidden","true");
-  }
-
-  btn.addEventListener("click", openDigiy);
-  closeBtn.addEventListener("click", closeDigiy);
-
-  // clic dehors ferme
-  modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
-
-  // actions
-  document.querySelectorAll(".digiy-act").forEach(b=>{
-    b.addEventListener("click", ()=>{
-      const action = b.getAttribute("data-action");
-      closeDigiy();
-      const url = routes[action];
-      if(url) location.href = url;
-    });
+    spResults.appendChild(card);
   });
+}
 
-  // ESC ferme
-  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
-})();
+/* =========================
+   🔍 SEARCH ACTION
+========================= */
+async function searchPros(){
+  if(spStatus) spStatus.textContent = 'Recherche…';
+  if(spResults) spResults.innerHTML = '';
+  if(spEmpty) spEmpty.style.display = 'none';
 
+  let query = supabase.from('pros_public')
+    .select('*')
+    .limit(50);
+
+  if(spQ?.value) query = query.ilike('search_text', `%${spQ.value}%`);
+  if(spCity?.value) query = query.eq('city', spCity.value);
+  if(spModule?.value) query = query.contains('modules', [spModule.value]);
+
+  const { data, error } = await query;
+
+  if(error){
+    dbg(error.message);
+    if(spStatus) spStatus.textContent = 'Erreur';
+    return;
+  }
+
+  if(spStatus) spStatus.textContent = `${data.length} résultat(s)`;
+  renderResults(data);
+}
+
+spBtn?.addEventListener('click', searchPros);
+spQ?.addEventListener('keydown', e => { if(e.key === 'Enter') searchPros(); });
+
+dbg("Script DIGIY JOBS prêt 🚀");
 </script>
+<!-- ========================= END SCRIPT ========================= -->
 
  <!-- =========================
      DIGIY NDIMBAL — V1.2 (FULL CLEAN)
