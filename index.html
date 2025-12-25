@@ -1600,6 +1600,145 @@
   spBtn?.addEventListener('click', searchPros);
   spQ?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
   spCity?.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchPros(); });
+<!-- =========================
+     DIGIY NDIMBAL — V1 (GitHub Pages)
+     À coller juste avant </body>
+========================= -->
+
+<button id="digiy-help-btn" aria-label="Besoin d'aide">Besoin d’aide ?</button>
+
+<div id="digiy-ndimbal" aria-hidden="true">
+  <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
+    <div class="digiy-title">♾️ NDIMBAL</div>
+    <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br/>Je suis là pour t’aider simplement.</p>
+
+    <button class="digiy-act" data-action="sell">🛒 Vendre / Encaisser</button>
+    <button class="digiy-act" data-action="job">💼 Trouver du travail</button>
+    <button class="digiy-act" data-action="info">📱 Comprendre DIGIY</button>
+
+    <button class="digiy-close" id="digiy-close">❌ Quitter</button>
+  </div>
+</div>
+
+<style>
+  #digiy-help-btn{
+    position:fixed;
+    right:16px; bottom:16px;
+    z-index:9999;
+    border:none;
+    border-radius:999px;
+    padding:12px 16px;
+    font-weight:900;
+    font-size:14px;
+    color:#052e16;
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+    box-shadow:0 12px 26px rgba(0,0,0,.25);
+    cursor:pointer;
+  }
+  #digiy-help-btn:active{ transform:translateY(1px); }
+
+  #digiy-ndimbal{
+    display:none;
+    position:fixed; inset:0;
+    z-index:10000;
+    background:rgba(0,0,0,.55);
+    padding:18px;
+  }
+  #digiy-ndimbal.show{ display:block; }
+
+  .digiy-box{
+    max-width:360px;
+    margin:18vh auto 0;
+    background:#ffffff;
+    border-radius:18px;
+    padding:16px;
+    box-shadow:0 18px 40px rgba(0,0,0,.25);
+    border:1px solid rgba(2,6,23,.08);
+    text-align:center;
+  }
+  .digiy-title{
+    font-weight:950;
+    letter-spacing:.08em;
+    color:#16a34a;
+    margin-bottom:6px;
+  }
+  .digiy-text{
+    margin:8px 0 12px;
+    color:#0f172a;
+    line-height:1.35;
+  }
+  .digiy-act{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:11px 12px;
+    margin:6px 0;
+    font-weight:900;
+    cursor:pointer;
+    background:#f1f5f9;
+    color:#0f172a;
+  }
+  .digiy-act:hover{ filter:brightness(.98); }
+  .digiy-close{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:10px 12px;
+    margin-top:8px;
+    font-weight:900;
+    cursor:pointer;
+    background:#0f172a;
+    color:#fff;
+  }
+</style>
+
+<script>
+(function(){
+  const btn = document.getElementById("digiy-help-btn");
+  const modal = document.getElementById("digiy-ndimbal");
+  const closeBtn = document.getElementById("digiy-close");
+
+  // ✅ Base URL GitHub Pages (important)
+  // Si tu es sur /digiy-hub/, on construit les liens depuis là.
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+
+  // ✅ Mets ici les vrais fichiers quand tu les crées
+  const routes = {
+    sell: basePath + "digiy-pay.html",
+    job:  basePath + "digiy-jobs.html",
+    info: basePath + "digiylyfe.html"
+  };
+
+  function openDigiy(){
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden","false");
+  }
+  function closeDigiy(){
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden","true");
+  }
+
+  btn.addEventListener("click", openDigiy);
+  closeBtn.addEventListener("click", closeDigiy);
+
+  // clic dehors ferme
+  modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
+
+  // actions
+  document.querySelectorAll(".digiy-act").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      const action = b.getAttribute("data-action");
+      closeDigiy();
+      const url = routes[action];
+      if(url) location.href = url;
+    });
+  });
+
+  // ESC ferme
+  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
+})();
+</script>
+<!-- ========================= END NDIMBAL ========================= -->  
 </script>
 
 </body>
