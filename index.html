@@ -1646,7 +1646,7 @@
   document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
 })();
 <!-- =========================
-     DIGIY NDIMBAL — V1 (GitHub Pages)
+     DIGIY NDIMBAL — V1 (CLEAN)
      À coller juste avant </body>
 ========================= -->
 
@@ -1666,26 +1666,33 @@
 </div>
 
 <style>
+  /* BOUTON — au-dessus de TOUT */
   #digiy-help-btn{
-    position:fixed;
-    right:16px; bottom:16px;
-    z-index:9999;
-    border:none;
-    border-radius:999px;
-    padding:12px 16px;
-    font-weight:900;
-    font-size:14px;
-    color:#052e16;
-    background:linear-gradient(135deg,#16a34a,#22c55e);
-    box-shadow:0 12px 26px rgba(0,0,0,.25);
-    cursor:pointer;
-  }
-  #digiy-help-btn:active{ transform:translateY(1px); }
+    position:fixed !important;
+    right:20px !important;
+    bottom:20px !important;
+    z-index:2147483647 !important;
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
 
+    border:none !important;
+    border-radius:999px !important;
+    padding:14px 18px !important;
+    font-weight:950 !important;
+    font-size:15px !important;
+    color:#052e16 !important;
+    background:linear-gradient(135deg,#16a34a,#22c55e) !important;
+    box-shadow:0 16px 40px rgba(0,0,0,.35) !important;
+    cursor:pointer !important;
+  }
+
+  /* MODAL */
   #digiy-ndimbal{
     display:none;
     position:fixed; inset:0;
-    z-index:10000;
+    z-index:2147483646;
     background:rgba(0,0,0,.55);
     padding:18px;
   }
@@ -1694,24 +1701,16 @@
   .digiy-box{
     max-width:360px;
     margin:18vh auto 0;
-    background:#ffffff;
+    background:#fff;
     border-radius:18px;
     padding:16px;
     box-shadow:0 18px 40px rgba(0,0,0,.25);
     border:1px solid rgba(2,6,23,.08);
     text-align:center;
   }
-  .digiy-title{
-    font-weight:950;
-    letter-spacing:.08em;
-    color:#16a34a;
-    margin-bottom:6px;
-  }
-  .digiy-text{
-    margin:8px 0 12px;
-    color:#0f172a;
-    line-height:1.35;
-  }
+  .digiy-title{ font-weight:950; letter-spacing:.08em; color:#16a34a; margin-bottom:6px; }
+  .digiy-text{ margin:8px 0 12px; color:#0f172a; line-height:1.35; }
+
   .digiy-act{
     width:100%;
     border:none;
@@ -1723,7 +1722,6 @@
     background:#f1f5f9;
     color:#0f172a;
   }
-  .digiy-act:hover{ filter:brightness(.98); }
   .digiy-close{
     width:100%;
     border:none;
@@ -1743,11 +1741,12 @@
   const modal = document.getElementById("digiy-ndimbal");
   const closeBtn = document.getElementById("digiy-close");
 
-  // ✅ Base URL GitHub Pages (important)
-  // Si tu es sur /digiy-hub/, on construit les liens depuis là.
-  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+  if(!btn || !modal || !closeBtn){
+    console.warn("DIGIY NDIMBAL: éléments manquants");
+    return;
+  }
 
-  // ✅ Mets ici les vrais fichiers quand tu les crées
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
   const routes = {
     sell: basePath + "digiy-pay.html",
     job:  basePath + "digiy-jobs.html",
@@ -1763,13 +1762,13 @@
     modal.setAttribute("aria-hidden","true");
   }
 
-  btn.addEventListener("click", openDigiy);
+  // ✅ Click ultra fiable (capture)
+  btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
   closeBtn.addEventListener("click", closeDigiy);
 
-  // clic dehors ferme
   modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
+  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
 
-  // actions
   document.querySelectorAll(".digiy-act").forEach(b=>{
     b.addEventListener("click", ()=>{
       const action = b.getAttribute("data-action");
@@ -1778,37 +1777,10 @@
       if(url) location.href = url;
     });
   });
-
-  // ESC ferme
-  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
 })();
 </script>
-<!-- ========================= END NDIMBAL ========================= -->
-  
-<!-- ========================= END NDIMBAL ========================= -->  
-</script>
-  <!-- DIGIY HELP (FORCE TOP) -->
-<button id="digiy-help-btn" style="
-  position:fixed !important;
-  right:20px !important;
-  bottom:20px !important;
-  z-index:2147483647 !important;
-  display:block !important;
-  visibility:visible !important;
-  opacity:1 !important;
-  pointer-events:auto !important;
 
-  background:#16a34a !important;
-  color:#fff !important;
-  border:none !important;
-  border-radius:999px !important;
-  padding:14px 18px !important;
-  font-weight:900 !important;
-  font-size:15px !important;
-  box-shadow:0 16px 40px rgba(0,0,0,.35) !important;
-">
-  Besoin d’aide ?
-</button>
+<!-- ========================= END NDIMBAL ========================= -->
 
 </body>
 </html>
