@@ -1647,22 +1647,37 @@
 })();
 
 </script>
-  <!-- DIGIY NDIMBAL — SAFE INSERT -->
-<button id="digiy-help-btn">Besoin d’aide ?</button>
+
+(function(){
+  function initDigiy(){<!-- =========================
+     DIGIY NDIMBAL — V1.2 (FULL CLEAN)
+     GitHub Pages /digiy-hub/
+     À coller juste avant </body>
+========================= -->
+
+<button id="digiy-help-btn" aria-label="Besoin d'aide">Besoin d’aide ?</button>
 
 <div id="digiy-ndimbal" aria-hidden="true">
-  <div class="digiy-box">
+  <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
     <div class="digiy-title">♾️ NDIMBAL</div>
     <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br/>Je suis là pour t’aider simplement.</p>
+
+    <!-- 🔁 Reprise (V1.1+) -->
     <div id="digiy-last" style="display:none;margin:10px 0 6px"></div>
-    <button class="digiy-act" data-action="sell">🛒 Vendre / Encaisser</button>
-    <button class="digiy-act" data-action="job">💼 Trouver du travail</button>
-    <button class="digiy-act" data-action="info">📱 Comprendre DIGIY</button>
+
+    <!-- ✅ Actions normales (V1.2: cachées quand “Reprendre ?” est visible) -->
+    <div id="digiy-actions">
+      <button class="digiy-act" data-action="sell">🛒 Vendre / Encaisser</button>
+      <button class="digiy-act" data-action="job">💼 Trouver du travail</button>
+      <button class="digiy-act" data-action="info">📱 Comprendre DIGIY</button>
+    </div>
+
     <button class="digiy-close" id="digiy-close">❌ Quitter</button>
   </div>
 </div>
 
 <style>
+  /* BOUTON — au-dessus de TOUT */
   #digiy-help-btn{
     position:fixed !important;
     right:20px !important;
@@ -1679,11 +1694,13 @@
     padding:14px 18px !important;
     font-weight:950 !important;
     font-size:15px !important;
-    background:#16a34a !important;
-    color:#fff !important;
+    color:#052e16 !important;
+    background:linear-gradient(135deg,#16a34a,#22c55e) !important;
     box-shadow:0 16px 40px rgba(0,0,0,.35) !important;
   }
+  #digiy-help-btn:active{ transform:translateY(1px); }
 
+  /* MODAL */
   #digiy-ndimbal{
     display:none;
     position:fixed; inset:0;
@@ -1700,10 +1717,21 @@
     border-radius:18px;
     padding:16px;
     box-shadow:0 18px 40px rgba(0,0,0,.25);
+    border:1px solid rgba(2,6,23,.08);
     text-align:center;
   }
-  .digiy-title{ font-weight:950; letter-spacing:.08em; color:#16a34a; margin-bottom:6px; }
-  .digiy-text{ margin:8px 0 12px; color:#0f172a; line-height:1.35; }
+
+  .digiy-title{
+    font-weight:950;
+    letter-spacing:.08em;
+    color:#16a34a;
+    margin-bottom:6px;
+  }
+  .digiy-text{
+    margin:8px 0 12px;
+    color:#0f172a;
+    line-height:1.35;
+  }
 
   .digiy-act{
     width:100%;
@@ -1716,6 +1744,8 @@
     background:#f1f5f9;
     color:#0f172a;
   }
+  .digiy-act:hover{ filter:brightness(.98); }
+
   .digiy-close{
     width:100%;
     border:none;
@@ -1732,6 +1762,137 @@
 <script>
 (function(){
   function initDigiy(){
+    const btn = document.getElementById("digiy-help-btn");
+    const modal = document.getElementById("digiy-ndimbal");
+    const closeBtn = document.getElementById("digiy-close");
+    const lastBox = document.getElementById("digiy-last");
+    const actionsBox = document.getElementById("digiy-actions");
+
+    if(!btn || !modal || !closeBtn){
+      console.warn("DIGIY NDIMBAL: éléments manquants");
+      return;
+    }
+
+    // Base GitHub Pages (repo /digiy-hub/)
+    const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+
+    // Pages à créer/mettre à jour dans le repo digiy-hub
+    const routes = {
+      sell: basePath + "digiy-pay.html",
+      job:  basePath + "digiy-jobs.html",
+      info: basePath + "digiylyfe.html"
+    };
+
+    const labels = {
+      sell: "🛒 Vendre / Encaisser",
+      job:  "💼 Trouver du travail",
+      info: "📱 Comprendre DIGIY"
+    };
+
+    const LS_KEY = "digiy_ndimbal_last_action";
+
+    function getLast(){
+      try { return localStorage.getItem(LS_KEY) || ""; }
+      catch(e){ return ""; }
+    }
+    function setLast(action){
+      try { localStorage.setItem(LS_KEY, action); }
+      catch(e){}
+    }
+
+    function openDigiy(){
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden","false");
+
+      // Par défaut: actions visibles
+      if(actionsBox) actionsBox.style.display = "block";
+
+      // Affiche “Reprendre ?” si un dernier choix existe
+      if(lastBox){
+        const last = getLast();
+        if(last && routes[last]){
+          lastBox.style.display = "block";
+          lastBox.innerHTML = `
+            <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:10px">
+              <div style="font-weight:950;color:#065f46;margin-bottom:6px">Reprendre ?</div>
+
+              <button id="digiy-continue" style="
+                width:100%;border:none;border-radius:12px;padding:10px 12px;
+                font-weight:950;cursor:pointer;background:#16a34a;color:#052e16">
+                Continuer : ${labels[last]}
+              </button>
+
+              <button id="digiy-reset" style="
+                width:100%;border:none;border-radius:12px;padding:10px 12px;margin-top:6px;
+                font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a">
+                Non, autre chose
+              </button>
+            </div>
+          `;
+
+          // ✅ V1.2: quand reprise visible -> on cache les gros boutons
+          if(actionsBox) actionsBox.style.display = "none";
+
+          const cont = document.getElementById("digiy-continue");
+          const reset = document.getElementById("digiy-reset");
+
+          if(cont) cont.onclick = ()=>{
+            closeDigiy();
+            location.href = routes[last];
+          };
+
+          if(reset) reset.onclick = ()=>{
+            lastBox.style.display="none";
+            lastBox.innerHTML="";
+            if(actionsBox) actionsBox.style.display="block";
+          };
+
+        }else{
+          lastBox.style.display="none";
+          lastBox.innerHTML="";
+          if(actionsBox) actionsBox.style.display="block";
+        }
+      }
+    }
+
+    function closeDigiy(){
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden","true");
+    }
+
+    // Click ultra fiable (capture)
+    btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
+    closeBtn.addEventListener("click", closeDigiy);
+
+    // clic dehors ferme
+    modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
+
+    // ESC ferme
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
+
+    // Actions + mémorisation
+    document.querySelectorAll(".digiy-act").forEach(b=>{
+      b.addEventListener("click", ()=>{
+        const action = b.getAttribute("data-action");
+        if(action && routes[action]) setLast(action);
+        closeDigiy();
+        const url = routes[action];
+        if(url) location.href = url;
+      });
+    });
+
+    console.log("DIGIY NDIMBAL V1.2: prêt ✅");
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", initDigiy);
+  }else{
+    initDigiy();
+  }
+})();
+</script>
+
+<!-- ========================= END NDIMBAL ========================= -->
     const btn = document.getElementById("digiy-help-btn");
     const modal = document.getElementById("digiy-ndimbal");
     const closeBtn = document.getElementById("digiy-close");
