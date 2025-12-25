@@ -6,8 +6,18 @@
   <title>DIGIY JËF — Jobs & Missions</title>
   <meta name="theme-color" content="#16a34a"/>
 
-  <!-- ✅ Supabase (1 seule fois) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Supabase (si déjà chargé ailleurs, on ne le recharge pas) -->
+  <script>
+    (function(){
+      if(!window.__DIGIY_SUPABASE_LIB__){
+        window.__DIGIY_SUPABASE_LIB__ = true;
+        var s=document.createElement("script");
+        s.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+        s.defer=true;
+        document.head.appendChild(s);
+      }
+    })();
+  </script>
 
   <style>
     :root{
@@ -41,7 +51,9 @@
       display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
     .brand{font-weight:950; letter-spacing:.08em}
-    .brand small{display:block; font-weight:800; letter-spacing:0; opacity:.8; margin-top:2px}
+    .brand small{
+      display:block; font-weight:800; letter-spacing:0; opacity:.8; margin-top:2px
+    }
     .btn{
       border:none; border-radius:14px; padding:10px 12px;
       font-weight:950; cursor:pointer;
@@ -73,56 +85,6 @@
       background:rgba(0,0,0,.14);
       font-weight:900; font-size:12px;
     }
-
-    /* ===== Clarification JËF vs JOBS PRO ===== */
-    .digiy-clarify{
-      margin-top:12px;
-      background:rgba(236,253,245,.10);
-      border:1px solid rgba(187,247,208,.28);
-      border-radius:16px;
-      padding:12px;
-    }
-    .digiy-clarify-title{
-      font-weight:950;
-      letter-spacing:.06em;
-      color:rgba(134,239,172,.95);
-    }
-    .digiy-clarify-text{
-      margin-top:6px;
-      color:rgba(234,255,241,.88);
-      font-weight:800;
-      line-height:1.35;
-    }
-    .digiy-clarify-actions{
-      margin-top:10px;
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-    }
-    .digiy-clarify-btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 12px; border-radius:14px;
-      font-weight:950; text-decoration:none;
-      background:linear-gradient(135deg,#16a34a,#22c55e);
-      color:#052e16;
-    }
-    .digiy-clarify-link{
-      background:transparent;
-      border:1px solid rgba(255,255,255,.14);
-      color:rgba(234,255,241,.9);
-      padding:10px 12px; border-radius:14px;
-      font-weight:900; cursor:pointer;
-    }
-    .digiy-clarify-faq{
-      margin-top:10px;
-      background:rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:14px;
-      padding:10px;
-      color:rgba(234,255,241,.88);
-      font-weight:800;
-      line-height:1.35;
-      display:none;
-    }
-
     .filters{
       display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;
     }
@@ -161,8 +123,8 @@
       <small>Missions rapides • terrain • WhatsApp direct</small>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
-      <button class="btn btn-ghost" id="btn-home" type="button">← HUB</button>
-      <button class="btn btn-primary" id="btn-new" type="button">+ Publier</button>
+      <button class="btn btn-ghost" id="btn-home">← HUB</button>
+      <button class="btn btn-primary" id="btn-new">+ Publier</button>
     </div>
   </div>
 </header>
@@ -175,23 +137,6 @@
         <div id="toast" class="pill">Chargement…</div>
       </div>
       <div class="pill" id="countPill">0 mission</div>
-    </div>
-
-    <!-- 🔎 Clarification -->
-    <div class="digiy-clarify">
-      <div class="digiy-clarify-title">♾️ DIGIY JËF vs DIGIY JOBS PRO</div>
-      <div class="digiy-clarify-text">
-        <b>JËF</b> : missions rapides, annonces simples, ouvertes à tous.<br/>
-        <b>JOBS PRO</b> : recrutement structuré, gestion pro, candidats qualifiés.
-      </div>
-      <div class="digiy-clarify-actions">
-        <a class="digiy-clarify-btn" id="btn-jobs-pro" href="#">Ouvrir DIGIY JOBS PRO</a>
-        <button class="digiy-clarify-link" id="btn-why" type="button">Pourquoi deux ?</button>
-      </div>
-      <div class="digiy-clarify-faq" id="clarify-faq">
-        <div><b>Quand j’utilise JËF ?</b> Pour du ponctuel : 2h, 1 jour, urgence.</div>
-        <div style="margin-top:6px"><b>Quand j’utilise JOBS PRO ?</b> Pour recruter souvent, avec suivi et tri.</div>
-      </div>
     </div>
 
     <!-- 🔍 Filtres -->
@@ -215,85 +160,70 @@
   </div>
 
   <div class="footer">
-    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a href="/digiy-hub/">Retour HUB</a>
+    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a id="backHubLink" href="#">Retour HUB</a>
   </div>
 </main>
 
 <script>
-/* ======================================================
-   ✅ SUPABASE — 1 SEULE FOIS (ANTI "already declared")
-   - On utilise window.digiySupabase pour éviter collisions
-====================================================== */
-(function initSupabaseOnce(){
-  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-  const SUPABASE_ANON_KEY =
+(function(){
+  // ✅ Base path propre (GitHub Pages)
+  // Exemple: /digiy-hub/digiy-jobs.html => basePath = /digiy-hub/
+  var parts = location.pathname.split('/').filter(Boolean);
+  var basePath = '/';
+  if(parts.length >= 2){
+    basePath = '/' + parts[0] + '/'; // "digiy-hub/"
+  }
+  document.getElementById("backHubLink").href = basePath;
+
+  // ✅ Boutons
+  document.getElementById("btn-home").onclick = function(){
+    location.href = basePath;
+  };
+  document.getElementById("btn-new").onclick = function(){
+    // page publish (si tu l’as)
+    location.href = basePath + "publish-mission.html";
+  };
+
+  // ✅ Supabase client UNIQUE (pas de redeclare)
+  // -> On utilise window.digiySupabaseClient partout
+  var SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+  var SUPABASE_ANON_KEY =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-  if (!window.supabase || !window.supabase.createClient) {
-    console.error("Supabase SDK introuvable. Vérifie le script CDN.");
-    return;
-  }
-
-  if (!window.digiySupabase) {
-    window.digiySupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  }
-})();
-
-/* ======================================================
-   DIGIY JËF — PUBLIC LIST (stable)
-   Table: public.jef_missions
-   Colonnes attendues: title, zone, phone, note, status, created_at
-====================================================== */
-(function(){
-  const supabase = window.digiySupabase;
-
-  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
-  const list = document.getElementById("list");
-  const q = document.getElementById("q");
-  const zone = document.getElementById("zone");
-  const count = document.getElementById("countPill");
-  const toast = document.getElementById("toast");
-
-  // ✅ Boutons (et ça marche même sur GitHub Pages)
-  document.getElementById("btn-home").addEventListener("click", ()=> {
-    location.href = basePath;
-  });
-
-  document.getElementById("btn-new").addEventListener("click", ()=> {
-    // Page de publication (à toi de créer si pas encore)
-    location.href = basePath + "publish-mission.html";
-  });
-
-  // Lien JOBS PRO (placeholder)
-  document.getElementById("btn-jobs-pro").href = basePath + "digiy-jobs-pro.html";
-
-  // FAQ toggle
-  document.getElementById("btn-why").addEventListener("click", ()=>{
-    const faq = document.getElementById("clarify-faq");
-    const open = (faq.style.display === "none" || !faq.style.display);
-    faq.style.display = open ? "block" : "none";
-  });
-
-  let cache = [];
-
-  function norm(s){ return (s||"").toLowerCase(); }
   function esc(s){
-    return String(s ?? "").replace(/[&<>"']/g, m => ({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      "\"":"&quot;",
-      "'":"&#039;"
-    }[m]));
+    return String(s ?? "").replace(/[&<>"']/g, function(m){
+      return ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" })[m];
+    });
   }
+
+  function fmtDate(iso){
+    if(!iso) return "";
+    try{
+      // Affichage simple: JJ/MM/AAAA HH:MM:SS (timezone locale du navigateur)
+      var d = new Date(iso);
+      var pad = (n)=> String(n).padStart(2,'0');
+      return pad(d.getDate()) + "/" + pad(d.getMonth()+1) + "/" + d.getFullYear()
+        + " " + pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
+    }catch(e){ return ""; }
+  }
+
+  var list = document.getElementById("list");
+  var q = document.getElementById("q");
+  var zone = document.getElementById("zone");
+  var count = document.getElementById("countPill");
+  var toast = document.getElementById("toast");
+
+  var cache = [];
+
+  function norm(s){ return String(s ?? "").toLowerCase(); }
 
   function render(){
-    const qq = norm(q.value);
-    const zz = zone.value;
+    var qq = norm(q.value);
+    var zz = zone.value;
 
-    const filtered = cache.filter(m=>{
-      const okQ = !qq || norm(m.title).includes(qq) || norm(m.note||"").includes(qq);
-      const okZ = !zz || m.zone === zz;
+    var filtered = cache.filter(function(m){
+      var okQ = !qq || norm(m.title).includes(qq) || norm(m.note||"").includes(qq);
+      var okZ = !zz || m.zone === zz;
       return okQ && okZ;
     });
 
@@ -301,85 +231,89 @@
     list.innerHTML = "";
 
     if(!filtered.length){
-      list.innerHTML = `<div class="mission">
-        <div class="m-title">Aucune mission</div>
-        <div class="m-meta">Publie une mission ou change le filtre.</div>
-      </div>`;
+      list.innerHTML = '<div class="mission"><div class="m-title">Aucune mission</div><div class="m-meta">Publie une mission ou change le filtre.</div></div>';
       return;
     }
 
-    // ✅ dédup simple (évite doublons visuels)
-    const seen = new Set();
-
-    filtered.forEach(m=>{
-      const key = `${(m.title||"").trim()}|${(m.zone||"").trim()}|${(m.phone||"").trim()}|${(m.note||"").trim()}`;
-      if(seen.has(key)) return;
-      seen.add(key);
-
-      const phoneDigits = String(m.phone||"").replace(/[^\d]/g,"");
-      const wa = phoneDigits
-        ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + (m.title||""))}`
-        : "#";
-
-      const div = document.createElement("div");
+    filtered.forEach(function(m){
+      var phoneDigits = String(m.phone||"").replace(/[^\d]/g,"");
+      var wa = "https://wa.me/" + phoneDigits + "?text=" + encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + (m.title||""));
+      var div = document.createElement("div");
       div.className = "mission";
-      div.innerHTML = `
-        <div class="m-title">${esc(m.title)}</div>
-        <div class="m-meta">
-          <span class="pill">📍 ${esc(m.zone || "—")}</span>
-          <span class="pill">📞 ${esc(m.phone || "—")}</span>
-          ${m.created_at ? `<span class="pill">🕒 ${esc(new Date(m.created_at).toLocaleString("fr-FR"))}</span>` : ``}
-        </div>
-        ${m.note ? `<div class="m-meta">📝 ${esc(m.note)}</div>` : ""}
-        <div class="m-actions">
-          ${phoneDigits
-            ? `<a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp direct</a>`
-            : `<button class="btn btn-ghost" type="button" onclick="alert('Numéro manquant sur cette mission')">WhatsApp</button>`
-          }
-        </div>
-      `;
+      div.innerHTML =
+        '<div class="m-title">' + esc(m.title||"") + '</div>' +
+        '<div class="m-meta">' +
+          '<span class="pill">📍 ' + esc(m.zone||"") + '</span>' +
+          '<span class="pill">📞 ' + esc(m.phone||"") + '</span>' +
+          (m.created_at ? '<span class="pill">🕒 ' + esc(fmtDate(m.created_at)) + '</span>' : '') +
+        '</div>' +
+        (m.note ? '<div class="m-meta">📝 ' + esc(m.note) + '</div>' : '') +
+        '<div class="m-actions">' +
+          '<a class="btn btn-primary" href="' + wa + '" target="_blank" rel="noopener">WhatsApp direct</a>' +
+        '</div>';
       list.appendChild(div);
     });
   }
 
-  async function load(){
-    try{
-      if(!supabase || typeof supabase.from !== "function"){
-        toast.textContent = "Erreur: Supabase client KO";
-        console.error("Supabase client invalid:", supabase);
-        return;
-      }
+  function waitSupabaseLib(){
+    return new Promise(function(resolve){
+      var t = setInterval(function(){
+        if(window.supabase && window.supabase.createClient){
+          clearInterval(t); resolve(true);
+        }
+      }, 50);
+      setTimeout(function(){ clearInterval(t); resolve(false); }, 6000);
+    });
+  }
 
-      toast.textContent = "Chargement…";
+  async function getClient(){
+    // Déjà prêt ?
+    if(window.digiySupabaseClient) return window.digiySupabaseClient;
 
-      const { data, error } = await supabase
-        .from("jef_missions")
-        .select("title,zone,phone,note,status,created_at")
-        .eq("status","approved")
-        .order("created_at",{ascending:false})
-        .limit(200);
-
-      if(error){
-        toast.textContent = "Erreur Supabase";
-        console.error(error);
-        return;
-      }
-
-      cache = data || [];
-      toast.textContent = "OK ✅";
-      render();
-
-    }catch(e){
-      toast.textContent = "Erreur chargement";
-      console.error("Load exception:", e);
+    var ok = await waitSupabaseLib();
+    if(!ok){
+      toast.textContent = "Supabase non chargé";
+      throw new Error("Supabase library not loaded");
     }
+
+    // ✅ Crée une seule fois, sans redeclare "supabase"
+    window.digiySupabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    return window.digiySupabaseClient;
+  }
+
+  async function load(){
+    toast.textContent = "Chargement…";
+
+    var client = await getClient();
+
+    // ✅ Table: jef_missions (comme tu utilises déjà)
+    // Colonnes attendues: title, zone, phone, note, status, created_at
+    var res = await client
+      .from("jef_missions")
+      .select("title,zone,phone,note,status,created_at")
+      .eq("status","approved")
+      .order("created_at",{ascending:false})
+      .limit(200);
+
+    if(res.error){
+      console.error(res.error);
+      toast.textContent = "Erreur Supabase";
+      list.innerHTML = '<div class="mission"><div class="m-title">Erreur Supabase</div><div class="m-meta">Vérifie la policy SELECT public (status = approved).</div></div>';
+      return;
+    }
+
+    cache = res.data || [];
+    toast.textContent = "OK";
+    render();
   }
 
   q.addEventListener("input", render);
   zone.addEventListener("change", render);
 
-  // ✅ charge au démarrage
-  load();
+  load().catch(function(e){
+    console.error("Load exception:", e);
+    toast.textContent = "Erreur JS";
+  });
 })();
 </script>
 
