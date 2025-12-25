@@ -3,93 +3,165 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>DIGIY JËF — Admin</title>
+  <title>DIGIY JËF — Jobs & Missions</title>
   <meta name="theme-color" content="#16a34a"/>
+
+  <!-- ✅ Supabase (1 seule fois) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    :root{--green:#16a34a;--bg:#071019;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--text:#eef2ff;--muted:rgba(238,242,255,.75);--radius:18px}
+    :root{
+      --green:#16a34a;
+      --bg:#061b14;
+      --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.12);
+      --text:#eafff1;
+      --muted:rgba(234,255,241,.75);
+      --dark:#052e16;
+      --radius:18px;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.18), transparent 60%), var(--bg); color:var(--text)}
-    header{position:sticky;top:0;z-index:10;background:rgba(7,16,25,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:980px;margin:0 auto}
-    .brand{font-weight:950;letter-spacing:.08em}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background: radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%), var(--bg);
+      color:var(--text);
+    }
+    header{
+      position:sticky; top:0; z-index:10;
+      background:rgba(6,27,20,.72);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+      padding:14px;
+    }
+    .top{
+      max-width:980px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .brand{font-weight:950; letter-spacing:.08em}
+    .brand small{display:block;font-weight:800;letter-spacing:0;opacity:.8;margin-top:2px}
     .btn{border:none;border-radius:14px;padding:10px 12px;font-weight:950;cursor:pointer}
-    .btn-primary{background:linear-gradient(135deg,#16a34a,#22c55e);color:#052e16}
+    .btn-primary{background:linear-gradient(135deg,#16a34a,#22c55e);color:var(--dark)}
     .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-    .btn-danger{background:#ef4444;color:#fff}
-    .btn-ok{background:#22c55e;color:#052e16}
     main{max-width:980px;margin:0 auto;padding:14px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.18)}
-    input,select{width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--text);outline:none;font-weight:800}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media(max-width:800px){.grid{grid-template-columns:1fr}}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+    .row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .pill{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.14);
+      font-weight:900;font-size:12px;
+    }
+
+    .digiy-clarify{
+      margin-top:12px;
+      background:rgba(236,253,245,.10);
+      border:1px solid rgba(187,247,208,.28);
+      border-radius:16px;
+      padding:12px;
+    }
+    .digiy-clarify-title{font-weight:950;letter-spacing:.06em;color:rgba(134,239,172,.95)}
+    .digiy-clarify-text{margin-top:6px;color:rgba(234,255,241,.88);font-weight:800;line-height:1.35}
+    .digiy-clarify-actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .digiy-clarify-btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:10px 12px;border-radius:14px;font-weight:950;text-decoration:none;
+      background:linear-gradient(135deg,#16a34a,#22c55e);
+      color:#052e16;
+    }
+    .digiy-clarify-link{
+      background:transparent;border:1px solid rgba(255,255,255,.14);
+      color:rgba(234,255,241,.9);
+      padding:10px 12px;border-radius:14px;font-weight:900;cursor:pointer;
+    }
+    .digiy-clarify-faq{
+      margin-top:10px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:10px;
+      color:rgba(234,255,241,.88);
+      font-weight:800;
+      line-height:1.35;
+      display:none;
+    }
+
+    .filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+    @media(max-width:700px){ .filters{grid-template-columns:1fr} }
+    input,select{
+      width:100%;padding:12px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      color:var(--text);
+      outline:none;
+      font-weight:800;
+    }
     .list{display:grid;gap:10px;margin-top:12px}
-    .item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:12px}
-    .title{font-weight:950}
-    .meta{margin-top:6px;color:var(--muted);font-weight:800;font-size:13px;display:flex;gap:8px;flex-wrap:wrap}
-    .actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.14);font-weight:900;font-size:12px}
-    .toast{margin-top:10px;font-weight:900;color:rgba(238,242,255,.85)}
+    .mission{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:12px;
+    }
+    .m-title{font-weight:950;font-size:15px}
+    .m-meta{margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-weight:800;font-size:13px}
+    .m-actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
     a{color:#86efac;text-decoration:none;font-weight:950}
+    .footer{text-align:center;color:rgba(234,255,241,.65);font-weight:800;padding:20px 10px}
   </style>
 </head>
-<body>
 
+<body>
 <header>
   <div class="top">
-    <div class="brand">♾️ DIGIY JËF — Admin
-      <small style="display:block;opacity:.8;letter-spacing:0;font-weight:800;margin-top:2px">Validation missions</small>
+    <div class="brand">♾️ DIGIY JËF
+      <small>Missions rapides • terrain • WhatsApp direct</small>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
       <button class="btn btn-ghost" id="btn-home">← HUB</button>
-      <button class="btn btn-ghost" id="btn-logout" style="display:none">Se déconnecter</button>
+      <button class="btn btn-primary" id="btn-new">+ Publier</button>
     </div>
   </div>
 </header>
 
 <main>
-  <div class="card" id="loginCard">
-    <div style="font-weight:950">Connexion admin</div>
-    <div class="toast">Connecte-toi avec ton compte Supabase Auth (email + mot de passe).</div>
-    <div class="grid" style="margin-top:10px">
+  <div class="card">
+    <div class="row">
       <div>
-        <div class="toast" style="margin:0 0 6px">Email</div>
-        <input id="email" placeholder="email"/>
+        <div style="font-weight:950">Trouver une mission</div>
+        <div id="toast" class="pill">Chargement…</div>
       </div>
-      <div>
-        <div class="toast" style="margin:0 0 6px">Mot de passe</div>
-        <input id="password" type="password" placeholder="mot de passe"/>
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:10px">
-      <button class="btn btn-primary" id="btn-login">Se connecter</button>
-    </div>
-    <div class="toast" id="loginToast"></div>
-  </div>
-
-  <div class="card" id="adminCard" style="display:none">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
-      <div>
-        <div style="font-weight:950">Missions</div>
-        <div class="toast" id="toast">Chargement…</div>
-      </div>
-      <div class="pill" id="countPill">0</div>
+      <div class="pill" id="countPill">0 mission</div>
     </div>
 
-    <div class="grid" style="margin-top:10px">
-      <div>
-        <div class="toast" style="margin:0 0 6px">Filtre statut</div>
-        <select id="status">
-          <option value="pending">pending</option>
-          <option value="approved">approved</option>
-          <option value="rejected">rejected</option>
-        </select>
+    <div class="digiy-clarify">
+      <div class="digiy-clarify-title">♾️ DIGIY JËF vs DIGIY JOBS PRO</div>
+      <div class="digiy-clarify-text">
+        <b>JËF</b> : missions rapides, annonces simples, ouvertes à tous.<br/>
+        <b>JOBS PRO</b> : recrutement structuré, gestion pro, candidats qualifiés.
       </div>
+      <div class="digiy-clarify-actions">
+        <a class="digiy-clarify-btn" id="btn-jobs-pro" href="#">Ouvrir DIGIY JOBS PRO</a>
+        <button class="digiy-clarify-link" id="btn-why">Pourquoi deux ?</button>
+      </div>
+      <div class="digiy-clarify-faq" id="clarify-faq">
+        <div><b>Quand j’utilise JËF ?</b> Pour du ponctuel : 2h, 1 jour, urgence.</div>
+        <div style="margin-top:6px"><b>Quand j’utilise JOBS PRO ?</b> Pour recruter souvent, avec suivi et tri.</div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <div><input id="q" placeholder="Ex: livraison, ménage, peinture, dépannage…"/></div>
       <div>
-        <div class="toast" style="margin:0 0 6px">Zone</div>
         <select id="zone">
-          <option value="">Toutes</option>
+          <option value="">Toutes zones</option>
           <option value="Saly">Saly</option>
           <option value="Dakar">Dakar</option>
           <option value="Mbour">Mbour</option>
@@ -102,19 +174,18 @@
     <div class="list" id="list"></div>
   </div>
 
-  <div style="text-align:center;color:rgba(238,242,255,.65);font-weight:800;padding:20px 10px">
-    DIGIYLYFE ♾️ — Admin • <a href="/digiy-hub/digiy-jobs.html">Voir la liste publique</a>
+  <div class="footer">
+    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a href="/digiy-hub/">Retour HUB</a>
   </div>
 </main>
 
 <script>
 /* =========================
-   ✅ SUPABASE — GLOBAL UNIQUE (ANTI "already declared")
+   ✅ SUPABASE — GLOBAL UNIQUE
 ========================= */
 const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
 const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsIm
-V mIjoid2VzcW13amp0c2VmeWpubHVvc2oiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc2NTE3ODg4MiwiZXhwIjoyMDgwNzU0ODgyfQ.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
 window.DIGIY_SUPABASE =
   window.DIGIY_SUPABASE ||
@@ -122,184 +193,114 @@ window.DIGIY_SUPABASE =
 
 const sb = window.DIGIY_SUPABASE;
 
-/* ✅ TABLE OFFICIELLE */
-const JEF_TABLE = "digiy_jef_missions";
-
 (function(){
   const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
 
-  const loginCard = document.getElementById("loginCard");
-  const adminCard = document.getElementById("adminCard");
-  const loginToast = document.getElementById("loginToast");
-  const toast = document.getElementById("toast");
   const list = document.getElementById("list");
-  const countPill = document.getElementById("countPill");
+  const q = document.getElementById("q");
+  const zone = document.getElementById("zone");
+  const count = document.getElementById("countPill");
+  const toast = document.getElementById("toast");
 
   document.getElementById("btn-home").onclick = ()=> location.href = basePath;
+  document.getElementById("btn-new").onclick  = ()=> location.href = basePath + "publish-mission.html";
 
-  const btnLogout = document.getElementById("btn-logout");
-  btnLogout.onclick = async ()=>{
-    await sb.auth.signOut();
-    location.reload();
+  document.getElementById("btn-jobs-pro").href = basePath + "digiy-jobs-pro.html";
+
+  document.getElementById("btn-why").onclick = ()=>{
+    const faq = document.getElementById("clarify-faq");
+    const open = (faq.style.display === "none" || !faq.style.display);
+    faq.style.display = open ? "block" : "none";
   };
 
+  let cache = [];
+
+  function norm(s){ return (s||"").toLowerCase(); }
   function esc(s){
-    return (s||"").toString()
-      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    return String(s||"").replace(/[&<>"']/g, m => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      "\"":"&quot;",
+      "'":"&#039;"
+    }[m]));
   }
 
-  async function isAdmin(){
-    const { data: { user } } = await sb.auth.getUser();
-    if(!user) return false;
+  function render(){
+    const qq = norm(q.value);
+    const zz = zone.value;
 
-    // Table admin_users: user_id uuid
-    const { data, error } = await sb
-      .from("admin_users")
-      .select("user_id")
-      .eq("user_id", user.id)
-      .maybeSingle();
+    const filtered = cache.filter(m=>{
+      const okQ = !qq || norm(m.title).includes(qq) || norm(m.note||"").includes(qq);
+      const okZ = !zz || m.zone === zz;
+      return okQ && okZ;
+    });
 
-    return !!data && !error;
-  }
-
-  async function loadMissions(){
-    toast.textContent = "Chargement…";
-    const status = document.getElementById("status").value;
-    const zone = document.getElementById("zone").value;
-
-    let q = sb
-      .from(JEF_TABLE)
-      .select("id,title,zone,phone,note,status,created_at,approved_at,approved_by")
-      .eq("status", status)
-      .order("created_at", { ascending:false })
-      .limit(200);
-
-    if(zone) q = q.eq("zone", zone);
-
-    const { data, error } = await q;
-    if(error){
-      console.error(error);
-      toast.textContent = "Erreur chargement (RLS / permissions).";
-      list.innerHTML = "";
-      return;
-    }
-
-    const arr = data || [];
-    countPill.textContent = String(arr.length);
-
+    count.textContent = filtered.length + (filtered.length>1 ? " missions" : " mission");
     list.innerHTML = "";
-    if(arr.length === 0){
-      list.innerHTML = `<div class="item"><div class="title">Aucune mission</div><div class="meta">Rien ici pour ce filtre.</div></div>`;
-      toast.textContent = "OK ✅";
+
+    if(!filtered.length){
+      list.innerHTML = `
+        <div class="mission">
+          <div class="m-title">Aucune mission</div>
+          <div class="m-meta">Publie une mission ou change le filtre.</div>
+        </div>`;
       return;
     }
 
-    arr.forEach(m=>{
-      const waNum = (m.phone||"").replace(/[^\d]/g,"");
-      const wa = waNum
-        ? `https://wa.me/${waNum}?text=${encodeURIComponent("DIGIY JËF ♾️ — Concernant: " + (m.title||""))}`
-        : "#";
+    filtered.forEach(m=>{
+      const wa = `https://wa.me/${String(m.phone||"").replace(/[^\d]/g,"")}?text=${
+        encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + (m.title||""))
+      }`;
 
       const div = document.createElement("div");
-      div.className = "item";
+      div.className = "mission";
       div.innerHTML = `
-        <div class="title">${esc(m.title||"")}</div>
-        <div class="meta">
-          <span class="pill">📍 ${esc(m.zone||"")}</span>
-          <span class="pill">📞 ${esc(m.phone||"")}</span>
-          <span class="pill">🟣 ${esc(m.status||"")}</span>
+        <div class="m-title">${esc(m.title)}</div>
+        <div class="m-meta">
+          <span class="pill">📍 ${esc(m.zone)}</span>
+          <span class="pill">📞 ${esc(m.phone)}</span>
+          ${m.category ? `<span class="pill">🏷️ ${esc(m.category)}</span>` : ``}
         </div>
-        ${m.note ? `<div class="meta" style="opacity:.9">📝 ${esc(m.note)}</div>` : ``}
-        <div class="actions">
-          ${m.status !== "approved" ? `<button class="btn btn-ok" data-approve="${m.id}">Approuver</button>` : ``}
-          ${m.status !== "rejected" ? `<button class="btn btn-ghost" data-reject="${m.id}">Rejeter</button>` : ``}
-          <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>
-          <button class="btn btn-danger" data-del="${m.id}">Supprimer</button>
+        ${m.note ? `<div class="m-meta">📝 ${esc(m.note)}</div>` : ``}
+        <div class="m-actions">
+          <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp direct</a>
         </div>
       `;
       list.appendChild(div);
     });
-
-    // handlers approve
-    document.querySelectorAll("[data-approve]").forEach(b=>{
-      b.onclick = async ()=>{
-        const id = b.getAttribute("data-approve");
-        const { data: { user } } = await sb.auth.getUser();
-        await sb.from(JEF_TABLE).update({
-          status:"approved",
-          approved_at: new Date().toISOString(),
-          approved_by: user?.id || null
-        }).eq("id", id);
-        loadMissions();
-      };
-    });
-
-    // handlers reject
-    document.querySelectorAll("[data-reject]").forEach(b=>{
-      b.onclick = async ()=>{
-        const id = b.getAttribute("data-reject");
-        await sb.from(JEF_TABLE).update({ status:"rejected" }).eq("id", id);
-        loadMissions();
-      };
-    });
-
-    // handlers delete
-    document.querySelectorAll("[data-del]").forEach(b=>{
-      b.onclick = async ()=>{
-        const id = b.getAttribute("data-del");
-        if(!confirm("Supprimer définitivement ?")) return;
-        await sb.from(JEF_TABLE).delete().eq("id", id);
-        loadMissions();
-      };
-    });
-
-    toast.textContent = "OK ✅";
   }
 
-  document.getElementById("status").addEventListener("change", loadMissions);
-  document.getElementById("zone").addEventListener("change", loadMissions);
+  async function load(){
+    toast.textContent = "Chargement…";
 
-  document.getElementById("btn-login").onclick = async ()=>{
-    loginToast.textContent = "Connexion…";
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+    const { data, error } = await sb
+      .from("jef_missions")
+      .select("title,zone,phone,note,category,created_at,status")
+      .eq("status","approved")
+      .order("created_at",{ascending:false})
+      .limit(200);
 
-    const { error } = await sb.auth.signInWithPassword({ email, password });
     if(error){
       console.error(error);
-      loginToast.textContent = "Erreur login. Vérifie email/mot de passe.";
-      return;
-    }
-    location.reload();
-  };
-
-  (async ()=>{
-    const { data: { user } } = await sb.auth.getUser();
-
-    if(!user){
-      loginCard.style.display="block";
-      adminCard.style.display="none";
-      btnLogout.style.display="none";
+      toast.textContent = "Erreur Supabase";
+      list.innerHTML = `
+        <div class="mission">
+          <div class="m-title">Erreur</div>
+          <div class="m-meta">Vérifie la table <b>jef_missions</b> + policy SELECT approved.</div>
+        </div>`;
       return;
     }
 
-    const ok = await isAdmin();
-    if(!ok){
-      loginCard.style.display="block";
-      adminCard.style.display="none";
-      btnLogout.style.display="none";
-      loginToast.textContent = "Connecté, mais pas admin (ajoute ton user_id dans admin_users).";
-      return;
-    }
+    cache = data || [];
+    toast.textContent = "OK";
+    render();
+  }
 
-    // admin OK
-    loginCard.style.display="none";
-    adminCard.style.display="block";
-    btnLogout.style.display="inline-block";
-    loadMissions();
-  })();
+  q.addEventListener("input", render);
+  zone.addEventListener("change", render);
 
+  load();
 })();
 </script>
 
