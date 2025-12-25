@@ -24,7 +24,9 @@
     body{
       margin:0;
       font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      background:radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%), var(--bg);
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%),
+        var(--bg);
       color:var(--text);
     }
     header{
@@ -39,15 +41,21 @@
       display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
     .brand{font-weight:950; letter-spacing:.08em}
-    .brand small{display:block; font-weight:800; letter-spacing:0; opacity:.8; margin-top:2px}
+    .brand small{
+      display:block; font-weight:800; letter-spacing:0; opacity:.8; margin-top:2px
+    }
     .btn{
       border:none; border-radius:14px; padding:10px 12px;
       font-weight:950; cursor:pointer;
-      display:inline-flex; align-items:center; justify-content:center;
-      text-decoration:none;
     }
-    .btn-primary{background:linear-gradient(135deg,#16a34a,#22c55e); color:var(--dark)}
-    .btn-ghost{background:transparent; color:var(--text); border:1px solid var(--line)}
+    .btn-primary{
+      background:linear-gradient(135deg,#16a34a,#22c55e);
+      color:var(--dark);
+    }
+    .btn-ghost{
+      background:transparent; color:var(--text);
+      border:1px solid var(--line);
+    }
     main{max-width:980px; margin:0 auto; padding:14px}
     .card{
       background:var(--card);
@@ -56,7 +64,10 @@
       padding:14px;
       box-shadow:0 18px 40px rgba(0,0,0,.18);
     }
-    .row{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .row{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
+    }
     .pill{
       display:inline-flex; align-items:center; gap:6px;
       padding:7px 10px; border-radius:999px;
@@ -72,9 +83,21 @@
       border-radius:16px;
       padding:12px;
     }
-    .digiy-clarify-title{font-weight:950; letter-spacing:.06em; color:rgba(134,239,172,.95)}
-    .digiy-clarify-text{margin-top:6px; color:rgba(234,255,241,.88); font-weight:800; line-height:1.35}
-    .digiy-clarify-actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .digiy-clarify-title{
+      font-weight:950;
+      letter-spacing:.06em;
+      color:rgba(134,239,172,.95);
+    }
+    .digiy-clarify-text{
+      margin-top:6px;
+      color:rgba(234,255,241,.88);
+      font-weight:800;
+      line-height:1.35;
+    }
+    .digiy-clarify-actions{
+      margin-top:10px;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
     .digiy-clarify-btn{
       display:inline-flex; align-items:center; justify-content:center;
       padding:10px 12px; border-radius:14px;
@@ -101,7 +124,9 @@
       display:none;
     }
 
-    .filters{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
+    .filters{
+      display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;
+    }
     @media(max-width:700px){ .filters{grid-template-columns:1fr} }
     input,select{
       width:100%; padding:12px; border-radius:14px;
@@ -123,10 +148,12 @@
     }
     .m-actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
     a{color:#86efac; text-decoration:none; font-weight:950}
-    .footer{text-align:center; color:rgba(234,255,241,.65); font-weight:800; padding:20px 10px}
+    .footer{
+      text-align:center; color:rgba(234,255,241,.65);
+      font-weight:800; padding:20px 10px;
+    }
   </style>
 </head>
-
 <body>
 
 <header>
@@ -134,11 +161,9 @@
     <div class="brand">♾️ DIGIY JËF
       <small>Missions rapides • terrain • WhatsApp direct</small>
     </div>
-
-    <!-- ✅ LIENS ABSOLUS (GitHub Pages safe) -->
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
-      <a class="btn btn-ghost" href="https://beauville.github.io/digiy-hub/">← HUB</a>
-      <a class="btn btn-primary" href="https://beauville.github.io/digiy-hub/publish-mission.html">+ Publier</a>
+      <button class="btn btn-ghost" id="btn-home">← HUB</button>
+      <button class="btn btn-primary" id="btn-new">+ Publier</button>
     </div>
   </div>
 </header>
@@ -160,7 +185,7 @@
         <b>JOBS PRO</b> : recrutement structuré, gestion pro, candidats qualifiés.
       </div>
       <div class="digiy-clarify-actions">
-        <a class="digiy-clarify-btn" href="https://beauville.github.io/digiy-hub/digiy-jobs-pro.html">Ouvrir DIGIY JOBS PRO</a>
+        <a class="digiy-clarify-btn" id="btn-jobs-pro" href="#">Ouvrir DIGIY JOBS PRO</a>
         <button class="digiy-clarify-link" id="btn-why">Pourquoi deux ?</button>
       </div>
       <div class="digiy-clarify-faq" id="clarify-faq">
@@ -170,9 +195,7 @@
     </div>
 
     <div class="filters">
-      <div>
-        <input id="q" placeholder="Ex: livraison, ménage, peinture, dépannage…"/>
-      </div>
+      <div><input id="q" placeholder="Ex: livraison, ménage, peinture, dépannage…"/></div>
       <div>
         <select id="zone">
           <option value="">Toutes zones</option>
@@ -189,8 +212,7 @@
   </div>
 
   <div class="footer">
-    DIGIYLYFE ♾️ — direct au peuple • 0% commission •
-    <a href="https://beauville.github.io/digiy-hub/">Retour HUB</a>
+    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a href="/digiy-hub/">Retour HUB</a>
   </div>
 </main>
 
@@ -199,22 +221,36 @@
    🔐 SUPABASE — SINGLETON
    (évite "already declared")
 ========================= */
-const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-
-window.DIGIY_SUPABASE = window.DIGIY_SUPABASE
-  || window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-const db = window.DIGIY_SUPABASE;
-
 (function(){
+  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+
+  window.digiySupabase = window.digiySupabase || window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+})();
+</script>
+
+<script>
+(function(){
+  const supabase = window.digiySupabase;
+
+  // ✅ Base path safe pour GitHub Pages /digiy-hub/
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+
   const list = document.getElementById("list");
   const q = document.getElementById("q");
   const zone = document.getElementById("zone");
   const count = document.getElementById("countPill");
   const toast = document.getElementById("toast");
 
+  // ✅ Boutons
+  document.getElementById("btn-home").onclick = ()=> { location.href = basePath; };
+  document.getElementById("btn-new").onclick  = ()=> { location.href = basePath + "publish-mission.html"; };
+
+  // Lien JOBS PRO (placeholder)
+  document.getElementById("btn-jobs-pro").href = basePath + "digiy-jobs-pro.html";
+
+  // FAQ toggle
   document.getElementById("btn-why").onclick = ()=>{
     const faq = document.getElementById("clarify-faq");
     const open = faq.style.display === "none" || !faq.style.display;
@@ -225,8 +261,8 @@ const db = window.DIGIY_SUPABASE;
 
   function norm(s){ return (s||"").toLowerCase(); }
   function esc(s){
-    return (s||"").replace(/[&<>"']/g,m=>({
-      "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+    return String(s ?? "").replace(/[&<>"']/g, (m)=>({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
     }[m]));
   }
 
@@ -236,7 +272,7 @@ const db = window.DIGIY_SUPABASE;
 
     const filtered = cache.filter(m=>{
       const okQ = !qq || norm(m.title).includes(qq) || norm(m.note||"").includes(qq);
-      const okZ = !zz || (m.zone === zz);
+      const okZ = !zz || m.zone === zz;
       return okQ && okZ;
     });
 
@@ -253,16 +289,20 @@ const db = window.DIGIY_SUPABASE;
     }
 
     filtered.forEach(m=>{
-      const wa = `https://wa.me/${(m.phone||"").replace(/[^\d]/g,"")}?text=${encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + (m.title||""))}`;
+      const phoneDigits = String(m.phone||"").replace(/[^\d]/g,"");
+      const wa = phoneDigits
+        ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: "+m.title)}`
+        : `https://wa.me/221771342889?text=${encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: "+m.title)}`;
+
       const div = document.createElement("div");
       div.className = "mission";
       div.innerHTML = `
-        <div class="m-title">${esc(m.title||"")}</div>
+        <div class="m-title">${esc(m.title)}</div>
         <div class="m-meta">
-          <span class="pill">📍 ${esc(m.zone||"")}</span>
-          <span class="pill">📞 ${esc(m.phone||"")}</span>
+          <span class="pill">📍 ${esc(m.zone)}</span>
+          <span class="pill">📞 ${esc(m.phone)}</span>
         </div>
-        ${m.note ? `<div class="m-meta">📝 ${esc(m.note)}</div>` : ``}
+        ${m.note ? `<div class="m-meta">📝 ${esc(m.note)}</div>` : ""}
         <div class="m-actions">
           <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp direct</a>
         </div>
@@ -274,32 +314,31 @@ const db = window.DIGIY_SUPABASE;
   async function load(){
     toast.textContent = "Chargement…";
 
-    try{
-      const { data, error } = await db
-        .from("jef_missions")
-        .select("title,zone,phone,note,status,created_at")
-        .eq("status","approved")
-        .order("created_at",{ascending:false})
-        .limit(200);
+    const { data, error } = await supabase
+      .from("jef_missions")
+      .select("title,zone,phone,note,status,created_at")
+      .eq("status","approved")
+      .order("created_at",{ascending:false})
+      .limit(200);
 
-      if(error){
-        console.error(error);
-        toast.textContent = "Erreur Supabase (RLS/table) — ouvre console";
-        list.innerHTML = `
-          <div class="mission">
-            <div class="m-title">Erreur de lecture</div>
-            <div class="m-meta">Cause fréquente: policy RLS SELECT manquante pour anon sur "jef_missions".</div>
-          </div>`;
-        return;
-      }
-
-      cache = data || [];
-      toast.textContent = "OK ✅ (" + cache.length + ")";
-      render();
-    }catch(e){
-      console.error(e);
-      toast.textContent = "JS crash — ouvre console";
+    if(error){
+      console.error("Supabase error:", error);
+      toast.textContent = "Erreur (RLS/policy)";
+      // ✅ Affiche un indice lisible
+      list.innerHTML = `
+        <div class="mission">
+          <div class="m-title">Erreur Supabase</div>
+          <div class="m-meta">Vérifie la policy SELECT public (status='approved').</div>
+          <div class="m-meta" style="opacity:.9">${esc(error.message || "—")}</div>
+        </div>`;
+      cache = [];
+      count.textContent = "0 mission";
+      return;
     }
+
+    cache = data || [];
+    toast.textContent = "OK";
+    render();
   }
 
   q.addEventListener("input", render);
