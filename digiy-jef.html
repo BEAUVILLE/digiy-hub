@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>DIGIY JËF — Jobs & Missions</title>
+  <meta name="theme-color" content="#16a34a"/>
+
+  <!-- ✅ Supabase (1 seule fois) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root{
+      --green:#16a34a;
+      --bg:#061b14;
+      --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.12);
+      --text:#eafff1;
+      --muted:rgba(234,255,241,.75);
+      --dark:#052e16;
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background: radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%), var(--bg);
+      color:var(--text);
+    }
+    header{
+      position:sticky; top:0; z-index:10;
+      background:rgba(6,27,20,.72);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+      padding:14px;
+    }
+    .top{
+      max-width:980px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .brand{font-weight:950; letter-spacing:.08em}
+    .brand small{display:block;font-weight:800;letter-spacing:0;opacity:.8;margin-top:2px}
+    .btn{border:none;border-radius:14px;padding:10px 12px;font-weight:950;cursor:pointer}
+    .btn-primary{background:linear-gradient(135deg,#16a34a,#22c55e);color:var(--dark)}
+    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+    main{max-width:980px;margin:0 auto;padding:14px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+    .row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .pill{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.14);
+      font-weight:900;font-size:12px;
+    }
+
+    .digiy-clarify{
+      margin-top:12px;
+      background:rgba(236,253,245,.10);
+      border:1px solid rgba(187,247,208,.28);
+      border-radius:16px;
+      padding:12px;
+    }
+    .digiy-clarify-title{font-weight:950;letter-spacing:.06em;color:rgba(134,239,172,.95)}
+    .digiy-clarify-text{margin-top:6px;color:rgba(234,255,241,.88);font-weight:800;line-height:1.35}
+    .digiy-clarify-actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .digiy-clarify-btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:10px 12px;border-radius:14px;font-weight:950;text-decoration:none;
+      background:linear-gradient(135deg,#16a34a,#22c55e);
+      color:#052e16;
+    }
+    .digiy-clarify-link{
+      background:transparent;border:1px solid rgba(255,255,255,.14);
+      color:rgba(234,255,241,.9);
+      padding:10px 12px;border-radius:14px;font-weight:900;cursor:pointer;
+    }
+    .digiy-clarify-faq{
+      margin-top:10px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:10px;
+      color:rgba(234,255,241,.88);
+      font-weight:800;
+      line-height:1.35;
+      display:none;
+    }
+
+    .filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+    @media(max-width:700px){ .filters{grid-template-columns:1fr} }
+    input,select{
+      width:100%;padding:12px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      color:var(--text);
+      outline:none;
+      font-weight:800;
+    }
+    .list{display:grid;gap:10px;margin-top:12px}
+    .mission{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:12px;
+    }
+    .m-title{font-weight:950;font-size:15px}
+    .m-meta{margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-weight:800;font-size:13px}
+    .m-actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+    a{color:#86efac;text-decoration:none;font-weight:950}
+    .footer{text-align:center;color:rgba(234,255,241,.65);font-weight:800;padding:20px 10px}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="top">
+    <div class="brand">♾️ DIGIY JËF
+      <small>Missions rapides • terrain • WhatsApp direct</small>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <button class="btn btn-ghost" id="btn-home">← HUB</button>
+      <button class="btn btn-primary" id="btn-new">+ Publier</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="row">
+      <div>
+        <div style="font-weight:950">Trouver une mission</div>
+        <div id="toast" class="pill">Chargement…</div>
+      </div>
+      <div class="pill" id="countPill">0 mission</div>
+    </div>
+
+    <div class="digiy-clarify">
+      <div class="digiy-clarify-title">♾️ DIGIY JËF vs DIGIY JOBS PRO</div>
+      <div class="digiy-clarify-text">
+        <b>JËF</b> : missions rapides, annonces simples, ouvertes à tous.<br/>
+        <b>JOBS PRO</b> : recrutement structuré, gestion pro, candidats qualifiés.
+      </div>
+      <div class="digiy-clarify-actions">
+        <a class="digiy-clarify-btn" id="btn-jobs-pro" href="#">Ouvrir DIGIY JOBS PRO</a>
+        <button class="digiy-clarify-link" id="btn-why">Pourquoi deux ?</button>
+      </div>
+      <div class="digiy-clarify-faq" id="clarify-faq">
+        <div><b>Quand j’utilise JËF ?</b> Pour du ponctuel : 2h, 1 jour, urgence.</div>
+        <div style="margin-top:6px"><b>Quand j’utilise JOBS PRO ?</b> Pour recruter souvent, avec suivi et tri.</div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <div><input id="q" placeholder="Ex: livraison, ménage, peinture, dépannage…"/></div>
+      <div>
+        <select id="zone">
+          <option value="">Toutes zones</option>
+          <option value="Saly">Saly</option>
+          <option value="Dakar">Dakar</option>
+          <option value="Mbour">Mbour</option>
+          <option value="Thiès">Thiès</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="list" id="list"></div>
+  </div>
+
+  <div class="footer">
+    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a href="/digiy-hub/">Retour HUB</a>
+  </div>
+</main>
+
+<script>
+/* =========================
+   ✅ SUPABASE — GLOBAL UNIQUE
+========================= */
+const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+
+window.DIGIY_SUPABASE =
+  window.DIGIY_SUPABASE ||
+  window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const sb = window.DIGIY_SUPABASE;
+
+(function(){
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+
+  const list = document.getElementById("list");
+  const q = document.getElementById("q");
+  const zone = document.getElementById("zone");
+  const count = document.getElementById("countPill");
+  const toast = document.getElementById("toast");
+
+  document.getElementById("btn-home").onclick = ()=> location.href = basePath;
+  document.getElementById("btn-new").onclick  = ()=> location.href = basePath + "publish-mission.html";
+
+  document.getElementById("btn-jobs-pro").href = basePath + "digiy-jobs-pro.html";
+
+  document.getElementById("btn-why").onclick = ()=>{
+    const faq = document.getElementById("clarify-faq");
+    const open = (faq.style.display === "none" || !faq.style.display);
+    faq.style.display = open ? "block" : "none";
+  };
+
+  let cache = [];
+
+  function norm(s){ return (s||"").toLowerCase(); }
+  function esc(s){
+    return String(s||"").replace(/[&<>"']/g, m => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      "\"":"&quot;",
+      "'":"&#039;"
+    }[m]));
+  }
+
+  function render(){
+    const qq = norm(q.value);
+    const zz = zone.value;
+
+    const filtered = cache.filter(m=>{
+      const okQ = !qq || norm(m.title).includes(qq) || norm(m.note||"").includes(qq);
+      const okZ = !zz || m.zone === zz;
+      return okQ && okZ;
+    });
+
+    count.textContent = filtered.length + (filtered.length>1 ? " missions" : " mission");
+    list.innerHTML = "";
+
+    if(!filtered.length){
+      list.innerHTML = `
+        <div class="mission">
+          <div class="m-title">Aucune mission</div>
+          <div class="m-meta">Publie une mission ou change le filtre.</div>
+        </div>`;
+      return;
+    }
+
+    filtered.forEach(m=>{
+      const wa = `https://wa.me/${String(m.phone||"").replace(/[^\d]/g,"")}?text=${
+        encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + (m.title||""))
+      }`;
+
+      const div = document.createElement("div");
+      div.className = "mission";
+      div.innerHTML = `
+        <div class="m-title">${esc(m.title)}</div>
+        <div class="m-meta">
+          <span class="pill">📍 ${esc(m.zone)}</span>
+          <span class="pill">📞 ${esc(m.phone)}</span>
+          ${m.category ? `<span class="pill">🏷️ ${esc(m.category)}</span>` : ``}
+        </div>
+        ${m.note ? `<div class="m-meta">📝 ${esc(m.note)}</div>` : ``}
+        <div class="m-actions">
+          <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp direct</a>
+        </div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  async function load(){
+    toast.textContent = "Chargement…";
+
+    const { data, error } = await sb
+      .from("jef_missions")
+      .select("title,zone,phone,note,category,created_at,status")
+      .eq("status","approved")
+      .order("created_at",{ascending:false})
+      .limit(200);
+
+    if(error){
+      console.error(error);
+      toast.textContent = "Erreur Supabase";
+      list.innerHTML = `
+        <div class="mission">
+          <div class="m-title">Erreur</div>
+          <div class="m-meta">Vérifie la table <b>jef_missions</b> + policy SELECT approved.</div>
+        </div>`;
+      return;
+    }
+
+    cache = data || [];
+    toast.textContent = "OK";
+    render();
+  }
+
+  q.addEventListener("input", render);
+  zone.addEventListener("change", render);
+
+  load();
+})();
+</script>
+
+</body>
+</html>
