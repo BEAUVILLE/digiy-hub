@@ -1844,11 +1844,84 @@ dbg("Search PRO V2 prêt ✅");
 
 <script>
 /* =========================
-   NDIMBAL — V1.3 (CLEAN)
-   ✅ basePath = dossier courant
-   ✅ ouvre PAGES LOCALES dans overlay (retour hub)
+   NDIMBAL — V1.3 (FULL CLEAN)
+   ✅ ABS() résout les pages locales correctement
+   ✅ openInside() ouvre en overlay iframe (ne sort pas du site)
+   ✅ Retour HUB = vitrine HUB (ou drive si tu veux)
 ========================= */
 (function(){
+  // ✅ Mets ici TA vitrine HUB (celle des modules)
+  const HUB_VITRINE_URL = "https://beauville.github.io/digiy-hub/"; 
+  // ✅ Repo courant (auto) : /digiy-hub-drive/ ou autre
+  const BASE_PATH = (function(){
+    const p = location.pathname;
+    // Ex: /digiy-hub-drive/index.html -> /digiy-hub-drive/
+    return p.endsWith("/") ? p : p.replace(/\/[^\/]*$/, "/");
+  })();
+
+  // ✅ Résout une page locale du repo courant (pas un fichier système)
+  function ABS(file){
+    // file attendu : "digiy-pay.html" (sans slash)
+    return location.origin + BASE_PATH + String(file || "").replace(/^\//,"");
+  }
+
+  // ===== Overlay elements
+  const inside = ()=>document.getElementById("digiy-inside");
+  const insideFrame = ()=>document.getElementById("digiy-inside-frame");
+  const insideTitle = ()=>document.getElementById("digiy-inside-title");
+  const insideClose = ()=>document.getElementById("digiy-inside-close");
+  const insideBack  = ()=>document.getElementById("digiy-inside-back");
+
+  function openInside(url, title){
+    const wrap = inside();
+    const frame = insideFrame();
+    const t = insideTitle();
+    if(!wrap || !frame){
+      // fallback si overlay absent
+      location.href = url;
+      return;
+    }
+    if(t) t.textContent = title || "♾️ NDIMBAL";
+    wrap.style.display = "block";
+    wrap.setAttribute("aria-hidden","false");
+    frame.src = url;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeInside(){
+    const wrap = inside();
+    const frame = insideFrame();
+    if(!wrap) return;
+    wrap.style.display = "none";
+    wrap.setAttribute("aria-hidden","true");
+    if(frame) frame.src = "about:blank";
+    document.body.style.overflow = "";
+  }
+
+  function bindInsideControls(){
+    const wrap = inside();
+    if(!wrap) return;
+
+    insideClose()?.addEventListener("click", closeInside);
+
+    // ✅ Retour HUB = vitrine modules (comme tu veux)
+    insideBack()?.addEventListener("click", ()=>{
+      closeInside();
+      location.href = HUB_VITRINE_URL;
+    });
+
+    wrap.addEventListener("click", (e)=>{
+      if(e.target === wrap) closeInside();
+    });
+
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape"){
+        // ferme overlay NDIMBAL viewer si ouvert
+        if(wrap.style.display === "block") closeInside();
+      }
+    });
+  }
+
   function initDigiy(){
     const btn = document.getElementById("digiy-help-btn");
     const modal = document.getElementById("digiy-ndimbal");
@@ -1861,8 +1934,8 @@ dbg("Search PRO V2 prêt ✅");
       return;
     }
 
+    // ✅ Pages locales DU REPO COURANT (digiy-hub-drive)
     const routes = {
-      // pages locales du repo digiy-hub-drive/
       sell: ABS("digiy-pay.html"),
       job:  ABS("digiy-jobs.html"),
       info: ABS("digiylyfe.html")
@@ -1875,14 +1948,12 @@ dbg("Search PRO V2 prêt ✅");
     };
 
     const LS_KEY = "digiy_ndimbal_last_action";
-
     function getLast(){ try { return localStorage.getItem(LS_KEY) || ""; } catch(e){ return ""; } }
     function setLast(action){ try { localStorage.setItem(LS_KEY, action); } catch(e){} }
 
     function openDigiy(){
       modal.classList.add("show");
       modal.setAttribute("aria-hidden","false");
-
       if(actionsBox) actionsBox.style.display = "block";
 
       if(lastBox){
@@ -1951,8 +2022,11 @@ dbg("Search PRO V2 prêt ✅");
       });
     });
 
-    console.log("DIGIY NDIMBAL V1.3: prêt ✅");
+    console.log("DIGIY NDIMBAL V1.3: prêt ✅", { BASE_PATH, routes });
   }
+
+  // bind overlay controls early
+  bindInsideControls();
 
   if(document.readyState === "loading"){
     document.addEventListener("DOMContentLoaded", initDigiy);
