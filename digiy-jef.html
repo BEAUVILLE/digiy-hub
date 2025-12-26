@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -123,16 +124,45 @@
       display:none;
     }
 
+    /* ===== NDIMBAL Context ===== */
+    .ndimb{
+      margin-top:12px;
+      background:rgba(250,204,21,.10);
+      border:1px solid rgba(250,204,21,.22);
+      border-radius:16px;
+      padding:12px;
+    }
+    .ndimb h3{
+      margin:0;
+      font-weight:950;
+      letter-spacing:.06em;
+      color:rgba(250,204,21,.95);
+      font-size:14px;
+    }
+    .ndimb p{
+      margin:8px 0 0;
+      color:rgba(234,255,241,.9);
+      font-weight:850;
+      line-height:1.35;
+    }
+    .ndimb .actions{
+      margin-top:10px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+
     .filters{
       display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;
     }
     @media(max-width:700px){ .filters{grid-template-columns:1fr} }
-    input,select{
+
+    input,select,textarea{
       width:100%; padding:12px; border-radius:14px;
       border:1px solid var(--line);
       background:rgba(0,0,0,.18);
       color:var(--text); outline:none; font-weight:800;
     }
+    textarea{min-height:88px; resize:vertical}
+
     .list{display:grid; gap:10px; margin-top:12px}
     .mission{
       background:rgba(255,255,255,.05);
@@ -147,9 +177,64 @@
     }
     .m-actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
     a{color:#86efac; text-decoration:none; font-weight:950}
+
     .footer{
       text-align:center; color:rgba(234,255,241,.65);
       font-weight:800; padding:20px 10px;
+    }
+
+    /* ===== Modal Publish ===== */
+    .modal{
+      position:fixed; inset:0; z-index:50;
+      display:none;
+      background:rgba(0,0,0,.55);
+      backdrop-filter:blur(6px);
+      padding:14px;
+    }
+    .modal.open{display:flex; align-items:center; justify-content:center}
+    .modal-card{
+      width:min(720px, 100%);
+      background:rgba(6,27,20,.95);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:18px;
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      padding:14px;
+    }
+    .modal-head{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      padding-bottom:10px;
+    }
+    .modal-title{font-weight:950; letter-spacing:.06em}
+    .modal-close{
+      border:1px solid rgba(255,255,255,.14);
+      background:transparent; color:var(--text);
+      border-radius:12px; padding:8px 10px; font-weight:950; cursor:pointer;
+    }
+    .grid{
+      margin-top:12px;
+      display:grid; grid-template-columns:1fr 1fr; gap:10px;
+    }
+    @media(max-width:700px){ .grid{grid-template-columns:1fr} }
+    .hint{
+      margin-top:10px;
+      color:rgba(234,255,241,.78);
+      font-weight:850;
+      line-height:1.35;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      padding:10px;
+    }
+    .danger{
+      margin-top:10px;
+      background:rgba(239,68,68,.12);
+      border:1px solid rgba(239,68,68,.22);
+      border-radius:14px;
+      padding:10px;
+      color:rgba(255,230,230,.95);
+      font-weight:900;
+      display:none;
     }
   </style>
 </head>
@@ -175,6 +260,16 @@
         <div id="toast" class="pill">Chargement…</div>
       </div>
       <div class="pill" id="countPill">0 mission</div>
+    </div>
+
+    <!-- ♾️ NDIMBAL Context (HUB → JËF) -->
+    <div class="ndimb" id="ndimbBox" style="display:none">
+      <h3>♾️ NDIMBAL — Demande venue du HUB</h3>
+      <p id="ndimbText">Contexte…</p>
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-use-ctx" type="button">Publier cette mission</button>
+        <button class="btn btn-ghost" id="btn-clear-ctx" type="button">Ignorer</button>
+      </div>
     </div>
 
     <!-- 🔎 Clarification -->
@@ -215,9 +310,70 @@
   </div>
 
   <div class="footer">
-    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a href="/digiy-hub/">Retour HUB</a>
+    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a href="#" id="footerHub">Retour HUB</a>
   </div>
 </main>
+
+<!-- ✅ Modal Publish -->
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title">+ Publier une mission (JËF)</div>
+        <div style="margin-top:4px;color:rgba(234,255,241,.75);font-weight:850">
+          Simple, direct, terrain.
+        </div>
+      </div>
+      <button class="modal-close" id="modalClose" type="button">Fermer</button>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label style="font-weight:900;opacity:.9">Titre mission</label>
+        <input id="f_title" placeholder="Ex: Aide déménagement 2h, Livraison urgente…">
+      </div>
+      <div>
+        <label style="font-weight:900;opacity:.9">Zone</label>
+        <select id="f_zone">
+          <option value="">Choisir zone</option>
+          <option value="Saly">Saly</option>
+          <option value="Dakar">Dakar</option>
+          <option value="Mbour">Mbour</option>
+          <option value="Thiès">Thiès</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-weight:900;opacity:.9">Téléphone (WhatsApp)</label>
+        <input id="f_phone" placeholder="+221 77 000 00 00">
+      </div>
+      <div>
+        <label style="font-weight:900;opacity:.9">Statut</label>
+        <select id="f_status">
+          <option value="pending">En attente (pending)</option>
+          <option value="approved">Publié (approved)</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-top:10px">
+      <label style="font-weight:900;opacity:.9">Détails</label>
+      <textarea id="f_note" placeholder="Infos utiles : durée, prix, lieu précis, urgence…"></textarea>
+    </div>
+
+    <div class="hint">
+      ⚡ Astuce : si ta sécurité (RLS) n’autorise pas l’insert, on affichera l’erreur clairement.
+      Tu pourras ensuite choisir : soit autoriser l’insertion publique, soit passer par ton serveur/API.
+    </div>
+
+    <div class="danger" id="publishError"></div>
+
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <button class="btn btn-ghost" id="btnDraft" type="button">Enregistrer en attente</button>
+      <button class="btn btn-primary" id="btnPublish" type="button">Publier</button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ======================================================
@@ -233,38 +389,37 @@
     console.error("Supabase SDK introuvable. Vérifie le script CDN.");
     return;
   }
-
   if (!window.digiySupabase) {
     window.digiySupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
 })();
 
 /* ======================================================
-   DIGIY JËF — PUBLIC LIST (stable)
+   DIGIY JËF — PUBLIC LIST + PUBLISH MODAL
    Table: public.jef_missions
    Colonnes attendues: title, zone, phone, note, status, created_at
 ====================================================== */
 (function(){
   const supabase = window.digiySupabase;
 
+  // ✅ HUB link stable (GitHub pages / Hostinger)
   const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+
   const list = document.getElementById("list");
   const q = document.getElementById("q");
   const zone = document.getElementById("zone");
   const count = document.getElementById("countPill");
   const toast = document.getElementById("toast");
 
-  // ✅ Boutons (et ça marche même sur GitHub Pages)
+  const footerHub = document.getElementById("footerHub");
+  footerHub.href = basePath;
+
+  // ✅ Boutons
   document.getElementById("btn-home").addEventListener("click", ()=> {
     location.href = basePath;
   });
 
-  document.getElementById("btn-new").addEventListener("click", ()=> {
-    // Page de publication (à toi de créer si pas encore)
-    location.href = basePath + "publish-mission.html";
-  });
-
-  // Lien JOBS PRO (placeholder)
+  // JOBS PRO placeholder
   document.getElementById("btn-jobs-pro").href = basePath + "digiy-jobs-pro.html";
 
   // FAQ toggle
@@ -274,6 +429,72 @@
     faq.style.display = open ? "block" : "none";
   });
 
+  // ===== Modal publish
+  const modal = document.getElementById("modal");
+  const modalClose = document.getElementById("modalClose");
+  const publishError = document.getElementById("publishError");
+
+  const f_title = document.getElementById("f_title");
+  const f_zone = document.getElementById("f_zone");
+  const f_phone = document.getElementById("f_phone");
+  const f_note  = document.getElementById("f_note");
+  const f_status= document.getElementById("f_status");
+
+  function openModal(){
+    publishError.style.display = "none";
+    publishError.textContent = "";
+    modal.classList.add("open");
+  }
+  function closeModal(){
+    modal.classList.remove("open");
+  }
+  modalClose.addEventListener("click", closeModal);
+  modal.addEventListener("click", (e)=>{ if(e.target === modal) closeModal(); });
+
+  document.getElementById("btn-new").addEventListener("click", ()=>{
+    // si tu crées publish-mission.html plus tard, tu pourras revenir à ta redirection
+    // là, on fait "toujours fonctionnel"
+    openModal();
+  });
+
+  // ===== NDIMBAL context (HUB → JËF)
+  const ndimbBox = document.getElementById("ndimbBox");
+  const ndimbText = document.getElementById("ndimbText");
+  const btnUseCtx = document.getElementById("btn-use-ctx");
+  const btnClearCtx = document.getElementById("btn-clear-ctx");
+
+  function getCtx(){
+    try{
+      return JSON.parse(localStorage.getItem("digiy_jef_context") || "null");
+    }catch(e){ return null; }
+  }
+  function clearCtx(){
+    localStorage.removeItem("digiy_jef_context");
+  }
+  const ctx = getCtx();
+  if(ctx && (ctx.action || ctx.from)){
+    ndimbBox.style.display = "block";
+    const action = ctx.action || "NDIMBAL";
+    const from = ctx.from || "HUB";
+    ndimbText.innerHTML = `Reçu: <b>${esc(action)}</b> depuis <b>${esc(from)}</b>. Tu veux publier une mission maintenant ?`;
+  }
+
+  btnClearCtx.addEventListener("click", ()=>{
+    clearCtx();
+    ndimbBox.style.display = "none";
+  });
+
+  btnUseCtx.addEventListener("click", ()=>{
+    // préremplit le formulaire depuis le contexte
+    const c = getCtx() || {};
+    f_title.value = (c.title || "♾️ NDIMBAL — Besoin d’aide");
+    f_zone.value = (c.zone || "");
+    f_note.value = (c.note || "Demande envoyée depuis le HUB (NDIMBAL).");
+    f_status.value = "pending";
+    openModal();
+  });
+
+  // ===== utils
   let cache = [];
 
   function norm(s){ return (s||"").toLowerCase(); }
@@ -285,6 +506,13 @@
       "\"":"&quot;",
       "'":"&#039;"
     }[m]));
+  }
+  function cleanPhone(p){
+    const raw = String(p||"").trim();
+    // garder + et chiffres
+    const plus = raw.startsWith("+") ? "+" : "";
+    const digits = raw.replace(/[^\d]/g,"");
+    return plus + digits;
   }
 
   function render(){
@@ -374,6 +602,75 @@
       console.error("Load exception:", e);
     }
   }
+
+  async function createMission(desiredStatus){
+    publishError.style.display = "none";
+    publishError.textContent = "";
+
+    const title = String(f_title.value||"").trim();
+    const zoneVal = String(f_zone.value||"").trim();
+    const phoneVal = cleanPhone(f_phone.value);
+    const noteVal  = String(f_note.value||"").trim();
+    const statusVal = desiredStatus || String(f_status.value||"pending");
+
+    if(!title){
+      publishError.style.display = "block";
+      publishError.textContent = "⚠️ Mets un titre de mission (obligatoire).";
+      return false;
+    }
+
+    try{
+      const payloadCtx = getCtx();
+      const row = {
+        title,
+        zone: zoneVal || null,
+        phone: phoneVal || null,
+        note: noteVal || null,
+        status: statusVal
+      };
+
+      // petit bonus : si tu as une colonne payload, ça passera, sinon ignoré (on ne l’envoie pas)
+      // On garde léger et compatible.
+
+      const { data, error } = await supabase
+        .from("jef_missions")
+        .insert(row)
+        .select()
+        .single();
+
+      if(error){
+        publishError.style.display = "block";
+        // message humain + debug utile
+        publishError.innerHTML = `❌ Insert bloqué. <br/>Détail : <b>${esc(error.message || "Erreur")}</b>`;
+        console.error("Insert error:", error);
+
+        // tip direct si RLS
+        if(String(error.message||"").toLowerCase().includes("row-level security")){
+          publishError.innerHTML += `<div style="margin-top:8px">
+            🔒 RLS bloque l’insertion. Solution : autoriser insert public OU passer par ton API serveur.
+          </div>`;
+        }
+        return false;
+      }
+
+      // si ça vient de NDIMBAL, on nettoie
+      if(payloadCtx) clearCtx();
+
+      closeModal();
+      toast.textContent = "Publié ✅";
+      await load();
+      return true;
+
+    }catch(e){
+      publishError.style.display = "block";
+      publishError.textContent = "❌ Exception insertion (voir console).";
+      console.error("Insert exception:", e);
+      return false;
+    }
+  }
+
+  document.getElementById("btnDraft").addEventListener("click", ()=> createMission("pending"));
+  document.getElementById("btnPublish").addEventListener("click", ()=> createMission("approved"));
 
   q.addEventListener("input", render);
   zone.addEventListener("change", render);
