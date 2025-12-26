@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>DIGIY JËF — Jobs & Missions</title>
+  <title>DIGIY JËF — Admin Validation</title>
   <meta name="theme-color" content="#16a34a"/>
 
-  <!-- ✅ Supabase (1 seule fois) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -19,12 +18,18 @@
       --muted:rgba(234,255,241,.75);
       --dark:#052e16;
       --radius:18px;
+
+      --gold:#facc15;
+      --danger:#ef4444;
+      --ok:#22c55e;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      background: radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%), var(--bg);
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(34,197,94,.25), transparent 60%),
+        var(--bg);
       color:var(--text);
     }
     header{
@@ -35,15 +40,38 @@
       padding:14px;
     }
     .top{
-      max-width:980px; margin:0 auto;
+      max-width:1100px; margin:0 auto;
       display:flex; align-items:center; justify-content:space-between; gap:10px;
+      flex-wrap:wrap;
     }
     .brand{font-weight:950; letter-spacing:.08em}
-    .brand small{display:block;font-weight:800;letter-spacing:0;opacity:.8;margin-top:2px}
-    .btn{border:none;border-radius:14px;padding:10px 12px;font-weight:950;cursor:pointer}
-    .btn-primary{background:linear-gradient(135deg,#16a34a,#22c55e);color:var(--dark)}
-    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-    main{max-width:980px;margin:0 auto;padding:14px}
+    .brand small{display:block; font-weight:850; letter-spacing:0; opacity:.85; margin-top:2px}
+    .btn{
+      border:none; border-radius:14px; padding:10px 12px;
+      font-weight:950; cursor:pointer;
+    }
+    .btn-ghost{
+      background:transparent; color:var(--text);
+      border:1px solid var(--line);
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,#16a34a,#22c55e);
+      color:var(--dark);
+    }
+    .btn-warn{
+      background:linear-gradient(135deg,#facc15,#fb923c);
+      color:#111827;
+    }
+    .btn-danger{
+      background:linear-gradient(135deg,#ef4444,#f97316);
+      color:#111827;
+    }
+    main{max-width:1100px; margin:0 auto; padding:14px}
+    .grid{
+      display:grid; grid-template-columns:1.2fr .8fr; gap:12px;
+    }
+    @media(max-width:900px){ .grid{grid-template-columns:1fr} }
+
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -51,116 +79,99 @@
       padding:14px;
       box-shadow:0 18px 40px rgba(0,0,0,.18);
     }
-    .row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .row{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
+    }
     .pill{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:7px 10px;border-radius:999px;
+      display:inline-flex; align-items:center; gap:6px;
+      padding:7px 10px; border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
       background:rgba(0,0,0,.14);
-      font-weight:900;font-size:12px;
+      font-weight:900; font-size:12px;
     }
-
-    .digiy-clarify{
-      margin-top:12px;
-      background:rgba(236,253,245,.10);
-      border:1px solid rgba(187,247,208,.28);
-      border-radius:16px;
-      padding:12px;
-    }
-    .digiy-clarify-title{font-weight:950;letter-spacing:.06em;color:rgba(134,239,172,.95)}
-    .digiy-clarify-text{margin-top:6px;color:rgba(234,255,241,.88);font-weight:800;line-height:1.35}
-    .digiy-clarify-actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .digiy-clarify-btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:10px 12px;border-radius:14px;font-weight:950;text-decoration:none;
-      background:linear-gradient(135deg,#16a34a,#22c55e);
-      color:#052e16;
-    }
-    .digiy-clarify-link{
-      background:transparent;border:1px solid rgba(255,255,255,.14);
-      color:rgba(234,255,241,.9);
-      padding:10px 12px;border-radius:14px;font-weight:900;cursor:pointer;
-    }
-    .digiy-clarify-faq{
-      margin-top:10px;
-      background:rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:14px;
-      padding:10px;
-      color:rgba(234,255,241,.88);
-      font-weight:800;
-      line-height:1.35;
-      display:none;
-    }
-
-    .filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-    @media(max-width:700px){ .filters{grid-template-columns:1fr} }
-    input,select{
-      width:100%;padding:12px;border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
-      color:var(--text);
-      outline:none;
-      font-weight:800;
-    }
-    .list{display:grid;gap:10px;margin-top:12px}
+    .muted{color:var(--muted); font-weight:850}
+    .list{display:grid; gap:10px; margin-top:12px}
     .mission{
       background:rgba(255,255,255,.05);
       border:1px solid rgba(255,255,255,.10);
       border-radius:16px;
       padding:12px;
     }
-    .m-title{font-weight:950;font-size:15px}
-    .m-meta{margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-weight:800;font-size:13px}
-    .m-actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
-    a{color:#86efac;text-decoration:none;font-weight:950}
-    .footer{text-align:center;color:rgba(234,255,241,.65);font-weight:800;padding:20px 10px}
+    .m-title{font-weight:950; font-size:15px}
+    .m-meta{
+      margin-top:6px; display:flex; gap:10px; flex-wrap:wrap;
+      color:var(--muted); font-weight:850; font-size:13px;
+    }
+    .m-note{
+      margin-top:8px;
+      color:rgba(234,255,241,.9);
+      font-weight:850;
+      line-height:1.35;
+    }
+    .actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
+    a{color:#86efac; text-decoration:none; font-weight:950}
+
+    input,select{
+      width:100%; padding:12px; border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      color:var(--text); outline:none; font-weight:850;
+    }
+    .dangerBox{
+      display:none;
+      margin-top:10px;
+      background:rgba(239,68,68,.12);
+      border:1px solid rgba(239,68,68,.22);
+      border-radius:14px;
+      padding:10px;
+      color:rgba(255,230,230,.95);
+      font-weight:900;
+      line-height:1.35;
+    }
+    .okBox{
+      display:none;
+      margin-top:10px;
+      background:rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.22);
+      border-radius:14px;
+      padding:10px;
+      color:rgba(234,255,241,.95);
+      font-weight:900;
+    }
   </style>
 </head>
 
 <body>
 <header>
   <div class="top">
-    <div class="brand">♾️ DIGIY JËF
-      <small>Missions rapides • terrain • WhatsApp direct</small>
+    <div class="brand">♾️ DIGIY JËF — ADMIN
+      <small>Validation missions • pending → approved • contrôle propre</small>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
-      <button class="btn btn-ghost" id="btn-home">← HUB</button>
-      <button class="btn btn-primary" id="btn-new">+ Publier</button>
+      <button class="btn btn-ghost" id="btn-public" type="button">Voir JËF public</button>
+      <button class="btn btn-ghost" id="btn-hub" type="button">← HUB</button>
+      <button class="btn btn-primary" id="btn-refresh" type="button">↻ Refresh</button>
+      <button class="btn btn-warn" id="btn-logout" type="button">Déconnexion</button>
     </div>
   </div>
 </header>
 
 <main>
-  <div class="card">
-    <div class="row">
-      <div>
-        <div style="font-weight:950">Trouver une mission</div>
-        <div id="toast" class="pill">Chargement…</div>
+  <div class="grid">
+    <!-- LISTE -->
+    <div class="card">
+      <div class="row">
+        <div>
+          <div style="font-weight:950">Missions en attente</div>
+          <div class="muted">Tu valides en 1 clic. Le public ne voit que “approved”.</div>
+        </div>
+        <div class="pill" id="countPill">0</div>
       </div>
-      <div class="pill" id="countPill">0 mission</div>
-    </div>
 
-    <div class="digiy-clarify">
-      <div class="digiy-clarify-title">♾️ DIGIY JËF vs DIGIY JOBS PRO</div>
-      <div class="digiy-clarify-text">
-        <b>JËF</b> : missions rapides, annonces simples, ouvertes à tous.<br/>
-        <b>JOBS PRO</b> : recrutement structuré, gestion pro, candidats qualifiés.
-      </div>
-      <div class="digiy-clarify-actions">
-        <a class="digiy-clarify-btn" id="btn-jobs-pro" href="#">Ouvrir DIGIY JOBS PRO</a>
-        <button class="digiy-clarify-link" id="btn-why">Pourquoi deux ?</button>
-      </div>
-      <div class="digiy-clarify-faq" id="clarify-faq">
-        <div><b>Quand j’utilise JËF ?</b> Pour du ponctuel : 2h, 1 jour, urgence.</div>
-        <div style="margin-top:6px"><b>Quand j’utilise JOBS PRO ?</b> Pour recruter souvent, avec suivi et tri.</div>
-      </div>
-    </div>
-
-    <div class="filters">
-      <div><input id="q" placeholder="Ex: livraison, ménage, peinture, dépannage…"/></div>
-      <div>
-        <select id="zone">
+      <div style="margin-top:12px" class="row">
+        <input id="q" placeholder="Filtrer: mot-clé (titre, note, phone)…" style="max-width:520px">
+        <select id="zone" style="max-width:220px">
           <option value="">Toutes zones</option>
           <option value="Saly">Saly</option>
           <option value="Dakar">Dakar</option>
@@ -169,55 +180,86 @@
           <option value="Autre">Autre</option>
         </select>
       </div>
+
+      <div class="dangerBox" id="errBox"></div>
+      <div class="okBox" id="okBox"></div>
+
+      <div class="list" id="list"></div>
     </div>
 
-    <div class="list" id="list"></div>
-  </div>
+    <!-- INFO / STATUS -->
+    <div class="card">
+      <div class="row">
+        <div style="font-weight:950">Statut admin</div>
+        <div class="pill" id="adminPill">…</div>
+      </div>
 
-  <div class="footer">
-    DIGIYLYFE ♾️ — direct au peuple • 0% commission • <a href="/digiy-hub/">Retour HUB</a>
+      <div style="margin-top:10px" class="muted">
+        ✅ <b>Approve</b> → mission visible publiquement.<br/>
+        🟠 <b>Reject</b> → cachée (reste en base).<br/>
+        🔴 <b>Delete</b> → supprimée définitivement.<br/><br/>
+        💡 Conseil terrain : public publie en <b>pending</b>, toi tu valides.
+      </div>
+
+      <div style="margin-top:12px" class="pill">🔗 Liens rapides</div>
+      <div style="margin-top:10px;display:grid;gap:10px">
+        <a class="btn btn-primary" href="digiy-jef.html">Ouvrir JËF (public)</a>
+        <a class="btn btn-ghost" href="#" id="openSupabase">Ouvrir Supabase (table)</a>
+      </div>
+    </div>
   </div>
 </main>
 
 <script>
-/* =========================
-   ✅ SUPABASE — GLOBAL UNIQUE
-========================= */
-const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+/* ======================================================
+   ✅ SUPABASE — 1 SEULE FOIS
+====================================================== */
+(function initSupabaseOnce(){
+  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-window.DIGIY_SUPABASE =
-  window.DIGIY_SUPABASE ||
-  window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-const sb = window.DIGIY_SUPABASE;
+  if (!window.supabase || !window.supabase.createClient) {
+    alert("Supabase SDK introuvable (CDN).");
+    return;
+  }
+  if (!window.digiySupabase) {
+    window.digiySupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+})();
 
 (function(){
-  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+  const supabase = window.digiySupabase;
 
   const list = document.getElementById("list");
   const q = document.getElementById("q");
   const zone = document.getElementById("zone");
-  const count = document.getElementById("countPill");
-  const toast = document.getElementById("toast");
+  const countPill = document.getElementById("countPill");
+  const adminPill = document.getElementById("adminPill");
+  const errBox = document.getElementById("errBox");
+  const okBox = document.getElementById("okBox");
 
-  document.getElementById("btn-home").onclick = ()=> location.href = basePath;
-  document.getElementById("btn-new").onclick  = ()=> location.href = basePath + "publish-mission.html";
+  // liens
+  const basePath = location.pathname.includes("/digiy-hub/") ? "/digiy-hub/" : "/";
+  document.getElementById("btn-hub").onclick = ()=> location.href = basePath;
+  document.getElementById("btn-public").onclick = ()=> location.href = "digiy-jef.html";
+  document.getElementById("btn-refresh").onclick = ()=> load();
+  document.getElementById("btn-logout").onclick = async ()=>{
+    try{ await supabase.auth.signOut(); }catch(e){}
+    location.reload();
+  };
 
-  document.getElementById("btn-jobs-pro").href = basePath + "digiy-jobs-pro.html";
-
-  document.getElementById("btn-why").onclick = ()=>{
-    const faq = document.getElementById("clarify-faq");
-    const open = (faq.style.display === "none" || !faq.style.display);
-    faq.style.display = open ? "block" : "none";
+  // Supabase dashboard link (placeholder safe)
+  document.getElementById("openSupabase").onclick = (e)=>{
+    e.preventDefault();
+    alert("Va sur Supabase → Table Editor → public.jef_missions (tu es admin déjà).");
   };
 
   let cache = [];
+  let channel = null;
 
-  function norm(s){ return (s||"").toLowerCase(); }
   function esc(s){
-    return String(s||"").replace(/[&<>"']/g, m => ({
+    return String(s ?? "").replace(/[&<>"']/g, m => ({
       "&":"&amp;",
       "<":"&lt;",
       ">":"&gt;",
@@ -225,46 +267,102 @@ const sb = window.DIGIY_SUPABASE;
       "'":"&#039;"
     }[m]));
   }
+  function norm(s){ return (s||"").toLowerCase(); }
+
+  function showErr(msg){
+    errBox.style.display = "block";
+    errBox.innerHTML = msg;
+    okBox.style.display = "none";
+    okBox.textContent = "";
+  }
+  function showOk(msg){
+    okBox.style.display = "block";
+    okBox.textContent = msg;
+    errBox.style.display = "none";
+    errBox.textContent = "";
+    setTimeout(()=>{ okBox.style.display="none"; }, 1800);
+  }
+
+  async function adminGuard(){
+    adminPill.textContent = "Vérification…";
+
+    // 1) user connecté ?
+    const { data: { user }, error: e0 } = await supabase.auth.getUser();
+    if(e0){ console.error(e0); }
+    if(!user){
+      adminPill.textContent = "Non connecté";
+      showErr("🔐 Tu n’es pas connecté. Ouvre ton HUB, connecte-toi, puis reviens ici.");
+      return false;
+    }
+
+    // 2) est admin ?
+    const { data, error } = await supabase
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if(error){
+      console.error(error);
+      showErr("Erreur admin check: " + esc(error.message||""));
+      adminPill.textContent = "Erreur";
+      return false;
+    }
+
+    if(!data){
+      adminPill.textContent = "Accès refusé";
+      showErr("⛔ Accès refusé. Ton user n’est pas dans <b>admin_users</b>.");
+      return false;
+    }
+
+    adminPill.textContent = "ADMIN ✅";
+    return true;
+  }
 
   function render(){
     const qq = norm(q.value);
     const zz = zone.value;
 
     const filtered = cache.filter(m=>{
-      const okQ = !qq || norm(m.title).includes(qq) || norm(m.note||"").includes(qq);
+      const blob = `${m.title||""} ${m.note||""} ${m.phone||""} ${m.zone||""}`;
+      const okQ = !qq || norm(blob).includes(qq);
       const okZ = !zz || m.zone === zz;
       return okQ && okZ;
     });
 
-    count.textContent = filtered.length + (filtered.length>1 ? " missions" : " mission");
+    countPill.textContent = filtered.length + " pending";
     list.innerHTML = "";
 
     if(!filtered.length){
-      list.innerHTML = `
-        <div class="mission">
-          <div class="m-title">Aucune mission</div>
-          <div class="m-meta">Publie une mission ou change le filtre.</div>
-        </div>`;
+      list.innerHTML = `<div class="mission">
+        <div class="m-title">Aucune mission en attente</div>
+        <div class="m-meta">Tout est clean. ♾️</div>
+      </div>`;
       return;
     }
 
     filtered.forEach(m=>{
-      const wa = `https://wa.me/${String(m.phone||"").replace(/[^\d]/g,"")}?text=${
-        encodeURIComponent("DIGIY JËF ♾️ — Je suis intéressé par: " + (m.title||""))
-      }`;
+      const phoneDigits = String(m.phone||"").replace(/[^\d]/g,"");
+      const wa = phoneDigits
+        ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent("DIGIY JËF ♾️ — Concernant: " + (m.title||""))}`
+        : "#";
 
       const div = document.createElement("div");
       div.className = "mission";
       div.innerHTML = `
         <div class="m-title">${esc(m.title)}</div>
         <div class="m-meta">
-          <span class="pill">📍 ${esc(m.zone)}</span>
-          <span class="pill">📞 ${esc(m.phone)}</span>
-          ${m.category ? `<span class="pill">🏷️ ${esc(m.category)}</span>` : ``}
+          <span class="pill">📍 ${esc(m.zone || "—")}</span>
+          <span class="pill">📞 ${esc(m.phone || "—")}</span>
+          ${m.created_at ? `<span class="pill">🕒 ${esc(new Date(m.created_at).toLocaleString("fr-FR"))}</span>` : ``}
+          <span class="pill">⏳ pending</span>
         </div>
-        ${m.note ? `<div class="m-meta">📝 ${esc(m.note)}</div>` : ``}
-        <div class="m-actions">
-          <a class="btn btn-primary" href="${wa}" target="_blank" rel="noopener">WhatsApp direct</a>
+        ${m.note ? `<div class="m-note">📝 ${esc(m.note)}</div>` : ""}
+        <div class="actions">
+          <button class="btn btn-primary" data-act="approve" data-id="${esc(m.id)}">✅ Approve</button>
+          <button class="btn btn-warn" data-act="reject" data-id="${esc(m.id)}">🟠 Reject</button>
+          <button class="btn btn-danger" data-act="delete" data-id="${esc(m.id)}">🗑️ Delete</button>
+          ${phoneDigits ? `<a class="btn btn-ghost" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>` : ``}
         </div>
       `;
       list.appendChild(div);
@@ -272,35 +370,116 @@ const sb = window.DIGIY_SUPABASE;
   }
 
   async function load(){
-    toast.textContent = "Chargement…";
+    try{
+      const ok = await adminGuard();
+      if(!ok) return;
 
-    const { data, error } = await sb
-      .from("jef_missions")
-      .select("title,zone,phone,note,category,created_at,status")
-      .eq("status","approved")
-      .order("created_at",{ascending:false})
-      .limit(200);
+      const { data, error } = await supabase
+        .from("jef_missions")
+        .select("id,title,zone,phone,note,status,created_at")
+        .eq("status","pending")
+        .order("created_at",{ascending:false})
+        .limit(300);
 
-    if(error){
-      console.error(error);
-      toast.textContent = "Erreur Supabase";
-      list.innerHTML = `
-        <div class="mission">
-          <div class="m-title">Erreur</div>
-          <div class="m-meta">Vérifie la table <b>jef_missions</b> + policy SELECT approved.</div>
-        </div>`;
-      return;
+      if(error){
+        console.error(error);
+        showErr("Erreur load: <b>" + esc(error.message||"") + "</b>");
+        return;
+      }
+
+      cache = data || [];
+      render();
+
+    }catch(e){
+      console.error(e);
+      showErr("Exception load (voir console).");
     }
-
-    cache = data || [];
-    toast.textContent = "OK";
-    render();
   }
 
+  async function approve(id){
+    const { error } = await supabase
+      .from("jef_missions")
+      .update({ status: "approved" })
+      .eq("id", id);
+    if(error) throw error;
+  }
+
+  async function reject(id){
+    const { error } = await supabase
+      .from("jef_missions")
+      .update({ status: "rejected" })
+      .eq("id", id);
+    if(error) throw error;
+  }
+
+  async function del(id){
+    const { error } = await supabase
+      .from("jef_missions")
+      .delete()
+      .eq("id", id);
+    if(error) throw error;
+  }
+
+  // actions click
+  list.addEventListener("click", async (e)=>{
+    const btn = e.target.closest("button[data-act]");
+    if(!btn) return;
+
+    const act = btn.getAttribute("data-act");
+    const id  = btn.getAttribute("data-id");
+
+    try{
+      btn.disabled = true;
+      btn.style.opacity = ".7";
+
+      if(act === "approve"){
+        await approve(id);
+        showOk("✅ Approved");
+      }else if(act === "reject"){
+        await reject(id);
+        showOk("🟠 Rejected");
+      }else if(act === "delete"){
+        const sure = confirm("Supprimer définitivement cette mission ?");
+        if(!sure){ btn.disabled=false; btn.style.opacity="1"; return; }
+        await del(id);
+        showOk("🗑️ Deleted");
+      }
+
+      // refresh local (remove item)
+      cache = cache.filter(x => x.id !== id);
+      render();
+
+    }catch(err){
+      console.error(err);
+      showErr("Action refusée: <b>" + esc(err.message||"Erreur") + "</b>");
+      btn.disabled = false;
+      btn.style.opacity = "1";
+    }
+  });
+
+  // filtres
   q.addEventListener("input", render);
   zone.addEventListener("change", render);
 
+  // realtime (si activé côté Supabase)
+  function setupRealtime(){
+    try{
+      if(channel) return;
+      channel = supabase
+        .channel("jef_admin_realtime")
+        .on("postgres_changes",
+          { event: "*", schema: "public", table: "jef_missions" },
+          () => load()
+        )
+        .subscribe();
+    }catch(e){
+      console.warn("Realtime not available:", e);
+    }
+  }
+
+  // start
   load();
+  setupRealtime();
 })();
 </script>
 
