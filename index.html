@@ -747,7 +747,6 @@
         <span class="icon">☰</span> MENU
       </a>
 
-      <!-- ✅ RESTO ENGINE: opens inside overlay (no site exit) -->
       <button id="btnRestoEngine" class="btn btn-secondary" style="padding:0.6rem 1.2rem;font-size:0.9rem;" type="button">
         🔍 DIGIY RESTO
       </button>
@@ -852,30 +851,30 @@
 
     <div class="modules-grid">
 
-      <div class="module" data-external="https://beauville.github.io/digiy-hub-drive/" data-title="♾️ DIGIY HUB DRIVE">
-  <div class="module-inner">
-    <div class="module-header">
-      <div class="module-icon">♾️</div>
-      <div class="module-titles">
-        <div class="module-name">DIGIY HUB DRIVE</div>
-        <div class="module-tagline">NDIMBAL • ACTION • ORIENTATION</div>
+      <div class="module" data-open="hubDrive" data-title="♾️ DIGIY HUB DRIVE">
+        <div class="module-inner">
+          <div class="module-header">
+            <div class="module-icon">♾️</div>
+            <div class="module-titles">
+              <div class="module-name">DIGIY HUB DRIVE</div>
+              <div class="module-tagline">NDIMBAL • ACTION • ORIENTATION</div>
+            </div>
+            <div class="module-badge badge-prio">ESSENTIEL</div>
+          </div>
+          <div class="module-body">
+            Accès direct à l’assistance NDIMBAL, jobs, paiements, actions rapides.
+          </div>
+          <div class="module-foot">
+            <button class="module-btn" type="button">Ouvrir →</button>
+            <div class="module-meta">Action rapide</div>
+          </div>
+        </div>
       </div>
-      <div class="module-badge badge-prio">ESSENTIEL</div>
-    </div>
-    <div class="module-body">
-      Accès direct à l’assistance NDIMBAL, jobs, paiements, actions rapides.
-    </div>
-    <div class="module-foot">
-      <button class="module-btn" type="button">Ouvrir →</button>
-      <div class="module-meta">Action rapide</div>
-    </div>
-  </div>
-</div>
-      
+
       <div class="module" data-open="inscriptionClient" data-title="Accès Client DIGIY (Inscription gratuite)">
         <div class="module-inner">
           <div class="module-header">
-            <div class="module-icon">🦅</div>
+            <div class="module-icon">♾️</div>
             <div class="module-titles">
               <div class="module-name">ACCÈS CLIENT DIGIY</div>
               <div class="module-tagline">INSCRIPTION GRATUITE</div>
@@ -892,7 +891,6 @@
         </div>
       </div>
 
-      <!-- OPEN SEARCH PRO (modal) -->
       <div class="module" id="openSearchPro">
         <div class="module-inner">
           <div class="module-header">
@@ -913,7 +911,6 @@
         </div>
       </div>
 
-      <!-- FRET: external pay flow (keep new tab) -->
       <div class="module" data-external="https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver" data-title="DIGIY FRET Chauffeur">
         <div class="module-inner">
           <div class="module-header">
@@ -1371,12 +1368,9 @@
   </div>
 </div>
 
-<!-- ♾️ NDIMBAL — BOUTON FIXE FINAL -->
-<a href="https://beauville.github.io/digiy-hub-drive/"
-   id="digiy-help-btn"
-   aria-label="NDIMBAL">
-  ♾️ NDIMBAL
-</a>
+<!-- ♾️ NDIMBAL — BOUTON FIXE FINAL (button, pas lien) -->
+<button id="digiy-help-btn" type="button" aria-label="NDIMBAL">♾️ NDIMBAL</button>
+
 <div id="digiy-ndimbal" aria-hidden="true">
   <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
     <div class="digiy-title">♾️ NDIMBAL</div>
@@ -1385,9 +1379,9 @@
     <div id="digiy-last" style="display:none;margin:10px 0 6px"></div>
 
     <div id="digiy-actions">
-      <button class="digiy-act" data-action="sell">🛒 Vendre / Encaisser</button>
-      <button class="digiy-act" data-action="job">💼 Trouver du travail</button>
-      <button class="digiy-act" data-action="info">📱 Comprendre DIGIY</button>
+      <button class="digiy-act" data-action="sell" type="button">🛒 Vendre / Encaisser</button>
+      <button class="digiy-act" data-action="job" type="button">💼 Trouver du travail</button>
+      <button class="digiy-act" data-action="info" type="button">📱 Comprendre DIGIY</button>
     </div>
 
     <button class="digiy-close" id="digiy-close" type="button">❌ Quitter</button>
@@ -1481,14 +1475,12 @@
 <script>
   /* =========================
      ✅ BASE PATH AUTO (fix GitHub Pages folder)
-     -> /digiy-hub-drive/ etc.
   ========================= */
   const BASE_PATH = location.pathname.replace(/[^/]*$/, ""); // dossier courant
   const ABS = (p) => (p.startsWith("http") ? p : (BASE_PATH + p.replace(/^\//,'')));
 
   /* =========================
-     ✅ LINKS
-     - "open inside hub" = URLs
+     ✅ LINKS (FIXED)
   ========================= */
   const LINKS = {
     go:           "https://beauville.github.io/digiy-go/",
@@ -1507,8 +1499,8 @@
     bonPlan:      "https://beauville.github.io/digiy-bonne-affaire/",
     inscription:  "https://beauville.github.io/inscription-digiy/",
     inscriptionClient: "https://beauville.github.io/inscription-client.html",
-    dashboard:    "https://beauville.github.io/mon-espace-digiy/"
-    hubDrive: "https://beauville.github.io/digiy-hub-drive/",
+    dashboard:    "https://beauville.github.io/mon-espace-digiy/",
+    hubDrive:     "https://beauville.github.io/digiy-hub-drive/"
   };
 
   /* =========================
@@ -1521,8 +1513,8 @@
   const hubCloseBtn= document.getElementById("hubCloseBtn");
 
   function openInside(url, title){
-    if(!hubOverlay || !hubFrame) return window.location.href = url;
-    hubTitle.textContent = title || url;
+    if(!hubOverlay || !hubFrame) { window.location.href = url; return; }
+    if(hubTitle) hubTitle.textContent = title || url;
     hubFrame.src = url;
     hubOverlay.classList.add("show");
     hubOverlay.setAttribute("aria-hidden","false");
@@ -1535,6 +1527,10 @@
     hubFrame.src = "about:blank";
     document.body.style.overflow = "";
   }
+
+  // ✅ Expose globally so NDIMBAL/SearchPro can reuse it safely
+  window.openInside = openInside;
+  window.closeInside = closeInside;
 
   hubBackBtn?.addEventListener("click", closeInside);
   hubCloseBtn?.addEventListener("click", closeInside);
@@ -1579,8 +1575,8 @@
      ✅ HEAD BUTTONS wired
   ========================= */
   document.getElementById("btnRestoEngine")?.addEventListener("click", ()=>{
-    // tries local file first: search-resto.html in this repo folder
-    openInside(ABS("search-resto.html"), "🔍 DIGIY RESTO — Recherche");
+    // ✅ safe: avoid 404 if local file missing
+    openInside(LINKS.resto, "🔍 DIGIY RESTO — Recherche");
   });
 
   document.getElementById("btnLogin")?.addEventListener("click", ()=>{
@@ -1593,7 +1589,6 @@
 
   document.getElementById("btnSeePacks")?.addEventListener("click", (e)=>{
     e.preventDefault();
-    // local packs.html in this repo folder
     openInside(ABS("packs.html"), "📦 Packs DIGIY");
   });
 
@@ -1604,6 +1599,15 @@
   document.getElementById("footerOrderHub")?.addEventListener("click", (e)=>{ e.preventDefault(); openInside(LINKS.inscription,"🦅 Commander le HUB"); });
   document.getElementById("footerLogin")?.addEventListener("click", (e)=>{ e.preventDefault(); openInside(LINKS.dashboard,"🔐 Se connecter"); });
   document.getElementById("footerSpace")?.addEventListener("click", (e)=>{ e.preventDefault(); openInside(LINKS.dashboard,"🎯 Mon Espace"); });
+
+  /* =========================
+     ✅ HOME brand click closes overlay
+  ========================= */
+  document.getElementById("homeBrand")?.addEventListener("click", (e)=>{
+    e.preventDefault();
+    closeInside();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
   /* =========================
      ✅ Pioneers counter (cosmetic)
@@ -1630,7 +1634,6 @@
 <script>
 /* =========================
    🔐 SUPABASE — CLIENT UNIQUE
-   ✅ ZERO "supabase" variable
    ✅ Global: SB
 ========================= */
 const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
@@ -1787,7 +1790,6 @@ function renderResults(rows){
 
     card.onclick = ()=>{
       if(!id) return alert("ID manquant");
-      // si tu as un pro-detail.html dans le repo, on l'ouvre DANS le HUB
       openInside(ABS(`pro-detail.html?id=${encodeURIComponent(id)}`), `🦅 Profil PRO — ${name}`);
       closeModal();
     };
@@ -1810,7 +1812,6 @@ async function searchPros(){
   const city = (spCity?.value || '').trim();
   const mod = (spModule?.value || 'all');
 
-  // RPC si dispo
   try{
     const payload = {
       p_q: q || null,
@@ -1837,7 +1838,6 @@ async function searchPros(){
     dbg(String(e));
   }
 
-  // Fallback table pros_public
   let query = SB.from('pros_public').select('*').limit(50);
 
   if(q){
@@ -1866,111 +1866,91 @@ dbg("Search PRO V2 prêt ✅");
 
 <script>
 /* =========================
-   NDIMBAL — V1.3 (HUB SAFE)
-   ✅ Ne casse pas le openInside du HUB
-   ✅ Utilise openInside HUB si dispo
-   ✅ Sinon fallback: location.href
+   ♾️ NDIMBAL — V1.3 (HUB SAFE)
+   ✅ Ouvre DRIVE/PAY/JOBS/INFO DANS l'overlay HUB
+   ✅ Retour HUB via bouton overlay (hubBackBtn)
 ========================= */
 (function(){
-  // ✅ Mets ici TA vitrine HUB (celle des modules)
-  const HUB_VITRINE_URL = "https://beauville.github.io/digiy-hub/";
-
-  // ✅ Résout les pages du DRIVE (car NDIMBAL renvoie vers PAY/JOBS/INFO du DRIVE)
-  // 👉 ici on fixe directement sur DIGIY HUB DRIVE (plus propre que BASE_PATH vitrine)
   const DRIVE_BASE = "https://beauville.github.io/digiy-hub-drive/";
-
   function ABS_DRIVE(file){
     return DRIVE_BASE + String(file || "").replace(/^\//,"");
   }
 
-  // ✅ Utilise l'overlay du HUB si disponible, sinon redirect
-  function openInHubOrRedirect(url, title){
-    // le HUB a déjà openInside(url,title)
-    if (typeof window.openInside === "function") {
+  const routes = {
+    sell: ABS_DRIVE("digiy-pay.html"),
+    job:  ABS_DRIVE("digiy-jobs.html"),
+    info: ABS_DRIVE("digiylyfe.html")
+  };
+
+  const labels = {
+    sell: "🛒 Vendre / Encaisser",
+    job:  "💼 Trouver du travail",
+    info: "📱 Comprendre DIGIY"
+  };
+
+  const LS_KEY = "digiy_ndimbal_last_action";
+  const getLast = ()=>{ try { return localStorage.getItem(LS_KEY) || ""; } catch(e){ return ""; } };
+  const setLast = (a)=>{ try { localStorage.setItem(LS_KEY, a); } catch(e){} };
+
+  function openInHub(url, title){
+    if(typeof window.openInside === "function"){
       window.openInside(url, title || "♾️ NDIMBAL");
       return;
     }
-    // fallback si pas d'overlay HUB
     window.location.href = url;
   }
 
-  function initDigiy(){
+  function init(){
     const btn = document.getElementById("digiy-help-btn");
     const modal = document.getElementById("digiy-ndimbal");
     const closeBtn = document.getElementById("digiy-close");
     const lastBox = document.getElementById("digiy-last");
     const actionsBox = document.getElementById("digiy-actions");
 
-    if(!btn || !modal || !closeBtn){
-      console.warn("DIGIY NDIMBAL: éléments manquants");
-      return;
-    }
-
-    // ✅ Pages du DRIVE (toujours accessibles à tous)
-    const routes = {
-      sell: ABS_DRIVE("digiy-pay.html"),
-      job:  ABS_DRIVE("digiy-jobs.html"),
-      info: ABS_DRIVE("digiylyfe.html")
-    };
-
-    const labels = {
-      sell: "🛒 Vendre / Encaisser",
-      job:  "💼 Trouver du travail",
-      info: "📱 Comprendre DIGIY"
-    };
-
-    const LS_KEY = "digiy_ndimbal_last_action";
-    function getLast(){ try { return localStorage.getItem(LS_KEY) || ""; } catch(e){ return ""; } }
-    function setLast(action){ try { localStorage.setItem(LS_KEY, action); } catch(e){} }
+    if(!btn || !modal || !closeBtn) return;
 
     function openDigiy(){
       modal.classList.add("show");
       modal.setAttribute("aria-hidden","false");
       if(actionsBox) actionsBox.style.display = "block";
 
-      if(lastBox){
-        const last = getLast();
-        if(last && routes[last]){
-          lastBox.style.display = "block";
-          lastBox.innerHTML = `
-            <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:10px">
-              <div style="font-weight:950;color:#065f46;margin-bottom:6px">Reprendre ?</div>
+      const last = getLast();
+      if(last && routes[last] && lastBox){
+        lastBox.style.display = "block";
+        lastBox.innerHTML = `
+          <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:10px">
+            <div style="font-weight:950;color:#065f46;margin-bottom:6px">Reprendre ?</div>
 
-              <button id="digiy-continue" style="
-                width:100%;border:none;border-radius:12px;padding:10px 12px;
-                font-weight:950;cursor:pointer;background:#16a34a;color:#052e16">
-                Continuer : ${labels[last]}
-              </button>
+            <button id="digiy-continue" type="button" style="
+              width:100%;border:none;border-radius:12px;padding:10px 12px;
+              font-weight:950;cursor:pointer;background:#16a34a;color:#052e16">
+              Continuer : ${labels[last]}
+            </button>
 
-              <button id="digiy-reset" style="
-                width:100%;border:none;border-radius:12px;padding:10px 12px;margin-top:6px;
-                font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a">
-                Non, autre chose
-              </button>
-            </div>
-          `;
+            <button id="digiy-reset" type="button" style="
+              width:100%;border:none;border-radius:12px;padding:10px 12px;margin-top:6px;
+              font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a">
+              Non, autre chose
+            </button>
+          </div>
+        `;
+        if(actionsBox) actionsBox.style.display = "none";
 
-          if(actionsBox) actionsBox.style.display = "none";
+        const cont = document.getElementById("digiy-continue");
+        const reset = document.getElementById("digiy-reset");
 
-          const cont = document.getElementById("digiy-continue");
-          const reset = document.getElementById("digiy-reset");
-
-          if(cont) cont.onclick = ()=>{
-            closeDigiy();
-            openInHubOrRedirect(routes[last], `♾️ NDIMBAL — ${labels[last]}`);
-          };
-
-          if(reset) reset.onclick = ()=>{
-            lastBox.style.display="none";
-            lastBox.innerHTML="";
-            if(actionsBox) actionsBox.style.display="block";
-          };
-
-        }else{
+        if(cont) cont.onclick = ()=>{
+          closeDigiy();
+          openInHub(routes[last], `♾️ NDIMBAL — ${labels[last]}`);
+        };
+        if(reset) reset.onclick = ()=>{
           lastBox.style.display="none";
           lastBox.innerHTML="";
           if(actionsBox) actionsBox.style.display="block";
-        }
+        };
+      }else{
+        if(lastBox){ lastBox.style.display="none"; lastBox.innerHTML=""; }
+        if(actionsBox) actionsBox.style.display="block";
       }
     }
 
@@ -1979,33 +1959,31 @@ dbg("Search PRO V2 prêt ✅");
       modal.setAttribute("aria-hidden","true");
     }
 
+    // ✅ NDIMBAL button opens the modal
     btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
     closeBtn.addEventListener("click", closeDigiy);
     modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
     document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
 
+    // ✅ action buttons
     document.querySelectorAll(".digiy-act").forEach(b=>{
       b.addEventListener("click", ()=>{
         const action = b.getAttribute("data-action");
         if(action && routes[action]) setLast(action);
         closeDigiy();
         const url = routes[action];
-        if(url) openInHubOrRedirect(url, `♾️ NDIMBAL — ${labels[action] || action}`);
+        if(url) openInHub(url, `♾️ NDIMBAL — ${labels[action] || action}`);
       });
     });
-
-    // ✅ Si tu veux un "Retour HUB" depuis le DRIVE, c’est géré côté HUB overlay (bouton retour)
-    // et pour le cas fallback (redirect), le retour navigateur fera le taf.
-
-    console.log("DIGIY NDIMBAL V1.3 (HUB SAFE): prêt ✅", { routes, HUB_VITRINE_URL });
   }
 
   if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", initDigiy);
+    document.addEventListener("DOMContentLoaded", init);
   }else{
-    initDigiy();
+    init();
   }
 })();
 </script>
+
 </body>
 </html>
