@@ -1866,82 +1866,32 @@ dbg("Search PRO V2 prêt ✅");
 
 <script>
 /* =========================
-   NDIMBAL — V1.3 (FULL CLEAN)
-   ✅ ABS() résout les pages locales correctement
-   ✅ openInside() ouvre en overlay iframe (ne sort pas du site)
-   ✅ Retour HUB = vitrine HUB (ou drive si tu veux)
+   NDIMBAL — V1.3 (HUB SAFE)
+   ✅ Ne casse pas le openInside du HUB
+   ✅ Utilise openInside HUB si dispo
+   ✅ Sinon fallback: location.href
 ========================= */
 (function(){
   // ✅ Mets ici TA vitrine HUB (celle des modules)
-  const HUB_VITRINE_URL = "https://beauville.github.io/digiy-hub/"; 
-  // ✅ Repo courant (auto) : /digiy-hub-drive/ ou autre
-  const BASE_PATH = (function(){
-    const p = location.pathname;
-    // Ex: /digiy-hub-drive/index.html -> /digiy-hub-drive/
-    return p.endsWith("/") ? p : p.replace(/\/[^\/]*$/, "/");
-  })();
+  const HUB_VITRINE_URL = "https://beauville.github.io/digiy-hub/";
 
-  // ✅ Résout une page locale du repo courant (pas un fichier système)
-  function ABS(file){
-    // file attendu : "digiy-pay.html" (sans slash)
-    return location.origin + BASE_PATH + String(file || "").replace(/^\//,"");
+  // ✅ Résout les pages du DRIVE (car NDIMBAL renvoie vers PAY/JOBS/INFO du DRIVE)
+  // 👉 ici on fixe directement sur DIGIY HUB DRIVE (plus propre que BASE_PATH vitrine)
+  const DRIVE_BASE = "https://beauville.github.io/digiy-hub-drive/";
+
+  function ABS_DRIVE(file){
+    return DRIVE_BASE + String(file || "").replace(/^\//,"");
   }
 
-  // ===== Overlay elements
-  const inside = ()=>document.getElementById("digiy-inside");
-  const insideFrame = ()=>document.getElementById("digiy-inside-frame");
-  const insideTitle = ()=>document.getElementById("digiy-inside-title");
-  const insideClose = ()=>document.getElementById("digiy-inside-close");
-  const insideBack  = ()=>document.getElementById("digiy-inside-back");
-
-  function openInside(url, title){
-    const wrap = inside();
-    const frame = insideFrame();
-    const t = insideTitle();
-    if(!wrap || !frame){
-      // fallback si overlay absent
-      location.href = url;
+  // ✅ Utilise l'overlay du HUB si disponible, sinon redirect
+  function openInHubOrRedirect(url, title){
+    // le HUB a déjà openInside(url,title)
+    if (typeof window.openInside === "function") {
+      window.openInside(url, title || "♾️ NDIMBAL");
       return;
     }
-    if(t) t.textContent = title || "♾️ NDIMBAL";
-    wrap.style.display = "block";
-    wrap.setAttribute("aria-hidden","false");
-    frame.src = url;
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeInside(){
-    const wrap = inside();
-    const frame = insideFrame();
-    if(!wrap) return;
-    wrap.style.display = "none";
-    wrap.setAttribute("aria-hidden","true");
-    if(frame) frame.src = "about:blank";
-    document.body.style.overflow = "";
-  }
-
-  function bindInsideControls(){
-    const wrap = inside();
-    if(!wrap) return;
-
-    insideClose()?.addEventListener("click", closeInside);
-
-    // ✅ Retour HUB = vitrine modules (comme tu veux)
-    insideBack()?.addEventListener("click", ()=>{
-      closeInside();
-      location.href = HUB_VITRINE_URL;
-    });
-
-    wrap.addEventListener("click", (e)=>{
-      if(e.target === wrap) closeInside();
-    });
-
-    document.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape"){
-        // ferme overlay NDIMBAL viewer si ouvert
-        if(wrap.style.display === "block") closeInside();
-      }
-    });
+    // fallback si pas d'overlay HUB
+    window.location.href = url;
   }
 
   function initDigiy(){
@@ -1956,11 +1906,11 @@ dbg("Search PRO V2 prêt ✅");
       return;
     }
 
-    // ✅ Pages locales DU REPO COURANT (digiy-hub-drive)
+    // ✅ Pages du DRIVE (toujours accessibles à tous)
     const routes = {
-      sell: ABS("digiy-pay.html"),
-      job:  ABS("digiy-jobs.html"),
-      info: ABS("digiylyfe.html")
+      sell: ABS_DRIVE("digiy-pay.html"),
+      job:  ABS_DRIVE("digiy-jobs.html"),
+      info: ABS_DRIVE("digiylyfe.html")
     };
 
     const labels = {
@@ -2007,7 +1957,7 @@ dbg("Search PRO V2 prêt ✅");
 
           if(cont) cont.onclick = ()=>{
             closeDigiy();
-            openInside(routes[last], `♾️ NDIMBAL — ${labels[last]}`);
+            openInHubOrRedirect(routes[last], `♾️ NDIMBAL — ${labels[last]}`);
           };
 
           if(reset) reset.onclick = ()=>{
@@ -2040,15 +1990,15 @@ dbg("Search PRO V2 prêt ✅");
         if(action && routes[action]) setLast(action);
         closeDigiy();
         const url = routes[action];
-        if(url) openInside(url, `♾️ NDIMBAL — ${labels[action] || action}`);
+        if(url) openInHubOrRedirect(url, `♾️ NDIMBAL — ${labels[action] || action}`);
       });
     });
 
-    console.log("DIGIY NDIMBAL V1.3: prêt ✅", { BASE_PATH, routes });
-  }
+    // ✅ Si tu veux un "Retour HUB" depuis le DRIVE, c’est géré côté HUB overlay (bouton retour)
+    // et pour le cas fallback (redirect), le retour navigateur fera le taf.
 
-  // bind overlay controls early
-  bindInsideControls();
+    console.log("DIGIY NDIMBAL V1.3 (HUB SAFE): prêt ✅", { routes, HUB_VITRINE_URL });
+  }
 
   if(document.readyState === "loading"){
     document.addEventListener("DOMContentLoaded", initDigiy);
@@ -2057,6 +2007,5 @@ dbg("Search PRO V2 prêt ✅");
   }
 })();
 </script>
-
 </body>
 </html>
