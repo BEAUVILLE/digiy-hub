@@ -1898,10 +1898,15 @@ dbg("Search PRO V2 prêt ✅");
   }
 
   const routes = {
-    sell: ABS_DRIVE("digiy-pay.html"),
-    job:  ABS_DRIVE("digiy-jobs.html"),
-    info: ABS_DRIVE("digiylyfe.html")
-  };
+  // ✅ Liens sûrs (zéro 404)
+  sell: "https://beauville.github.io/digiy-pay/",
+  job:  "https://beauville.github.io/digiy-jobs/",
+  info: "https://digiylyfe.com/"
+};
+
+// ✅ Fallback si jamais un module change / down
+const FALLBACK_WA = "https://wa.me/221771342889?text=SOS%20NDIMBAL%20—%20j’ai%20besoin%20d’aide%20sur%20le%20HUB";
+
 
   const labels = {
     sell: "🛒 Vendre / Encaisser",
