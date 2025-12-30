@@ -1925,83 +1925,203 @@ dbg("Search PRO V2 prêt ✅");
 
 <script>
 <!-- =========================
-   ✅ MODAL QR DIGIYLYFE (COMPLET)
+   ♾️ NDIMBAL — SAFE PACK (V1)
+   ✅ fonctionne même si d’autres scripts plantent
 ========================= -->
-<div id="qrModal" class="digiy-modal-overlay" aria-hidden="true">
-  <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="QR DIGIYLYFE">
-    <div class="digiy-modal-card" style="text-align:center">
+<button id="digiy-help-btn" type="button" aria-label="NDIMBAL">♾️ NDIMBAL</button>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px;">
-        <div style="font-family:Outfit,sans-serif; font-weight:950; letter-spacing:.06em; text-transform:uppercase;">
-          ♾️ QR DIGIYLYFE
-        </div>
-        <button id="qrClose" class="btn btn-secondary" type="button" style="padding:.6rem 1.1rem;font-size:.85rem;">
-          ✖ Fermer
-        </button>
-      </div>
+<div id="digiy-ndimbal" aria-hidden="true">
+  <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
+    <div class="digiy-title">♾️ NDIMBAL</div>
+    <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t’aider simplement.</p>
 
-      <div style="color:#cbd5e1;font-weight:650;margin-bottom:10px">
-        Scanne pour ouvrir DIGIYLYFE sur le téléphone.
-      </div>
+    <div id="digiy-last" style="display:none;margin:10px 0 6px"></div>
 
-      <img id="qrImg" alt="QR DIGIYLYFE" style="
-        width:min(360px, 92vw);
-        border-radius:18px;
-        border:1px solid rgba(148,163,184,.45);
-        box-shadow:0 18px 60px rgba(0,0,0,.45);
-        background:#fff;
-        padding:10px;
-      ">
-
-      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:14px;">
-        <a id="qrOpenTab" class="btn btn-primary" target="_blank" rel="noopener"
-           style="padding:.85rem 1.2rem;font-size:.85rem;text-decoration:none;">
-          Ouvrir l’image →
-        </a>
-        <a href="https://digiylyfe.com" class="btn btn-secondary" target="_blank" rel="noopener"
-           style="padding:.85rem 1.2rem;font-size:.85rem;text-decoration:none;">
-          Ouvrir le site →
-        </a>
-      </div>
-
+    <div id="digiy-actions">
+      <button class="digiy-act" data-action="sell" type="button">🛒 Vendre / Encaisser</button>
+      <button class="digiy-act" data-action="job" type="button">💼 Trouver du travail</button>
+      <button class="digiy-act" data-action="info" type="button">📷 Ouvrir QR DIGIYLYFE</button>
     </div>
+
+    <button class="digiy-close" id="digiy-close" type="button">❌ Quitter</button>
   </div>
 </div>
 
-<script>
-  // ✅ QR local dans le même dossier que index.html
-  const QR_URL = (location.origin + location.pathname.replace(/\/[^\/]*$/, "/") + "QR_DIGIYLYFE_SITE-2.png.webp");
+<style>
+  /* ✅ bouton flottant */
+  #digiy-help-btn{
+    position:fixed !important;
+    right:20px !important;
+    bottom:20px !important;
+    z-index:2147483647 !important;
 
-  function openQR(){
-    const modal = document.getElementById("qrModal");
-    const img   = document.getElementById("qrImg");
-    const tab   = document.getElementById("qrOpenTab");
-    if(!modal || !img) return;
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
 
-    img.src = QR_URL;
+    border:none !important;
+    border-radius:999px !important;
+    padding:14px 18px !important;
+    font-weight:950 !important;
+    font-size:15px !important;
+    cursor:pointer !important;
 
-    // ✅ fallback si tu préfères héberger sur WordPress
-    img.onerror = ()=>{ img.src = "https://digiylyfe.com/wp-content/uploads/2025/06/QR_DIGIYLYFE_SITE-2.png.webp"; };
-
-    if(tab) tab.href = QR_URL;
-
-    modal.style.display = "block";
-    modal.setAttribute("aria-hidden","false");
+    color:#052e16 !important;
+    background:linear-gradient(135deg,#16a34a,#22c55e) !important;
+    box-shadow:0 16px 40px rgba(0,0,0,.35) !important;
   }
+  #digiy-help-btn:active{ transform:translateY(1px); }
 
-  function closeQR(){
-    const modal = document.getElementById("qrModal");
+  /* ✅ overlay */
+  #digiy-ndimbal{
+    display:none;
+    position:fixed; inset:0;
+    z-index:2147483646;
+    background:rgba(0,0,0,.55);
+    padding:18px;
+    pointer-events:auto;
+  }
+  #digiy-ndimbal.show{ display:block; }
+
+  .digiy-box{
+    max-width:360px;
+    margin:18vh auto 0;
+    background:#fff;
+    border-radius:18px;
+    padding:16px;
+    box-shadow:0 18px 40px rgba(0,0,0,.25);
+    border:1px solid rgba(2,6,23,.08);
+    text-align:center;
+  }
+  .digiy-title{ font-weight:950; letter-spacing:.08em; color:#16a34a; margin-bottom:6px; }
+  .digiy-text{ margin:8px 0 12px; color:#0f172a; line-height:1.35; }
+
+  .digiy-act{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:11px 12px;
+    margin:6px 0;
+    font-weight:900;
+    cursor:pointer;
+    background:#f1f5f9;
+    color:#0f172a;
+  }
+  .digiy-close{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:10px 12px;
+    margin-top:8px;
+    font-weight:900;
+    cursor:pointer;
+    background:#0f172a;
+    color:#fff;
+  }
+</style>
+
+<script>
+(function(){
+  // ✅ routes sûrs
+  const routes = {
+    sell: "https://beauville.github.io/digiy-pay/",
+    job:  "https://beauville.github.io/digiy-jobs/"
+  };
+
+  const LS_KEY = "digiy_ndimbal_last_action";
+  const getLast = ()=>{ try { return localStorage.getItem(LS_KEY) || ""; } catch(e){ return ""; } };
+  const setLast = (a)=>{ try { localStorage.setItem(LS_KEY, a); } catch(e){} };
+
+  function closeDigiy(){
+    const modal = document.getElementById("digiy-ndimbal");
     if(!modal) return;
-    modal.style.display = "none";
+    modal.classList.remove("show");
     modal.setAttribute("aria-hidden","true");
   }
+  function openDigiy(){
+    const modal = document.getElementById("digiy-ndimbal");
+    const actionsBox = document.getElementById("digiy-actions");
+    const lastBox = document.getElementById("digiy-last");
+    if(!modal) return;
 
-  document.getElementById("qrClose")?.addEventListener("click", closeQR);
-  document.getElementById("qrModal")?.addEventListener("click", (e)=>{ if(e.target.id==="qrModal") closeQR(); });
-  document.addEventListener("keydown", (e)=>{ if(e.key==="Escape" && document.getElementById("qrModal")?.style.display==="block") closeQR(); });
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden","false");
 
-  window.openQR = openQR; // ✅ accessible partout
+    // (option) resume
+    const last = getLast();
+    if(last && routes[last] && lastBox && actionsBox){
+      lastBox.style.display = "block";
+      lastBox.innerHTML = `
+        <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:10px">
+          <div style="font-weight:950;color:#065f46;margin-bottom:6px">Reprendre ?</div>
+          <button id="digiy-continue" type="button" style="width:100%;border:none;border-radius:12px;padding:10px 12px;font-weight:950;cursor:pointer;background:#16a34a;color:#052e16">
+            Continuer
+          </button>
+          <button id="digiy-reset" type="button" style="width:100%;border:none;border-radius:12px;padding:10px 12px;margin-top:6px;font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a">
+            Non, autre chose
+          </button>
+        </div>
+      `;
+      actionsBox.style.display = "none";
+
+      document.getElementById("digiy-continue")?.addEventListener("click", ()=>{
+        closeDigiy();
+        // ouvre dans overlay HUB si dispo, sinon new tab
+        const url = routes[last];
+        if(typeof window.openInside === "function") window.openInside(url, "♾️ NDIMBAL");
+        else window.open(url, "_blank", "noopener");
+      });
+      document.getElementById("digiy-reset")?.addEventListener("click", ()=>{
+        lastBox.style.display="none";
+        lastBox.innerHTML="";
+        actionsBox.style.display="block";
+      });
+    }else{
+      if(lastBox){ lastBox.style.display="none"; lastBox.innerHTML=""; }
+      if(actionsBox){ actionsBox.style.display="block"; }
+    }
+  }
+
+  function init(){
+    const btn = document.getElementById("digiy-help-btn");
+    const modal = document.getElementById("digiy-ndimbal");
+    const closeBtn = document.getElementById("digiy-close");
+    if(!btn || !modal || !closeBtn) return;
+
+    // ✅ IMPORTANT : stopPropagation + capture = clique toujours
+    btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
+    closeBtn.addEventListener("click", closeDigiy);
+    modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
+
+    document.querySelectorAll(".digiy-act").forEach(b=>{
+      b.addEventListener("click", ()=>{
+        const action = b.getAttribute("data-action");
+
+        // ✅ QR : ouvre la modale QR si présente
+        if(action === "info"){
+          closeDigiy();
+          if(typeof window.openQR === "function") window.openQR();
+          else alert("QR non installé. Ajoute la modale QR (openQR).");
+          return;
+        }
+
+        if(action && routes[action]) setLast(action);
+        closeDigiy();
+        const url = routes[action];
+
+        if(typeof window.openInside === "function") window.openInside(url, `♾️ NDIMBAL`);
+        else window.open(url, "_blank", "noopener");
+      });
+    });
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
 </script>
+
 
 </body>
 </html>
