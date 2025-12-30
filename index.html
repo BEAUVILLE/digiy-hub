@@ -1706,15 +1706,13 @@ if(!createClient){
 }
 </script>
 
-<!-- =========================
-   ✅ MODAL QR DIGIYLYFE (HTML)
-========================= -->
-<div id="qrModal" class="digiy-modal-overlay" aria-hidden="true" style="z-index:2147483647; display:none;">
+<!-- ✅ MODAL QR DIGIYLYFE (UNE SEULE FOIS) -->
+<div id="qrModal" class="digiy-modal-overlay" aria-hidden="true" style="z-index:2147483647;">
   <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="QR DIGIYLYFE">
-    <div class="digiy-modal-card" style="text-align:center">
+    <div class="digiy-modal-card" style="text-align:center; max-width:420px;">
 
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px;">
-        <div style="font-family:Outfit,sans-serif; font-weight:950; letter-spacing:.06em; text-transform:uppercase;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px;">
+        <div style="font-family:Outfit,sans-serif; font-weight:950; letter-spacing:.06em; text-transform:uppercase; color:#fff;">
           ♾️ QR DIGIYLYFE
         </div>
         <button id="qrClose" class="btn btn-secondary" type="button" style="padding:.6rem 1.1rem;font-size:.85rem;">
@@ -1722,16 +1720,19 @@ if(!createClient){
         </button>
       </div>
 
-      <div style="display:flex;justify-content:center;margin:10px 0 12px;">
-        <img id="qrImg" alt="QR DIGIYLYFE" style="width:220px;height:220px;border-radius:16px;border:1px solid rgba(148,163,184,.35);background:#fff;padding:10px"/>
+      <div style="display:flex;justify-content:center;margin:16px 0;">
+        <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://digiylyfe.com" 
+             alt="QR DIGIYLYFE" 
+             style="width:260px;height:260px;border-radius:18px;border:2px solid rgba(249,115,22,.65);background:#fff;padding:12px;"/>
       </div>
 
-      <div style="color:#cbd5e1;font-weight:700;margin-bottom:12px">
-        Scanne pour ouvrir DIGIYLYFE
+      <div style="color:#e5e7eb;font-weight:700;margin-bottom:14px;font-size:1.05rem;">
+        📱 Scanne pour ouvrir DIGIYLYFE
       </div>
 
-      <a id="qrLink" class="btn btn-primary" href="https://digiylyfe.com" target="_blank" rel="noopener"
-         style="display:inline-flex;justify-content:center;width:100%;max-width:360px;">
+      <a href="https://digiylyfe.com" target="_blank" rel="noopener"
+         class="btn btn-primary" 
+         style="display:inline-flex;justify-content:center;align-items:center;width:100%;max-width:320px;gap:8px;">
         Ouvrir le site →
       </a>
 
@@ -1739,15 +1740,13 @@ if(!createClient){
   </div>
 </div>
 
-<!-- =========================
-   ♾️ NDIMBAL — UNIQUE (HTML)
-========================= -->
+<!-- ✅ NDIMBAL — UNIQUE (UNE SEULE FOIS) -->
 <button id="digiy-help-btn" type="button" aria-label="NDIMBAL">♾️ NDIMBAL</button>
 
 <div id="digiy-ndimbal" aria-hidden="true">
   <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
     <div class="digiy-title">♾️ NDIMBAL</div>
-    <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t’aider simplement.</p>
+    <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t'aider simplement.</p>
 
     <div id="digiy-actions">
       <button class="digiy-act" data-action="sell" type="button">🛒 Vendre / Encaisser</button>
@@ -1760,8 +1759,19 @@ if(!createClient){
 </div>
 
 <style>
-  /* QR overlay utilise .digiy-modal-overlay/.digiy-modal/.digiy-modal-card déjà présents chez toi */
+  /* ✅ QR Modal overlay (propre) */
+  #qrModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:2147483647;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(6px);
+    padding:16px;
+  }
+  #qrModal.show{ display:block; }
 
+  /* ✅ NDIMBAL button (final, propre) */
   #digiy-help-btn{
     position:fixed !important;
     right:20px !important;
@@ -1786,51 +1796,154 @@ if(!createClient){
   }
   #digiy-help-btn:active{ transform:translateY(1px); }
 
+  /* ✅ NDIMBAL overlay */
   #digiy-ndimbal{
     display:none;
-    position:fixed; inset:0;
+    position:fixed;
+    inset:0;
     z-index:2147483645;
-    background:rgba(0,0,0,.55);
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(6px);
     padding:18px;
   }
   #digiy-ndimbal.show{ display:block; }
 
   .digiy-box{
-    max-width:360px;
+    max-width:380px;
     margin:18vh auto 0;
     background:#fff;
     border-radius:18px;
-    padding:16px;
-    box-shadow:0 18px 40px rgba(0,0,0,.25);
+    padding:18px;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
     border:1px solid rgba(2,6,23,.08);
     text-align:center;
   }
-  .digiy-title{ font-weight:950; letter-spacing:.08em; color:#16a34a; margin-bottom:6px; }
-  .digiy-text{ margin:8px 0 12px; color:#0f172a; line-height:1.35; }
+  .digiy-title{ 
+    font-family:'Outfit',sans-serif;
+    font-weight:950; 
+    letter-spacing:.08em; 
+    font-size:1.3rem;
+    color:#16a34a; 
+    margin-bottom:8px; 
+  }
+  .digiy-text{ 
+    margin:10px 0 14px; 
+    color:#0f172a; 
+    line-height:1.45;
+    font-weight:600;
+  }
 
   .digiy-act{
     width:100%;
     border:none;
     border-radius:14px;
-    padding:11px 12px;
-    margin:6px 0;
+    padding:12px 14px;
+    margin:7px 0;
+    font-family:'Outfit',sans-serif;
     font-weight:900;
+    font-size:0.95rem;
     cursor:pointer;
     background:#f1f5f9;
     color:#0f172a;
+    transition:all .15s ease;
   }
+  .digiy-act:hover{ 
+    background:#e2e8f0;
+    transform:translateY(-1px);
+  }
+  .digiy-act:active{ transform:translateY(0); }
+
   .digiy-close{
     width:100%;
     border:none;
     border-radius:14px;
-    padding:10px 12px;
-    margin-top:8px;
+    padding:11px 14px;
+    margin-top:10px;
+    font-family:'Outfit',sans-serif;
     font-weight:900;
+    font-size:0.95rem;
     cursor:pointer;
     background:#0f172a;
     color:#fff;
+    transition:all .15s ease;
   }
+  .digiy-close:hover{ background:#1e293b; }
+  .digiy-close:active{ transform:translateY(1px); }
 </style>
+
+<script>
+/* =========================
+   ✅ NDIMBAL + QR MODAL (FINAL WIRING)
+========================= */
+(function(){
+  const helpBtn = document.getElementById("digiy-help-btn");
+  const ndimbal = document.getElementById("digiy-ndimbal");
+  const closeBtn= document.getElementById("digiy-close");
+  const qrModal = document.getElementById("qrModal");
+  const qrClose = document.getElementById("qrClose");
+
+  // ✅ Ouvrir NDIMBAL
+  helpBtn?.addEventListener("click", ()=>{
+    ndimbal?.classList.add("show");
+    ndimbal?.setAttribute("aria-hidden","false");
+  });
+
+  // ✅ Fermer NDIMBAL
+  function closeNdimbal(){
+    ndimbal?.classList.remove("show");
+    ndimbal?.setAttribute("aria-hidden","true");
+  }
+  closeBtn?.addEventListener("click", closeNdimbal);
+  ndimbal?.addEventListener("click", (e)=>{ 
+    if(e.target === ndimbal) closeNdimbal(); 
+  });
+
+  // ✅ Actions NDIMBAL
+  document.querySelectorAll(".digiy-act").forEach(btn => {
+    btn.addEventListener("click", ()=>{
+      const action = btn.getAttribute("data-action");
+
+      if(action === "sell"){
+        closeNdimbal();
+        if(typeof openInside === "function"){
+          openInside("https://beauville.github.io/Digiy-pos-pro/", "🛒 DIGIY POS PRO");
+        }
+      }
+      else if(action === "job"){
+        closeNdimbal();
+        if(typeof openInside === "function"){
+          openInside("https://beauville.github.io/digiy-jobs/", "💼 DIGIY JOBS");
+        }
+      }
+      else if(action === "qr"){
+        closeNdimbal();
+        qrModal.style.display = "block";
+        qrModal.classList.add("show");
+        qrModal.setAttribute("aria-hidden","false");
+      }
+    });
+  });
+
+  // ✅ Fermer QR modal
+  function closeQR(){
+    qrModal.style.display = "none";
+    qrModal.classList.remove("show");
+    qrModal.setAttribute("aria-hidden","true");
+  }
+  qrClose?.addEventListener("click", closeQR);
+  qrModal?.addEventListener("click", (e)=>{ 
+    if(e.target === qrModal) closeQR(); 
+  });
+
+  // ✅ ESC ferme tout
+  document.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape"){
+      if(qrModal?.classList.contains("show")) closeQR();
+      else if(ndimbal?.classList.contains("show")) closeNdimbal();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
