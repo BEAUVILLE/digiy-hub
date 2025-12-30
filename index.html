@@ -1388,136 +1388,7 @@
   </div>
 </div>
 
-<!-- ♾️ NDIMBAL — BOUTON FIXE FINAL -->
-<button id="digiy-help-btn" type="button" aria-label="NDIMBAL">♾️ NDIMBAL</button>
 
-<div id="digiy-ndimbal" aria-hidden="true">
-  <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
-    <div class="digiy-title">♾️ NDIMBAL</div>
-    <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t’aider simplement.</p>
-
-    <div id="digiy-last" style="display:none;margin:10px 0 6px"></div>
-
-    <div id="digiy-actions">
-      <button class="digiy-act" data-action="sell" type="button">🛒 Vendre / Encaisser</button>
-      <button class="digiy-act" data-action="job" type="button">💼 Trouver du travail</button>
-      <button class="digiy-act" data-action="info" type="button">📱 Comprendre DIGIY</button>
-    </div>
-
-    <button class="digiy-close" id="digiy-close" type="button">❌ Quitter</button>
-  </div>
-</div>
-
-<style>
-  #digiy-help-btn{
-    position:fixed !important;
-    right:20px !important;
-    bottom:20px !important;
-    z-index:2147483647 !important;
-    display:block !important;
-    visibility:visible !important;
-    opacity:1 !important;
-    pointer-events:auto !important;
-    cursor:pointer !important;
-
-    border:none !important;
-    border-radius:999px !important;
-    padding:14px 18px !important;
-    font-weight:950 !important;
-    font-size:15px !important;
-    color:#052e16 !important;
-    background:linear-gradient(135deg,#16a34a,#22c55e) !important;
-    box-shadow:0 16px 40px rgba(0,0,0,.35) !important;
-  }
-  #digiy-help-btn:active{ transform:translateY(1px); }
-
-  #digiy-ndimbal{
-    display:none;
-    position:fixed; inset:0;
-    z-index:2147483646;
-    background:rgba(0,0,0,.55);
-    padding:18px;
-  }
-  #digiy-ndimbal.show{ display:block; }
-
-  .digiy-box{
-    max-width:360px;
-    margin:18vh auto 0;
-    background:#fff;
-    border-radius:18px;
-    padding:16px;
-    box-shadow:0 18px 40px rgba(0,0,0,.25);
-    border:1px solid rgba(2,6,23,.08);
-    text-align:center;
-  }
-
-  .digiy-title{
-    font-weight:950;
-    letter-spacing:.08em;
-    color:#16a34a;
-    margin-bottom:6px;
-  }
-  .digiy-text{
-    margin:8px 0 12px;
-    color:#0f172a;
-    line-height:1.35;
-  }
-
-  .digiy-act{
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:11px 12px;
-    margin:6px 0;
-    font-weight:900;
-    cursor:pointer;
-    background:#f1f5f9;
-    color:#0f172a;
-  }
-  .digiy-act:hover{ filter:brightness(.98); }
-
-  .digiy-close{
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:10px 12px;
-    margin-top:8px;
-    font-weight:900;
-    cursor:pointer;
-    background:#0f172a;
-    color:#fff;
-  }
-
-  /* ✅ NDIMBAL Continue/Reset (clean, stable) */
-  .nd-btn-primary{
-    width:100%;
-    border:none;
-    border-radius:12px;
-    padding:10px 12px;
-    font-family:'Outfit',sans-serif;
-    font-weight:950;
-    cursor:pointer;
-    background:linear-gradient(135deg,#16a34a,#22c55e);
-    color:#052e16;
-  }
-  .nd-btn-secondary{
-    width:100%;
-    border:none;
-    border-radius:12px;
-    padding:10px 12px;
-    margin-top:6px;
-    font-family:'Outfit',sans-serif;
-    font-weight:900;
-    cursor:pointer;
-    background:#f1f5f9;
-    color:#0f172a;
-  }
-  .nd-btn-primary:active,.nd-btn-secondary:active{ transform:translateY(1px); }
-</style>
-
-<!-- =========================
-   SCRIPTS (CLEAN ORDER)
-========================= -->
 <script>
   /* =========================
      ✅ HUB BASE OFFICIEL (GitHub Pages)
@@ -1739,75 +1610,199 @@ if(!createClient){
     </div>
   </div>
 </div>
+<!-- =============================
+     FLOATING BUBBLES (SIDE)
+============================= -->
+<a href="https://beauville.github.io/digiy/" class="tarif-bubble" target="_blank" rel="noopener">
+  <div class="tarif-badge-icon">F</div>
+  <div>Tarifs DIGIY</div>
+</a>
 
-<!-- ✅ NDIMBAL — UNIQUE (UNE SEULE FOIS) -->
+<a href="https://beauville.github.io/digiy-chat-pro/" class="chat-bubble" target="_blank" rel="noopener">
+  <div class="chat-badge-icon">💬</div>
+  <div class="chat-bubble-text">
+    DIGIY CHAT PRO
+    <small>Assistance & clients</small>
+  </div>
+</a>
+
+<a href="https://wa.me/221771342889?text=SOS%20DIGIY%20HUB" class="sos-bubble" target="_blank" rel="noopener">
+  <div class="sos-badge-icon">SOS</div>
+  <div class="sos-bubble-text">
+    SOS DIGIY
+    <small>Besoin d'aide</small>
+  </div>
+</a>
+
+<!-- =============================
+     HUB OVERLAY (INTERNAL APPS)
+============================= -->
+<div id="hubOverlay" aria-hidden="true">
+  <div class="hubOverlayCard" role="dialog" aria-modal="true" aria-label="Module DIGIY">
+    <div class="hubOverlayTop">
+      <div class="hubOverlayLeft">
+        <div class="hubOverlayBrand">
+          <span>♾️ DIGIY HUB</span>
+          <span class="hubOverlayBadge">INTERNE</span>
+        </div>
+        <div id="hubOverlayTitle" class="hubOverlayTitle">—</div>
+      </div>
+      <div class="hubOverlayActions">
+        <button id="hubBackBtn" class="hubOverlayBtn back" type="button">← Retour HUB</button>
+        <button id="hubCloseBtn" class="hubOverlayBtn close" type="button">✖ Fermer</button>
+      </div>
+    </div>
+    <iframe id="hubFrame" class="hubOverlayFrame" title="Module DIGIY"></iframe>
+  </div>
+</div>
+
+<!-- =============================
+     MODAL SEARCH PRO
+============================= -->
+<div id="searchProModal" class="digiy-modal-overlay" aria-hidden="true">
+  <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="Recherche PRO">
+    <div class="digiy-modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="font-family:Outfit,sans-serif;font-weight:950;letter-spacing:.06em;text-transform:uppercase;">
+          🔎 Recherche PRO — Métiers DIGIY
+        </div>
+        <button id="closeSearchPro" class="btn btn-secondary" type="button" style="padding:.6rem 1.1rem;font-size:.85rem;">
+          ✖ Fermer
+        </button>
+      </div>
+      <div class="digiy-modal-row">
+        <input id="sp_q" class="digiy-input" placeholder='Ex: "fatou plateau"'/>
+        <input id="sp_city" class="digiy-input" placeholder="Ville : Dakar, Thiès..."/>
+        <select id="sp_module" class="digiy-select">
+          <option value="all" selected>🦅 Tous métiers</option>
+          <option value="resto">🍽️ Resto</option>
+          <option value="loc">🏠 Loc</option>
+          <option value="chauffeur">🚗 Chauffeur</option>
+          <option value="market">🛍️ Boutique</option>
+          <option value="build">🏗️ Artisan</option>
+          <option value="job">💼 Jobs</option>
+        </select>
+        <button id="sp_btn" class="btn btn-primary" type="button" style="padding:.85rem 1.2rem;font-size:.85rem;">
+          Chercher →
+        </button>
+      </div>
+      <div id="sp_status" style="color:#cbd5e1;font-weight:650;margin:8px 2px;">—</div>
+      <div id="sp_results" class="digiy-results-grid"></div>
+      <div id="sp_empty" style="display:none;margin-top:12px;padding:18px;border-radius:16px;border:1px dashed rgba(148,163,184,.45);color:#cbd5e1;">
+        😕 Aucun résultat. Essaie "dakar", "plateau", "fatou".
+      </div>
+      <div id="sp_debug"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================
+     ♾️ NDIMBAL (UNE SEULE FOIS)
+============================= -->
 <button id="digiy-help-btn" type="button" aria-label="NDIMBAL">♾️ NDIMBAL</button>
 
 <div id="digiy-ndimbal" aria-hidden="true">
   <div class="digiy-box" role="dialog" aria-modal="true" aria-label="Assistance DIGIY">
     <div class="digiy-title">♾️ NDIMBAL</div>
     <p class="digiy-text"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t'aider simplement.</p>
-
+    
     <div id="digiy-actions">
       <button class="digiy-act" data-action="sell" type="button">🛒 Vendre / Encaisser</button>
       <button class="digiy-act" data-action="job" type="button">💼 Trouver du travail</button>
       <button class="digiy-act" data-action="qr" type="button">📷 Ouvrir QR DIGIYLYFE</button>
     </div>
-
+    
     <button class="digiy-close" id="digiy-close" type="button">❌ Quitter</button>
   </div>
 </div>
 
+<!-- =============================
+     QR MODAL (UNE SEULE FOIS)
+============================= -->
+<div id="qrModal" class="digiy-modal-overlay" aria-hidden="true" style="z-index:2147483648;">
+  <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="QR DIGIYLYFE">
+    <div class="digiy-modal-card" style="text-align:center;max-width:420px;margin:10vh auto;">
+      
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="font-family:Outfit,sans-serif;font-weight:950;letter-spacing:.06em;text-transform:uppercase;color:#fff;">
+          ♾️ QR DIGIYLYFE
+        </div>
+        <button id="qrClose" class="btn btn-secondary" type="button" style="padding:.6rem 1.1rem;font-size:.85rem;">
+          ✖ Fermer
+        </button>
+      </div>
+
+      <div style="display:flex;justify-content:center;margin:16px 0;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://digiylyfe.com" 
+             alt="QR DIGIYLYFE" 
+             style="width:260px;height:260px;border-radius:18px;border:2px solid rgba(249,115,22,.75);background:#fff;padding:12px;"/>
+      </div>
+
+      <div style="color:#e5e7eb;font-weight:700;margin-bottom:14px;font-size:1.05rem;">
+        📱 Scanne pour ouvrir DIGIYLYFE
+      </div>
+
+      <a href="https://digiylyfe.com" target="_blank" rel="noopener"
+         class="btn btn-primary" 
+         style="display:inline-flex;justify-content:center;align-items:center;width:100%;max-width:320px;gap:8px;">
+        Ouvrir le site →
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- =============================
+     STYLES (FINAL — UNE SEULE FOIS)
+============================= -->
 <style>
-  /* ✅ QR Modal overlay (propre) */
+  /* QR Modal */
   #qrModal{
     display:none;
     position:fixed;
     inset:0;
-    z-index:2147483647;
-    background:rgba(0,0,0,.72);
-    backdrop-filter:blur(6px);
+    z-index:2147483648;
+    background:rgba(0,0,0,.75);
+    backdrop-filter:blur(8px);
     padding:16px;
   }
   #qrModal.show{ display:block; }
 
-  /* ✅ NDIMBAL button (final, propre) */
+  /* NDIMBAL Button */
   #digiy-help-btn{
     position:fixed !important;
     right:20px !important;
     bottom:20px !important;
-    z-index:2147483646 !important;
-
+    z-index:2147483647 !important;
     display:block !important;
     visibility:visible !important;
     opacity:1 !important;
     pointer-events:auto !important;
     cursor:pointer !important;
-
     border:none !important;
     border-radius:999px !important;
     padding:14px 18px !important;
     font-weight:950 !important;
     font-size:15px !important;
-
     color:#052e16 !important;
     background:linear-gradient(135deg,#16a34a,#22c55e) !important;
     box-shadow:0 16px 40px rgba(0,0,0,.35) !important;
   }
   #digiy-help-btn:active{ transform:translateY(1px); }
 
-  /* ✅ NDIMBAL overlay */
+  /* NDIMBAL Overlay */
   #digiy-ndimbal{
     display:none;
     position:fixed;
     inset:0;
-    z-index:2147483645;
-    background:rgba(0,0,0,.65);
+    z-index:2147483646;
+    background:rgba(0,0,0,.68);
     backdrop-filter:blur(6px);
     padding:18px;
   }
   #digiy-ndimbal.show{ display:block; }
 
+  /* NDIMBAL Box */
   .digiy-box{
     max-width:380px;
     margin:18vh auto 0;
@@ -1818,6 +1813,7 @@ if(!createClient){
     border:1px solid rgba(2,6,23,.08);
     text-align:center;
   }
+  
   .digiy-title{ 
     font-family:'Outfit',sans-serif;
     font-weight:950; 
@@ -1826,6 +1822,7 @@ if(!createClient){
     color:#16a34a; 
     margin-bottom:8px; 
   }
+  
   .digiy-text{ 
     margin:10px 0 14px; 
     color:#0f172a; 
@@ -1871,11 +1868,13 @@ if(!createClient){
   .digiy-close:active{ transform:translateY(1px); }
 </style>
 
+<!-- =============================
+     SCRIPTS (FINAL WIRING)
+============================= -->
 <script>
-/* =========================
-   ✅ NDIMBAL + QR MODAL (FINAL WIRING)
-========================= */
 (function(){
+  "use strict";
+  
   const helpBtn = document.getElementById("digiy-help-btn");
   const ndimbal = document.getElementById("digiy-ndimbal");
   const closeBtn= document.getElementById("digiy-close");
@@ -1944,6 +1943,5 @@ if(!createClient){
   });
 })();
 </script>
-
 </body>
 </html>
