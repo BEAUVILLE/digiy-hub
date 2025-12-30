@@ -931,7 +931,6 @@
         </div>
       </div>
 
-      <!-- ✅ NDIMBAL MAP (TAILLE STANDARD + OUVERTURE DANS OVERLAY) -->
       <div class="module" data-open="ndimbalMap" data-title="DIGIY NDIMBAL MAP">
         <div class="module-inner">
           <div class="module-header">
@@ -1026,7 +1025,6 @@
         </div>
       </div>
 
-      <!-- ✅ NOUVEAU : DRIVER ABONNÉS (OVERLAY HUB) -->
       <div class="module" data-open="driverAbonnes" data-title="DIGIY DRIVER — Abonnés">
         <div class="module-inner">
           <div class="module-header">
@@ -1390,7 +1388,7 @@
   </div>
 </div>
 
-<!-- ♾️ NDIMBAL — BOUTON FIXE FINAL (button, pas lien) -->
+<!-- ♾️ NDIMBAL — BOUTON FIXE FINAL -->
 <button id="digiy-help-btn" type="button" aria-label="NDIMBAL">♾️ NDIMBAL</button>
 
 <div id="digiy-ndimbal" aria-hidden="true">
@@ -1489,6 +1487,32 @@
     background:#0f172a;
     color:#fff;
   }
+
+  /* ✅ NDIMBAL Continue/Reset (clean, stable) */
+  .nd-btn-primary{
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:10px 12px;
+    font-family:'Outfit',sans-serif;
+    font-weight:950;
+    cursor:pointer;
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+    color:#052e16;
+  }
+  .nd-btn-secondary{
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:10px 12px;
+    margin-top:6px;
+    font-family:'Outfit',sans-serif;
+    font-weight:900;
+    cursor:pointer;
+    background:#f1f5f9;
+    color:#0f172a;
+  }
+  .nd-btn-primary:active,.nd-btn-secondary:active{ transform:translateY(1px); }
 </style>
 
 <!-- =========================
@@ -1496,10 +1520,10 @@
 ========================= -->
 <script>
   /* =========================
-     ✅ BASE PATH AUTO (fix GitHub Pages folder)
+     ✅ HUB BASE OFFICIEL (GitHub Pages)
   ========================= */
-  const BASE_PATH = location.pathname.replace(/[^/]*$/, ""); // dossier courant
-  const ABS = (p) => (p.startsWith("http") ? p : (BASE_PATH + p.replace(/^\//,'')));
+  const HUB_BASE = "https://beauville.github.io/digiy-hub/";
+  const HUB = (p) => HUB_BASE + String(p || "").replace(/^\//, "");
 
   /* =========================
      ✅ LINKS (FIXED + AJOUT DRIVER ABONNES)
@@ -1537,6 +1561,16 @@
   const hubCloseBtn= document.getElementById("hubCloseBtn");
 
   function openInside(url, title){
+    // ✅ ferme NDIMBAL si ouvert (anti-chevauchement)
+    document.getElementById("digiy-ndimbal")?.classList.remove("show");
+
+    // ✅ ferme la modale Search Pro si ouverte
+    const spm = document.getElementById("searchProModal");
+    if(spm){
+      spm.style.display = "none";
+      spm.setAttribute("aria-hidden","true");
+    }
+
     if(!hubOverlay || !hubFrame) { window.location.href = url; return; }
     if(hubTitle) hubTitle.textContent = title || url;
     hubFrame.src = url;
@@ -1544,6 +1578,7 @@
     hubOverlay.setAttribute("aria-hidden","false");
     document.body.style.overflow = "hidden";
   }
+
   function closeInside(){
     if(!hubOverlay || !hubFrame) return;
     hubOverlay.classList.remove("show");
@@ -1609,9 +1644,10 @@
     openInside(LINKS.inscription, "🦅 Commander / Inscription HUB");
   });
 
+  // ✅ FIX packs.html (base officielle du hub)
   document.getElementById("btnSeePacks")?.addEventListener("click", (e)=>{
     e.preventDefault();
-    openInside(ABS("packs.html"), "📦 Packs DIGIY");
+    openInside(HUB("packs.html"), "📦 Packs DIGIY");
   });
 
   document.getElementById("btnFullSignup")?.addEventListener("click", ()=>{
@@ -1660,7 +1696,7 @@
 ========================= */
 const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
 const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
 const createClient = globalThis.supabase?.createClient;
 if(!createClient){
@@ -1673,7 +1709,7 @@ if(!createClient){
 <script>
 /* =========================
    🔎 SEARCH PRO — V2 (CLEAN)
-   -> utilise SB (client global)
+   -> utilise globalThis.SB (safe)
 ========================= */
 const spDebug = document.getElementById("sp_debug");
 function dbg(msg){
@@ -1812,7 +1848,7 @@ function renderResults(rows){
 
     card.onclick = ()=>{
       if(!id) return alert("ID manquant");
-      openInside(ABS(`pro-detail.html?id=${encodeURIComponent(id)}`), `🦅 Profil PRO — ${name}`);
+      openInside(HUB(`pro-detail.html?id=${encodeURIComponent(id)}`), `🦅 Profil PRO — ${name}`);
       closeModal();
     };
 
@@ -1824,7 +1860,8 @@ async function searchPros(){
   clearResults();
   setStatus('Recherche…');
 
-  if(!globalThis.SB){
+  const SB = globalThis.SB;
+  if(!SB){
     dbg("SB non prêt (Supabase).");
     setStatus("Supabase pas prêt");
     return;
@@ -1889,24 +1926,13 @@ dbg("Search PRO V2 prêt ✅");
 <script>
 /* =========================
    ♾️ NDIMBAL — V1.3 (HUB SAFE)
-   ✅ Ouvre DRIVE/PAY/JOBS/INFO DANS l'overlay HUB
 ========================= */
 (function(){
-  const DRIVE_BASE = "https://beauville.github.io/digiy-hub-drive/";
-  function ABS_DRIVE(file){
-    return DRIVE_BASE + String(file || "").replace(/^\//,"");
-  }
-
   const routes = {
-  // ✅ Liens sûrs (zéro 404)
-  sell: "https://beauville.github.io/digiy-pay/",
-  job:  "https://beauville.github.io/digiy-jobs/",
-  info: "https://digiylyfe.com/"
-};
-
-// ✅ Fallback si jamais un module change / down
-const FALLBACK_WA = "https://wa.me/221771342889?text=SOS%20NDIMBAL%20—%20j’ai%20besoin%20d’aide%20sur%20le%20HUB";
-
+    sell: "https://beauville.github.io/digiy-pay/",
+    job:  "https://beauville.github.io/digiy-jobs/",
+    info: "https://digiylyfe.com/"
+  };
 
   const labels = {
     sell: "🛒 Vendre / Encaisser",
@@ -1936,6 +1962,7 @@ const FALLBACK_WA = "https://wa.me/221771342889?text=SOS%20NDIMBAL%20—%20j’a
     if(!btn || !modal || !closeBtn) return;
 
     function openDigiy(){
+      // ✅ si hub overlay ouvert, on le garde, mais NDIMBAL s’affiche au-dessus (normal)
       modal.classList.add("show");
       modal.setAttribute("aria-hidden","false");
       if(actionsBox) actionsBox.style.display = "block";
@@ -1947,15 +1974,11 @@ const FALLBACK_WA = "https://wa.me/221771342889?text=SOS%20NDIMBAL%20—%20j’a
           <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:10px">
             <div style="font-weight:950;color:#065f46;margin-bottom:6px">Reprendre ?</div>
 
-            <button id="digiy-continue" type="button" style="
-              width:100%;border:none;border-radius:12px;padding:10px 12px;
-              font-weight:950;cursor:pointer;background:#16a34a;color:#052e16">
+            <button id="digiy-continue" type="button" class="nd-btn-primary">
               Continuer : ${labels[last]}
             </button>
 
-            <button id="digiy-reset" type="button" style="
-              width:100%;border:none;border-radius:12px;padding:10px 12px;margin-top:6px;
-              font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a">
+            <button id="digiy-reset" type="button" class="nd-btn-secondary">
               Non, autre chose
             </button>
           </div>
