@@ -1706,228 +1706,10 @@ if(!createClient){
 }
 </script>
 
-<script>
-/* =========================
-   🔎 SEARCH PRO — V2 (CLEAN)
-   -> utilise globalThis.SB (safe)
-========================= */
-const spDebug = document.getElementById("sp_debug");
-function dbg(msg){
-  if(!spDebug) return;
-  spDebug.style.display = "block";
-  spDebug.textContent += msg + "\n";
-}
-
-const modal     = document.getElementById('searchProModal');
-const openCard  = document.getElementById('openSearchPro');
-const closeBtn  = document.getElementById('closeSearchPro');
-
-const spQ       = document.getElementById('sp_q');
-const spCity    = document.getElementById('sp_city');
-const spModule  = document.getElementById('sp_module');
-const spBtn     = document.getElementById('sp_btn');
-const spStatus  = document.getElementById('sp_status');
-const spResults = document.getElementById('sp_results');
-const spEmpty   = document.getElementById('sp_empty');
-
-let userPos = null; // {lat, lon}
-
-function esc(s){
-  return String(s ?? '')
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'","&#039;");
-}
-function setStatus(txt){ if(spStatus) spStatus.textContent = txt; }
-function clearResults(){
-  if(spResults) spResults.innerHTML = '';
-  if(spEmpty) spEmpty.style.display = 'none';
-}
-function showEmpty(){ if(spEmpty) spEmpty.style.display = 'block'; }
-
-function openModal(){
-  if(!modal) return;
-  modal.style.display = 'block';
-  modal.setAttribute('aria-hidden','false');
-  clearResults();
-  setStatus('—');
-  if(spDebug){ spDebug.style.display='none'; spDebug.textContent=''; }
-  setTimeout(()=> spQ?.focus(), 50);
-  tryGetGeolocSilently();
-}
-function closeModal(){
-  if(!modal) return;
-  modal.style.display = 'none';
-  modal.setAttribute('aria-hidden','true');
-}
-openCard?.addEventListener('click', openModal);
-closeBtn?.addEventListener('click', closeModal);
-modal?.addEventListener('click', e => { if(e.target === modal) closeModal(); });
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape' && modal?.style.display === 'block') closeModal();
-});
-
-function tryGetGeolocSilently(){
-  if(userPos) return;
-  if(!navigator.geolocation) return;
-  navigator.geolocation.getCurrentPosition(
-    (pos)=>{
-      userPos = { lat: pos.coords.latitude, lon: pos.coords.longitude };
-      dbg(`📍 Position OK: ${userPos.lat.toFixed(5)}, ${userPos.lon.toFixed(5)}`);
-    },
-    (err)=>{
-      dbg(`📍 Position refusée / indispo (${err.code})`);
-    },
-    { enableHighAccuracy:false, timeout:4000, maximumAge:600000 }
-  );
-}
-
-function kmBetween(lat1, lon1, lat2, lon2){
-  const toRad = x => (x*Math.PI)/180;
-  const R = 6371;
-  const dLat = toRad(lat2-lat1);
-  const dLon = toRad(lon2-lon1);
-  const a =
-    Math.sin(dLat/2)**2 +
-    Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
-  return 2*R*Math.asin(Math.sqrt(a));
-}
-
-function renderResults(rows){
-  if(!spResults) return;
-  spResults.innerHTML = '';
-
-  if(!rows || !rows.length){ showEmpty(); return; }
-
-  if(userPos){
-    rows = rows.map(r=>{
-      const lat = Number(r.lat ?? r.latitude ?? null);
-      const lon = Number(r.lon ?? r.lng ?? r.longitude ?? null);
-      if(Number.isFinite(lat) && Number.isFinite(lon)){
-        const d = kmBetween(userPos.lat, userPos.lon, lat, lon);
-        return { ...r, _km: d };
-      }
-      return { ...r, _km: null };
-    }).sort((a,b)=>{
-      if(a._km === null && b._km === null) return 0;
-      if(a._km === null) return 1;
-      if(b._km === null) return -1;
-      return a._km - b._km;
-    });
-  }
-
-  rows.forEach(r=>{
-    const name = r.business_name || r.full_name || 'Sans nom';
-    const city = r.city || '';
-    const quartier = r.quartier || '';
-    const modules = Array.isArray(r.modules) ? r.modules : [];
-    const id = r.id || r.pro_id;
-    const km = (r._km !== null && Number.isFinite(r._km)) ? `${r._km.toFixed(1)} km` : '';
-
-    const card = document.createElement('div');
-    card.className = 'digiy-result';
-    card.innerHTML = `
-      <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;align-items:flex-start">
-        <div style="font-weight:950">${esc(name)}</div>
-        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
-          ${km ? `<span class="digiy-pill">📍 ${esc(km)}</span>` : ``}
-          <span class="digiy-pill">🦅 PRO</span>
-        </div>
-      </div>
-
-      <div style="font-size:.9rem;opacity:.85">
-        ${city ? '📍 '+esc(city) : ''}${quartier ? ' • '+esc(quartier) : ''}
-      </div>
-
-      <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
-        ${modules.slice(0,6).map(m=>`<span class="digiy-pill">${esc(m)}</span>`).join('')}
-      </div>
-    `;
-
-    card.onclick = ()=>{
-      if(!id) return alert("ID manquant");
-      openInside(HUB(`pro-detail.html?id=${encodeURIComponent(id)}`), `🦅 Profil PRO — ${name}`);
-      closeModal();
-    };
-
-    spResults.appendChild(card);
-  });
-}
-
-async function searchPros(){
-  clearResults();
-  setStatus('Recherche…');
-
-  const SB = globalThis.SB;
-  if(!SB){
-    dbg("SB non prêt (Supabase).");
-    setStatus("Supabase pas prêt");
-    return;
-  }
-
-  const q = (spQ?.value || '').trim();
-  const city = (spCity?.value || '').trim();
-  const mod = (spModule?.value || 'all');
-
-  try{
-    const payload = {
-      p_q: q || null,
-      p_city: city || null,
-      p_module: (mod && mod !== 'all') ? mod : null,
-      p_limit: 50,
-      p_lat: userPos?.lat ?? null,
-      p_lon: userPos?.lon ?? null,
-      p_radius_km: 25
-    };
-
-    const { data, error } = await SB.rpc('search_pros_v2', payload);
-    if(!error && Array.isArray(data)){
-      setStatus(`${data.length} résultat(s)`);
-      renderResults(data);
-      return;
-    }
-    if(error){
-      dbg("RPC search_pros_v2 indispo → fallback");
-      dbg(error.message || String(error));
-    }
-  }catch(e){
-    dbg("RPC exception → fallback");
-    dbg(String(e));
-  }
-
-  let query = SB.from('pros_public').select('*').limit(50);
-
-  if(q){
-    query = query.or(
-      `business_name.ilike.%${q}%,full_name.ilike.%${q}%,phone.ilike.%${q}%,quartier.ilike.%${q}%`
-    );
-  }
-  if(city) query = query.eq('city', city);
-  if(mod && mod !== 'all') query = query.contains('modules', [mod]);
-
-  const { data, error } = await query;
-  if(error){
-    dbg(error.message || String(error));
-    setStatus('Erreur');
-    return;
-  }
-
-  setStatus(`${(data||[]).length} résultat(s)`);
-  renderResults(data || []);
-}
-
-spBtn?.addEventListener('click', searchPros);
-spQ?.addEventListener('keydown', e => { if(e.key === 'Enter') searchPros(); });
-dbg("Search PRO V2 prêt ✅");
-</script>
-
-<script>
 <!-- =========================
-   ✅ MODAL QR DIGIYLYFE (PROPRE)
+   ✅ MODAL QR DIGIYLYFE (HTML)
 ========================= -->
-<div id="qrModal" class="digiy-modal-overlay" aria-hidden="true" style="z-index:2147483647;">
+<div id="qrModal" class="digiy-modal-overlay" aria-hidden="true" style="z-index:2147483647; display:none;">
   <div class="digiy-modal" role="dialog" aria-modal="true" aria-label="QR DIGIYLYFE">
     <div class="digiy-modal-card" style="text-align:center">
 
@@ -1957,41 +1739,8 @@ dbg("Search PRO V2 prêt ✅");
   </div>
 </div>
 
-<script>
-  // ✅ QR open/close (SAFE)
-  (function(){
-    const qrModal = document.getElementById("qrModal");
-    const qrClose = document.getElementById("qrClose");
-    const qrImg   = document.getElementById("qrImg");
-    const qrLink  = document.getElementById("qrLink");
-
-    const QR_TARGET = "https://digiylyfe.com";
-    const QR_SRC = "https://api.qrserver.com/v1/create-qr-code/?size=420x420&data=" + encodeURIComponent(QR_TARGET);
-
-    function openQR(){
-      if(!qrModal) return;
-      if(qrImg) qrImg.src = QR_SRC;
-      if(qrLink) qrLink.href = QR_TARGET;
-      qrModal.style.display = "block";
-      qrModal.setAttribute("aria-hidden","false");
-    }
-    function closeQR(){
-      if(!qrModal) return;
-      qrModal.style.display = "none";
-      qrModal.setAttribute("aria-hidden","true");
-    }
-
-    window.openQR = openQR;
-    window.closeQR = closeQR;
-
-    qrClose?.addEventListener("click", closeQR);
-    qrModal?.addEventListener("click", (e)=>{ if(e.target === qrModal) closeQR(); });
-    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeQR(); });
-  })();
-</script>
-
 <!-- =========================
-   ♾️ NDIMBAL — UNIQUE (PROPRE)
+   ♾️ NDIMBAL — UNIQUE (HTML)
 ========================= -->
 <button id="digiy-help-btn" type="button" aria-label="NDIMBAL">♾️ NDIMBAL</button>
 
@@ -2011,6 +1760,8 @@ dbg("Search PRO V2 prêt ✅");
 </div>
 
 <style>
+  /* QR overlay utilise .digiy-modal-overlay/.digiy-modal/.digiy-modal-card déjà présents chez toi */
+
   #digiy-help-btn{
     position:fixed !important;
     right:20px !important;
@@ -2081,61 +1832,5 @@ dbg("Search PRO V2 prêt ✅");
   }
 </style>
 
-<script>
-(function(){
-  const routes = {
-    sell: "https://beauville.github.io/digiy-pay/",
-    job:  "https://beauville.github.io/digiy-jobs/"
-  };
-
-  function closeDigiy(){
-    const modal = document.getElementById("digiy-ndimbal");
-    if(!modal) return;
-    modal.classList.remove("show");
-    modal.setAttribute("aria-hidden","true");
-  }
-  function openDigiy(){
-    const modal = document.getElementById("digiy-ndimbal");
-    if(!modal) return;
-    modal.classList.add("show");
-    modal.setAttribute("aria-hidden","false");
-  }
-
-  function init(){
-    const btn = document.getElementById("digiy-help-btn");
-    const modal = document.getElementById("digiy-ndimbal");
-    const closeBtn = document.getElementById("digiy-close");
-    if(!btn || !modal || !closeBtn) return;
-
-    btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openDigiy(); }, true);
-    closeBtn.addEventListener("click", closeDigiy);
-    modal.addEventListener("click", (e)=>{ if(e.target === modal) closeDigiy(); });
-    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeDigiy(); });
-
-    document.querySelectorAll("#digiy-actions .digiy-act").forEach(b=>{
-      b.addEventListener("click", ()=>{
-        const action = b.getAttribute("data-action");
-
-        if(action === "qr"){
-          closeDigiy();
-          if(typeof window.openQR === "function") window.openQR();
-          else window.open("https://digiylyfe.com", "_blank", "noopener");
-          return;
-        }
-
-        const url = routes[action];
-        if(!url) return;
-
-        closeDigiy();
-        if(typeof window.openInside === "function") window.openInside(url, `♾️ NDIMBAL`);
-        else window.open(url, "_blank", "noopener");
-      });
-    });
-  }
-
-  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
-})();
-</script>
 </body>
 </html>
