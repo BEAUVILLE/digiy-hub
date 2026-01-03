@@ -1,10 +1,12 @@
 {
-  "name": "DIGIYLYFE ♾️",
+  "name": "DIGIY HUB ♾️",
   "short_name": "DIGIY",
-  "start_url": ".",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "theme_color": "#0A0E1A",
   "icons": [
     {
       "src": "icon-192.png",
@@ -18,3 +20,4 @@
     }
   ]
 }
+
