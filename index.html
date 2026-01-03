@@ -2,17 +2,72 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
+
+  <!-- CACHE CONTROL -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+
+  <!-- TITLE & SEO -->
   <title>DIGIY HUB — 0% Commission</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="DIGIY HUB — Toutes les apps DIGIY au même endroit. 0% commission, paiement direct au pro.">
+
+  <!-- VIEWPORT -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- THEME COLOR (HUB sombre) -->
   <meta name="theme-color" content="#0A0E1A">
+
+  <!-- ✅ ICONES DIGIY OFFICIELLES (∞ + DIGIY GOLD / fond blanc) -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <!-- PWA MANIFEST -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- GOOGLE FONTS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- STYLES DIGIY HUB -->
   <style>
+    :root{
+      --bg-dark:#020617;
+      --bg-soft:#0B1120;
+      --card:#0B1120;
+      --card2:rgba(15,23,42,0.98);
+      --cardBorder:rgba(148,163,184,0.48);
+      --ink:#F9FAFB;
+      --ink-soft:#E5E7EB;
+      --muted:#CBD5E1;
+      --accent:#f97316;
+      --accent-strong:#ea580c;
+      --gold:#facc15;
+      --success:#22c55e;
+      --danger:#ef4444;
+      --glow-primary:rgba(249,115,22,0.4);
+      --glow-secondary:rgba(34,211,238,0.35);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;}
+    body{
+      font-family:'Manrope',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+      font-size:16px;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top left,rgba(249,115,22,0.14),transparent 55%),
+        radial-gradient(circle at bottom right,rgba(34,211,238,0.18),transparent 60%),
+        #020617;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      overflow-x:hidden;
+      position:relative;
+      -webkit-font-smoothing:antialiased;
+    }
+  </style>
+</head>
     :root{--bg-dark:#020617;--bg-soft:#0B1120;--card:#0B1120;--card2:rgba(15,23,42,0.98);--cardBorder:rgba(148,163,184,0.48);--ink:#F9FAFB;--ink-soft:#E5E7EB;--muted:#CBD5E1;--accent:#f97316;--accent-strong:#ea580c;--gold:#facc15;--success:#22c55e;--danger:#ef4444;--glow-primary:rgba(249,115,22,0.4);--glow-secondary:rgba(34,211,238,0.35);}
     *{box-sizing:border-box;margin:0;padding:0;}
     html,body{height:100%;}
