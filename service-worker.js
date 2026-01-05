@@ -1,23 +1,23 @@
-/* DIGIY HUB — Service Worker (stable) */
-const CACHE_NAME = "digiy-hub-v1.0.0";
+/* DIGIY HUB — Service Worker (stable + safe API) */
+const CACHE_NAME = "digiy-hub-v1.0.1";
 
 const ASSETS = [
-  "./",
-  "./index.html",
-  "./offline.html",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png",
-  "./core.html",
-  "./digiylyfe.html",
-  "./digiy-jef.html",
-  "./digiy-jef-lite.html",
-  "./digiy-jobs.html",
-  "./digiy-pay.html",
-  "./pwa-install.html",
-  "./generateur-icones-pwa.html",
-  "./inscription-digiylyfe.html",
-  "./jef-admin.html"
+  "/",
+  "/index.html",
+  "/offline.html",
+  "/manifest.json",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/core.html",
+  "/digiylyfe.html",
+  "/digiy-jef.html",
+  "/digiy-jef-lite.html",
+  "/digiy-jobs.html",
+  "/digiy-pay.html",
+  "/pwa-install.html",
+  "/generateur-icones-pwa.html",
+  "/inscription-digiylyfe.html",
+  "/jef-admin.html"
 ];
 
 self.addEventListener("install", (event) => {
@@ -44,8 +44,11 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(req.url);
 
-  // On ne cache pas les appels cross-origin QR / API externes etc.
+  // ✅ On ne touche pas au cross-origin (QR, CDN, API externes…)
   if (url.origin !== self.location.origin) return;
+
+  // ✅ IMPORTANT: ne jamais intercepter/cache les routes API
+  if (url.pathname.startsWith("/api")) return;
 
   // Navigations: network-first, fallback cache, puis offline
   if (req.mode === "navigate") {
@@ -58,7 +61,7 @@ self.addEventListener("fetch", (event) => {
           return fresh;
         } catch (e) {
           const cached = await caches.match(req);
-          return cached || caches.match("./offline.html");
+          return cached || caches.match("/offline.html");
         }
       })()
     );
@@ -77,8 +80,7 @@ self.addEventListener("fetch", (event) => {
         cache.put(req, fresh.clone());
         return fresh;
       } catch (e) {
-        // fallback minimal
-        return caches.match("./offline.html");
+        return caches.match("/offline.html");
       }
     })()
   );
