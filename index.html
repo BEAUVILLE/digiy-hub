@@ -206,201 +206,220 @@ Depuis 3 mois avec DIGIY DRIVER, j'ai économisé 127,000 F que je payais en com
 </div>
 
 <script>
-(function(){'use strict';
+(function () {
+  'use strict';
 
-const HUB_BASE="https://beauville.github.io/digiy-hub-drive/",
-      HUB=p=>HUB_BASE+String(p||"").replace(/^\//,""),
-      NDIMBAL_PUBLISH_URL=HUB(""),
-      NDIMBAL_JEF_URL=HUB("digiy-jef.html"),
-      LINKS={
-        driver:"https://beauville.github.io/digiy-driver/",
-        driverClient:"https://beauville.github.io/digiy-driver-client/",
-        loc:"https://beauville.github.io/digiy-loc/",
-        resto:"https://beauville.github.io/digiy-resto/",
-        resa:"https://beauville.github.io/digiy-resa-table/",
-        caissePro:"https://beauville.github.io/Digiy-caisse-pro/",
-        vasChez:"https://beauville.github.io/vas-chez-digiy/",
-        pay:"https://beauville.github.io/digiy-pay/",
-        build:"https://beauville.github.io/digiy-build/",
-        market:"https://beauville.github.io/digiy-market/",
-        job:"https://beauville.github.io/digiy-jobs/",
-        explore:"https://beauville.github.io/digiy-explore/",
-        ndimbalMap:"https://beauville.github.io/digiy-mdimbal-map/",
-        inscription:"https://beauville.github.io/inscription-digiy/",
-        inscriptionClient:"https://beauville.github.io/inscription-client.html",
-        dashboard:"https://beauville.github.io/mon-espace-digiy/",
-        ndimbalJef:NDIMBAL_JEF_URL,
-        ndimbalPublish:NDIMBAL_PUBLISH_URL,
+  const HUB_BASE = "https://beauville.github.io/digiy-hub-drive/";
+  const HUB = (p) => HUB_BASE + String(p || "").replace(/^\//, "");
 
-        /* ✅ OFFICIEL : DIGIY BONNE AFFAIRE */
-        bonneAffaire:"https://beauville.github.io/digiy-bonne-affaire/"
-      };
+  const NDIMBAL_PUBLISH_URL = HUB("");
+  const NDIMBAL_JEF_URL = HUB("digiy-jef.html");
 
-const hubOverlay=document.getElementById('hubOverlay'),
-      hubFrame=document.getElementById('hubFrame'),
-      hubBackBtn=document.getElementById('hubBackBtn'),
-      hubCloseBtn=document.getElementById('hubCloseBtn'),
-      ndimbalModal=document.getElementById('digiy-ndimbal'),
-      ndimbalBtn=document.getElementById('digiy-help-btn'),
-      ndimbalCloseBtn=document.getElementById('digiy-close'),
-      qrModal=document.getElementById('qrModal'),
-      qrCloseBtn=document.getElementById('qrClose');
+  const LINKS = {
+    driver: "https://beauville.github.io/digiy-driver/",
+    driverClient: "https://beauville.github.io/digiy-driver-client/",
+    loc: "https://beauville.github.io/digiy-loc/",
+    resto: "https://beauville.github.io/digiy-resto/",
+    resa: "https://beauville.github.io/digiy-resa-table/",
+    caissePro: "https://beauville.github.io/Digiy-caisse-pro/",
+    vasChez: "https://beauville.github.io/vas-chez-digiy/",
+    pay: "https://beauville.github.io/digiy-pay/",
+    build: "https://beauville.github.io/digiy-build/",
+    market: "https://beauville.github.io/digiy-market/",
+    job: "https://beauville.github.io/digiy-jobs/",
+    explore: "https://beauville.github.io/digiy-explore/",
+    ndimbalMap: "https://beauville.github.io/digiy-mdimbal-map/",
+    inscription: "https://beauville.github.io/inscription-digiy/",
+    inscriptionClient: "https://beauville.github.io/inscription-client.html",
+    dashboard: "https://beauville.github.io/mon-espace-digiy/",
+    ndimbalJef: NDIMBAL_JEF_URL,
+    ndimbalPublish: NDIMBAL_PUBLISH_URL,
 
-function openInside(url){
-  if(ndimbalModal)ndimbalModal.classList.remove('show');
-  if(!hubOverlay||!hubFrame){window.location.href=url;return}
-  hubFrame.src=url;
-  hubOverlay.classList.add('show');
-  hubOverlay.setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
-}
+    // ✅ OFFICIEL
+    bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/"
+  };
 
-function closeInside(){
-  if(!hubOverlay||!hubFrame)return;
-  hubOverlay.classList.remove('show');
-  hubOverlay.setAttribute('aria-hidden','true');
-  hubFrame.src='about:blank';
-  document.body.style.overflow='';
-}
+  const hubOverlay = document.getElementById('hubOverlay');
+  const hubFrame = document.getElementById('hubFrame');
+  const hubBackBtn = document.getElementById('hubBackBtn');
+  const hubCloseBtn = document.getElementById('hubCloseBtn');
 
-if(hubBackBtn)hubBackBtn.addEventListener('click',closeInside);
-if(hubCloseBtn)hubCloseBtn.addEventListener('click',closeInside);
-if(hubOverlay)hubOverlay.addEventListener('click',e=>{if(e.target===hubOverlay)closeInside()});
+  const ndimbalModal = document.getElementById('digiy-ndimbal');
+  const ndimbalBtn = document.getElementById('digiy-help-btn');
+  const ndimbalCloseBtn = document.getElementById('digiy-close');
 
-function openModuleKey(key){
-  const url=LINKS[key];
-  if(!url){alert('Module en préparation.');return}
-  openInside(url);
-}
+  const qrModal = document.getElementById('qrModal');
+  const qrCloseBtn = document.getElementById('qrClose');
 
-document.querySelectorAll('[data-path]').forEach(card=>{
-  card.addEventListener('click',()=>{
-    const path=card.getAttribute('data-path');
-    if(path==='client')openInside(LINKS.inscriptionClient);
-    else if(path==='driver')openInside(LINKS.driver);
-    else if(path==='commerce')openInside(LINKS.caissePro);
+  function openInside(url) {
+    if (!url) return;
+
+    if (ndimbalModal) ndimbalModal.classList.remove('show');
+
+    if (!hubOverlay || !hubFrame) {
+      window.location.href = url;
+      return;
+    }
+    hubFrame.src = url;
+    hubOverlay.classList.add('show');
+    hubOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeInside() {
+    if (!hubOverlay || !hubFrame) return;
+    hubOverlay.classList.remove('show');
+    hubOverlay.setAttribute('aria-hidden', 'true');
+    hubFrame.src = 'about:blank';
+    document.body.style.overflow = '';
+  }
+
+  if (hubBackBtn) hubBackBtn.addEventListener('click', closeInside);
+  if (hubCloseBtn) hubCloseBtn.addEventListener('click', closeInside);
+  if (hubOverlay) hubOverlay.addEventListener('click', (e) => { if (e.target === hubOverlay) closeInside(); });
+
+  function openModuleKey(key) {
+    const url = LINKS[key];
+    if (!url) { alert('Module en préparation.'); return; }
+    openInside(url);
+  }
+
+  // Parcours guidés
+  document.querySelectorAll('[data-path]').forEach((card) => {
+    card.addEventListener('click', () => {
+      const path = card.getAttribute('data-path');
+      if (path === 'client') openInside(LINKS.inscriptionClient);
+      else if (path === 'driver') openInside(LINKS.driver);
+      else if (path === 'commerce') openInside(LINKS.caissePro);
+    });
   });
-});
 
-document.addEventListener('click',e=>{
-  const card=e.target.closest('.module');
-  if(!card)return;
-  const ext=card.getAttribute('data-external'),
-        key=card.getAttribute('data-open');
-  if(ext){window.open(ext,'_blank','noopener');return}
-  if(key){openModuleKey(key);return}
-});
+  // Modules
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.module');
+    if (!card) return;
 
-const loginBtn=document.getElementById('btnLogin'),
-      getHubBtn=document.getElementById('btnGetHub'),
-      signupBtn=document.getElementById('btnSignup'),
-      homeBrand=document.getElementById('homeBrand'),
-      tarifBtn=document.getElementById('tarif-bubble-btn'),
-      btnDeals=document.getElementById('btnDeals');
+    const ext = card.getAttribute('data-external');
+    const key = card.getAttribute('data-open');
 
-if(loginBtn)loginBtn.addEventListener('click',()=>openInside(LINKS.dashboard));
-if(getHubBtn)getHubBtn.addEventListener('click',()=>openInside(LINKS.inscription));
-if(signupBtn)signupBtn.addEventListener('click',()=>openInside(LINKS.inscription));
-if(homeBrand)homeBrand.addEventListener('click',e=>{e.preventDefault();closeInside();window.scrollTo({top:0,behavior:'smooth'})});
-if(tarifBtn)tarifBtn.addEventListener('click',()=>openInside('https://beauville.github.io/digiy/'));
+    if (ext) { window.open(ext, '_blank', 'noopener'); return; }
+    if (key) openModuleKey(key);
+  });
 
-<!-- ✅ HERO -> BONNES AFFAIRES -->
-if(btnDeals)btnDeals.addEventListener('click',()=>openInside(LINKS.bonneAffaire));
+  const loginBtn = document.getElementById('btnLogin');
+  const getHubBtn = document.getElementById('btnGetHub');
+  const signupBtn = document.getElementById('btnSignup');
+  const homeBrand = document.getElementById('homeBrand');
+  const tarifBtn = document.getElementById('tarif-bubble-btn');
+  const btnDeals = document.getElementById('btnDeals'); // ✅ HERO
 
-if(ndimbalBtn)ndimbalBtn.addEventListener('click',()=>{
-  ndimbalModal.classList.add('show');
-  ndimbalModal.setAttribute('aria-hidden','false');
-});
+  if (loginBtn) loginBtn.addEventListener('click', () => openInside(LINKS.dashboard));
+  if (getHubBtn) getHubBtn.addEventListener('click', () => openInside(LINKS.inscription));
+  if (signupBtn) signupBtn.addEventListener('click', () => openInside(LINKS.inscription));
 
-function closeNdimbal(){
-  if(ndimbalModal){
+  if (homeBrand) homeBrand.addEventListener('click', (e) => {
+    e.preventDefault();
+    closeInside();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  if (tarifBtn) tarifBtn.addEventListener('click', () => openInside('https://beauville.github.io/digiy/'));
+  if (btnDeals) btnDeals.addEventListener('click', () => openInside(LINKS.bonneAffaire));
+
+  // NDIMBAL (safe)
+  if (ndimbalBtn) ndimbalBtn.addEventListener('click', () => {
+    if (!ndimbalModal) return;
+    ndimbalModal.classList.add('show');
+    ndimbalModal.setAttribute('aria-hidden', 'false');
+  });
+
+  function closeNdimbal() {
+    if (!ndimbalModal) return;
     ndimbalModal.classList.remove('show');
-    ndimbalModal.setAttribute('aria-hidden','true');
+    ndimbalModal.setAttribute('aria-hidden', 'true');
   }
-}
 
-if(ndimbalCloseBtn)ndimbalCloseBtn.addEventListener('click',closeNdimbal);
-if(ndimbalModal)ndimbalModal.addEventListener('click',e=>{if(e.target===ndimbalModal)closeNdimbal()});
+  if (ndimbalCloseBtn) ndimbalCloseBtn.addEventListener('click', closeNdimbal);
+  if (ndimbalModal) ndimbalModal.addEventListener('click', (e) => { if (e.target === ndimbalModal) closeNdimbal(); });
 
-document.querySelectorAll('.digiy-act').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const action=btn.getAttribute('data-action');
-    if(action==='sell'){closeNdimbal();openInside(LINKS.ndimbalPublish)}
-    else if(action==='job'){closeNdimbal();openInside(LINKS.ndimbalJef)}
-    else if(action==='qr'){closeNdimbal();qrModal.classList.add('show');qrModal.setAttribute('aria-hidden','false')}
+  document.querySelectorAll('.digiy-act').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const action = btn.getAttribute('data-action');
+      if (action === 'sell') { closeNdimbal(); openInside(LINKS.ndimbalPublish); }
+      else if (action === 'job') { closeNdimbal(); openInside(LINKS.ndimbalJef); }
+      else if (action === 'qr') {
+        closeNdimbal();
+        if (!qrModal) return;
+        qrModal.classList.add('show');
+        qrModal.setAttribute('aria-hidden', 'false');
+      }
+    });
   });
-});
 
-function closeQR(){
-  if(qrModal){qrModal.classList.remove('show');qrModal.setAttribute('aria-hidden','true')}
-}
-
-if(qrCloseBtn)qrCloseBtn.addEventListener('click',closeQR);
-if(qrModal)qrModal.addEventListener('click',e=>{if(e.target===qrModal)closeQR()});
-
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    if(qrModal&&qrModal.classList.contains('show'))closeQR();
-    else if(ndimbalModal&&ndimbalModal.classList.contains('show'))closeNdimbal();
-    else if(hubOverlay&&hubOverlay.classList.contains('show'))closeInside();
+  function closeQR() {
+    if (!qrModal) return;
+    qrModal.classList.remove('show');
+    qrModal.setAttribute('aria-hidden', 'true');
   }
-});
 
-const pioneersEl=document.getElementById('pioneersLeft');
-if(pioneersEl){
-  let pioneersLeft=parseInt(pioneersEl.textContent,10);
-  if(Number.isNaN(pioneersLeft))pioneersLeft=87;
-  setInterval(()=>{
-    if(pioneersLeft>83&&Math.random()>.7){pioneersLeft--;pioneersEl.textContent=pioneersLeft}
-  },30000);
-}
+  if (qrCloseBtn) qrCloseBtn.addEventListener('click', closeQR);
+  if (qrModal) qrModal.addEventListener('click', (e) => { if (e.target === qrModal) closeQR(); });
 
-function animateLiveStats(){
-  const prosEl=document.getElementById('livePros'),
-        driversEl=document.getElementById('liveDrivers'),
-        shopsEl=document.getElementById('liveShops');
-  setInterval(()=>{
-    if(prosEl&&Math.random()>.85){
-      let current=parseInt(prosEl.textContent,10);
-      prosEl.textContent=current+(Math.random()>.5?1:-1);
-    }
-    if(driversEl&&Math.random()>.88){
-      let current=parseInt(driversEl.textContent,10);
-      driversEl.textContent=Math.max(18,current+(Math.random()>.5?1:-1));
-    }
-    if(shopsEl&&Math.random()>.9){
-      let current=parseInt(shopsEl.textContent,10);
-      shopsEl.textContent=Math.max(15,current+(Math.random()>.5?1:-1));
-    }
-  },5000);
-}
-animateLiveStats();
-
-if('serviceWorker'in navigator){
-  window.addEventListener('load',()=>{
-    if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-
-    const swPath =
-      window.location.pathname.includes('/digiy-hub-drive/')
-        ? '/digiy-hub-drive/service-worker.js'
-        : './service-worker.js';
-
-    navigator.serviceWorker.register(swPath)
-      .then(() => console.log("✅ SW registered:", swPath))
-      .catch(err => console.log("❌ SW failed:", err));
+  // ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (qrModal && qrModal.classList.contains('show')) closeQR();
+    else if (ndimbalModal && ndimbalModal.classList.contains('show')) closeNdimbal();
+    else if (hubOverlay && hubOverlay.classList.contains('show')) closeInside();
   });
-}
 
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault();
-  deferredPrompt=e;
-  console.log('💾 PWA installable');
-});
+  // Compteur pionniers
+  const pioneersEl = document.getElementById('pioneersLeft');
+  if (pioneersEl) {
+    let pioneersLeft = parseInt(pioneersEl.textContent, 10);
+    if (Number.isNaN(pioneersLeft)) pioneersLeft = 87;
+    setInterval(() => {
+      if (pioneersLeft > 83 && Math.random() > 0.7) {
+        pioneersLeft--;
+        pioneersEl.textContent = String(pioneersLeft);
+      }
+    }, 30000);
+  }
 
-console.log('✅ DIGIY HUB — Bonnes Affaires OFFICIEL ! 💥🦅♾️');
+  // Stats live
+  (function animateLiveStats() {
+    const prosEl = document.getElementById('livePros');
+    const driversEl = document.getElementById('liveDrivers');
+    const shopsEl = document.getElementById('liveShops');
+
+    setInterval(() => {
+      if (prosEl && Math.random() > 0.85) {
+        const current = parseInt(prosEl.textContent, 10) || 142;
+        prosEl.textContent = String(current + (Math.random() > 0.5 ? 1 : -1));
+      }
+      if (driversEl && Math.random() > 0.88) {
+        const current = parseInt(driversEl.textContent, 10) || 23;
+        driversEl.textContent = String(Math.max(18, current + (Math.random() > 0.5 ? 1 : -1)));
+      }
+      if (shopsEl && Math.random() > 0.9) {
+        const current = parseInt(shopsEl.textContent, 10) || 18;
+        shopsEl.textContent = String(Math.max(15, current + (Math.random() > 0.5 ? 1 : -1)));
+      }
+    }, 5000);
+  })();
+
+  // SW
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('✅ SW registered'))
+        .catch((err) => console.log('❌ SW failed:', err));
+    });
+  }
+
+  console.log('✅ DIGIY HUB — Bonnes Affaires OFFICIEL ! 💥🦅♾️');
 })();
 </script>
+
 </body>
 </html>
