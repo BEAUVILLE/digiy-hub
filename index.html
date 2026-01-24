@@ -28,7 +28,6 @@
 </div>
 </header>
 
-<!-- HERO ULTRA-SIMPLIFIÉ -->
 <section class="hero">
 <div class="hero-eyebrow">L'Afrique enracinée, connectée au monde</div>
 <h1 class="hero-title">
@@ -39,12 +38,16 @@ Tout ton business dans ta main.<br>
 Chauffeur, restaurant, boutique, logement, artisan.<br>
 <strong>Un seul abonnement. 11 métiers. Paiement direct au pro.</strong>
 </p>
-<button id="btnGetHub" class="hero-cta" type="button">
-<span>→</span> Je veux mon HUB DIGIY
+
+<!-- CTA HUB -->
+<button id="btnGetHub" class="hero-cta" type="button"><span>→</span> Je veux mon HUB DIGIY</button>
+
+<!-- ✅ CTA BONNES AFFAIRES (HERO) -->
+<button id="btnDeals" class="hero-cta" type="button" style="margin-left:.6rem;background:linear-gradient(135deg,#facc15,#f97316)">
+  <span>💥</span> Voir les Bonnes Affaires
 </button>
-<div class="hero-meta">
-Places pionniers limitées • Prix bloqué à vie pour les premiers
-</div>
+
+<div class="hero-meta">Places pionniers limitées • Prix bloqué à vie pour les premiers</div>
 <div class="urgency-strip">
 <span class="blink">🔥</span>
 <span>Places restantes :</span>
@@ -52,375 +55,98 @@ Places pionniers limitées • Prix bloqué à vie pour les premiers
 </div>
 </section>
 
-<!-- LIVE STATS - SOCIAL PROOF -->
 <section class="live-stats">
 <div class="live-stats-title">♾️ En direct sur DIGIY</div>
 <div class="live-stats-grid">
-<div class="live-stat">
-<div class="live-stat-number" id="livePros">142</div>
-<div class="live-stat-label">Professionnels actifs</div>
-</div>
-<div class="live-stat">
-<div class="live-stat-number" id="liveDrivers">23</div>
-<div class="live-stat-label">Chauffeurs en ligne</div>
-</div>
-<div class="live-stat">
-<div class="live-stat-number" id="liveShops">18</div>
-<div class="live-stat-label">Commerces ouverts</div>
-</div>
-<div class="live-stat">
-<div class="live-stat-number">+40,100 F</div>
-<div class="live-stat-label">Économie moy./mois</div>
-</div>
+<div class="live-stat"><div class="live-stat-number" id="livePros">142</div><div class="live-stat-label">Professionnels actifs</div></div>
+<div class="live-stat"><div class="live-stat-number" id="liveDrivers">23</div><div class="live-stat-label">Chauffeurs en ligne</div></div>
+<div class="live-stat"><div class="live-stat-number" id="liveShops">18</div><div class="live-stat-label">Commerces ouverts</div></div>
+<div class="live-stat"><div class="live-stat-number">+40,100 F</div><div class="live-stat-label">Économie moy./mois</div></div>
 </div>
 </section>
 
-<!-- PARCOURS GUIDÉS -->
 <section class="paths-section">
 <h2 class="paths-title">Choisis ton parcours</h2>
 <p class="paths-subtitle">Tu es client ou professionnel ? On te guide direct vers ton besoin.</p>
-
 <div class="paths-grid">
-<!-- CLIENT -->
-<div class="path-card" data-path="client">
-<div class="path-icon">👤</div>
-<div class="path-title">Je suis CLIENT</div>
-<div class="path-desc">
-Commander un chauffeur, réserver un logement, trouver un artisan.<br>
-<strong>Gratuit • 0% frais</strong>
-</div>
-<button class="path-btn" type="button">
-Accéder aux services →
-</button>
-</div>
-
-<!-- CHAUFFEUR -->
-<div class="path-card" data-path="driver">
-<div class="path-icon">🚗</div>
-<div class="path-title">Je suis CHAUFFEUR</div>
-<div class="path-desc">
-VTC ou transport marchandises.<br>
-<strong>0% commission • Paiement direct</strong>
-</div>
-<button class="path-btn" type="button">
-Devenir chauffeur DIGIY →
-</button>
-</div>
-
-<!-- COMMERÇANT -->
-<div class="path-card" data-path="commerce">
-<div class="path-icon">🏪</div>
-<div class="path-title">Je suis COMMERÇANT</div>
-<div class="path-desc">
-Boutique, restaurant, hôtel, artisan.<br>
-<strong>Caisse pro • 0% commission</strong>
-</div>
-<button class="path-btn" type="button">
-Ouvrir ma boutique DIGIY →
-</button>
-</div>
+<div class="path-card" data-path="client"><div class="path-icon">👤</div><div class="path-title">Je suis CLIENT</div><div class="path-desc">Commander un chauffeur, réserver un logement, trouver un artisan.<br><strong>Gratuit • 0% frais</strong></div><button class="path-btn" type="button">Accéder aux services →</button></div>
+<div class="path-card" data-path="driver"><div class="path-icon">🚗</div><div class="path-title">Je suis CHAUFFEUR</div><div class="path-desc">VTC ou transport marchandises.<br><strong>0% commission • Paiement direct</strong></div><button class="path-btn" type="button">Devenir chauffeur DIGIY →</button></div>
+<div class="path-card" data-path="commerce"><div class="path-icon">🏪</div><div class="path-title">Je suis COMMERÇANT</div><div class="path-desc">Boutique, restaurant, hôtel, artisan.<br><strong>Caisse pro • 0% commission</strong></div><button class="path-btn" type="button">Ouvrir ma boutique DIGIY →</button></div>
 </div>
 </section>
 
-<!-- TÉMOIGNAGE -->
 <section class="testimonial">
 <div class="testimonial-quote">
 Depuis 3 mois avec DIGIY DRIVER, j'ai économisé 127,000 F que je payais en commission à Uber. Mon argent reste dans ma poche. Je recommande à tous les chauffeurs.
 </div>
 <div class="testimonial-author">
 <div class="testimonial-avatar">👤</div>
-<div>
-<div class="testimonial-info-name">Lamine Diop</div>
-<div class="testimonial-info-role">Chauffeur VTC • Dakar</div>
-</div>
+<div><div class="testimonial-info-name">Lamine Diop</div><div class="testimonial-info-role">Chauffeur VTC • Dakar</div></div>
 </div>
 </section>
 
-<!-- MODULES PRIORITAIRES -->
 <section class="modules-section">
 <h2 class="modules-title">Tous tes modules DIGIY</h2>
 <p class="modules-subtitle">Clique pour ouvrir un module dans le HUB. Retour avec <strong>← Retour HUB</strong>.</p>
 
-<!-- CATÉGORIE: MODULES PRIORITAIRES -->
 <div class="modules-category">
-<div class="category-header">
-<span class="category-icon">🔥</span>
-<h3 class="category-title">Modules prioritaires</h3>
-<span class="category-badge">LIVE</span>
-</div>
+<div class="category-header"><span class="category-icon">🔥</span><h3 class="category-title">Modules prioritaires</h3><span class="category-badge">LIVE</span></div>
 <div class="modules-grid">
 
-<!-- DRIVER PRO -->
-<div class="module" data-open="driver">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🚗</div>
-<div class="module-titles">
-<div class="module-name">DIGIY DRIVER PRO</div>
-<div class="module-tagline">CHAUFFEUR PROFESSIONNEL</div>
-</div>
-<div class="module-badge">LIVE</div>
-</div>
-<div class="module-body">
-Interface chauffeur : accepter courses, GPS temps réel, encaissements directs.
-</div>
-</div>
-</div>
+<div class="module" data-open="driver"><div class="module-inner"><div class="module-header"><div class="module-icon">🚗</div><div class="module-titles"><div class="module-name">DIGIY DRIVER PRO</div><div class="module-tagline">CHAUFFEUR PROFESSIONNEL</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Interface chauffeur : accepter courses, GPS temps réel, encaissements directs.</div></div></div>
+<div class="module" data-open="driverClient"><div class="module-inner"><div class="module-header"><div class="module-icon">🚕</div><div class="module-titles"><div class="module-name">DIGIY DRIVER CLIENT</div><div class="module-tagline">COMMANDER UNE COURSE</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Commande ta course VTC au Sénégal. 0% commission. Paiement direct.</div></div></div>
+<div class="module" data-open="caissePro"><div class="module-inner"><div class="module-header"><div class="module-icon">🧾</div><div class="module-titles"><div class="module-name">DIGIY CAISSE PRO</div><div class="module-tagline">POS + SYNC BATCH</div></div><div class="module-badge badge-new">NOUVEAU</div></div><div class="module-body">Caisse professionnelle + sync ultra-légère (99.9% économie data).</div></div></div>
+<div class="module" data-open="vasChez"><div class="module-inner"><div class="module-header"><div class="module-icon">🏃</div><div class="module-titles"><div class="module-name">VAS CHEZ DIGIY</div><div class="module-tagline">COURSIER EXPRESS</div></div><div class="module-badge badge-new">NOUVEAU</div></div><div class="module-body">Service de livraison et courses rapides. 0% commission.</div></div></div>
 
-<!-- DRIVER CLIENT -->
-<div class="module" data-open="driverClient">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🚕</div>
-<div class="module-titles">
-<div class="module-name">DIGIY DRIVER CLIENT</div>
-<div class="module-tagline">COMMANDER UNE COURSE</div>
-</div>
-<div class="module-badge">LIVE</div>
-</div>
-<div class="module-body">
-Commande ta course VTC au Sénégal. 0% commission. Paiement direct.
-</div>
-</div>
-</div>
-
-<!-- CAISSE PRO -->
-<div class="module" data-open="caissePro">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🧾</div>
-<div class="module-titles">
-<div class="module-name">DIGIY CAISSE PRO</div>
-<div class="module-tagline">POS + SYNC BATCH</div>
-</div>
-<div class="module-badge badge-new">NOUVEAU</div>
-</div>
-<div class="module-body">
-Caisse professionnelle + sync ultra-légère (99.9% économie data).
-</div>
-</div>
-</div>
-
-<!-- VAS CHEZ -->
-<div class="module" data-open="vasChez">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🏃</div>
-<div class="module-titles">
-<div class="module-name">VAS CHEZ DIGIY</div>
-<div class="module-tagline">COURSIER EXPRESS</div>
-</div>
-<div class="module-badge badge-new">NOUVEAU</div>
-</div>
-<div class="module-body">
-Service de livraison et courses rapides. 0% commission.
-</div>
-</div>
+<!-- ✅ DIGIY BONNE AFFAIRE (PRIORITAIRE) -->
+<div class="module" data-open="bonneAffaire">
+  <div class="module-inner">
+    <div class="module-header">
+      <div class="module-icon">💥</div>
+      <div class="module-titles">
+        <div class="module-name">DIGIY BONNE AFFAIRE</div>
+        <div class="module-tagline">NOTABLE • BON PLAN • DEALS</div>
+      </div>
+      <div class="module-badge badge-new">OFFICIEL</div>
+    </div>
+    <div class="module-body">
+      Les meilleures opportunités du terrain : deals, bons plans, bonnes adresses.
+    </div>
+  </div>
 </div>
 
 </div>
 </div>
 
-<!-- CATÉGORIE: AUTRES SERVICES -->
 <div class="modules-category">
-<div class="category-header">
-<span class="category-icon">📦</span>
-<h3 class="category-title">Autres services</h3>
-</div>
+<div class="category-header"><span class="category-icon">📦</span><h3 class="category-title">Autres services</h3></div>
 <div class="modules-grid">
 
-<!-- LOC -->
-<div class="module" data-open="loc">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🏠</div>
-<div class="module-titles">
-<div class="module-name">DIGIY LOC</div>
-<div class="module-tagline">LOCATION SANS OTA</div>
-</div>
-<div class="module-badge">LIVE</div>
-</div>
-<div class="module-body">
-Alternative Booking/Airbnb, sans commission, en direct.
-</div>
-</div>
-</div>
+<div class="module" data-open="loc"><div class="module-inner"><div class="module-header"><div class="module-icon">🏠</div><div class="module-titles"><div class="module-name">DIGIY LOC</div><div class="module-tagline">LOCATION SANS OTA</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Alternative Booking/Airbnb, sans commission, en direct.</div></div></div>
+<div class="module" data-open="resto"><div class="module-inner"><div class="module-header"><div class="module-icon">🍽️</div><div class="module-titles"><div class="module-name">DIGIY RESTO</div><div class="module-tagline">VITRINE RESTAURANT</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Menus, photos, horaires, localisation. Réservation directe.</div></div></div>
+<div class="module" data-open="pay"><div class="module-inner"><div class="module-header"><div class="module-icon">💳</div><div class="module-titles"><div class="module-name">DIGIY PAY</div><div class="module-tagline">WALLET UNIFIÉ</div></div><div class="module-badge badge-prio">PRIORITÉ</div></div><div class="module-body">Encaissements Wave / OM / CB. Historique et suivi.</div></div></div>
+<div class="module" data-open="build"><div class="module-inner"><div class="module-header"><div class="module-icon">🏗️</div><div class="module-titles"><div class="module-name">DIGIY BUILD</div><div class="module-tagline">ARTISANS & BTP</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Devis, galerie, contact. Humain. Direct.</div></div></div>
+<div class="module" data-open="market"><div class="module-inner"><div class="module-header"><div class="module-icon">🛍️</div><div class="module-titles"><div class="module-name">DIGIY MARKET</div><div class="module-tagline">MARKETPLACE LOCALE</div></div><div class="module-badge badge-prio">PRIORITÉ</div></div><div class="module-body">Acheter/vendre local. Annonces propres. Sans commission.</div></div></div>
+<div class="module" data-open="job"><div class="module-inner"><div class="module-header"><div class="module-icon">💼</div><div class="module-titles"><div class="module-name">DIGIY JOBS</div><div class="module-tagline">EMPLOI & TALENTS</div></div><div class="module-badge badge-prio">PRIORITÉ</div></div><div class="module-body">Offres, candidatures, profils. Pont talents–employeurs.</div></div></div>
+<div class="module" data-open="ndimbalMap"><div class="module-inner"><div class="module-header"><div class="module-icon">🗺️</div><div class="module-titles"><div class="module-name">DIGIY NDIMBAL MAP</div><div class="module-tagline">CARTE COMMUNAUTÉ</div></div><div class="module-badge badge-prio">GRATUIT</div></div><div class="module-body">Annuaire géolocalisé du Sénégal. Pros, quartiers, filtres.</div></div></div>
 
-<!-- RESTO -->
-<div class="module" data-open="resto">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🍽️</div>
-<div class="module-titles">
-<div class="module-name">DIGIY RESTO</div>
-<div class="module-tagline">VITRINE RESTAURANT</div>
-</div>
-<div class="module-badge">LIVE</div>
-</div>
-<div class="module-body">
-Menus, photos, horaires, localisation. Réservation directe.
-</div>
-</div>
-</div>
+<div class="module" data-external="https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver"><div class="module-inner"><div class="module-header"><div class="module-icon">🚚</div><div class="module-titles"><div class="module-name">DIGIY FRET</div><div class="module-tagline">TRANSPORT MARCHANDISES</div></div><div class="module-badge badge-new">NOUVEAU</div></div><div class="module-body">Transport marchandises 0% commission. GPS, paiements directs.</div></div></div>
 
-<!-- PAY -->
-<div class="module" data-open="pay">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">💳</div>
-<div class="module-titles">
-<div class="module-name">DIGIY PAY</div>
-<div class="module-tagline">WALLET UNIFIÉ</div>
-</div>
-<div class="module-badge badge-prio">PRIORITÉ</div>
-</div>
-<div class="module-body">
-Encaissements Wave / OM / CB. Historique et suivi.
-</div>
-</div>
-</div>
-
-<!-- BUILD -->
-<div class="module" data-open="build">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🏗️</div>
-<div class="module-titles">
-<div class="module-name">DIGIY BUILD</div>
-<div class="module-tagline">ARTISANS & BTP</div>
-</div>
-<div class="module-badge">LIVE</div>
-</div>
-<div class="module-body">
-Devis, galerie, contact. Humain. Direct.
-</div>
-</div>
-</div>
-
-<!-- MARKET -->
-<div class="module" data-open="market">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🛍️</div>
-<div class="module-titles">
-<div class="module-name">DIGIY MARKET</div>
-<div class="module-tagline">MARKETPLACE LOCALE</div>
-</div>
-<div class="module-badge badge-prio">PRIORITÉ</div>
-</div>
-<div class="module-body">
-Acheter/vendre local. Annonces propres. Sans commission.
-</div>
-</div>
-</div>
-
-<!-- JOBS -->
-<div class="module" data-open="job">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">💼</div>
-<div class="module-titles">
-<div class="module-name">DIGIY JOBS</div>
-<div class="module-tagline">EMPLOI & TALENTS</div>
-</div>
-<div class="module-badge badge-prio">PRIORITÉ</div>
-</div>
-<div class="module-body">
-Offres, candidatures, profils. Pont talents–employeurs.
-</div>
-</div>
-</div>
-
-<!-- NDIMBAL MAP -->
-<div class="module" data-open="ndimbalMap">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🗺️</div>
-<div class="module-titles">
-<div class="module-name">DIGIY NDIMBAL MAP</div>
-<div class="module-tagline">CARTE COMMUNAUTÉ</div>
-</div>
-<div class="module-badge badge-prio">GRATUIT</div>
-</div>
-<div class="module-body">
-Annuaire géolocalisé du Sénégal. Pros, quartiers, filtres.
-</div>
-</div>
-</div>
-
-<!-- FRET -->
-<div class="module" data-external="https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">🚚</div>
-<div class="module-titles">
-<div class="module-name">DIGIY FRET</div>
-<div class="module-tagline">TRANSPORT MARCHANDISES</div>
-</div>
-<div class="module-badge badge-new">NOUVEAU</div>
-</div>
-<div class="module-body">
-Transport marchandises 0% commission. GPS, paiements directs.
-</div>
-</div>
-</div>
-
-<!-- INSCRIPTION CLIENT -->
-<div class="module" data-open="inscriptionClient">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">♾️</div>
-<div class="module-titles">
-<div class="module-name">ACCÈS CLIENT</div>
-<div class="module-tagline">INSCRIPTION GRATUITE</div>
-</div>
-<div class="module-badge badge-prio">GRATUIT</div>
-</div>
-<div class="module-body">
-Crée ton compte gratuit et accède aux apps clients DIGIY.
-</div>
-</div>
-</div>
-
-<!-- INSCRIPTION PRO -->
-<div class="module" data-open="inscription">
-<div class="module-inner">
-<div class="module-header">
-<div class="module-icon">📝</div>
-<div class="module-titles">
-<div class="module-name">INSCRIPTION PRO</div>
-<div class="module-tagline">NOUVEAU COMPTE PRO</div>
-</div>
-<div class="module-badge badge-new">NOUVEAU</div>
-</div>
-<div class="module-body">
-Inscription intelligente. Choisis ton module, on calcule ton tarif.
-</div>
-</div>
-</div>
+<div class="module" data-open="inscriptionClient"><div class="module-inner"><div class="module-header"><div class="module-icon">♾️</div><div class="module-titles"><div class="module-name">ACCÈS CLIENT</div><div class="module-tagline">INSCRIPTION GRATUITE</div></div><div class="module-badge badge-prio">GRATUIT</div></div><div class="module-body">Crée ton compte gratuit et accède aux apps clients DIGIY.</div></div></div>
+<div class="module" data-open="inscription"><div class="module-inner"><div class="module-header"><div class="module-icon">📝</div><div class="module-titles"><div class="module-name">INSCRIPTION PRO</div><div class="module-tagline">NOUVEAU COMPTE PRO</div></div><div class="module-badge badge-new">NOUVEAU</div></div><div class="module-body">Inscription intelligente. Choisis ton module, on calcule ton tarif.</div></div></div>
 
 </div>
 </div>
 </section>
 
-<!-- PRICING SIMPLIFIÉ -->
 <section class="pricing">
 <h2 class="pricing-title">Un abonnement. Tout l'écosystème.</h2>
-<p class="pricing-subtitle">
-Tu ne payes pas à chaque course/vente :<br>
-tu payes <strong>une fois par mois</strong>, tu gardes <strong>100%</strong>.
-</p>
-
+<p class="pricing-subtitle">Tu ne payes pas à chaque course/vente :<br>tu payes <strong>une fois par mois</strong>, tu gardes <strong>100%</strong>.</p>
 <div class="pricing-card">
 <div class="pricing-label">Offre Pionniers</div>
 <div class="pricing-price">29,900 F / mois</div>
-<div class="pricing-note">
-Prix bloqué <strong>À VIE</strong> pour les premiers.<br>
-Accès à tous les modules • 0% commission • Support WhatsApp
-</div>
-<button id="btnSignup" class="pricing-cta" type="button">
-S'inscrire maintenant →
-</button>
+<div class="pricing-note">Prix bloqué <strong>À VIE</strong> pour les premiers.<br>Accès à tous les modules • 0% commission • Support WhatsApp</div>
+<button id="btnSignup" class="pricing-cta" type="button">S'inscrire maintenant →</button>
 </div>
 </section>
 
@@ -436,8 +162,7 @@ S'inscrire maintenant →
 </div>
 
 <button id="tarif-bubble-btn" class="tarif-bubble" type="button">
-<div class="tarif-badge-icon">F</div>
-<div>Tarifs DIGIY</div>
+<div class="tarif-badge-icon">F</div><div>Tarifs DIGIY</div>
 </button>
 
 <button id="digiy-help-btn" type="button">♾️ NDIMBAL</button>
@@ -505,7 +230,10 @@ const HUB_BASE="https://beauville.github.io/digiy-hub-drive/",
         inscriptionClient:"https://beauville.github.io/inscription-client.html",
         dashboard:"https://beauville.github.io/mon-espace-digiy/",
         ndimbalJef:NDIMBAL_JEF_URL,
-        ndimbalPublish:NDIMBAL_PUBLISH_URL
+        ndimbalPublish:NDIMBAL_PUBLISH_URL,
+
+        /* ✅ OFFICIEL : DIGIY BONNE AFFAIRE */
+        bonneAffaire:"https://beauville.github.io/digiy-bonne-affaire/"
       };
 
 const hubOverlay=document.getElementById('hubOverlay'),
@@ -545,7 +273,6 @@ function openModuleKey(key){
   openInside(url);
 }
 
-// Gestion parcours guidés
 document.querySelectorAll('[data-path]').forEach(card=>{
   card.addEventListener('click',()=>{
     const path=card.getAttribute('data-path');
@@ -555,7 +282,6 @@ document.querySelectorAll('[data-path]').forEach(card=>{
   });
 });
 
-// Modules cliquables
 document.addEventListener('click',e=>{
   const card=e.target.closest('.module');
   if(!card)return;
@@ -569,13 +295,17 @@ const loginBtn=document.getElementById('btnLogin'),
       getHubBtn=document.getElementById('btnGetHub'),
       signupBtn=document.getElementById('btnSignup'),
       homeBrand=document.getElementById('homeBrand'),
-      tarifBtn=document.getElementById('tarif-bubble-btn');
+      tarifBtn=document.getElementById('tarif-bubble-btn'),
+      btnDeals=document.getElementById('btnDeals');
 
 if(loginBtn)loginBtn.addEventListener('click',()=>openInside(LINKS.dashboard));
 if(getHubBtn)getHubBtn.addEventListener('click',()=>openInside(LINKS.inscription));
 if(signupBtn)signupBtn.addEventListener('click',()=>openInside(LINKS.inscription));
 if(homeBrand)homeBrand.addEventListener('click',e=>{e.preventDefault();closeInside();window.scrollTo({top:0,behavior:'smooth'})});
 if(tarifBtn)tarifBtn.addEventListener('click',()=>openInside('https://beauville.github.io/digiy/'));
+
+<!-- ✅ HERO -> BONNES AFFAIRES -->
+if(btnDeals)btnDeals.addEventListener('click',()=>openInside(LINKS.bonneAffaire));
 
 if(ndimbalBtn)ndimbalBtn.addEventListener('click',()=>{
   ndimbalModal.classList.add('show');
@@ -616,7 +346,6 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-// Compteur pionniers
 const pioneersEl=document.getElementById('pioneersLeft');
 if(pioneersEl){
   let pioneersLeft=parseInt(pioneersEl.textContent,10);
@@ -626,12 +355,10 @@ if(pioneersEl){
   },30000);
 }
 
-// Stats live (animation)
 function animateLiveStats(){
   const prosEl=document.getElementById('livePros'),
         driversEl=document.getElementById('liveDrivers'),
         shopsEl=document.getElementById('liveShops');
-  
   setInterval(()=>{
     if(prosEl&&Math.random()>.85){
       let current=parseInt(prosEl.textContent,10);
@@ -647,7 +374,6 @@ function animateLiveStats(){
     }
   },5000);
 }
-
 animateLiveStats();
 
 if('serviceWorker'in navigator){
@@ -665,7 +391,7 @@ window.addEventListener('beforeinstallprompt',e=>{
   console.log('💾 PWA installable');
 });
 
-console.log('✅ DIGIY HUB OPTIMISÉ - Empreinte de l\'aigle royal ! 🦅🔥♾️');
+console.log('✅ DIGIY HUB — Bonnes Affaires OFFICIEL ! 💥🦅♾️');
 })();
 </script>
 </body>
