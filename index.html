@@ -599,141 +599,228 @@
   </div>
 
   <script>
-  (function(){
-    "use strict";
+(function(){
+  "use strict";
 
-    const LINKS = {
-      ndimbal: "https://beauville.github.io/digiy-hub-drive/",
-      bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/",
-      driver: "https://beauville.github.io/digiy-driver/",
-      driverClient: "https://beauville.github.io/digiy-driver-client/",
-      loc: "https://beauville.github.io/digiy-loc/",
-      resto: "https://beauville.github.io/digiy-resto/",
-      caissePro: "https://beauville.github.io/Digiy-caisse-pro/",
-      vasChez: "https://beauville.github.io/vas-chez-digiy/",
-      pay: "https://beauville.github.io/digiy-pay/",
-      build: "https://beauville.github.io/digiy-build/",
-      market: "https://beauville.github.io/digiy-market/",
-      job: "https://beauville.github.io/digiy-jobs/",
-      explore: "https://beauville.github.io/digiy-explore/",
-      ndimbalMap: "https://beauville.github.io/digiy-mdimbal-map/",
-      inscription: "https://beauville.github.io/inscription-digiy/",
-      inscriptionClient: "https://beauville.github.io/inscription-client.html",
-      dashboard: "https://beauville.github.io/mon-espace-digiy/",
-      tarifs: "https://beauville.github.io/digiy/",
-      home: "https://digiylyfe.com"
-    };
+  const LINKS = {
+    ndimbal: "https://beauville.github.io/digiy-hub-drive/",
+    bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/",
+    driver: "https://beauville.github.io/digiy-driver/",
+    driverClient: "https://beauville.github.io/digiy-driver-client/",
+    loc: "https://beauville.github.io/digiy-loc/",
+    resto: "https://beauville.github.io/digiy-resto/",
+    caissePro: "https://beauville.github.io/Digiy-caisse-pro/",
+    vasChez: "https://beauville.github.io/vas-chez-digiy/",
+    pay: "https://beauville.github.io/digiy-pay/",
+    build: "https://beauville.github.io/digiy-build/",
+    market: "https://beauville.github.io/digiy-market/",
+    job: "https://beauville.github.io/digiy-jobs/",
+    explore: "https://beauville.github.io/digiy-explore/",
+    ndimbalMap: "https://beauville.github.io/digiy-mdimbal-map/",
+    inscription: "https://beauville.github.io/inscription-digiy/",
+    inscriptionClient: "https://beauville.github.io/inscription-client.html",
+    dashboard: "https://beauville.github.io/mon-espace-digiy/",
+    tarifs: "https://beauville.github.io/digiy/",
+    home: "https://digiylyfe.com"
+  };
 
-    const hubOverlay = document.getElementById("hubOverlay");
-    const hubFrame   = document.getElementById("hubFrame");
-    const ndimbal    = document.getElementById("digiy-ndimbal");
-    const qrModal    = document.getElementById("qrModal");
+  // Elements
+  const hubOverlay = document.getElementById("hubOverlay");
+  const hubFrame   = document.getElementById("hubFrame");
+  const ndimbal    = document.getElementById("digiy-ndimbal");
+  const qrModal    = document.getElementById("qrModal");
 
-    function show(el){
-      if(!el) return;
-      el.classList.add("show");
-      el.setAttribute("aria-hidden","false");
+  // Helpers show/hide (WP/Astra safe)
+  function show(el){
+    if(!el) return;
+    el.classList.add("show");
+    el.style.display = "block";
+    el.style.pointerEvents = "auto";
+    el.setAttribute("aria-hidden","false");
+  }
+  function hide(el){
+    if(!el) return;
+    el.classList.remove("show");
+    el.style.display = "none";
+    el.style.pointerEvents = "none";
+    el.setAttribute("aria-hidden","true");
+  }
+
+  function hasOverlay(){
+    return !!(hubOverlay && hubFrame);
+  }
+
+  function openInside(url){
+    hide(ndimbal);
+    if(!hasOverlay()){
+      window.location.href = url;
+      return;
     }
-    function hide(el){
-      if(!el) return;
-      el.classList.remove("show");
-      el.setAttribute("aria-hidden","true");
+    hubFrame.src = url;
+    show(hubOverlay);
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeInside(){
+    if(!hasOverlay()) return;
+    hide(hubOverlay);
+    hubFrame.src = "about:blank";
+    document.body.style.overflow = "";
+  }
+
+  function openNdimbal(){ show(ndimbal); }
+  function closeNdimbal(){ hide(ndimbal); }
+
+  function openQR(){ show(qrModal); }
+  function closeQR(){ hide(qrModal); }
+
+  // -------------------------
+  // CLICK ROUTER (WP SAFE)
+  // -------------------------
+  document.addEventListener("click", function(e){
+    const t = e.target;
+
+    // 1) Overlay buttons
+    if(t && (t.id === "hubBackBtn" || t.id === "hubCloseBtn")){
+      e.preventDefault(); e.stopPropagation();
+      closeInside();
+      return;
     }
 
-    function openInside(url){
-      hide(ndimbal);
-      if(!hubOverlay || !hubFrame){ window.location.href = url; return; }
-      hubFrame.src = url;
-      show(hubOverlay);
-      document.body.style.overflow = "hidden";
-    }
-    function closeInside(){
-      if(!hubOverlay || !hubFrame) return;
-      hide(hubOverlay);
-      hubFrame.src = "about:blank";
-      document.body.style.overflow = "";
+    // 2) Backdrop close (click outside card)
+    if(hubOverlay && t === hubOverlay){
+      closeInside();
+      return;
     }
 
-    function openNdimbal(){ show(ndimbal); }
-    function closeNdimbal(){ hide(ndimbal); }
+    // 3) Hero / header buttons (use closest to catch inner spans)
+    if(t && t.closest && t.closest("#btnLogin")){
+      e.preventDefault();
+      openInside(LINKS.dashboard);
+      return;
+    }
+    if(t && t.closest && t.closest("#btnGetHub")){
+      e.preventDefault();
+      // ✅ deep link WHY (tu voulais ça)
+      openInside(LINKS.inscription + "#why");
+      return;
+    }
+    if(t && t.closest && t.closest("#btnSignup")){
+      e.preventDefault();
+      openInside(LINKS.inscription + "#why");
+      return;
+    }
+    if(t && t.closest && t.closest("#btnDeals")){
+      e.preventDefault();
+      openInside(LINKS.bonneAffaire);
+      return;
+    }
+    if(t && t.closest && t.closest("#tarif-bubble-btn")){
+      e.preventDefault();
+      openInside(LINKS.tarifs);
+      return;
+    }
 
-    function openQR(){ show(qrModal); }
-    function closeQR(){ hide(qrModal); }
+    // 4) Floating NDIMBAL
+    if(t && t.closest && t.closest("#digiy-help-btn")){
+      e.preventDefault();
+      openNdimbal();
+      return;
+    }
+    // Close NDIMBAL (ton bouton réel = digiyCloseBtn)
+    if(t && t.closest && t.closest("#digiyCloseBtn")){
+      e.preventDefault();
+      closeNdimbal();
+      return;
+    }
+    // Click backdrop NDIMBAL
+    if(ndimbal && t === ndimbal){
+      closeNdimbal();
+      return;
+    }
 
-    document.addEventListener("click", function(e){
-      const t = e.target;
+    // 5) NDIMBAL actions (tes boutons ont class digiyAct)
+    const actBtn = (t && t.closest) ? t.closest(".digiyAct") : null;
+    if(actBtn){
+      e.preventDefault();
+      const action = actBtn.getAttribute("data-action");
+      closeNdimbal();
 
-      // Overlay buttons
-      if(t && (t.id === "hubBackBtn" || t.id === "hubCloseBtn")){
-        e.preventDefault(); e.stopPropagation();
-        closeInside(); return;
+      if(action === "sell"){
+        openInside(LINKS.inscription + "#why");
+      } else if(action === "job"){
+        openInside(LINKS.job);
+      } else if(action === "qr"){
+        openQR();
       }
+      return;
+    }
 
-      // Backdrop close
-      if(hubOverlay && t === hubOverlay){ closeInside(); return; }
+    // 6) QR close
+    if(t && t.closest && t.closest("#qrClose")){
+      e.preventDefault();
+      closeQR();
+      return;
+    }
+    if(qrModal && t === qrModal){
+      closeQR();
+      return;
+    }
 
-      // Header/Hero
-      if(t && t.closest && t.closest("#btnLogin")) { e.preventDefault(); openInside(LINKS.dashboard); return; }
-      if(t && t.closest && t.closest("#btnGetHub")) { e.preventDefault(); openInside(LINKS.inscription); return; }
-      if(t && t.closest && t.closest("#btnDeals")) { e.preventDefault(); openInside(LINKS.bonneAffaire); return; }
-      if(t && t.closest && t.closest("#tarif-bubble-btn")) { e.preventDefault(); openInside(LINKS.tarifs); return; }
+    // 7) Module cards (click on card or inside)
+    const card = (t && t.closest) ? t.closest(".module") : null;
+    if(card){
+      e.preventDefault();
 
-      // NDIMBAL
-      if(t && t.closest && t.closest("#digiy-help-btn")) { e.preventDefault(); openNdimbal(); return; }
-      if(t && t.closest && t.closest("#digiyCloseBtn")) { e.preventDefault(); closeNdimbal(); return; }
-      if(ndimbal && t === ndimbal){ closeNdimbal(); return; }
+      const ext = card.getAttribute("data-external");
+      const key = card.getAttribute("data-open");
 
-      // NDIMBAL actions (✅ class digiyAct)
-      const act = (t && t.closest) ? t.closest(".digiyAct") : null;
-      if(act){
-        e.preventDefault();
-        const action = act.getAttribute("data-action");
-        closeNdimbal();
-        if(action === "sell") openInside(LINKS.ndimbal);
-        else if(action === "job") openInside(LINKS.job);
-        else if(action === "qr") openQR();
+      if(ext){
+        window.open(ext, "_blank", "noopener");
+        return;
+      }
+      if(key && LINKS[key]){
+        openInside(LINKS[key]);
         return;
       }
 
-      // QR close
-      if(t && t.closest && t.closest("#qrClose")) { e.preventDefault(); closeQR(); return; }
-      if(qrModal && t === qrModal) { closeQR(); return; }
+      alert("Module en préparation.");
+      return;
+    }
 
-      // Module cards
-      const card = (t && t.closest) ? t.closest(".module") : null;
-      if(card){
-        e.preventDefault();
-        const ext = card.getAttribute("data-external");
-        const key = card.getAttribute("data-open");
+    // 8) Brand home (optional smooth scroll)
+    if(t && t.closest && t.closest("#homeBrand")){
+      e.preventDefault();
+      closeInside();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+  }, true);
 
-        if(ext){ window.open(ext,"_blank","noopener"); return; }
-        if(key && LINKS[key]){ openInside(LINKS[key]); return; }
+  // -------------------------
+  // ESC handling
+  // -------------------------
+  document.addEventListener("keydown", function(e){
+    if(e.key !== "Escape") return;
 
-        // fallback propre (jamais "vol" de module)
-        openInside(LINKS.tarifs);
-        return;
-      }
+    // close in priority: QR > NDIMBAL > HUB
+    if(qrModal && qrModal.classList.contains("show")){
+      closeQR();
+      return;
+    }
+    if(ndimbal && ndimbal.classList.contains("show")){
+      closeNdimbal();
+      return;
+    }
+    if(hubOverlay && hubOverlay.classList.contains("show")){
+      closeInside();
+      return;
+    }
+  });
 
-      // Brand home
-      if(t && t.closest && t.closest("#homeBrand")){
-        e.preventDefault();
-        closeInside();
-        window.scrollTo({top:0,behavior:"smooth"});
-        return;
-      }
-    }, true);
-
-    document.addEventListener("keydown", function(e){
-      if(e.key === "Escape"){
-        if(qrModal && qrModal.classList.contains("show")) closeQR();
-        else if(ndimbal && ndimbal.classList.contains("show")) closeNdimbal();
-        else if(hubOverlay && hubOverlay.classList.contains("show")) closeInside();
-      }
-    });
-
-    console.log("✅ DIGIY HUB — GITHUB FULL OK");
-  })();
-  </script>
+  console.log("✅ DIGIY HUB — ROUTER FULL OK (WP SAFE) + #why");
+})();
+</script>
 
 </body>
 </html>
