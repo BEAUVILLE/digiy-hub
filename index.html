@@ -1,425 +1,738 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0A0E1A">
-<title>DIGIY HUB ♾️ — 0% Commission</title>
-<meta name="description" content="DIGIY HUB — Tout ton business dans ta main. 0% commission, paiement direct au pro.">
-<link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icon-192.png" sizes="192x192">
-<link rel="apple-touch-icon" href="./icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>:root{--bg:#020617;--card:#0B1120;--border:rgba(148,163,184,.48);--ink:#F9FAFB;--muted:#CBD5E1;--orange:#f97316;--orange-dark:#ea580c;--gold:#facc15;--cyan:#22d3ee;--green:#22c55e;--green-dark:#16a34a;--red:#ef4444}*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}body{font-family:Manrope,-apple-system,sans-serif;font-size:16px;color:var(--ink);background:radial-gradient(circle at 15% 10%,rgba(249,115,22,.14),transparent 55%),radial-gradient(circle at 85% 90%,rgba(34,211,238,.18),transparent 60%),var(--bg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 20%,rgba(249,115,22,.22),transparent 55%),radial-gradient(ellipse at 85% 80%,rgba(56,189,248,.22),transparent 55%);opacity:.55;z-index:0;pointer-events:none}strong{font-weight:800}@keyframes slideUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.97);opacity:.7}}@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.app{width:100%;max-width:1400px;min-height:100vh;margin:0 auto;background:rgba(15,23,42,.9);backdrop-filter:blur(40px);border-left:1px solid var(--border);border-right:1px solid var(--border);padding:2rem;position:relative;z-index:1}header{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:2rem;padding:1.25rem 1.75rem;background:linear-gradient(135deg,rgba(15,23,42,.98),rgba(17,24,39,.96));border-radius:24px;border:1px solid var(--border);box-shadow:0 14px 40px rgba(0,0,0,.75);animation:slideUp .5s ease-out;position:relative;overflow:hidden}header::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top left,rgba(249,115,22,.20),transparent 60%);opacity:.9;pointer-events:none}.brand{display:flex;align-items:center;gap:1rem;text-decoration:none;color:inherit;position:relative;z-index:1}.brand-logo{width:56px;height:56px;border-radius:18px;background:radial-gradient(circle at 30% 20%,#fef3c7,#f97316);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#111827;box-shadow:0 12px 32px rgba(249,115,22,.7);position:relative;overflow:hidden}.brand-logo::after{content:'';position:absolute;inset:-20%;background:conic-gradient(from 0deg,#f97316,#facc15,#22d3ee,#f97316);mix-blend-mode:soft-light;opacity:.55;animation:spin 6s linear infinite}.brand-text h1{font-family:Outfit,sans-serif;font-size:2rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;background:linear-gradient(135deg,#f97316,#facc15,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0}.brand-text p{font-size:.85rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-weight:700;margin:0}.top-actions{display:flex;align-items:center;gap:1rem;justify-content:flex-end;flex-wrap:nowrap;position:relative;z-index:1}.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.95rem 2rem;border-radius:999px;font-family:Outfit,sans-serif;font-size:1rem;font-weight:900;border:none;cursor:pointer;text-decoration:none;white-space:nowrap;transition:all .18s ease}.btn-secondary{background:rgba(15,23,42,.98);color:var(--ink);border:1px solid var(--border);font-weight:800;padding:.6rem 1.2rem;font-size:.9rem}.btn-secondary:hover{border-color:var(--orange);background:rgba(249,115,22,.10)}.hero{margin-bottom:2.5rem;padding:3rem 2.5rem;border-radius:26px;border:1px solid var(--border);background:radial-gradient(circle at top right,rgba(251,191,36,.10),transparent 60%),linear-gradient(135deg,rgba(15,23,42,.98),rgba(15,23,42,.94));position:relative;overflow:hidden;box-shadow:0 18px 60px rgba(0,0,0,.85);animation:slideUp .55s ease-out;text-align:center}.hero::before{content:'♾️';position:absolute;right:-18px;top:-20px;font-size:7rem;opacity:.05;transform:rotate(-15deg);animation:float 7s infinite ease-in-out}.hero-eyebrow{font-size:.9rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);margin-bottom:.8rem;font-weight:700}.hero-title{font-family:Outfit,sans-serif;font-size:3.2rem;line-height:1.12;margin-bottom:1.2rem;font-weight:900;color:var(--ink)}.hero-title span{background:linear-gradient(135deg,#f97316,#facc15,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.hero-subtitle{font-size:1.25rem;color:#E5E7EB;max-width:780px;line-height:1.6;margin:0 auto 2.2rem;font-weight:600}.hero-cta{display:inline-flex;align-items:center;justify-content:center;gap:.8rem;padding:1.2rem 3rem;border-radius:999px;font-family:Outfit,sans-serif;font-size:1.15rem;font-weight:900;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#111827;border:none;cursor:pointer;box-shadow:0 16px 48px rgba(249,115,22,.75);transition:all .2s ease;margin-bottom:1.2rem}.hero-cta:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(249,115,22,.85)}.hero-cta span{font-size:1.5rem}.hero-meta{font-size:.95rem;color:var(--muted);font-weight:600}.urgency-strip{display:inline-flex;align-items:center;gap:.8rem;padding:.65rem 1.4rem;border-radius:999px;border:1px solid rgba(250,204,21,.85);background:linear-gradient(90deg,rgba(249,115,22,.22),rgba(250,204,21,.18));font-size:.88rem;font-weight:700;color:var(--ink);margin-top:1.2rem}.blink{animation:blink 1.6s infinite}.urgency-number{font-family:Outfit,sans-serif;font-size:1.15rem;color:var(--red);font-weight:900}.live-stats{background:linear-gradient(145deg,rgba(15,23,42,.98),rgba(15,23,42,.96));border-radius:24px;border:1px solid var(--border);padding:1.8rem 2rem;margin-bottom:2rem;box-shadow:0 14px 44px rgba(0,0,0,.85)}.live-stats-title{font-family:Outfit,sans-serif;font-size:1.15rem;font-weight:800;margin-bottom:1.2rem;color:var(--ink);text-align:center;text-transform:uppercase;letter-spacing:.12em}.live-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem}.live-stat{background:rgba(15,23,42,.98);border-radius:18px;padding:1.2rem;border:1px solid var(--border);text-align:center;position:relative;overflow:hidden}.live-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#22c55e,#22d3ee);opacity:.8}.live-stat-number{font-family:Outfit,sans-serif;font-size:2rem;font-weight:900;color:var(--ink);margin-bottom:.4rem}.live-stat-label{font-size:.85rem;color:var(--muted);font-weight:700}.paths-section{background:linear-gradient(145deg,rgba(15,23,42,.98),rgba(15,23,42,.96));border-radius:26px;border:1px solid var(--border);padding:2.5rem 2.2rem;margin-bottom:2rem;box-shadow:0 16px 52px rgba(0,0,0,.9)}.paths-title{font-family:Outfit,sans-serif;font-size:1.9rem;font-weight:900;margin-bottom:.6rem;color:var(--ink);text-align:center}.paths-subtitle{font-size:1.05rem;color:var(--muted);margin-bottom:2rem;text-align:center;font-weight:650}.paths-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:2rem}.path-card{position:relative;border-radius:22px;border:2px solid var(--border);background:radial-gradient(circle at top left,rgba(249,115,22,.16),transparent 60%),rgba(11,17,32,.98);padding:2rem 1.8rem;overflow:hidden;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;text-align:center}.path-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at bottom right,rgba(34,211,238,.16),transparent 60%);opacity:0;transition:opacity .2s ease}.path-card:hover{transform:translateY(-6px);border-color:var(--orange);box-shadow:0 20px 50px rgba(0,0,0,.95)}.path-card:hover::after{opacity:1}.path-icon{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 1.2rem;box-shadow:0 12px 32px rgba(249,115,22,.6)}.path-title{font-family:Outfit,sans-serif;font-size:1.4rem;font-weight:900;margin-bottom:.6rem;color:var(--ink)}.path-desc{font-size:.95rem;color:#E5E7EB;line-height:1.6;margin-bottom:1.2rem;font-weight:600}.path-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.9rem 1.5rem;border-radius:999px;font-family:Outfit,sans-serif;font-size:.95rem;font-weight:900;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#111827;border:none;cursor:pointer;box-shadow:0 10px 28px rgba(249,115,22,.65);transition:all .2s ease}.path-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(249,115,22,.8)}.modules-section{background:linear-gradient(145deg,rgba(15,23,42,.98),rgba(15,23,42,.96));border-radius:26px;border:1px solid var(--border);padding:2.1rem 2rem 2.4rem;margin-bottom:2rem;box-shadow:0 16px 52px rgba(0,0,0,.9)}.modules-title{font-family:Outfit,sans-serif;font-size:1.7rem;font-weight:900;margin-bottom:.45rem;color:var(--ink)}.modules-subtitle{font-size:1rem;color:var(--muted);margin-bottom:1.7rem;font-weight:650}.modules-category{margin-bottom:2.5rem}.category-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)}.category-icon{font-size:1.5rem}.category-title{font-family:Outfit,sans-serif;font-size:1.25rem;font-weight:900;color:var(--ink)}.category-badge{font-size:.75rem;padding:.3rem .75rem;border-radius:999px;border:1px solid rgba(249,115,22,1);color:#fed7aa;background:rgba(249,115,22,.18);text-transform:uppercase;letter-spacing:.13em;font-weight:900}.modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.3rem}.module{position:relative;border-radius:20px;border:1px solid var(--border);background:radial-gradient(circle at top left,rgba(249,115,22,.14),transparent 60%),rgba(11,17,32,.98);padding:1.35rem 1.25rem;overflow:hidden;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.module::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at bottom right,rgba(34,211,238,.14),transparent 60%);opacity:0;transition:opacity .2s ease}.module:hover{transform:translateY(-5px);border-color:rgba(249,115,22,.95);box-shadow:0 18px 42px rgba(0,0,0,.95)}.module:hover::after{opacity:1}.module-inner{position:relative;z-index:1;display:flex;flex-direction:column;gap:.7rem}.module-header{display:flex;align-items:flex-start;justify-content:space-between;gap:.6rem}.module-icon{width:46px;height:46px;border-radius:16px;background:rgba(15,23,42,.98);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.5rem}.module-titles{flex:1}.module-name{font-family:Outfit,sans-serif;font-size:1.05rem;font-weight:950;margin-bottom:.1rem;color:var(--ink)}.module-tagline{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-weight:800}.module-badge{font-size:.72rem;padding:.32rem .8rem;border-radius:999px;border:1px solid rgba(34,197,94,1);color:#dcfce7;background:rgba(22,163,74,.18);text-transform:uppercase;letter-spacing:.13em;font-weight:900;white-space:nowrap}.badge-prio{border-color:rgba(250,204,21,1);color:#fef9c3;background:rgba(250,204,21,.16)}.badge-new{border-color:rgba(249,115,22,1);color:#fed7aa;background:rgba(249,115,22,.18)}.module-body{font-size:.92rem;color:#E5E7EB;line-height:1.65;font-weight:650}.testimonial{background:linear-gradient(140deg,rgba(15,23,42,.98),rgba(15,23,42,.95));border-radius:24px;border:1px solid var(--border);padding:2rem 1.8rem;margin-bottom:2rem;box-shadow:0 16px 52px rgba(0,0,0,.9)}.testimonial-quote{font-size:1.15rem;color:#E5E7EB;line-height:1.7;font-style:italic;margin-bottom:1.2rem;font-weight:600}.testimonial-quote::before{content:'"';font-size:2.5rem;color:var(--orange);line-height:0;margin-right:.3rem;vertical-align:-.3em}.testimonial-author{display:flex;align-items:center;gap:1rem}.testimonial-avatar{width:48px;height:48px;border-radius:999px;background:radial-gradient(circle at 30% 20%,#fecaca,#f97316);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#111827}.testimonial-info-name{font-family:Outfit,sans-serif;font-size:1.05rem;font-weight:900;color:var(--ink)}.testimonial-info-role{font-size:.88rem;color:var(--muted);font-weight:700}.pricing{background:linear-gradient(140deg,rgba(15,23,42,.98),rgba(15,23,42,.95));border-radius:24px;border:1px solid var(--border);padding:2rem 1.8rem 2.2rem;margin-bottom:2rem;box-shadow:0 16px 52px rgba(0,0,0,.9);text-align:center}.pricing-title{font-family:Outfit,sans-serif;font-size:1.8rem;font-weight:900;margin-bottom:.4rem;color:var(--ink)}.pricing-subtitle{font-size:1rem;color:var(--muted);margin-bottom:1.8rem;font-weight:650}.pricing-card{max-width:480px;margin:0 auto;border-radius:18px;border:1px solid rgba(249,115,22,.75);background:radial-gradient(circle at top left,rgba(249,115,22,.18),transparent 60%),rgba(15,23,42,.98);padding:1.8rem 2rem;box-shadow:0 14px 44px rgba(249,115,22,.6)}.pricing-label{font-size:.85rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);margin-bottom:.4rem;font-weight:800}.pricing-price{font-family:Outfit,sans-serif;font-size:2.8rem;font-weight:950;color:#fff;margin-bottom:.6rem}.pricing-note{font-size:.95rem;color:#E5E7EB;margin-bottom:1.2rem;font-weight:650}.pricing-cta{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:1rem 2rem;border-radius:999px;font-size:1.05rem;font-weight:950;font-family:Outfit,sans-serif;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#111827;text-decoration:none;border:none;cursor:pointer;box-shadow:0 12px 36px rgba(249,115,22,.7);transition:all .2s ease}.pricing-cta:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(249,115,22,.85)}footer{border-top:1px solid var(--border);padding-top:1.4rem;margin-top:.8rem;text-align:center;font-size:.85rem;color:var(--muted);font-weight:650}.footer-tagline{font-family:Outfit,sans-serif;font-size:1rem;font-weight:900;color:#fff;margin-bottom:.5rem}.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:1.3rem;margin-bottom:.7rem}.footer-link{color:var(--muted);text-decoration:none;font-weight:800;font-size:.85rem;transition:color .2s ease}.footer-link:hover{color:#fff}.tarif-bubble{position:fixed!important;z-index:2147483645!important;display:flex!important;align-items:center;gap:.4rem;padding:.55rem .8rem;border-radius:999px;font-family:Outfit,sans-serif;font-size:.78rem;font-weight:900;right:20px!important;bottom:90px!important;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#111827;box-shadow:0 10px 30px rgba(249,115,22,.8);animation:pulse 3s infinite;border:none!important;cursor:pointer!important}.tarif-badge-icon{width:22px;height:22px;border-radius:999px;background:#111827;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fed7aa;font-weight:900}#digiy-help-btn{position:fixed!important;right:20px!important;bottom:20px!important;z-index:2147483647!important;display:block!important;border:none!important;border-radius:999px!important;padding:14px 18px!important;font-weight:950!important;font-size:15px!important;color:#052e16!important;background:linear-gradient(135deg,var(--green-dark),var(--green))!important;box-shadow:0 16px 40px rgba(0,0,0,.35)!important;cursor:pointer!important;transition:all .2s ease!important}#digiy-help-btn:hover{transform:translateY(-2px)!important}#hubOverlay{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);padding:14px}#hubOverlay.show{display:block}.hubOverlayCard{height:calc(100vh - 28px);max-width:1400px;margin:0 auto;border-radius:22px;border:1px solid var(--border);background:rgba(2,6,23,.86);box-shadow:0 18px 70px rgba(0,0,0,.8);overflow:hidden;display:flex;flex-direction:column}.hubOverlayTop{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;background:linear-gradient(135deg,rgba(15,23,42,.98),rgba(17,24,39,.96));border-bottom:1px solid rgba(148,163,184,.35)}.hubOverlayBrand{display:flex;align-items:center;gap:10px;font-family:Outfit,sans-serif;font-weight:950;letter-spacing:.08em;text-transform:uppercase;color:#fff}.hubOverlayBtn{border:none;border-radius:999px;padding:10px 12px;font-weight:950;cursor:pointer;font-family:Outfit,sans-serif;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease}.hubOverlayBtn.back{background:linear-gradient(135deg,var(--gold),#fde68a);color:#111827}.hubOverlayBtn.back:hover{transform:translateY(-1px)}.hubOverlayBtn.close{background:rgba(15,23,42,.98);color:#e5e7eb;border:1px solid var(--border)}.hubOverlayFrame{width:100%;height:100%;border:0;background:#fff}#digiy-ndimbal{display:none;position:fixed;inset:0;z-index:2147483646;background:rgba(0,0,0,.68);backdrop-filter:blur(6px);padding:18px}#digiy-ndimbal.show{display:block}.digiy-box{max-width:380px;margin:18vh auto 0;background:#fff;border-radius:18px;padding:18px;box-shadow:0 20px 50px rgba(0,0,0,.35);text-align:center}.digiy-title{font-family:Outfit,sans-serif;font-weight:950;font-size:1.3rem;color:var(--green-dark);margin-bottom:8px}.digiy-text{margin:10px 0 14px;color:#0f172a;line-height:1.45;font-weight:600}.digiy-act{width:100%;border:none;border-radius:14px;padding:12px 14px;margin:7px 0;font-family:Outfit,sans-serif;font-weight:900;font-size:.95rem;cursor:pointer;background:#f1f5f9;color:#0f172a;transition:all .15s ease}.digiy-act:hover{background:#e2e8f0;transform:translateY(-1px)}.digiy-close{width:100%;border:none;border-radius:14px;padding:11px 14px;margin-top:10px;font-family:Outfit,sans-serif;font-weight:900;font-size:.95rem;cursor:pointer;background:#0f172a;color:#fff;transition:all .15s ease}.digiy-close:hover{background:#1e293b}#qrModal{display:none;position:fixed;inset:0;z-index:2147483648;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);padding:16px}#qrModal.show{display:block}@media(max-width:900px){.paths-grid{grid-template-columns:1fr}}@media(max-width:768px){.app{padding:1rem}header{flex-direction:column;align-items:flex-start}.brand-text h1{font-size:1.6rem}.top-actions{width:100%;justify-content:flex-end}.hero{padding:2rem 1.4rem}.hero-title{font-size:2.2rem}.hero-subtitle{font-size:1.05rem}.hero-cta{padding:1rem 2rem;font-size:1rem}.live-stats-grid{grid-template-columns:1fr}.modules-section{padding:1.6rem 1.1rem 2rem}.tarif-bubble{right:16px!important;bottom:85px!important;padding:.45rem .7rem;font-size:.75rem}.tarif-badge-icon{width:20px;height:20px;font-size:.75rem}#digiy-help-btn{right:16px!important;bottom:16px!important}}</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0A0E1A" />
+  <title>DIGIY HUB ♾️ — 0% Commission</title>
+  <meta name="description" content="DIGIY HUB — Tout ton business dans ta main. 0% commission, paiement direct au pro." />
+
+  <!-- (Optionnel PWA GitHub) -->
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./icon-192.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#020617;--card:#0B1120;--border:rgba(148,163,184,.38);
+      --ink:#F9FAFB;--muted:#CBD5E1;
+      --orange:#f97316;--orange-dark:#ea580c;
+      --gold:#facc15;--cyan:#22d3ee;
+      --green:#22c55e;--green-dark:#16a34a;--red:#ef4444;
+      --shadow:0 18px 60px rgba(0,0,0,.55);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Manrope,-apple-system,system-ui,Segoe UI,Roboto,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%,rgba(249,115,22,.10),transparent 55%),
+        radial-gradient(circle at 85% 90%,rgba(34,211,238,.12),transparent 60%),
+        rgba(2,6,23,1);
+      min-height:100vh;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit}
+
+    .app{
+      width:100%;
+      max-width:1400px;
+      margin:18px auto;
+      padding:18px;
+      border:1px solid rgba(148,163,184,.22);
+      border-radius:22px;
+      background:
+        radial-gradient(circle at 15% 10%,rgba(249,115,22,.10),transparent 55%),
+        radial-gradient(circle at 85% 90%,rgba(34,211,238,.12),transparent 60%),
+        rgba(2,6,23,.86);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+      z-index:2;
+    }
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:14px 16px;border-radius:18px;
+      background:linear-gradient(135deg,rgba(15,23,42,.98),rgba(17,24,39,.96));
+      border:1px solid var(--border);
+      box-shadow:0 12px 36px rgba(0,0,0,.35);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-logo{
+      width:50px;height:50px;border-radius:16px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:950;font-size:26px;color:#111827;
+      background:radial-gradient(circle at 30% 20%,#fef3c7,#f97316);
+      box-shadow:0 12px 26px rgba(249,115,22,.45);
+    }
+    .brand h1{margin:0;font-size:20px;letter-spacing:.08em;text-transform:uppercase;font-family:Outfit,sans-serif}
+    .brand p{margin:0;font-size:12px;color:var(--muted);font-weight:750;letter-spacing:.12em;text-transform:uppercase}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 14px;border-radius:999px;border:1px solid var(--border);
+      background:rgba(15,23,42,.92);color:var(--ink);
+      font-weight:900;cursor:pointer;
+    }
+    .btn:hover{border-color:rgba(249,115,22,.9);background:rgba(249,115,22,.10)}
+
+    .hero{
+      margin-top:14px;
+      padding:24px 18px;
+      border-radius:20px;
+      border:1px solid rgba(148,163,184,.22);
+      background:radial-gradient(circle at top right,rgba(251,191,36,.10),transparent 60%),
+                 linear-gradient(135deg,rgba(15,23,42,.98),rgba(15,23,42,.94));
+      text-align:center;
+      box-shadow:0 14px 40px rgba(0,0,0,.35);
+      position:relative;
+    }
+    .hero-eyebrow{color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:12px;margin-bottom:10px}
+    .hero-title{font-weight:950;font-size:32px;line-height:1.1;margin:0 0 10px;font-family:Outfit,sans-serif}
+    .hero-title span{
+      background:linear-gradient(135deg,#f97316,#facc15,#22d3ee);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent
+    }
+    .hero-subtitle{color:#E5E7EB;font-weight:650;line-height:1.55;margin:0 auto 16px;max-width:820px}
+
+    .hero-cta{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 18px;border-radius:999px;border:none;
+      font-weight:950;cursor:pointer;
+      background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+      color:#111827;
+      box-shadow:0 12px 34px rgba(249,115,22,.40);
+      margin:6px;
+    }
+    .hero-cta.secondary{
+      background:linear-gradient(135deg,#22d3ee,#60a5fa);
+      box-shadow:0 12px 34px rgba(34,211,238,.25);
+    }
+
+    .urgency-strip{
+      display:inline-flex;align-items:center;gap:8px;
+      margin-top:14px;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid rgba(250,204,21,.85);
+      background:linear-gradient(90deg,rgba(249,115,22,.18),rgba(250,204,21,.12));
+      font-weight:800;font-size:13px;
+    }
+    .urgency-number{color:var(--red);font-weight:950}
+
+    .section{
+      margin-top:16px;
+      padding:18px;
+      border-radius:20px;
+      border:1px solid rgba(148,163,184,.22);
+      background:linear-gradient(145deg,rgba(15,23,42,.96),rgba(15,23,42,.92));
+    }
+    .section h2{margin:0 0 6px;font-size:18px;font-weight:950;font-family:Outfit,sans-serif}
+    .section p{margin:0 0 14px;color:var(--muted);font-weight:650}
+
+    .modules-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+      gap:12px;
+    }
+    .module{
+      border:1px solid rgba(148,163,184,.25);
+      border-radius:18px;
+      padding:14px;
+      background:radial-gradient(circle at top left,rgba(249,115,22,.12),transparent 60%),rgba(11,17,32,.98);
+      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+      position:relative;
+      cursor:pointer;
+    }
+    .module:hover{transform:translateY(-3px);border-color:rgba(249,115,22,.8);box-shadow:0 16px 40px rgba(0,0,0,.45)}
+    .module-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+    .module-icon{
+      width:42px;height:42px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(15,23,42,.95);
+      border:1px solid rgba(148,163,184,.25);
+      font-size:18px;
+    }
+    .module-name{font-weight:950}
+    .module-tag{font-size:11px;color:var(--muted);font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+    .badge{
+      font-size:11px;font-weight:950;letter-spacing:.12em;text-transform:uppercase;
+      padding:6px 10px;border-radius:999px;border:1px solid rgba(34,197,94,1);
+      background:rgba(22,163,74,.14);color:#dcfce7;
+      white-space:nowrap;
+    }
+    .badge.new{border-color:rgba(249,115,22,1);background:rgba(249,115,22,.14);color:#fed7aa}
+    .badge.prio{border-color:rgba(250,204,21,1);background:rgba(250,204,21,.12);color:#fef9c3}
+    .badge.free{border-color:rgba(34,211,238,1);background:rgba(34,211,238,.10);color:#cffafe}
+    .module-body{color:#E5E7EB;font-weight:650;line-height:1.5;font-size:13px}
+
+    footer{
+      margin-top:16px;
+      padding-top:14px;
+      border-top:1px solid rgba(148,163,184,.22);
+      color:var(--muted);
+      font-weight:650;
+      text-align:center;
+      font-size:13px;
+    }
+
+    /* Floating buttons */
+    #tarif-bubble-btn{
+      position:fixed;right:18px;bottom:86px;z-index:2147483645;
+      display:flex;align-items:center;gap:8px;
+      padding:10px 12px;border:none;border-radius:999px;
+      font-weight:950;font-size:12px;color:#111827;cursor:pointer;
+      background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+      box-shadow:0 14px 36px rgba(249,115,22,.35);
+    }
+    #digiy-help-btn{
+      position:fixed;right:18px;bottom:18px;z-index:2147483646;
+      border:none;border-radius:999px;padding:12px 14px;
+      font-weight:950;font-size:14px;color:#052e16;cursor:pointer;
+      background:linear-gradient(135deg,var(--green-dark),var(--green));
+      box-shadow:0 16px 40px rgba(0,0,0,.25);
+    }
+
+    /* HUB Overlay */
+    #hubOverlay{
+      display:none;
+      position:fixed;inset:0;z-index:2147483647;
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(8px);
+      padding:12px;
+      pointer-events:none;
+    }
+    #hubOverlay.show{display:block;pointer-events:auto}
+    .hubCard{
+      height:calc(100vh - 24px);
+      max-width:1400px;margin:0 auto;
+      border-radius:18px;border:1px solid rgba(148,163,184,.30);
+      background:rgba(2,6,23,.86);
+      overflow:hidden;display:flex;flex-direction:column;
+      box-shadow:0 18px 70px rgba(0,0,0,.55);
+    }
+    .hubTop{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:10px 12px;
+      background:linear-gradient(135deg,rgba(15,23,42,.98),rgba(17,24,39,.96));
+      border-bottom:1px solid rgba(148,163,184,.22);
+    }
+    .hubBrand{font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .hubTopBtns{display:flex;gap:10px}
+    .hubBtn{
+      border:none;border-radius:999px;padding:10px 12px;font-weight:950;
+      cursor:pointer;
+    }
+    .hubBtn.back{background:linear-gradient(135deg,var(--gold),#fde68a);color:#111827}
+    .hubBtn.close{background:rgba(15,23,42,.98);color:#e5e7eb;border:1px solid rgba(148,163,184,.30)}
+    #hubFrame{width:100%;height:100%;border:0;background:#fff}
+
+    /* NDIMBAL Modal */
+    #digiy-ndimbal{
+      display:none;position:fixed;inset:0;z-index:2147483646;
+      background:rgba(0,0,0,.68);backdrop-filter:blur(6px);
+      padding:16px;
+      pointer-events:none;
+    }
+    #digiy-ndimbal.show{display:block;pointer-events:auto}
+    .digiyBox{
+      max-width:400px;margin:14vh auto 0;
+      background:#fff;border-radius:18px;padding:16px;
+      box-shadow:0 20px 55px rgba(0,0,0,.35);
+      text-align:center;
+    }
+    .digiyTitle{font-weight:950;color:var(--green-dark);font-size:18px;margin-bottom:6px;font-family:Outfit,sans-serif}
+    .digiyText{color:#0f172a;font-weight:650;line-height:1.45;margin:10px 0 14px}
+    .digiyAct{
+      width:100%;border:none;border-radius:14px;padding:12px 14px;margin:7px 0;
+      font-weight:900;cursor:pointer;background:#f1f5f9;color:#0f172a;
+    }
+    .digiyClose{
+      width:100%;border:none;border-radius:14px;padding:11px 14px;margin-top:10px;
+      font-weight:950;cursor:pointer;background:#0f172a;color:#fff;
+    }
+
+    /* QR Modal (unifié) */
+    #qrModal{
+      display:none;position:fixed;inset:0;z-index:2147483647;
+      background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+      padding:16px;pointer-events:none;
+    }
+    #qrModal.show{display:block;pointer-events:auto}
+
+    @media(max-width:820px){
+      .hero-title{font-size:24px}
+      .app{padding:12px}
+      #tarif-bubble-btn{right:14px;bottom:84px}
+      #digiy-help-btn{right:14px;bottom:14px}
+    }
+  </style>
 </head>
+
 <body>
-<div class="app">
-<header>
-<a href="#" class="brand" id="homeBrand">
-<div class="brand-logo">∞</div>
-<div class="brand-text">
-<h1>DIGIY HUB</h1>
-<p>0% Commission • Paiement Direct</p>
-</div>
-</a>
-<div class="top-actions">
-<button id="btnLogin" class="btn btn-secondary" type="button">🔐 Connexion</button>
-</div>
-</header>
 
-<section class="hero">
-<div class="hero-eyebrow">L'Afrique enracinée, connectée au monde</div>
-<h1 class="hero-title">
-Tout ton business dans ta main.<br>
-<span>0% commission.</span>
-</h1>
-<p class="hero-subtitle">
-Chauffeur, restaurant, boutique, logement, artisan.<br>
-<strong>Un seul abonnement. 11 métiers. Paiement direct au pro.</strong>
-</p>
+  <div class="app">
+    <header>
+      <a href="#" class="brand" id="homeBrand">
+        <div class="brand-logo">∞</div>
+        <div>
+          <h1>DIGIY HUB</h1>
+          <p>0% Commission • Paiement Direct</p>
+        </div>
+      </a>
+      <button class="btn" type="button" id="btnLogin">🔐 Connexion</button>
+    </header>
 
-<!-- CTA HUB -->
-<button id="btnGetHub" class="hero-cta" type="button"><span>→</span> Je veux mon HUB DIGIY</button>
+    <section class="hero">
+      <div class="hero-eyebrow">L’Afrique enracinée, connectée au monde</div>
+      <h1 class="hero-title">Tout ton business dans ta main.<br><span>0% commission.</span></h1>
+      <p class="hero-subtitle">
+        Chauffeur, restaurant, boutique, logement, artisan.<br>
+        <strong>Un seul abonnement. 11 métiers. Paiement direct au pro.</strong>
+      </p>
 
-<!-- ✅ CTA BONNES AFFAIRES (HERO) -->
-<button id="btnDeals" class="hero-cta" type="button" style="margin-left:.6rem;background:linear-gradient(135deg,#facc15,#f97316)">
-  <span>💥</span> Voir les Bonnes Affaires
-</button>
+      <button id="btnGetHub" class="hero-cta" type="button"><span>→</span> Je veux mon HUB DIGIY</button>
+      <button id="btnDeals" class="hero-cta secondary" type="button">💥 Voir les Bonnes Affaires</button>
 
-<div class="hero-meta">Places pionniers limitées • Prix bloqué à vie pour les premiers</div>
-<div class="urgency-strip">
-<span class="blink">🔥</span>
-<span>Places restantes :</span>
-<span id="pioneersLeft" class="urgency-number">87</span>
-</div>
-</section>
-
-<section class="live-stats">
-<div class="live-stats-title">♾️ En direct sur DIGIY</div>
-<div class="live-stats-grid">
-<div class="live-stat"><div class="live-stat-number" id="livePros">142</div><div class="live-stat-label">Professionnels actifs</div></div>
-<div class="live-stat"><div class="live-stat-number" id="liveDrivers">23</div><div class="live-stat-label">Chauffeurs en ligne</div></div>
-<div class="live-stat"><div class="live-stat-number" id="liveShops">18</div><div class="live-stat-label">Commerces ouverts</div></div>
-<div class="live-stat"><div class="live-stat-number">+40,100 F</div><div class="live-stat-label">Économie moy./mois</div></div>
-</div>
-</section>
-
-<section class="paths-section">
-<h2 class="paths-title">Choisis ton parcours</h2>
-<p class="paths-subtitle">Tu es client ou professionnel ? On te guide direct vers ton besoin.</p>
-<div class="paths-grid">
-<div class="path-card" data-path="client"><div class="path-icon">👤</div><div class="path-title">Je suis CLIENT</div><div class="path-desc">Commander un chauffeur, réserver un logement, trouver un artisan.<br><strong>Gratuit • 0% frais</strong></div><button class="path-btn" type="button">Accéder aux services →</button></div>
-<div class="path-card" data-path="driver"><div class="path-icon">🚗</div><div class="path-title">Je suis CHAUFFEUR</div><div class="path-desc">VTC ou transport marchandises.<br><strong>0% commission • Paiement direct</strong></div><button class="path-btn" type="button">Devenir chauffeur DIGIY →</button></div>
-<div class="path-card" data-path="commerce"><div class="path-icon">🏪</div><div class="path-title">Je suis COMMERÇANT</div><div class="path-desc">Boutique, restaurant, hôtel, artisan.<br><strong>Caisse pro • 0% commission</strong></div><button class="path-btn" type="button">Ouvrir ma boutique DIGIY →</button></div>
-</div>
-</section>
-
-<section class="testimonial">
-<div class="testimonial-quote">
-Depuis 3 mois avec DIGIY DRIVER, j'ai économisé 127,000 F que je payais en commission à Uber. Mon argent reste dans ma poche. Je recommande à tous les chauffeurs.
-</div>
-<div class="testimonial-author">
-<div class="testimonial-avatar">👤</div>
-<div><div class="testimonial-info-name">Lamine Diop</div><div class="testimonial-info-role">Chauffeur VTC • Dakar</div></div>
-</div>
-</section>
-
-<section class="modules-section">
-<h2 class="modules-title">Tous tes modules DIGIY</h2>
-<p class="modules-subtitle">Clique pour ouvrir un module dans le HUB. Retour avec <strong>← Retour HUB</strong>.</p>
-
-<div class="modules-category">
-<div class="category-header"><span class="category-icon">🔥</span><h3 class="category-title">Modules prioritaires</h3><span class="category-badge">LIVE</span></div>
-<div class="modules-grid">
-
-<div class="module" data-open="driver"><div class="module-inner"><div class="module-header"><div class="module-icon">🚗</div><div class="module-titles"><div class="module-name">DIGIY DRIVER PRO</div><div class="module-tagline">CHAUFFEUR PROFESSIONNEL</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Interface chauffeur : accepter courses, GPS temps réel, encaissements directs.</div></div></div>
-<div class="module" data-open="driverClient"><div class="module-inner"><div class="module-header"><div class="module-icon">🚕</div><div class="module-titles"><div class="module-name">DIGIY DRIVER CLIENT</div><div class="module-tagline">COMMANDER UNE COURSE</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Commande ta course VTC au Sénégal. 0% commission. Paiement direct.</div></div></div>
-<div class="module" data-open="caissePro"><div class="module-inner"><div class="module-header"><div class="module-icon">🧾</div><div class="module-titles"><div class="module-name">DIGIY CAISSE PRO</div><div class="module-tagline">POS + SYNC BATCH</div></div><div class="module-badge badge-new">NOUVEAU</div></div><div class="module-body">Caisse professionnelle + sync ultra-légère (99.9% économie data).</div></div></div>
-<div class="module" data-open="vasChez"><div class="module-inner"><div class="module-header"><div class="module-icon">🏃</div><div class="module-titles"><div class="module-name">VAS CHEZ DIGIY</div><div class="module-tagline">COURSIER EXPRESS</div></div><div class="module-badge badge-new">NOUVEAU</div></div><div class="module-body">Service de livraison et courses rapides. 0% commission.</div></div></div>
-
-<!-- ✅ DIGIY BONNE AFFAIRE (PRIORITAIRE) -->
-<div class="module" data-open="bonneAffaire">
-  <div class="module-inner">
-    <div class="module-header">
-      <div class="module-icon">💥</div>
-      <div class="module-titles">
-        <div class="module-name">DIGIY BONNE AFFAIRE</div>
-        <div class="module-tagline">NOTABLE • BON PLAN • DEALS</div>
+      <div style="margin-top:10px;color:var(--muted);font-weight:650">
+        Places pionniers limitées • Prix bloqué à vie pour les premiers
       </div>
-      <div class="module-badge badge-new">OFFICIEL</div>
-    </div>
-    <div class="module-body">
-      Les meilleures opportunités du terrain : deals, bons plans, bonnes adresses.
+
+      <div class="urgency-strip">
+        <span>🔥</span>
+        <span>Places restantes :</span>
+        <span id="pioneersLeft" class="urgency-number">87</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Tous tes modules DIGIY (RESTORE)</h2>
+      <p>Clique pour ouvrir un module dans le HUB. Retour avec <strong>← Retour HUB</strong>.</p>
+
+      <div class="modules-grid">
+
+        <div class="module" data-open="bonneAffaire">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">💥</div>
+              <div>
+                <div class="module-name">DIGIY BONNE AFFAIRE</div>
+                <div class="module-tag">BONS PLANS • PROMOS</div>
+              </div>
+            </div>
+            <div class="badge new">OFFICIEL</div>
+          </div>
+          <div class="module-body">Les meilleures opportunités locales : promos, deals, bonnes affaires terrain.</div>
+        </div>
+
+        <div class="module" data-open="driver">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🚗</div>
+              <div>
+                <div class="module-name">DIGIY DRIVER PRO</div>
+                <div class="module-tag">CHAUFFEUR PROFESSIONNEL</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Accepter courses, GPS temps réel, encaissements directs.</div>
+        </div>
+
+        <div class="module" data-open="driverClient">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🚕</div>
+              <div>
+                <div class="module-name">DIGIY DRIVER CLIENT</div>
+                <div class="module-tag">COMMANDER UNE COURSE</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Commande ta course VTC au Sénégal. Paiement direct. 0% commission.</div>
+        </div>
+
+        <div class="module" data-open="caissePro">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🧾</div>
+              <div>
+                <div class="module-name">DIGIY CAISSE PRO</div>
+                <div class="module-tag">POS + SYNC BATCH</div>
+              </div>
+            </div>
+            <div class="badge new">NOUVEAU</div>
+          </div>
+          <div class="module-body">Caisse pro + sync ultra-légère. Encaissement terrain.</div>
+        </div>
+
+        <div class="module" data-open="vasChez">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🏃</div>
+              <div>
+                <div class="module-name">VAS CHEZ DIGIY</div>
+                <div class="module-tag">COURSIER EXPRESS</div>
+              </div>
+            </div>
+            <div class="badge new">NOUVEAU</div>
+          </div>
+          <div class="module-body">Livraison & courses rapides. 0% commission. Paiement direct.</div>
+        </div>
+
+        <div class="module" data-open="loc">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🏠</div>
+              <div>
+                <div class="module-name">DIGIY LOC</div>
+                <div class="module-tag">LOCATION SANS OTA</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Alternative Booking/Airbnb, sans commission, en direct propriétaire.</div>
+        </div>
+
+        <div class="module" data-open="resto">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🍽️</div>
+              <div>
+                <div class="module-name">DIGIY RESTO</div>
+                <div class="module-tag">VITRINE RESTAURANT</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Menus, photos, horaires, localisation. Réservation directe.</div>
+        </div>
+
+        <div class="module" data-open="pay">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">💳</div>
+              <div>
+                <div class="module-name">DIGIY PAY</div>
+                <div class="module-tag">WALLET UNIFIÉ</div>
+              </div>
+            </div>
+            <div class="badge prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">Wave / OM / CB. Historique, suivi, activation modules.</div>
+        </div>
+
+        <div class="module" data-open="build">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🏗️</div>
+              <div>
+                <div class="module-name">DIGIY BUILD</div>
+                <div class="module-tag">ARTISANS & BTP</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Devis, galerie, contact. Humain. Direct. Sans commission.</div>
+        </div>
+
+        <div class="module" data-open="market">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🛍️</div>
+              <div>
+                <div class="module-name">DIGIY MARKET</div>
+                <div class="module-tag">MARKETPLACE LOCALE</div>
+              </div>
+            </div>
+            <div class="badge prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">Acheter/vendre local. Annonces propres. Sans commission.</div>
+        </div>
+
+        <div class="module" data-open="job">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">💼</div>
+              <div>
+                <div class="module-name">DIGIY JOBS</div>
+                <div class="module-tag">EMPLOI & TALENTS</div>
+              </div>
+            </div>
+            <div class="badge prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">Offres, candidatures, profils. Pont talents–employeurs.</div>
+        </div>
+
+        <div class="module" data-open="explore">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🧭</div>
+              <div>
+                <div class="module-name">DIGIY EXPLORE</div>
+                <div class="module-tag">BONS SPOTS • GUIDES</div>
+              </div>
+            </div>
+            <div class="badge new">NOUVEAU</div>
+          </div>
+          <div class="module-body">Découvrir lieux, bons plans, itinéraires. Terrain & culture.</div>
+        </div>
+
+        <div class="module" data-open="ndimbalMap">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🗺️</div>
+              <div>
+                <div class="module-name">DIGIY NDIMBAL MAP</div>
+                <div class="module-tag">CARTE COMMUNAUTÉ</div>
+              </div>
+            </div>
+            <div class="badge free">GRATUIT</div>
+          </div>
+          <div class="module-body">Annuaire géolocalisé du Sénégal : pros, quartiers, filtres.</div>
+        </div>
+
+        <div class="module" data-external="https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🚚</div>
+              <div>
+                <div class="module-name">DIGIY FRET</div>
+                <div class="module-tag">TRANSPORT MARCHANDISES</div>
+              </div>
+            </div>
+            <div class="badge new">NOUVEAU</div>
+          </div>
+          <div class="module-body">Transport marchandises 0% commission. GPS, paiements directs.</div>
+        </div>
+
+        <div class="module" data-open="inscriptionClient">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">♾️</div>
+              <div>
+                <div class="module-name">ACCÈS CLIENT</div>
+                <div class="module-tag">INSCRIPTION GRATUITE</div>
+              </div>
+            </div>
+            <div class="badge free">GRATUIT</div>
+          </div>
+          <div class="module-body">Crée ton compte gratuit et accède aux apps clients DIGIY.</div>
+        </div>
+
+        <div class="module" data-open="inscription">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">📝</div>
+              <div>
+                <div class="module-name">INSCRIPTION PRO</div>
+                <div class="module-tag">NOUVEAU COMPTE PRO</div>
+              </div>
+            </div>
+            <div class="badge new">NOUVEAU</div>
+          </div>
+          <div class="module-body">Inscription intelligente. Choisis ton module, on calcule ton tarif.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <div style="font-weight:950;color:#fff;margin-bottom:6px">L’Afrique enracinée, connectée au monde — DIGIYLYFE ♾️</div>
+      <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:8px">
+        <a href="https://digiylyfe.com" target="_blank" rel="noopener">Accueil DIGIYLYFE</a>
+        <a href="https://wa.me/221771342889" target="_blank" rel="noopener">Contact WhatsApp</a>
+        <a href="https://beauville.github.io/DIGIY/" target="_blank" rel="noopener">Tarifs détaillés</a>
+      </div>
+      <div>© DIGIYLYFE — Made in Sénégal • 0% commission • Paiement direct</div>
+    </footer>
+  </div>
+
+  <button id="tarif-bubble-btn" type="button">F • Tarifs DIGIY</button>
+  <button id="digiy-help-btn" type="button">♾️ NDIMBAL</button>
+
+  <div id="digiy-ndimbal" aria-hidden="true">
+    <div class="digiyBox">
+      <div class="digiyTitle">♾️ NDIMBAL</div>
+      <div class="digiyText"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t’aider simplement.</div>
+
+      <!-- ✅ IMPORTANT: class digiyAct (pas digiy-act) -->
+      <button class="digiyAct" type="button" data-action="sell">📋 Publier une mission</button>
+      <button class="digiyAct" type="button" data-action="job">💼 Trouver du travail</button>
+      <button class="digiyAct" type="button" data-action="qr">📷 Ouvrir QR DIGIYLYFE</button>
+
+      <!-- ✅ IMPORTANT: id digiyCloseBtn -->
+      <button class="digiyClose" type="button" id="digiyCloseBtn">❌ Quitter</button>
     </div>
   </div>
-</div>
 
-</div>
-</div>
+  <div id="qrModal" aria-hidden="true">
+    <div style="max-width:420px;margin:10vh auto;background:#fff;border-radius:20px;padding:20px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.50)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div style="font-weight:950;letter-spacing:.06em;text-transform:uppercase;color:#0f172a;font-size:1.05rem">♾️ QR DIGIYLYFE</div>
+        <button id="qrClose" style="border:none;background:#f1f5f9;color:#0f172a;padding:8px 12px;border-radius:12px;font-weight:900;cursor:pointer;font-size:.85rem" type="button">✖ Fermer</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://digiylyfe.com" alt="QR DIGIYLYFE" style="width:260px;height:260px;border-radius:16px;border:2px solid #16a34a;padding:12px;background:#fff;margin:0 auto 12px">
+      <div style="color:#0f172a;font-weight:800;margin-bottom:12px;font-size:1rem">📱 Scanne pour ouvrir DIGIYLYFE</div>
+      <a href="https://digiylyfe.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:320px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#052e16;padding:12px 18px;border-radius:14px;font-weight:950;text-decoration:none">Ouvrir le site →</a>
+    </div>
+  </div>
 
-<div class="modules-category">
-<div class="category-header"><span class="category-icon">📦</span><h3 class="category-title">Autres services</h3></div>
-<div class="modules-grid">
+  <div id="hubOverlay" aria-hidden="true">
+    <div class="hubCard" role="dialog" aria-modal="true">
+      <div class="hubTop">
+        <div class="hubBrand">♾️ DIGIY HUB</div>
+        <div class="hubTopBtns">
+          <button class="hubBtn back" id="hubBackBtn" type="button">← Retour HUB</button>
+          <button class="hubBtn close" id="hubCloseBtn" type="button">✖ Fermer</button>
+        </div>
+      </div>
+      <iframe id="hubFrame" title="Module DIGIY" allow="geolocation; camera; microphone"></iframe>
+    </div>
+  </div>
 
-<div class="module" data-open="loc"><div class="module-inner"><div class="module-header"><div class="module-icon">🏠</div><div class="module-titles"><div class="module-name">DIGIY LOC</div><div class="module-tagline">LOCATION SANS OTA</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Alternative Booking/Airbnb, sans commission, en direct.</div></div></div>
-<div class="module" data-open="resto"><div class="module-inner"><div class="module-header"><div class="module-icon">🍽️</div><div class="module-titles"><div class="module-name">DIGIY RESTO</div><div class="module-tagline">VITRINE RESTAURANT</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Menus, photos, horaires, localisation. Réservation directe.</div></div></div>
-<div class="module" data-open="pay"><div class="module-inner"><div class="module-header"><div class="module-icon">💳</div><div class="module-titles"><div class="module-name">DIGIY PAY</div><div class="module-tagline">WALLET UNIFIÉ</div></div><div class="module-badge badge-prio">PRIORITÉ</div></div><div class="module-body">Encaissements Wave / OM / CB. Historique et suivi.</div></div></div>
-<div class="module" data-open="build"><div class="module-inner"><div class="module-header"><div class="module-icon">🏗️</div><div class="module-titles"><div class="module-name">DIGIY BUILD</div><div class="module-tagline">ARTISANS & BTP</div></div><div class="module-badge">LIVE</div></div><div class="module-body">Devis, galerie, contact. Humain. Direct.</div></div></div>
-<div class="module" data-open="market"><div class="module-inner"><div class="module-header"><div class="module-icon">🛍️</div><div class="module-titles"><div class="module-name">DIGIY MARKET</div><div class="module-tagline">MARKETPLACE LOCALE</div></div><div class="module-badge badge-prio">PRIORITÉ</div></div><div class="module-body">Acheter/vendre local. Annonces propres. Sans commission.</div></div></div>
-<div class="module" data-open="job"><div class="module-inner"><div class="module-header"><div class="module-icon">💼</div><div class="module-titles"><div class="module-name">DIGIY JOBS</div><div class="module-tagline">EMPLOI & TALENTS</div></div><div class="module-badge badge-prio">PRIORITÉ</div></div><div class="module-body">Offres, candidatures, profils. Pont talents–employeurs.</div></div></div>
-<div class="module" data-open="ndimbalMap"><div class="module-inner"><div class="module-header"><div class="module-icon">🗺️</div><div class="module-titles"><div class="module-name">DIGIY NDIMBAL MAP</div><div class="module-tagline">CARTE COMMUNAUTÉ</div></div><div class="module-badge badge-prio">GRATUIT</div></div><div class="module-body">Annuaire géolocalisé du Sénégal. Pros, quartiers, filtres.</div></div></div>
+  <script>
+  (function(){
+    "use strict";
 
-<div class="module" data-external="https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver"><div class="module-inner"><div class="module-header"><div class="module-icon">🚚</div><div class="module-titles"><div class="module-name">DIGIY FRET</div><div class="module-tagline">TRANSPORT MARCHANDISES</div></div><div class="module-badge badge-new">NOUVEAU</div></div><div class="module-body">Transport marchandises 0% commission. GPS, paiements directs.</div></div></div>
+    const LINKS = {
+      bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/",
+      driver: "https://beauville.github.io/digiy-driver/",
+      driverClient: "https://beauville.github.io/digiy-driver-client/",
+      loc: "https://beauville.github.io/digiy-loc/",
+      resto: "https://beauville.github.io/digiy-resto/",
+      caissePro: "https://beauville.github.io/Digiy-caisse-pro/",
+      vasChez: "https://beauville.github.io/vas-chez-digiy/",
+      pay: "https://beauville.github.io/digiy-pay/",
+      build: "https://beauville.github.io/digiy-build/",
+      market: "https://beauville.github.io/digiy-market/",
+      job: "https://beauville.github.io/digiy-jobs/",
+      explore: "https://beauville.github.io/digiy-explore/",
+      ndimbalMap: "https://beauville.github.io/digiy-mdimbal-map/",
+      inscription: "https://beauville.github.io/inscription-digiy/",
+      inscriptionClient: "https://beauville.github.io/inscription-client.html",
+      dashboard: "https://beauville.github.io/mon-espace-digiy/",
+      tarifs: "https://beauville.github.io/digiy/",
+      home: "https://digiylyfe.com"
+    };
 
-<div class="module" data-open="inscriptionClient"><div class="module-inner"><div class="module-header"><div class="module-icon">♾️</div><div class="module-titles"><div class="module-name">ACCÈS CLIENT</div><div class="module-tagline">INSCRIPTION GRATUITE</div></div><div class="module-badge badge-prio">GRATUIT</div></div><div class="module-body">Crée ton compte gratuit et accède aux apps clients DIGIY.</div></div></div>
-<div class="module" data-open="inscription"><div class="module-inner"><div class="module-header"><div class="module-icon">📝</div><div class="module-titles"><div class="module-name">INSCRIPTION PRO</div><div class="module-tagline">NOUVEAU COMPTE PRO</div></div><div class="module-badge badge-new">NOUVEAU</div></div><div class="module-body">Inscription intelligente. Choisis ton module, on calcule ton tarif.</div></div></div>
+    const hubOverlay = document.getElementById("hubOverlay");
+    const hubFrame   = document.getElementById("hubFrame");
+    const ndimbal    = document.getElementById("digiy-ndimbal");
+    const qrModal    = document.getElementById("qrModal");
 
-</div>
-</div>
-</section>
-
-<section class="pricing">
-<h2 class="pricing-title">Un abonnement. Tout l'écosystème.</h2>
-<p class="pricing-subtitle">Tu ne payes pas à chaque course/vente :<br>tu payes <strong>une fois par mois</strong>, tu gardes <strong>100%</strong>.</p>
-<div class="pricing-card">
-<div class="pricing-label">Offre Pionniers</div>
-<div class="pricing-price">29,900 F / mois</div>
-<div class="pricing-note">Prix bloqué <strong>À VIE</strong> pour les premiers.<br>Accès à tous les modules • 0% commission • Support WhatsApp</div>
-<button id="btnSignup" class="pricing-cta" type="button">S'inscrire maintenant →</button>
-</div>
-</section>
-
-<footer>
-<div class="footer-tagline">L'Afrique enracinée, connectée au monde — DIGIYLYFE ♾️</div>
-<div class="footer-links">
-<a href="https://digiylyfe.com" class="footer-link" target="_blank" rel="noopener">Accueil DIGIYLYFE</a>
-<a href="https://wa.me/221771342889" class="footer-link" target="_blank" rel="noopener">Contact WhatsApp</a>
-<a href="https://beauville.github.io/DIGIY/" class="footer-link" target="_blank" rel="noopener">Tarifs détaillés</a>
-</div>
-<p>© 2024 DIGIYLYFE — Made in Sénégal • 0% commission • Paiement direct</p>
-</footer>
-</div>
-
-<button id="tarif-bubble-btn" class="tarif-bubble" type="button">
-<div class="tarif-badge-icon">F</div><div>Tarifs DIGIY</div>
-</button>
-
-<button id="digiy-help-btn" type="button">♾️ NDIMBAL</button>
-
-<div id="digiy-ndimbal" aria-hidden="true">
-<div class="digiy-box">
-<div class="digiy-title">♾️ NDIMBAL</div>
-<p class="digiy-text"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t'aider simplement.</p>
-<div>
-<button class="digiy-act" data-action="sell" type="button">📋 Publier une mission</button>
-<button class="digiy-act" data-action="job" type="button">💼 Trouver du travail</button>
-<button class="digiy-act" data-action="qr" type="button">📷 Ouvrir QR DIGIYLYFE</button>
-</div>
-<button class="digiy-close" id="digiy-close" type="button">❌ Quitter</button>
-</div>
-</div>
-
-<div id="qrModal" aria-hidden="true">
-<div style="max-width:420px;margin:10vh auto;background:#fff;border-radius:20px;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.50)">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-<div style="font-weight:950;letter-spacing:.06em;text-transform:uppercase;color:#0f172a;font-size:1.1rem">♾️ QR DIGIYLYFE</div>
-<button id="qrClose" style="border:none;background:#f1f5f9;color:#0f172a;padding:8px 14px;border-radius:12px;font-weight:900;cursor:pointer;font-size:.85rem" type="button">✖ Fermer</button>
-</div>
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://digiylyfe.com" alt="QR DIGIYLYFE" style="width:260px;height:260px;border-radius:16px;border:2px solid #16a34a;padding:12px;background:#fff;margin:0 auto 16px">
-<div style="color:#0f172a;font-weight:700;margin-bottom:16px;font-size:1.05rem">📱 Scanne pour ouvrir DIGIYLYFE</div>
-<a href="https://digiylyfe.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:320px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#052e16;padding:12px 20px;border-radius:14px;font-weight:950;text-decoration:none">Ouvrir le site →</a>
-</div>
-</div>
-
-<div id="hubOverlay" aria-hidden="true">
-<div class="hubOverlayCard">
-<div class="hubOverlayTop">
-<div class="hubOverlayBrand"><span>♾️ DIGIY HUB</span></div>
-<div>
-<button id="hubBackBtn" class="hubOverlayBtn back" type="button">← Retour HUB</button>
-<button id="hubCloseBtn" class="hubOverlayBtn close" type="button">✖ Fermer</button>
-</div>
-</div>
-<iframe id="hubFrame" class="hubOverlayFrame" title="Module DIGIY" allow="geolocation; camera; microphone"></iframe>
-</div>
-</div>
-
-<script>
-(function () {
-  'use strict';
-
-  const HUB_BASE = "https://beauville.github.io/digiy-hub-drive/";
-  const HUB = (p) => HUB_BASE + String(p || "").replace(/^\//, "");
-
-  const NDIMBAL_PUBLISH_URL = HUB("");
-  const NDIMBAL_JEF_URL = HUB("digiy-jef.html");
-
-  const LINKS = {
-    driver: "https://beauville.github.io/digiy-driver/",
-    driverClient: "https://beauville.github.io/digiy-driver-client/",
-    loc: "https://beauville.github.io/digiy-loc/",
-    resto: "https://beauville.github.io/digiy-resto/",
-    resa: "https://beauville.github.io/digiy-resa-table/",
-    caissePro: "https://beauville.github.io/Digiy-caisse-pro/",
-    vasChez: "https://beauville.github.io/vas-chez-digiy/",
-    pay: "https://beauville.github.io/digiy-pay/",
-    build: "https://beauville.github.io/digiy-build/",
-    market: "https://beauville.github.io/digiy-market/",
-    job: "https://beauville.github.io/digiy-jobs/",
-    explore: "https://beauville.github.io/digiy-explore/",
-    ndimbalMap: "https://beauville.github.io/digiy-mdimbal-map/",
-    inscription: "https://beauville.github.io/inscription-digiy/",
-    inscriptionClient: "https://beauville.github.io/inscription-client.html",
-    dashboard: "https://beauville.github.io/mon-espace-digiy/",
-    ndimbalJef: NDIMBAL_JEF_URL,
-    ndimbalPublish: NDIMBAL_PUBLISH_URL,
-
-    // ✅ OFFICIEL
-    bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/"
-  };
-
-  const hubOverlay = document.getElementById('hubOverlay');
-  const hubFrame = document.getElementById('hubFrame');
-  const hubBackBtn = document.getElementById('hubBackBtn');
-  const hubCloseBtn = document.getElementById('hubCloseBtn');
-
-  const ndimbalModal = document.getElementById('digiy-ndimbal');
-  const ndimbalBtn = document.getElementById('digiy-help-btn');
-  const ndimbalCloseBtn = document.getElementById('digiy-close');
-
-  const qrModal = document.getElementById('qrModal');
-  const qrCloseBtn = document.getElementById('qrClose');
-
-  function openInside(url) {
-    if (!url) return;
-
-    if (ndimbalModal) ndimbalModal.classList.remove('show');
-
-    if (!hubOverlay || !hubFrame) {
-      window.location.href = url;
-      return;
+    function show(el){
+      if(!el) return;
+      el.classList.add("show");
+      el.setAttribute("aria-hidden","false");
     }
-    hubFrame.src = url;
-    hubOverlay.classList.add('show');
-    hubOverlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
+    function hide(el){
+      if(!el) return;
+      el.classList.remove("show");
+      el.setAttribute("aria-hidden","true");
+    }
 
-  function closeInside() {
-    if (!hubOverlay || !hubFrame) return;
-    hubOverlay.classList.remove('show');
-    hubOverlay.setAttribute('aria-hidden', 'true');
-    hubFrame.src = 'about:blank';
-    document.body.style.overflow = '';
-  }
+    function openInside(url){
+      hide(ndimbal);
+      if(!hubOverlay || !hubFrame){ window.location.href = url; return; }
+      hubFrame.src = url;
+      show(hubOverlay);
+      document.body.style.overflow = "hidden";
+    }
+    function closeInside(){
+      if(!hubOverlay || !hubFrame) return;
+      hide(hubOverlay);
+      hubFrame.src = "about:blank";
+      document.body.style.overflow = "";
+    }
 
-  if (hubBackBtn) hubBackBtn.addEventListener('click', closeInside);
-  if (hubCloseBtn) hubCloseBtn.addEventListener('click', closeInside);
-  if (hubOverlay) hubOverlay.addEventListener('click', (e) => { if (e.target === hubOverlay) closeInside(); });
+    function openNdimbal(){ show(ndimbal); }
+    function closeNdimbal(){ hide(ndimbal); }
 
-  function openModuleKey(key) {
-    const url = LINKS[key];
-    if (!url) { alert('Module en préparation.'); return; }
-    openInside(url);
-  }
+    function openQR(){ show(qrModal); }
+    function closeQR(){ hide(qrModal); }
 
-  // Parcours guidés
-  document.querySelectorAll('[data-path]').forEach((card) => {
-    card.addEventListener('click', () => {
-      const path = card.getAttribute('data-path');
-      if (path === 'client') openInside(LINKS.inscriptionClient);
-      else if (path === 'driver') openInside(LINKS.driver);
-      else if (path === 'commerce') openInside(LINKS.caissePro);
-    });
-  });
+    document.addEventListener("click", function(e){
+      const t = e.target;
 
-  // Modules
-  document.addEventListener('click', (e) => {
-    const card = e.target.closest('.module');
-    if (!card) return;
+      // Overlay buttons
+      if(t && (t.id === "hubBackBtn" || t.id === "hubCloseBtn")){
+        e.preventDefault(); e.stopPropagation();
+        closeInside(); return;
+      }
 
-    const ext = card.getAttribute('data-external');
-    const key = card.getAttribute('data-open');
+      // Backdrop close
+      if(hubOverlay && t === hubOverlay){ closeInside(); return; }
 
-    if (ext) { window.open(ext, '_blank', 'noopener'); return; }
-    if (key) openModuleKey(key);
-  });
+      // Header/Hero
+      if(t && t.closest && t.closest("#btnLogin")) { e.preventDefault(); openInside(LINKS.dashboard); return; }
+      if(t && t.closest && t.closest("#btnGetHub")) { e.preventDefault(); openInside(LINKS.inscription); return; }
+      if(t && t.closest && t.closest("#btnDeals")) { e.preventDefault(); openInside(LINKS.bonneAffaire); return; }
+      if(t && t.closest && t.closest("#tarif-bubble-btn")) { e.preventDefault(); openInside(LINKS.tarifs); return; }
 
-  const loginBtn = document.getElementById('btnLogin');
-  const getHubBtn = document.getElementById('btnGetHub');
-  const signupBtn = document.getElementById('btnSignup');
-  const homeBrand = document.getElementById('homeBrand');
-  const tarifBtn = document.getElementById('tarif-bubble-btn');
-  const btnDeals = document.getElementById('btnDeals'); // ✅ HERO
+      // NDIMBAL
+      if(t && t.closest && t.closest("#digiy-help-btn")) { e.preventDefault(); openNdimbal(); return; }
+      if(t && t.closest && t.closest("#digiyCloseBtn")) { e.preventDefault(); closeNdimbal(); return; }
+      if(ndimbal && t === ndimbal){ closeNdimbal(); return; }
 
-  if (loginBtn) loginBtn.addEventListener('click', () => openInside(LINKS.dashboard));
-  if (getHubBtn) getHubBtn.addEventListener('click', () => openInside(LINKS.inscription));
-  if (signupBtn) signupBtn.addEventListener('click', () => openInside(LINKS.inscription));
-
-  if (homeBrand) homeBrand.addEventListener('click', (e) => {
-    e.preventDefault();
-    closeInside();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  if (tarifBtn) tarifBtn.addEventListener('click', () => openInside('https://beauville.github.io/digiy/'));
-  if (btnDeals) btnDeals.addEventListener('click', () => openInside(LINKS.bonneAffaire));
-
-  // NDIMBAL (safe)
-  if (ndimbalBtn) ndimbalBtn.addEventListener('click', () => {
-    if (!ndimbalModal) return;
-    ndimbalModal.classList.add('show');
-    ndimbalModal.setAttribute('aria-hidden', 'false');
-  });
-
-  function closeNdimbal() {
-    if (!ndimbalModal) return;
-    ndimbalModal.classList.remove('show');
-    ndimbalModal.setAttribute('aria-hidden', 'true');
-  }
-
-  if (ndimbalCloseBtn) ndimbalCloseBtn.addEventListener('click', closeNdimbal);
-  if (ndimbalModal) ndimbalModal.addEventListener('click', (e) => { if (e.target === ndimbalModal) closeNdimbal(); });
-
-  document.querySelectorAll('.digiy-act').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const action = btn.getAttribute('data-action');
-      if (action === 'sell') { closeNdimbal(); openInside(LINKS.ndimbalPublish); }
-      else if (action === 'job') { closeNdimbal(); openInside(LINKS.ndimbalJef); }
-      else if (action === 'qr') {
+      // NDIMBAL actions (✅ class digiyAct)
+      const act = (t && t.closest) ? t.closest(".digiyAct") : null;
+      if(act){
+        e.preventDefault();
+        const action = act.getAttribute("data-action");
         closeNdimbal();
-        if (!qrModal) return;
-        qrModal.classList.add('show');
-        qrModal.setAttribute('aria-hidden', 'false');
+        if(action === "sell") openInside(LINKS.bonneAffaire);
+        else if(action === "job") openInside(LINKS.job);
+        else if(action === "qr") openQR();
+        return;
+      }
+
+      // QR close
+      if(t && t.closest && t.closest("#qrClose")) { e.preventDefault(); closeQR(); return; }
+      if(qrModal && t === qrModal) { closeQR(); return; }
+
+      // Module cards
+      const card = (t && t.closest) ? t.closest(".module") : null;
+      if(card){
+        e.preventDefault();
+        const ext = card.getAttribute("data-external");
+        const key = card.getAttribute("data-open");
+
+        if(ext){ window.open(ext,"_blank","noopener"); return; }
+        if(key && LINKS[key]){ openInside(LINKS[key]); return; }
+
+        // fallback propre (jamais "vol" de module)
+        openInside(LINKS.tarifs);
+        return;
+      }
+
+      // Brand home
+      if(t && t.closest && t.closest("#homeBrand")){
+        e.preventDefault();
+        closeInside();
+        window.scrollTo({top:0,behavior:"smooth"});
+        return;
+      }
+    }, true);
+
+    document.addEventListener("keydown", function(e){
+      if(e.key === "Escape"){
+        if(qrModal && qrModal.classList.contains("show")) closeQR();
+        else if(ndimbal && ndimbal.classList.contains("show")) closeNdimbal();
+        else if(hubOverlay && hubOverlay.classList.contains("show")) closeInside();
       }
     });
-  });
 
-  function closeQR() {
-    if (!qrModal) return;
-    qrModal.classList.remove('show');
-    qrModal.setAttribute('aria-hidden', 'true');
-  }
-
-  if (qrCloseBtn) qrCloseBtn.addEventListener('click', closeQR);
-  if (qrModal) qrModal.addEventListener('click', (e) => { if (e.target === qrModal) closeQR(); });
-
-  // ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    if (qrModal && qrModal.classList.contains('show')) closeQR();
-    else if (ndimbalModal && ndimbalModal.classList.contains('show')) closeNdimbal();
-    else if (hubOverlay && hubOverlay.classList.contains('show')) closeInside();
-  });
-
-  // Compteur pionniers
-  const pioneersEl = document.getElementById('pioneersLeft');
-  if (pioneersEl) {
-    let pioneersLeft = parseInt(pioneersEl.textContent, 10);
-    if (Number.isNaN(pioneersLeft)) pioneersLeft = 87;
-    setInterval(() => {
-      if (pioneersLeft > 83 && Math.random() > 0.7) {
-        pioneersLeft--;
-        pioneersEl.textContent = String(pioneersLeft);
-      }
-    }, 30000);
-  }
-
-  // Stats live
-  (function animateLiveStats() {
-    const prosEl = document.getElementById('livePros');
-    const driversEl = document.getElementById('liveDrivers');
-    const shopsEl = document.getElementById('liveShops');
-
-    setInterval(() => {
-      if (prosEl && Math.random() > 0.85) {
-        const current = parseInt(prosEl.textContent, 10) || 142;
-        prosEl.textContent = String(current + (Math.random() > 0.5 ? 1 : -1));
-      }
-      if (driversEl && Math.random() > 0.88) {
-        const current = parseInt(driversEl.textContent, 10) || 23;
-        driversEl.textContent = String(Math.max(18, current + (Math.random() > 0.5 ? 1 : -1)));
-      }
-      if (shopsEl && Math.random() > 0.9) {
-        const current = parseInt(shopsEl.textContent, 10) || 18;
-        shopsEl.textContent = String(Math.max(15, current + (Math.random() > 0.5 ? 1 : -1)));
-      }
-    }, 5000);
+    console.log("✅ DIGIY HUB — GITHUB FULL OK");
   })();
-
-  // SW
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./service-worker.js')
-        .then(() => console.log('✅ SW registered'))
-        .catch((err) => console.log('❌ SW failed:', err));
-    });
-  }
-
-  console.log('✅ DIGIY HUB — Bonnes Affaires OFFICIEL ! 💥🦅♾️');
-})();
-</script>
+  </script>
 
 </body>
 </html>
