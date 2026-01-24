@@ -370,7 +370,7 @@
             </div>
             <div class="badge new">NOUVEAU</div>
           </div>
-          <div class="module-body">Caisse pro + sync ultra-légère. Encaissement terrain.</div>
+          <div class="module-body">Caisse pro + sync ultra-légère. Encaissement terrain (slug → direct).</div>
         </div>
 
         <div class="module" data-open="vasChez">
@@ -413,6 +413,66 @@
             <div class="badge">LIVE</div>
           </div>
           <div class="module-body">Menus, photos, horaires, localisation. Réservation directe.</div>
+        </div>
+
+        <!-- ✅ AJOUT — RESA TABLE -->
+        <div class="module" data-open="resaTable">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🍽️</div>
+              <div>
+                <div class="module-name">DIGIY RESA TABLE</div>
+                <div class="module-tag">RÉSERVATION • TABLES</div>
+              </div>
+            </div>
+            <div class="badge new">NOUVEAU</div>
+          </div>
+          <div class="module-body">Réservations de tables, gestion simple, confirmation rapide.</div>
+        </div>
+
+        <!-- ✅ AJOUT — NOTABLE -->
+        <div class="module" data-open="notable">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🏆</div>
+              <div>
+                <div class="module-name">DIGIY NOTABLE</div>
+                <div class="module-tag">VISIBILITÉ • RÉFÉRENCE</div>
+              </div>
+            </div>
+            <div class="badge prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">Les pros recommandés, repères terrain, confiance & qualité.</div>
+        </div>
+
+        <!-- ✅ AJOUT — ESPACE PRO -->
+        <div class="module" data-open="espacePro">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🧰</div>
+              <div>
+                <div class="module-name">ESPACE PRO</div>
+                <div class="module-tag">PORTAIL • OUTILS</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Portail pro : accès, outils, raccourcis, pilotage.</div>
+        </div>
+
+        <!-- ✅ AJOUT — ESPACE CLIENT -->
+        <div class="module" data-open="espaceClient">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">👤</div>
+              <div>
+                <div class="module-name">ESPACE CLIENT</div>
+                <div class="module-tag">COMPTE • SUIVI</div>
+              </div>
+            </div>
+            <div class="badge free">GRATUIT</div>
+          </div>
+          <div class="module-body">Compte client DIGIY : parcours, suivi, accès aux apps clients.</div>
         </div>
 
         <div class="module" data-open="pay">
@@ -609,20 +669,56 @@
     driverClient: "https://beauville.github.io/digiy-driver-client/",
     loc: "https://beauville.github.io/digiy-loc/",
     resto: "https://beauville.github.io/digiy-resto/",
-    caissePro: "https://beauville.github.io/Digiy-caisse-pro/",
+    // ✅ CAISSE PRO: on pointe l’index, et on injecte ?slug=... automatiquement
+    caissePro: "https://beauville.github.io/Digiy-caisse-pro/index.html",
     vasChez: "https://beauville.github.io/vas-chez-digiy/",
     pay: "https://beauville.github.io/digiy-pay/",
     build: "https://beauville.github.io/digiy-build/",
     market: "https://beauville.github.io/digiy-market/",
     job: "https://beauville.github.io/digiy-jobs/",
     explore: "https://beauville.github.io/digiy-explore/",
-    ndimbalMap: "https://beauville.github.io/digiy-mdimbal-map/",
+    // ✅ FIX typo: ndimbal (pas mdimbal)
+    ndimbalMap: "https://beauville.github.io/digiy-ndimbal-map/",
+    // ✅ AJOUTS HUB
+    resaTable: "https://beauville.github.io/digiy-resa-table/",
+    notable: "https://beauville.github.io/digiy-notable/",
+    espacePro: "https://beauville.github.io/espace-pro/",
+    espaceClient: "https://beauville.github.io/digiy-espace-client/",
     inscription: "https://beauville.github.io/inscription-digiy/",
     inscriptionClient: "https://beauville.github.io/inscription-client.html",
     dashboard: "https://beauville.github.io/mon-espace-digiy/",
     tarifs: "https://beauville.github.io/digiy/",
     home: "https://digiylyfe.com"
   };
+
+  // ✅ Slug passthrough (universel, mais ciblé pour éviter de polluer les pages marketing)
+  const SLUG_KEYS = new Set([
+    "caissePro","loc","resto","driver","driverClient",
+    "pay","build","market","job","explore",
+    "ndimbalMap","resaTable","notable","espacePro","espaceClient",
+    "dashboard"
+  ]);
+
+  function getSlug(){
+    try{
+      const s = new URL(location.href).searchParams.get("slug");
+      return (s || "").trim().toLowerCase();
+    }catch{
+      return "";
+    }
+  }
+  function withSlug(url){
+    const slug = getSlug();
+    if(!slug) return url;
+    const u = new URL(url, location.href);
+    u.searchParams.set("slug", slug);
+    return u.toString();
+  }
+  function resolveUrl(key, url){
+    if(!url) return url;
+    if(key && SLUG_KEYS.has(key)) return withSlug(url);
+    return url;
+  }
 
   // Elements
   const hubOverlay = document.getElementById("hubOverlay");
@@ -650,15 +746,25 @@
     return !!(hubOverlay && hubFrame);
   }
 
-  function openInside(url){
+  function openInside(url, key){
     hide(ndimbal);
+    const finalUrl = resolveUrl(key, url);
+
     if(!hasOverlay()){
-      window.location.href = url;
+      window.location.href = finalUrl;
       return;
     }
-    hubFrame.src = url;
+    hubFrame.src = finalUrl;
     show(hubOverlay);
     document.body.style.overflow = "hidden";
+  }
+
+  function openModule(key){
+    if(key && LINKS[key]){
+      openInside(LINKS[key], key);
+      return;
+    }
+    alert("Module en préparation.");
   }
 
   function closeInside(){
@@ -696,28 +802,27 @@
     // 3) Hero / header buttons (use closest to catch inner spans)
     if(t && t.closest && t.closest("#btnLogin")){
       e.preventDefault();
-      openInside(LINKS.dashboard);
+      openModule("dashboard");
       return;
     }
     if(t && t.closest && t.closest("#btnGetHub")){
       e.preventDefault();
-      // ✅ deep link WHY (tu voulais ça)
-      openInside(LINKS.inscription + "#why");
+      openInside(LINKS.inscription + "#why", "inscription"); // pas besoin de slug ici
       return;
     }
     if(t && t.closest && t.closest("#btnSignup")){
       e.preventDefault();
-      openInside(LINKS.inscription + "#why");
+      openInside(LINKS.inscription + "#why", "inscription");
       return;
     }
     if(t && t.closest && t.closest("#btnDeals")){
       e.preventDefault();
-      openInside(LINKS.bonneAffaire);
+      openModule("bonneAffaire");
       return;
     }
     if(t && t.closest && t.closest("#tarif-bubble-btn")){
       e.preventDefault();
-      openInside(LINKS.tarifs);
+      openModule("tarifs"); // slug non injecté (marketing)
       return;
     }
 
@@ -747,9 +852,9 @@
       closeNdimbal();
 
       if(action === "sell"){
-        openInside(LINKS.inscription + "#why");
+        openInside(LINKS.inscription + "#why", "inscription");
       } else if(action === "job"){
-        openInside(LINKS.job);
+        openModule("job");
       } else if(action === "qr"){
         openQR();
       }
@@ -779,8 +884,8 @@
         window.open(ext, "_blank", "noopener");
         return;
       }
-      if(key && LINKS[key]){
-        openInside(LINKS[key]);
+      if(key){
+        openModule(key);
         return;
       }
 
@@ -818,7 +923,7 @@
     }
   });
 
-  console.log("✅ DIGIY HUB — ROUTER FULL OK (WP SAFE) + #why");
+  console.log("✅ DIGIY HUB — ROUTER FULL OK + Ajouts (RESA/NOTABLE/ESPACES) + Slug passthrough ciblé");
 })();
 </script>
 
