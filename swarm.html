@@ -4,23 +4,21 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <meta name="theme-color" content="#061b14"/>
-  <title>DIGIY SWARM — Dashboard Central</title>
+  <title>DIGIY — Température Business</title>
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- ✅ Guard DIGIY -->
-  <script src="./guard.js?v=swarm-2"></script>
+  <!-- Guard DIGIY -->
+  <script src="./guard.js?v=swarm-peuple-1"></script>
 
   <style>
     :root{
       --bg:#061b14;
       --card:#0b2a1f;
-      --card2:#0a241b;
       --line:rgba(255,255,255,.12);
-
       --text:#eafff1;
-      --muted:rgba(234,255,241,.70);
+      --muted:rgba(234,255,241,.7);
 
       --gold:#facc15;
       --green:#22c55e;
@@ -33,10 +31,9 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{
       font-family:system-ui,-apple-system,sans-serif;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(250,204,21,.12), transparent 55%),
-        radial-gradient(circle at 80% 90%, rgba(34,197,94,.10), transparent 60%),
-        var(--bg);
+      background:radial-gradient(circle at 20% 10%, rgba(250,204,21,.12), transparent 55%),
+                 radial-gradient(circle at 80% 90%, rgba(34,197,94,.10), transparent 60%),
+                 var(--bg);
       color:var(--text);
       min-height:100vh;
       padding:22px;
@@ -44,39 +41,23 @@
 
     header{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:14px;
+      align-items:center;
       margin-bottom:18px;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
     .logo{
-      width:54px;height:54px;
-      border-radius:16px;
-      background:linear-gradient(135deg, rgba(34,197,94,.22), rgba(250,204,21,.22));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:26px;
-      border:1px solid var(--line);
-      box-shadow:0 0 18px rgba(34,197,94,.12);
+      font-size:28px;
+      font-weight:900;
+      color:var(--gold);
     }
 
-    h1{font-size:18px;line-height:1.2}
-    .sub{font-size:13px;color:var(--muted)}
-
-    .pill{
-      background:rgba(255,255,255,.06);
-      border:1px solid var(--line);
+    .status{
       padding:10px 14px;
       border-radius:999px;
+      border:1px solid var(--line);
       font-size:13px;
+      background:rgba(255,255,255,.06);
       color:var(--muted);
     }
 
@@ -84,76 +65,55 @@
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
       gap:14px;
-      margin-top:14px;
     }
 
     .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+      background:rgba(255,255,255,.04);
       border:1px solid var(--line);
       border-radius:var(--radius);
-      padding:16px;
-      box-shadow:0 12px 30px rgba(0,0,0,.35);
-      transition:.18s ease;
-    }
-    .card:hover{
-      transform:translateY(-3px);
-      border-color:rgba(250,204,21,.35);
+      padding:18px;
+      box-shadow:0 12px 28px rgba(0,0,0,.35);
+      text-align:center;
     }
 
-    .card h2{
-      font-size:15px;
+    .title{
+      font-size:16px;
+      font-weight:800;
       margin-bottom:6px;
     }
 
-    .kpi{
-      font-size:30px;
+    .value{
+      font-size:46px;
       font-weight:900;
-      margin:10px 0;
+      margin:8px 0;
       color:var(--gold);
     }
 
-    .desc{
+    .hint{
       font-size:13px;
       color:var(--muted);
-      line-height:1.35;
     }
 
-    .btn{
-      margin-top:12px;
-      width:100%;
-      padding:12px;
-      border-radius:14px;
-      border:0;
-      cursor:pointer;
-      font-weight:800;
-      background:linear-gradient(135deg, rgba(34,197,94,.95), rgba(250,204,21,.85));
-      color:#052016;
-    }
-    .btn:active{transform:scale(.98)}
-
-    .row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+    .tempBox{
       margin-top:18px;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      text-align:center;
     }
 
-    .mini{
-      flex:1;
-      min-width:180px;
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      padding:12px;
-      border-radius:16px;
-      font-size:13px;
-      color:var(--muted);
+    .temp{
+      font-size:28px;
+      font-weight:900;
+      margin-top:8px;
     }
 
     footer{
-      margin-top:22px;
+      margin-top:18px;
       text-align:center;
-      color:rgba(234,255,241,.35);
       font-size:12px;
+      color:rgba(234,255,241,.35);
     }
   </style>
 </head>
@@ -161,157 +121,111 @@
 <body>
 
 <header>
-  <div class="brand">
-    <div class="logo">♾️</div>
-    <div>
-      <h1>DIGIY SWARM — Tour de Contrôle</h1>
-      <div class="sub">LOC • PAY • JOBS • MARKET • DRIVER • STORE</div>
-    </div>
-  </div>
-
-  <div class="pill" id="sessionPill">Chargement…</div>
+  <div class="logo">♾️ DIGIY</div>
+  <div class="status" id="status">Chargement…</div>
 </header>
 
-<!-- ✅ MODULES KPI -->
-<div class="grid" id="kpiGrid"></div>
-
-<!-- ✅ Infos -->
-<div class="row">
-  <div class="mini">
-    🔥 Modules actifs : <span id="modsActive">…</span><br>
-    Dernier check : <span id="lastCheck">…</span>
+<div class="grid">
+  <div class="card">
+    <div class="title">Réservations</div>
+    <div class="value" id="kpiResa">…</div>
+    <div class="hint">Séjours confirmés</div>
   </div>
 
-  <div class="mini">
-    💳 Paiement direct Pro : <b>Wave / OM</b><br>
-    Commission : <b style="color:var(--gold)">0%</b>
+  <div class="card">
+    <div class="title">Argent Reçu</div>
+    <div class="value" id="kpiPay">…</div>
+    <div class="hint">Paiements en attente</div>
   </div>
 
-  <div class="mini">
-    🛡️ Accès sécurisé : PIN + Téléphone<br>
-    Mode : <b style="color:var(--green)">Souverain</b>
+  <div class="card">
+    <div class="title">Clients Demain</div>
+    <div class="value" id="kpiTomorrow">…</div>
+    <div class="hint">Arrivées prévues</div>
+  </div>
+
+  <div class="card">
+    <div class="title">Messages</div>
+    <div class="value" id="kpiMsg">…</div>
+    <div class="hint">Rappels prêts</div>
   </div>
 </div>
 
-<footer>
-  DIGIYLYFE — SWARM Dashboard © 2026 • NDIMBAL ♾️
-</footer>
+<!-- ✅ Température Globale -->
+<div class="tempBox">
+  🌡️ Température Business
+  <div class="temp" id="tempLevel">…</div>
+</div>
+
+<footer>DIGIY • Ensemble, on avance ♾️</footer>
 
 <script>
 /* ===============================
-   DIGIY SWARM — FULL ENGINE
-================================= */
+   DIGIY TEMPERATURE LIVE ENGINE
+================================ */
 
-const MODULES = [
-  { key:"LOC",   title:"DIGIY LOC PRO",   desc:"Réservations • Pulse • Cockpit", table:"digiy_loc_reservations",
-    url:"https://beauville.github.io/digiy-loc-pro/app.html" },
+const sb = window.__digiy_sb__ || window.supa;
 
-  { key:"PULSE", title:"DIGIY PULSE",     desc:"Outbox • Notifications J-1/J+1", table:"digiy_loc_pulse_outbox",
-    url:"https://beauville.github.io/digiy-pulse/" },
+/* ✅ Tables KPI (à ajuster selon ton schéma réel) */
+const TABLES = {
+  reservations: "digiy_loc_reservations",
+  payments:     "digiy_wallets",
+  tomorrow:     "digiy_loc_reservations",
+  messages:     "digiy_loc_pulse_outbox"
+};
 
-  { key:"PAY",   title:"DIGIY PAY PRO",   desc:"Wallet Pro • Wave Direct", table:"digiy_wallets",
-    url:"https://beauville.github.io/digiy-pay-pro/" },
+/* ✅ Helper count */
+async function countTable(table){
+  const { count, error } = await sb
+    .from(table)
+    .select("id", { count:"exact", head:true });
 
-  { key:"JOBS",  title:"DIGIY JOBS",      desc:"Recrutement + Accompagnement", table:"digiy_jobs_requests",
-    url:"https://beauville.github.io/digiy-jobs/" },
-
-  { key:"MARKET",title:"DIGIY MARKET",    desc:"Boutiques terrain • QR", table:"digiy_market_items",
-    url:"https://beauville.github.io/digiy-market-pro/" },
-
-  { key:"DRIVER",title:"DIGIY DRIVER",    desc:"Transport souverain", table:"digiy_driver_trips",
-    url:"https://beauville.github.io/digiy-driver-pro/" },
-];
-
-function slug(){
-  return new URL(location.href).searchParams.get("slug") || "";
+  if(error) return 0;
+  return count || 0;
 }
 
-function go(url){
-  const s = slug();
-  location.href = url + (s ? ("?slug="+encodeURIComponent(s)) : "");
-}
+/* ✅ Load all KPI */
+async function loadTemperature(){
 
-/* ✅ Render cards */
-function render(){
-  const grid = document.getElementById("kpiGrid");
-  grid.innerHTML = "";
-
-  MODULES.forEach(m=>{
-    const card = document.createElement("div");
-    card.className="card";
-    card.dataset.key = m.key;
-
-    card.innerHTML = `
-      <h2>${m.title}</h2>
-      <div class="kpi" id="kpi-${m.key}">…</div>
-      <div class="desc">${m.desc}</div>
-      <button class="btn">Ouvrir Module</button>
-    `;
-
-    card.querySelector("button").onclick = ()=>go(m.url);
-    grid.appendChild(card);
-  });
-
-  document.getElementById("modsActive").textContent = MODULES.length;
-  document.getElementById("lastCheck").textContent = new Date().toLocaleString();
-}
-
-/* ✅ Load session */
-function loadSession(){
-  const pill = document.getElementById("sessionPill");
-
-  const sess =
-    localStorage.getItem("DIGIY_LOC_PRO_SESSION_V1") ||
-    localStorage.getItem("DIGIY_PAY_SESSION_V1");
-
-  if(!sess){
-    pill.innerHTML = "⚠️ Pas connecté (PIN requis)";
-    pill.style.color="var(--red)";
-    return;
-  }
-
-  try{
-    const js = JSON.parse(sess);
-    pill.innerHTML = "✅ " + (js.phone||"PRO") + " • " + (js.slug||"");
-    pill.style.color="var(--green)";
-  }catch(e){
-    pill.innerHTML="⚠️ Session invalide";
-    pill.style.color="var(--red)";
-  }
-}
-
-/* ✅ KPI LIVE SUPABASE */
-async function loadKpis(){
-  const sb = window.__digiy_sb__ || window.supa;
   if(!sb){
-    console.warn("Supabase non prêt (guard?)");
+    document.getElementById("status").textContent="⚠️ Pas connecté";
     return;
   }
 
-  for(const m of MODULES){
+  document.getElementById("status").textContent="✅ Live";
 
-    try{
-      const { count, error } = await sb
-        .from(m.table)
-        .select("id", { count:"exact", head:true });
+  const resa = await countTable(TABLES.reservations);
+  const pay  = await countTable(TABLES.payments);
+  const msg  = await countTable(TABLES.messages);
 
-      if(error){
-        document.getElementById("kpi-"+m.key).textContent="—";
-        continue;
-      }
+  // Tomorrow = réservations où checkin = demain (simple version)
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(tomorrowDate.getDate()+1);
+  const iso = tomorrowDate.toISOString().slice(0,10);
 
-      document.getElementById("kpi-"+m.key).textContent = count ?? 0;
+  const { count:tomCount } = await sb
+    .from(TABLES.tomorrow)
+    .select("id", { count:"exact", head:true })
+    .eq("checkin", iso);
 
-    }catch(e){
-      document.getElementById("kpi-"+m.key).textContent="?";
-    }
-  }
+  document.getElementById("kpiResa").textContent = resa;
+  document.getElementById("kpiPay").textContent  = pay;
+  document.getElementById("kpiTomorrow").textContent = tomCount || 0;
+  document.getElementById("kpiMsg").textContent  = msg;
+
+  /* ✅ Température globale */
+  const total = resa + pay + msg + (tomCount||0);
+
+  let label="❄️ Calme";
+  if(total>=5) label="🌤️ Ça bouge";
+  if(total>=15) label="🔥 Très chaud";
+  if(total>=30) label="🚀 Explosion business";
+
+  document.getElementById("tempLevel").textContent = label;
 }
 
-/* 🚀 BOOT */
-render();
-loadSession();
-loadKpis();
+/* 🚀 Boot */
+loadTemperature();
 </script>
 
 </body>
