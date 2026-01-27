@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Guard DIGIY -->
-  <script src="./guard.js?v=swarm-peuple-3"></script>
+  <script src="./guard.js?v=swarm-peuple-4"></script>
 
   <style>
     :root{
@@ -209,6 +209,7 @@
 </div>
 
 <div class="grid">
+  <!-- LOC -->
   <div class="card">
     <div class="title">Réservations</div>
     <div class="value" id="kpiResa">…</div>
@@ -234,9 +235,29 @@
     </div>
     <div class="value" id="kpiMsg">…</div>
     <div class="hint">
-  Rappels prévus : <span id="msgPlanned">0</span>
-  • Urgent maintenant : <span id="msgDue">0</span>
-  • Prévu demain : <span id="msgTomorrow">0</span>
+      Rappels prévus : <span id="msgPlanned">0</span>
+      • Urgent maintenant : <span id="msgDue">0</span>
+      • Prévu demain : <span id="msgTomorrow">0</span>
+    </div>
+  </div>
+
+  <!-- CAISSE -->
+  <div class="card">
+    <div class="title">Ventes aujourd’hui</div>
+    <div class="value" id="kpiSalesToday">…</div>
+    <div class="hint">Tickets (caisse)</div>
+  </div>
+
+  <div class="card">
+    <div class="title">CA aujourd’hui</div>
+    <div class="value" id="kpiTurnoverToday">…</div>
+    <div class="hint">Total (FCFA)</div>
+  </div>
+
+  <div class="card">
+    <div class="title">Panier moyen</div>
+    <div class="value" id="kpiAvgBasket">…</div>
+    <div class="hint">Moyenne / ticket</div>
   </div>
 </div>
 
@@ -252,7 +273,7 @@
 <script>
 /* ===============================
    DIGIY SWARM — VERSION PEUPLE
-   1 RPC = tout (léger + RLS-friendly)
+   2 RPC = LOC + CAISSE (léger + clean)
 ================================ */
 
 function $(id){ return document.getElementById(id); }
@@ -295,6 +316,7 @@ function setUrgenceUI(data){
       location.href = "./pulse.html";
     };
 
+    // 🔥 priorité urgence
     $("tempLevel").textContent = "🚨 URGENCE : action immédiate";
   } else {
     urgentBar.style.display = "none";
@@ -322,44 +344,67 @@ async function loadTemperature(){
 
   $("status").textContent = "⏳ Live…";
 
-  const { data, error } = await sb.rpc("rpc_swarm_temperature_owner_v2", {
+  // 1) LOC SWARM
+  const rLoc = await sb.rpc("rpc_swarm_temperature_owner_v2", {
     p_owner: ownerId,
     p_phone: phone
   });
 
-  if(error){
-    console.error(error);
-    $("status").textContent = "❌ Erreur RPC";
+  if(rLoc.error){
+    console.error(rLoc.error);
+    $("status").textContent = "❌ Erreur RPC LOC";
     return;
   }
 
+  const loc = rLoc.data || {};
+
+  // 2) CAISSE SWARM
+  const rCaisse = await sb.rpc("rpc_caisse_swarm_owner_v1", { p_owner: ownerId });
+  if(rCaisse.error){
+    console.error(rCaisse.error);
+    // on n’échoue pas tout : la page LOC reste utile
+  }
+  const caisse = (rCaisse.data || {});
+
   $("status").textContent = "✅ Live";
 
-  // KPIs
-  $("kpiResa").textContent = data.reservations ?? 0;
-  $("kpiTomorrow").textContent = data.tomorrow ?? 0;
+  // --- LOC KPIs
+  $("kpiResa").textContent = loc.reservations ?? 0;
+  $("kpiTomorrow").textContent = loc.tomorrow ?? 0;
 
-  const bal = Number(data.wallet_balance || 0);
+  const bal = Number(loc.wallet_balance || 0);
   $("kpiWallet").textContent = moneyFCFA(bal);
 
-  $("kpiMsg").textContent = data.messages_new ?? 0;
-  $("msgPlanned").textContent = data.messages_new ?? 0;
-  $("msgDue").textContent = data.messages_due ?? 0;
+  $("kpiMsg").textContent = loc.messages_new ?? 0;
+  $("msgPlanned").textContent = loc.messages_new ?? 0;
+  $("msgDue").textContent = loc.messages_due ?? 0;
+  $("msgTomorrow").textContent = loc.messages_tomorrow ?? 0;
 
-  // Température (si pas urgence)
-  $("tempLevel").textContent = data.label || "❄️ Calme";
+  // --- CAISSE KPIs
+  $("kpiSalesToday").textContent = caisse.sales_today ?? 0;
+  $("kpiTurnoverToday").textContent = moneyFCFA(caisse.turnover_today ?? 0);
+  $("kpiAvgBasket").textContent = moneyFCFA(Math.round(caisse.avg_basket ?? 0));
+
+  // --- Température globale (si pas urgence)
+  // On laisse LOC décider du label principal, et on ajoute un petit “+ caisse”
+  const baseLabel = loc.label || "❄️ Calme";
+  $("tempLevel").textContent = baseLabel;
 
   // Meta
-  $("subTemp").textContent =
-    `Solde: ${moneyFCFA(bal)} FCFA • Messages: ${data.messages_new ?? 0} (dû: ${data.messages_due ?? 0}) • Maj: ${nowLabel()}`;
+  const topPay = caisse.top_payment_method ? `${caisse.top_payment_method} (${caisse.top_payment_method_n||0})` : "—";
+  const lastSale = caisse.last_sale_at ? new Date(caisse.last_sale_at).toLocaleString("fr-FR") : "—";
 
-  // URGENCE FULL
-  setUrgenceUI(data);
+  $("subTemp").textContent =
+    `Wallet: ${moneyFCFA(bal)} FCFA • Msg: ${loc.messages_new ?? 0} (dû: ${loc.messages_due ?? 0}, demain: ${loc.messages_tomorrow ?? 0}) • ` +
+    `Caisse: ${caisse.sales_today ?? 0} vente(s), CA ${moneyFCFA(caisse.turnover_today ?? 0)} • Top ${topPay} • Dernière vente ${lastSale} • Maj: ${nowLabel()}`;
+
+  // URGENCE FULL (priorité)
+  setUrgenceUI(loc);
 }
 
 // Boot + auto-refresh
 loadTemperature();
-setInterval(loadTemperature, 60000); // ⏱️ 60s (commente si tu veux)
+setInterval(loadTemperature, 60000);
 </script>
 
 </body>
