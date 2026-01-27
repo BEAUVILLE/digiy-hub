@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#061b14"/>
+  <title>DIGIY LOC — PULSE Outbox</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./guard.js?v=pulse-peuple-1"></script>
+
+  <style>
+    :root{
+      --bg:#061b14; --line:rgba(255,255,255,.12);
+      --text:#eafff1; --muted:rgba(234,255,241,.7);
+      --gold:#facc15; --red:#ef4444; --green:#22c55e; --orange:#f59e0b;
+      --radius:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:system-ui,-apple-system,sans-serif;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(250,204,21,.12), transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(34,197,94,.10), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      padding:18px;
+    }
+    header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+    .logo{font-size:22px;font-weight:950;color:var(--gold)}
+    .pill{border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--muted);padding:10px 12px;border-radius:999px;font-size:13px;white-space:nowrap}
+    .topActions{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}
+    .btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btnPrimary{border-color:rgba(250,204,21,.5);background:rgba(250,204,21,.12)}
+    .btnDanger{border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.12)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+    .card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:0 12px 28px rgba(0,0,0,.35);
+    }
+    .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .title{font-weight:950}
+    .meta{font-size:12px;color:rgba(234,255,241,.6);margin-top:6px;line-height:1.35}
+    .msg{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18);
+      font-size:13px;
+      color:rgba(234,255,241,.92);
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:4px 10px;border-radius:999px;font-size:12px;font-weight:950;
+      border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);
+      color:rgba(234,255,241,.85);
+      white-space:nowrap;
+    }
+    .badgeDue{border-color:rgba(239,68,68,.65);background:rgba(239,68,68,.12)}
+    .badgeNew{border-color:rgba(245,158,11,.55);background:rgba(245,158,11,.10)}
+    .badgeSent{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.10)}
+    .small{font-size:12px;color:rgba(234,255,241,.55);margin-top:12px;text-align:center}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="logo">♾️ DIGIY PULSE</div>
+  <div class="pill" id="status">Chargement…</div>
+</header>
+
+<div class="topActions">
+  <button class="btn" id="backBtn">← Retour SWARM</button>
+  <button class="btn btnPrimary" id="refreshBtn">Actualiser</button>
+  <button class="btn btnDanger" id="sendAllDueBtn">Envoyer tout (DÛ)</button>
+</div>
+
+<div class="grid" id="grid"></div>
+<div class="small">DIGIY • Outbox Peuple • 0% blabla, 100% action ♾️</div>
+
+<script>
+/* ===============================
+   CONFIG
+================================ */
+// 🔧 Mets ton API base ici :
+const API_BASE = "https://api.digiylyfe.com/loc/pulse"; // => POST {API_BASE}/send
+// 🔒 La clé API doit rester côté VPS Worker normalement.
+// Ici: page PRO interne seulement. Si tu veux, on remplace par un RPC "queue/send" sécurisé.
+const API_KEY = ""; // si tu veux tester depuis navigateur, mets la clé (sinon laisse vide).
+
+function $(id){ return document.getElementById(id); }
+function fmtDate(x){
+  try { return new Date(x).toLocaleString("fr-FR"); } catch(e){ return String(x||""); }
+}
+function isDue(row){
+  if(row.status !== "new") return false;
+  if(!row.next_try_at) return (row.run_date && String(row.run_date) <= new Date().toISOString().slice(0,10));
+  return new Date(row.next_try_at).getTime() <= Date.now();
+}
+
+function getSession(){
+  const raw =
+    localStorage.getItem("DIGIY_LOC_PRO_SESSION_V1") ||
+    localStorage.getItem("DIGIY_SESSION_V1") ||
+    "{}";
+  try { return JSON.parse(raw); } catch(e){ return {}; }
+}
+
+const sb = window.__digiy_sb__ || window.supa;
+
+/* ===============================
+   ROUTING
+================================ */
+$("backBtn").onclick = () => location.href = "./swarm.html";
+
+/* ===============================
+   DATA LOAD (Supabase)
+   On lit l'outbox de l'owner via RLS (si activée)
+================================ */
+async function loadOutbox(){
+  $("status").textContent = "⏳ Chargement…";
+  $("grid").innerHTML = "";
+
+  if(!sb){
+    $("status").textContent = "⚠️ Supabase pas prêt";
+    return;
+  }
+
+  const sess = getSession();
+  const ownerId = sess.owner_id;
+  if(!ownerId){
+    $("status").textContent = "⚠️ Session manquante (owner_id)";
+    return;
+  }
+
+  // On prend les plus récents "new" et ce qui a été vu récemment
+  const { data, error } = await sb
+    .from("digiy_loc_pulse_outbox")
+    .select("id, owner_id, status, kind, pulse_kind, run_date, next_try_at, channel, phone, business_code, message, payload, created_at, updated_at")
+    .eq("owner_id", ownerId)
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if(error){
+    console.error(error);
+    $("status").textContent = "❌ Erreur lecture outbox";
+    return;
+  }
+
+  const rows = data || [];
+  const dueCount = rows.filter(isDue).length;
+  $("status").textContent = `✅ ${rows.length} message(s) • DÛ: ${dueCount}`;
+
+  if(rows.length === 0){
+    $("grid").innerHTML = `<div class="card"><div class="title">Rien à envoyer ✅</div><div class="meta">Outbox vide pour cet owner.</div></div>`;
+    return;
+  }
+
+  for(const r of rows){
+    const due = isDue(r);
+    const badge = due ? `<span class="badge badgeDue">🚨 DÛ</span>`
+               : r.status === "new" ? `<span class="badge badgeNew">🟠 NEW</span>`
+               : r.status === "sent" ? `<span class="badge badgeSent">✅ SENT</span>`
+               : `<span class="badge">${String(r.status||"—").toUpperCase()}</span>`;
+
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `
+      <div class="row">
+        <div class="title">${r.kind || "message"} • ${r.pulse_kind || "—"}</div>
+        ${badge}
+      </div>
+      <div class="meta">
+        <div>📆 run_date: <b>${r.run_date || "—"}</b></div>
+        <div>⏱️ next_try_at: <b>${r.next_try_at ? fmtDate(r.next_try_at) : "—"}</b></div>
+        <div>📞 ${r.phone || "—"} • 📡 ${r.channel || "—"} • 🏷️ ${r.business_code || "—"}</div>
+        <div>🕒 créé: ${fmtDate(r.created_at)}</div>
+      </div>
+      <div class="msg">${(r.message || (r.payload && r.payload.message) || "").toString().trim() || "(message vide)"}</div>
+      <div class="topActions" style="margin-top:12px;">
+        <button class="btn btnPrimary" data-act="send" ${API_KEY ? "" : "disabled"}>${due ? "Envoyer maintenant" : "Envoyer (test)"}</button>
+        <button class="btn" data-act="seen">Marquer vu</button>
+        <button class="btn" data-act="archive">Archiver</button>
+      </div>
+    `;
+
+    // Actions
+    el.querySelector('[data-act="send"]').onclick = () => sendOne(r);
+    el.querySelector('[data-act="seen"]').onclick = () => markStatus(r.id, "seen");
+    el.querySelector('[data-act="archive"]').onclick = () => markStatus(r.id, "archived");
+
+    $("grid").appendChild(el);
+  }
+}
+
+$("refreshBtn").onclick = loadOutbox;
+
+/* ===============================
+   STATUS UPDATE (Supabase)
+================================ */
+async function markStatus(id, status){
+  $("status").textContent = "⏳ Mise à jour…";
+  const { error } = await sb
+    .from("digiy_loc_pulse_outbox")
+    .update({ status, updated_at: new Date().toISOString() })
+    .eq("id", id);
+
+  if(error){
+    console.error(error);
+    $("status").textContent = "❌ Update failed";
+    return;
+  }
+  await loadOutbox();
+}
+
+/* ===============================
+   SEND (call your API)
+   ⚠️ Normalement: c'est le worker VPS qui appelle l'API (clé secrète).
+   Ici, c'est un mode "PRO interne" si tu mets API_KEY.
+================================ */
+async function sendOne(r){
+  if(!API_KEY){
+    alert("API_KEY vide. Normal: c'est le worker VPS qui envoie. Pour test navigateur, mets API_KEY dans le code.");
+    return;
+  }
+
+  $("status").textContent = "📨 Envoi…";
+
+  const body = {
+    channel: r.channel || "whatsapp",
+    phone: r.phone,
+    business_code: r.business_code || "",
+    pulse_kind: r.pulse_kind || (r.kind || "pulse"),
+    message: (r.message || (r.payload && r.payload.message) || "").toString(),
+    payload: r.payload || {},
+    outbox_id: r.id,
+    reservation_id: r.reservation_id || (r.payload && r.payload.reservation_id) || null
+  };
+
+  try{
+    const res = await fetch(`${API_BASE}/send`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": API_KEY,
+        "x-request-id": `web_${Date.now()}`
+      },
+      body: JSON.stringify(body)
+    });
+
+    const json = await res.json().catch(()=>({}));
+    if(!res.ok || !json.ok){
+      console.error("send fail", res.status, json);
+      $("status").textContent = "❌ Envoi échoué";
+      alert("Envoi échoué : " + (json.error || res.status));
+      return;
+    }
+
+    // si OK: on marque sent (ou seen) côté outbox
+    await markStatus(r.id, "sent");
+    $("status").textContent = "✅ Envoyé";
+  }catch(e){
+    console.error(e);
+    $("status").textContent = "❌ Erreur réseau";
+  }
+}
+
+$("sendAllDueBtn").onclick = async () => {
+  if(!API_KEY){
+    alert("API_KEY vide. Normal: c'est le worker VPS qui envoie. Pour test navigateur, mets API_KEY dans le code.");
+    return;
+  }
+  const sess = getSession();
+  const ownerId = sess.owner_id;
+  if(!ownerId) return;
+
+  // reload and send due
+  const { data } = await sb
+    .from("digiy_loc_pulse_outbox")
+    .select("id, owner_id, status, kind, pulse_kind, run_date, next_try_at, channel, phone, business_code, message, payload, created_at")
+    .eq("owner_id", ownerId)
+    .order("created_at", { ascending: false })
+    .limit(100);
+
+  const due = (data || []).filter(isDue);
+  if(due.length === 0){
+    alert("Aucun message DÛ.");
+    return;
+  }
+
+  for(const r of due){
+    await sendOne(r);
+  }
+  await loadOutbox();
+};
+
+/* Boot */
+loadOutbox();
+</script>
+</body>
+</html>
