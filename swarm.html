@@ -9,8 +9,8 @@
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- ✅ Guard DIGIY (slug + pin safe) -->
-  <script src="./guard.js?v=swarm-1"></script>
+  <!-- ✅ Guard DIGIY -->
+  <script src="./guard.js?v=swarm-2"></script>
 
   <style>
     :root{
@@ -33,9 +33,10 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{
       font-family:system-ui,-apple-system,sans-serif;
-      background:radial-gradient(circle at 20% 10%, rgba(250,204,21,.12), transparent 55%),
-                 radial-gradient(circle at 80% 90%, rgba(34,197,94,.10), transparent 60%),
-                 var(--bg);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(250,204,21,.12), transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(34,197,94,.10), transparent 60%),
+        var(--bg);
       color:var(--text);
       min-height:100vh;
       padding:22px;
@@ -67,14 +68,8 @@
       box-shadow:0 0 18px rgba(34,197,94,.12);
     }
 
-    h1{
-      font-size:18px;
-      line-height:1.2;
-    }
-    .sub{
-      font-size:13px;
-      color:var(--muted);
-    }
+    h1{font-size:18px;line-height:1.2}
+    .sub{font-size:13px;color:var(--muted)}
 
     .pill{
       background:rgba(255,255,255,.06);
@@ -109,11 +104,14 @@
       font-size:15px;
       margin-bottom:6px;
     }
+
     .kpi{
-      font-size:28px;
+      font-size:30px;
       font-weight:900;
-      margin:8px 0;
+      margin:10px 0;
+      color:var(--gold);
     }
+
     .desc{
       font-size:13px;
       color:var(--muted);
@@ -151,10 +149,6 @@
       color:var(--muted);
     }
 
-    .danger{color:var(--red);font-weight:700}
-    .ok{color:var(--green);font-weight:800}
-    .gold{color:var(--gold);font-weight:800}
-
     footer{
       margin-top:22px;
       text-align:center;
@@ -170,35 +164,32 @@
   <div class="brand">
     <div class="logo">♾️</div>
     <div>
-      <h1>DIGIY SWARM — Cockpit Central</h1>
-      <div class="sub">Toutes les locomotives unifiées • Saly → Afrique → Infini</div>
+      <h1>DIGIY SWARM — Tour de Contrôle</h1>
+      <div class="sub">LOC • PAY • JOBS • MARKET • DRIVER • STORE</div>
     </div>
   </div>
 
   <div class="pill" id="sessionPill">Chargement…</div>
 </header>
 
-<!-- ✅ KPIs -->
+<!-- ✅ MODULES KPI -->
 <div class="grid" id="kpiGrid"></div>
 
-<!-- ✅ Actions rapides -->
+<!-- ✅ Infos -->
 <div class="row">
   <div class="mini">
-    🔥 <span class="gold">SWARM STATUS</span><br>
-    Modules actifs : <span id="modsActive">…</span><br>
+    🔥 Modules actifs : <span id="modsActive">…</span><br>
     Dernier check : <span id="lastCheck">…</span>
   </div>
 
   <div class="mini">
-    💳 Paiements Direct Pro<br>
-    Wave/OM : <span class="ok">READY</span><br>
-    Commission : <span class="gold">0%</span>
+    💳 Paiement direct Pro : <b>Wave / OM</b><br>
+    Commission : <b style="color:var(--gold)">0%</b>
   </div>
 
   <div class="mini">
-    🛡️ Sécurité<br>
-    Accès : PIN + Téléphone<br>
-    Mode : <span class="ok">Souverain</span>
+    🛡️ Accès sécurisé : PIN + Téléphone<br>
+    Mode : <b style="color:var(--green)">Souverain</b>
   </div>
 </div>
 
@@ -208,16 +199,27 @@
 
 <script>
 /* ===============================
-   DIGIY SWARM — Dashboard Engine
+   DIGIY SWARM — FULL ENGINE
 ================================= */
 
 const MODULES = [
-  { key:"LOC",   title:"DIGIY LOC PRO",   desc:"Logements • Réservations • Pulse", url:"https://beauville.github.io/digiy-loc-pro/app.html" },
-  { key:"PAY",   title:"DIGIY PAY PRO",   desc:"Wallet Pro • Wave Direct", url:"https://beauville.github.io/digiy-pay-pro/" },
-  { key:"JOBS",  title:"DIGIY JOBS",      desc:"Emplois • Dossiers accompagnés", url:"https://beauville.github.io/digiy-jobs/" },
-  { key:"MARK",  title:"DIGIY MARKET",    desc:"Boutiques terrain • QR", url:"https://beauville.github.io/digiy-market-pro/" },
-  { key:"DRIVE", title:"DIGIY DRIVER",    desc:"Transport local souverain", url:"https://beauville.github.io/digiy-driver-pro/" },
-  { key:"STORE", title:"DIGIY STORE PRO", desc:"Progiciel commerçant", url:"https://beauville.github.io/digiy-store-pro/" }
+  { key:"LOC",   title:"DIGIY LOC PRO",   desc:"Réservations • Pulse • Cockpit", table:"digiy_loc_reservations",
+    url:"https://beauville.github.io/digiy-loc-pro/app.html" },
+
+  { key:"PULSE", title:"DIGIY PULSE",     desc:"Outbox • Notifications J-1/J+1", table:"digiy_loc_pulse_outbox",
+    url:"https://beauville.github.io/digiy-pulse/" },
+
+  { key:"PAY",   title:"DIGIY PAY PRO",   desc:"Wallet Pro • Wave Direct", table:"digiy_wallets",
+    url:"https://beauville.github.io/digiy-pay-pro/" },
+
+  { key:"JOBS",  title:"DIGIY JOBS",      desc:"Recrutement + Accompagnement", table:"digiy_jobs_requests",
+    url:"https://beauville.github.io/digiy-jobs/" },
+
+  { key:"MARKET",title:"DIGIY MARKET",    desc:"Boutiques terrain • QR", table:"digiy_market_items",
+    url:"https://beauville.github.io/digiy-market-pro/" },
+
+  { key:"DRIVER",title:"DIGIY DRIVER",    desc:"Transport souverain", table:"digiy_driver_trips",
+    url:"https://beauville.github.io/digiy-driver-pro/" },
 ];
 
 function slug(){
@@ -229,18 +231,19 @@ function go(url){
   location.href = url + (s ? ("?slug="+encodeURIComponent(s)) : "");
 }
 
-/* ✅ Render KPIs */
+/* ✅ Render cards */
 function render(){
   const grid = document.getElementById("kpiGrid");
   grid.innerHTML = "";
 
-  MODULES.forEach((m,i)=>{
+  MODULES.forEach(m=>{
     const card = document.createElement("div");
     card.className="card";
+    card.dataset.key = m.key;
 
     card.innerHTML = `
       <h2>${m.title}</h2>
-      <div class="kpi">${i+1}</div>
+      <div class="kpi" id="kpi-${m.key}">…</div>
       <div class="desc">${m.desc}</div>
       <button class="btn">Ouvrir Module</button>
     `;
@@ -249,27 +252,27 @@ function render(){
     grid.appendChild(card);
   });
 
-  document.getElementById("modsActive").textContent = MODULES.length + " Modules";
+  document.getElementById("modsActive").textContent = MODULES.length;
   document.getElementById("lastCheck").textContent = new Date().toLocaleString();
 }
 
-/* ✅ Session Pill */
+/* ✅ Load session */
 function loadSession(){
-  const sess = localStorage.getItem("DIGIY_LOC_PRO_SESSION_V1")
-            || localStorage.getItem("DIGIY_PAY_SESSION_V1")
-            || null;
-
   const pill = document.getElementById("sessionPill");
+
+  const sess =
+    localStorage.getItem("DIGIY_LOC_PRO_SESSION_V1") ||
+    localStorage.getItem("DIGIY_PAY_SESSION_V1");
 
   if(!sess){
     pill.innerHTML = "⚠️ Pas connecté (PIN requis)";
-    pill.style.color = "var(--red)";
+    pill.style.color="var(--red)";
     return;
   }
 
   try{
     const js = JSON.parse(sess);
-    pill.innerHTML = "✅ " + (js.phone || "PRO") + " • " + (js.slug || "");
+    pill.innerHTML = "✅ " + (js.phone||"PRO") + " • " + (js.slug||"");
     pill.style.color="var(--green)";
   }catch(e){
     pill.innerHTML="⚠️ Session invalide";
@@ -277,8 +280,38 @@ function loadSession(){
   }
 }
 
+/* ✅ KPI LIVE SUPABASE */
+async function loadKpis(){
+  const sb = window.__digiy_sb__ || window.supa;
+  if(!sb){
+    console.warn("Supabase non prêt (guard?)");
+    return;
+  }
+
+  for(const m of MODULES){
+
+    try{
+      const { count, error } = await sb
+        .from(m.table)
+        .select("id", { count:"exact", head:true });
+
+      if(error){
+        document.getElementById("kpi-"+m.key).textContent="—";
+        continue;
+      }
+
+      document.getElementById("kpi-"+m.key).textContent = count ?? 0;
+
+    }catch(e){
+      document.getElementById("kpi-"+m.key).textContent="?";
+    }
+  }
+}
+
+/* 🚀 BOOT */
 render();
 loadSession();
+loadKpis();
 </script>
 
 </body>
