@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Guard DIGIY -->
-  <script src="./guard.js?v=swarm-peuple-1"></script>
+  <script src="./guard.js?v=swarm-peuple-2"></script>
 
   <style>
     :root{
@@ -43,13 +43,16 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
-      margin-bottom:18px;
+      margin-bottom:12px;
+      gap:12px;
     }
 
     .logo{
       font-size:28px;
       font-weight:900;
       color:var(--gold);
+      letter-spacing:.2px;
+      white-space:nowrap;
     }
 
     .status{
@@ -59,7 +62,44 @@
       font-size:13px;
       background:rgba(255,255,255,.06);
       color:var(--muted);
+      white-space:nowrap;
     }
+
+    /* 🚨 URGENCE BAR */
+    .urgentBar{
+      display:none;
+      margin:10px 0 14px;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid rgba(239,68,68,.55);
+      background:rgba(239,68,68,.12);
+      box-shadow:0 14px 30px rgba(0,0,0,.35);
+    }
+    .urgentRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .urgentTitle{
+      font-weight:950;
+      font-size:15px;
+    }
+    .urgentText{
+      font-size:13px;
+      opacity:.9;
+      margin-top:4px;
+    }
+    .urgentBtn{
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.10);
+      color:var(--text);
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:950;
+      cursor:pointer;
+    }
+    .urgentBtn:active{transform:translateY(1px)}
 
     .grid{
       display:grid;
@@ -74,19 +114,37 @@
       padding:18px;
       box-shadow:0 12px 28px rgba(0,0,0,.35);
       text-align:center;
+      position:relative;
+      overflow:hidden;
     }
 
     .title{
       font-size:16px;
-      font-weight:800;
+      font-weight:900;
       margin-bottom:6px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    /* 🔴 Badge DÛ */
+    .dueBadge{
+      display:none;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:950;
+      border:1px solid rgba(239,68,68,.65);
+      background:rgba(239,68,68,.14);
     }
 
     .value{
       font-size:46px;
-      font-weight:900;
+      font-weight:950;
       margin:8px 0;
       color:var(--gold);
+      line-height:1;
     }
 
     .hint{
@@ -105,8 +163,14 @@
 
     .temp{
       font-size:28px;
-      font-weight:900;
+      font-weight:950;
       margin-top:8px;
+    }
+
+    .subTemp{
+      margin-top:6px;
+      font-size:12px;
+      color:rgba(234,255,241,.55);
     }
 
     footer{
@@ -114,6 +178,12 @@
       text-align:center;
       font-size:12px;
       color:rgba(234,255,241,.35);
+    }
+
+    .mini{
+      margin-top:8px;
+      font-size:12px;
+      color:rgba(234,255,241,.65);
     }
   </style>
 </head>
@@ -125,6 +195,17 @@
   <div class="status" id="status">Chargement…</div>
 </header>
 
+<!-- 🚨 URGENCE -->
+<div class="urgentBar" id="urgentBar">
+  <div class="urgentRow">
+    <div>
+      <div class="urgentTitle">🚨 URGENCE</div>
+      <div class="urgentText" id="urgentText">Message à envoyer maintenant.</div>
+    </div>
+    <button class="urgentBtn" id="urgentBtn">Voir</button>
+  </div>
+</div>
+
 <div class="grid">
   <div class="card">
     <div class="title">Réservations</div>
@@ -133,21 +214,26 @@
   </div>
 
   <div class="card">
-    <div class="title">Argent Reçu</div>
-    <div class="value" id="kpiPay">…</div>
-    <div class="hint">Paiements en attente</div>
+    <div class="title">Solde Wallet</div>
+    <div class="value" id="kpiWallet">…</div>
+    <div class="hint">Argent disponible</div>
   </div>
 
   <div class="card">
-    <div class="title">Clients Demain</div>
+    <div class="title">Clients demain</div>
     <div class="value" id="kpiTomorrow">…</div>
     <div class="hint">Arrivées prévues</div>
   </div>
 
   <div class="card">
-    <div class="title">Messages</div>
+    <div class="title">
+      Messages
+      <span class="dueBadge" id="dueBadge">DÛ</span>
+    </div>
     <div class="value" id="kpiMsg">…</div>
-    <div class="hint">Rappels prêts</div>
+    <div class="hint">
+      Planifiés <span id="msgPlanned">0</span> • Dû maintenant <span id="msgDue">0</span>
+    </div>
   </div>
 </div>
 
@@ -155,77 +241,118 @@
 <div class="tempBox">
   🌡️ Température Business
   <div class="temp" id="tempLevel">…</div>
+  <div class="subTemp" id="subTemp">—</div>
 </div>
 
 <footer>DIGIY • Ensemble, on avance ♾️</footer>
 
 <script>
 /* ===============================
-   DIGIY TEMPERATURE LIVE ENGINE
+   DIGIY SWARM — VERSION PEUPLE
+   1 RPC = tout (léger + RLS-friendly)
 ================================ */
 
-const sb = window.__digiy_sb__ || window.supa;
+function $(id){ return document.getElementById(id); }
 
-/* ✅ Tables KPI (à ajuster selon ton schéma réel) */
-const TABLES = {
-  reservations: "digiy_loc_reservations",
-  payments:     "digiy_wallets",
-  tomorrow:     "digiy_loc_reservations",
-  messages:     "digiy_loc_pulse_outbox"
-};
-
-/* ✅ Helper count */
-async function countTable(table){
-  const { count, error } = await sb
-    .from(table)
-    .select("id", { count:"exact", head:true });
-
-  if(error) return 0;
-  return count || 0;
+function moneyFCFA(v){
+  const n = Number(v || 0);
+  try { return n.toLocaleString("fr-FR"); } catch(e){ return String(n); }
 }
 
-/* ✅ Load all KPI */
+function getSession(){
+  // On supporte plusieurs clés si besoin
+  const raw =
+    localStorage.getItem("DIGIY_LOC_PRO_SESSION_V1") ||
+    localStorage.getItem("DIGIY_SESSION_V1") ||
+    "{}";
+  try { return JSON.parse(raw); } catch(e){ return {}; }
+}
+
+function setUrgenceUI(data){
+  const due = Number(data.messages_due || 0);
+  const urgentBar = $("urgentBar");
+  const urgentText = $("urgentText");
+  const urgentBtn = $("urgentBtn");
+  const dueBadge = $("dueBadge");
+
+  if(due > 0){
+    urgentBar.style.display = "block";
+    urgentText.textContent = `🚨 ${due} message(s) à envoyer MAINTENANT`;
+    dueBadge.style.display = "inline-flex";
+    dueBadge.textContent = `DÛ x${due}`;
+
+    if(navigator.vibrate) navigator.vibrate([80,40,80]);
+
+    urgentBtn.onclick = () => {
+      // 🔧 Mets ici ta page outbox si tu l’as (ex: "./pulse.html")
+      // Sinon on scrolle vers la carte Messages
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      alert("Va dans le module PULSE / Outbox pour traiter les messages dûs.");
+    };
+
+    $("tempLevel").textContent = "🚨 URGENCE : action immédiate";
+  } else {
+    urgentBar.style.display = "none";
+    dueBadge.style.display = "none";
+  }
+}
+
 async function loadTemperature(){
+  const sb = window.__digiy_sb__ || window.supa;
 
   if(!sb){
-    document.getElementById("status").textContent="⚠️ Pas connecté";
+    $("status").textContent = "⚠️ Pas connecté";
     return;
   }
 
-  document.getElementById("status").textContent="✅ Live";
+  const sess = getSession();
+  const ownerId = sess.owner_id;
+  const phone = sess.phone || sess.phone_number || sess.tel;
 
-  const resa = await countTable(TABLES.reservations);
-  const pay  = await countTable(TABLES.payments);
-  const msg  = await countTable(TABLES.messages);
+  if(!ownerId || !phone){
+    $("status").textContent = "⚠️ Session manquante (owner/phone)";
+    return;
+  }
 
-  // Tomorrow = réservations où checkin = demain (simple version)
-  const tomorrowDate = new Date();
-  tomorrowDate.setDate(tomorrowDate.getDate()+1);
-  const iso = tomorrowDate.toISOString().slice(0,10);
+  $("status").textContent = "⏳ Live…";
 
-  const { count:tomCount } = await sb
-    .from(TABLES.tomorrow)
-    .select("id", { count:"exact", head:true })
-    .eq("checkin", iso);
+  const { data, error } = await sb.rpc("rpc_swarm_temperature_owner_v2", {
+    p_owner: ownerId,
+    p_phone: phone
+  });
 
-  document.getElementById("kpiResa").textContent = resa;
-  document.getElementById("kpiPay").textContent  = pay;
-  document.getElementById("kpiTomorrow").textContent = tomCount || 0;
-  document.getElementById("kpiMsg").textContent  = msg;
+  if(error){
+    console.error(error);
+    $("status").textContent = "❌ Erreur RPC";
+    return;
+  }
 
-  /* ✅ Température globale */
-  const total = resa + pay + msg + (tomCount||0);
+  $("status").textContent = "✅ Live";
 
-  let label="❄️ Calme";
-  if(total>=5) label="🌤️ Ça bouge";
-  if(total>=15) label="🔥 Très chaud";
-  if(total>=30) label="🚀 Explosion business";
+  // KPIs
+  $("kpiResa").textContent = data.reservations ?? 0;
+  $("kpiTomorrow").textContent = data.tomorrow ?? 0;
 
-  document.getElementById("tempLevel").textContent = label;
+  const bal = Number(data.wallet_balance || 0);
+  $("kpiWallet").textContent = moneyFCFA(bal);
+  // petits détails (optionnel)
+  $("subTemp").textContent =
+    `Solde: ${moneyFCFA(bal)} FCFA • Messages: ${data.messages_new ?? 0} (dû: ${data.messages_due ?? 0})`;
+
+  $("kpiMsg").textContent = data.messages_new ?? 0;
+  $("msgPlanned").textContent = data.messages_new ?? 0;
+  $("msgDue").textContent = data.messages_due ?? 0;
+
+  // Température
+  $("tempLevel").textContent = data.label || "❄️ Calme";
+
+  // URGENCE FULL
+  setUrgenceUI(data);
 }
 
-/* 🚀 Boot */
+// Boot + auto-refresh
 loadTemperature();
+setInterval(loadTemperature, 60000); // ⏱️ 60s (tu peux commenter si tu veux)
 </script>
 
 </body>
