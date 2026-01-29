@@ -670,7 +670,6 @@
     driverClient: "https://beauville.github.io/digiy-driver-client/",
     loc: "https://beauville.github.io/digiy-loc/",
     resto: "https://beauville.github.io/digiy-resto/",
-    // ✅ CAISSE PRO: on pointe l’index, et on injecte ?slug=... automatiquement
     caissePro: "https://beauville.github.io/Digiy-caisse-pro/index.html",
     vasChez: "https://beauville.github.io/vas-chez-digiy/",
     pay: "https://beauville.github.io/digiy-pay/",
@@ -678,9 +677,7 @@
     market: "https://beauville.github.io/digiy-market/",
     job: "https://beauville.github.io/digiy-jobs/",
     explore: "https://beauville.github.io/digiy-explore/",
-    // ✅ FIX typo: ndimbal (pas mdimbal)
     ndimbalMap: "https://beauville.github.io/digiy-ndimbal-map/",
-    // ✅ AJOUTS HUB
     resaTable: "https://beauville.github.io/digiy-resa-table/",
     notable: "https://beauville.github.io/digiy-notable/",
     espacePro: "https://beauville.github.io/espace-pro/",
@@ -692,7 +689,6 @@
     home: "https://digiylyfe.com"
   };
 
-  // ✅ Slug passthrough (universel, mais ciblé pour éviter de polluer les pages marketing)
   const SLUG_KEYS = new Set([
     "caissePro","loc","resto","driver","driverClient",
     "pay","build","market","job","explore",
@@ -704,9 +700,7 @@
     try{
       const s = new URL(location.href).searchParams.get("slug");
       return (s || "").trim().toLowerCase();
-    }catch{
-      return "";
-    }
+    }catch{ return ""; }
   }
   function withSlug(url){
     const slug = getSlug();
@@ -726,27 +720,20 @@
   const hubFrame   = document.getElementById("hubFrame");
   const ndimbal    = document.getElementById("digiy-ndimbal");
   const qrModal    = document.getElementById("qrModal");
-// ✅ BOUTONS DIRECTS (anti-casse, priorité)
-const btnLogin  = document.getElementById("btnLogin");
-const btnGetHub = document.getElementById("btnGetHub");
-const btnProGate = document.getElementById("btnProGate"); // optionnel
-const btnDeals  = document.getElementById("btnDeals");
 
-function goSupaApps(e){
-  if(e){ e.preventDefault(); e.stopPropagation(); }
-  openModule("dashboard"); // ✅ porte Supa APPS existante
-}
+  const btnLogin    = document.getElementById("btnLogin");
+  const btnGetHub   = document.getElementById("btnGetHub");
+  const btnProGate  = document.getElementById("btnProGate");
+  const btnDeals    = document.getElementById("btnDeals");
+  const btnTarifs   = document.getElementById("tarif-bubble-btn");
+  const btnHelp     = document.getElementById("digiy-help-btn");
+  const btnNdClose  = document.getElementById("digiyCloseBtn");
+  const btnQrClose  = document.getElementById("qrClose");
+  const hubBackBtn  = document.getElementById("hubBackBtn");
+  const hubCloseBtn = document.getElementById("hubCloseBtn");
+  const homeBrand   = document.getElementById("homeBrand");
 
-btnLogin?.addEventListener("click", goSupaApps);
-btnGetHub?.addEventListener("click", goSupaApps);
-btnProGate?.addEventListener("click", goSupaApps);
-
-btnDeals?.addEventListener("click", (e)=>{
-  e.preventDefault(); e.stopPropagation();
-  openModule("bonneAffaire");
-});
-  
-  // Helpers show/hide (WP/Astra safe)
+  // Helpers
   function show(el){
     if(!el) return;
     el.classList.add("show");
@@ -761,7 +748,6 @@ btnDeals?.addEventListener("click", (e)=>{
     el.style.pointerEvents = "none";
     el.setAttribute("aria-hidden","true");
   }
-
   function hasOverlay(){
     return !!(hubOverlay && hubFrame);
   }
@@ -771,7 +757,7 @@ btnDeals?.addEventListener("click", (e)=>{
     const finalUrl = resolveUrl(key, url);
 
     if(!hasOverlay()){
-      window.location.href = finalUrl;
+      location.href = finalUrl;
       return;
     }
     hubFrame.src = finalUrl;
@@ -796,146 +782,80 @@ btnDeals?.addEventListener("click", (e)=>{
 
   function openNdimbal(){ show(ndimbal); }
   function closeNdimbal(){ hide(ndimbal); }
-
   function openQR(){ show(qrModal); }
   function closeQR(){ hide(qrModal); }
 
-  // -------------------------
-  // CLICK ROUTER (WP SAFE)
-  // -------------------------
+  // ✅ LISTENERS DIRECTS (priorité)
+  function goSupaApps(e){
+    e?.preventDefault();
+    openModule("dashboard");
+  }
+  btnLogin?.addEventListener("click", goSupaApps);
+  btnGetHub?.addEventListener("click", goSupaApps);
+  btnProGate?.addEventListener("click", goSupaApps);
+
+  btnDeals?.addEventListener("click", (e)=>{ e.preventDefault(); openModule("bonneAffaire"); });
+  btnTarifs?.addEventListener("click", (e)=>{ e.preventDefault(); openModule("tarifs"); });
+
+  btnHelp?.addEventListener("click", (e)=>{ e.preventDefault(); openNdimbal(); });
+  btnNdClose?.addEventListener("click", (e)=>{ e.preventDefault(); closeNdimbal(); });
+
+  btnQrClose?.addEventListener("click", (e)=>{ e.preventDefault(); closeQR(); });
+
+  hubBackBtn?.addEventListener("click", (e)=>{ e.preventDefault(); closeInside(); });
+  hubCloseBtn?.addEventListener("click", (e)=>{ e.preventDefault(); closeInside(); });
+
+  homeBrand?.addEventListener("click", (e)=>{
+    e.preventDefault();
+    closeInside();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  // ✅ ROUTER GLOBAL (BUBBLE — PAS CAPTURE)
   document.addEventListener("click", function(e){
     const t = e.target;
 
-    // 1) Overlay buttons
-    if(t && (t.id === "hubBackBtn" || t.id === "hubCloseBtn")){
-      e.preventDefault(); e.stopPropagation();
-      closeInside();
-      return;
-    }
+    // close overlay si click backdrop
+    if(hubOverlay && t === hubOverlay){ closeInside(); return; }
 
-    // 2) Backdrop close (click outside card)
-    if(hubOverlay && t === hubOverlay){
-      closeInside();
-      return;
-    }
+    // close NDIMBAL si click backdrop
+    if(ndimbal && t === ndimbal){ closeNdimbal(); return; }
 
-    // 3) Hero / header buttons (PASSAGE OBLIGÉ SUPA APPS)
-if(t && t.closest && t.closest("#btnLogin")){
-  e.preventDefault();
-  openModule("dashboard"); // ✅ porte Supa APPS existante
-  return;
-}
+    // close QR si click backdrop
+    if(qrModal && t === qrModal){ closeQR(); return; }
 
-if(t && t.closest && t.closest("#btnGetHub")){
-  e.preventDefault();
-  openModule("dashboard"); // ✅ même porte
-  return;
-}
-
-if(t && t.closest && t.closest("#btnProGate")){
-  e.preventDefault();
-  openModule("dashboard"); // ✅ même porte
-  return;
-}
-
-    // 4) Floating NDIMBAL
-    if(t && t.closest && t.closest("#digiy-help-btn")){
-      e.preventDefault();
-      openNdimbal();
-      return;
-    }
-    // Close NDIMBAL (ton bouton réel = digiyCloseBtn)
-    if(t && t.closest && t.closest("#digiyCloseBtn")){
-      e.preventDefault();
-      closeNdimbal();
-      return;
-    }
-    // Click backdrop NDIMBAL
-    if(ndimbal && t === ndimbal){
-      closeNdimbal();
-      return;
-    }
-
-    // 5) NDIMBAL actions (tes boutons ont class digiyAct)
-    const actBtn = (t && t.closest) ? t.closest(".digiyAct") : null;
+    // NDIMBAL actions
+    const actBtn = t && t.closest ? t.closest(".digiyAct") : null;
     if(actBtn){
       e.preventDefault();
       const action = actBtn.getAttribute("data-action");
       closeNdimbal();
-
-      if(action === "sell"){
-        openInside(LINKS.inscription + "#why", "inscription");
-      } else if(action === "job"){
-        openModule("job");
-      } else if(action === "qr"){
-        openQR();
-      }
+      if(action === "sell") openInside(LINKS.inscription + "#why", "inscription");
+      else if(action === "job") openModule("job");
+      else if(action === "qr") openQR();
       return;
     }
 
-    // 6) QR close
-    if(t && t.closest && t.closest("#qrClose")){
-      e.preventDefault();
-      closeQR();
-      return;
-    }
-    if(qrModal && t === qrModal){
-      closeQR();
-      return;
-    }
-
-    // 7) Module cards (click on card or inside)
-    const card = (t && t.closest) ? t.closest(".module") : null;
+    // Module cards
+    const card = t && t.closest ? t.closest(".module") : null;
     if(card){
       e.preventDefault();
-
       const ext = card.getAttribute("data-external");
       const key = card.getAttribute("data-open");
-
-      if(ext){
-        window.open(ext, "_blank", "noopener");
-        return;
-      }
-      if(key){
-        openModule(key);
-        return;
-      }
-
-      alert("Module en préparation.");
-      return;
-    }
-
-    // 8) Brand home (optional smooth scroll)
-    if(t && t.closest && t.closest("#homeBrand")){
-      e.preventDefault();
-      closeInside();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-  }, true);
-
-  // -------------------------
-  // ESC handling
-  // -------------------------
-  document.addEventListener("keydown", function(e){
-    if(e.key !== "Escape") return;
-
-    // close in priority: QR > NDIMBAL > HUB
-    if(qrModal && qrModal.classList.contains("show")){
-      closeQR();
-      return;
-    }
-    if(ndimbal && ndimbal.classList.contains("show")){
-      closeNdimbal();
-      return;
-    }
-    if(hubOverlay && hubOverlay.classList.contains("show")){
-      closeInside();
-      return;
+      if(ext){ window.open(ext, "_blank", "noopener,noreferrer"); return; }
+      if(key){ openModule(key); return; }
     }
   });
 
-  console.log("✅ DIGIY HUB — ROUTER FULL OK + Ajouts (RESA/NOTABLE/ESPACES) + Slug passthrough ciblé");
+  // ESC
+  document.addEventListener("keydown", function(e){
+    if(e.key !== "Escape") return;
+    if(qrModal && qrModal.classList.contains("show")){ closeQR(); return; }
+    if(ndimbal && ndimbal.classList.contains("show")){ closeNdimbal(); return; }
+    if(hubOverlay && hubOverlay.classList.contains("show")){ closeInside(); return; }
+  });
+
+  console.log("✅ DIGIY HUB ROUTER OK (stable) — listeners directs + bubble");
 })();
 </script>
 
