@@ -726,7 +726,26 @@
   const hubFrame   = document.getElementById("hubFrame");
   const ndimbal    = document.getElementById("digiy-ndimbal");
   const qrModal    = document.getElementById("qrModal");
+// ✅ BOUTONS DIRECTS (anti-casse, priorité)
+const btnLogin  = document.getElementById("btnLogin");
+const btnGetHub = document.getElementById("btnGetHub");
+const btnProGate = document.getElementById("btnProGate"); // optionnel
+const btnDeals  = document.getElementById("btnDeals");
 
+function goSupaApps(e){
+  if(e){ e.preventDefault(); e.stopPropagation(); }
+  openModule("dashboard"); // ✅ porte Supa APPS existante
+}
+
+btnLogin?.addEventListener("click", goSupaApps);
+btnGetHub?.addEventListener("click", goSupaApps);
+btnProGate?.addEventListener("click", goSupaApps);
+
+btnDeals?.addEventListener("click", (e)=>{
+  e.preventDefault(); e.stopPropagation();
+  openModule("bonneAffaire");
+});
+  
   // Helpers show/hide (WP/Astra safe)
   function show(el){
     if(!el) return;
