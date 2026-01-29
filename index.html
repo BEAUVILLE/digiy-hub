@@ -297,9 +297,10 @@
         <strong>Un seul abonnement. 11 métiers. Paiement direct au pro.</strong>
       </p>
 
-      <button id="btnGetHub" class="hero-cta" type="button"><span>→</span> Je veux mon HUB DIGIY</button>
+     <button id="btnGetHub" class="hero-cta" type="button"><span>→</span> Entrer dans Supa APPS</button>
       <button id="btnDeals" class="hero-cta secondary" type="button">💥 Voir les Bonnes Affaires</button>
-
+<!-- 🦅 PORTE OFFICIELLE PRO (Supa APPS) -->
+<button id="btnProGate" class="hero-cta secondary" type="button">🦅 Accès Pro — Supa APPS</button>
       <div style="margin-top:10px;color:var(--muted);font-weight:650">
         Places pionniers limitées • Prix bloqué à vie pour les premiers
       </div>
@@ -799,12 +800,19 @@
       return;
     }
 
-    // 3) Hero / header buttons (use closest to catch inner spans)
-    if(t && t.closest && t.closest("#btnLogin")){
-      e.preventDefault();
-      openModule("dashboard");
-      return;
-    }
+    // 3) Hero / header buttons (PASSAGE OBLIGÉ SUPA APPS)
+if(t && t.closest && t.closest("#btnLogin")){
+  e.preventDefault();
+  // ✅ porte officielle (login)
+  openInside("./login.html", null);
+  return;
+}
+
+if(t && t.closest && t.closest("#btnProGate")){
+  e.preventDefault();
+  openInside("./login.html", null);
+  return;
+}
     if(t && t.closest && t.closest("#btnGetHub")){
       e.preventDefault();
       openInside(LINKS.inscription + "#why", "inscription"); // pas besoin de slug ici
