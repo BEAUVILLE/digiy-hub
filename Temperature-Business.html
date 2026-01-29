@@ -223,266 +223,112 @@
 <div class="topActions">
   <a class="linkBtn" href="./login.html">🔑 Se connecter</a>
   <a class="linkBtn" href="./">🏠 HUB</a>
-</div>
+</div><!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#061b14"/>
+  <title>DIGIY — Température Business</title>
 
-<!-- 🚨 URGENCE -->
-<div class="urgentBar" id="urgentBar">
-  <div class="urgentRow">
-    <div>
-      <div class="urgentTitle">🚨 URGENCE</div>
-      <div class="urgentText" id="urgentText">Message à envoyer maintenant.</div>
+  <style>
+    :root{
+      --bg:#061b14; --card:#0b2a1f; --line:rgba(255,255,255,.12);
+      --text:#eafff1; --muted:rgba(234,255,241,.72);
+      --gold:#facc15; --green:#22c55e; --red:#ef4444;
+      --r:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);padding:18px}
+    .wrap{max-width:980px;margin:0 auto}
+    .top{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:14px 16px;border:1px solid var(--line);border-radius:var(--r);
+      background:rgba(255,255,255,.04)
+    }
+    .title{font-weight:950;font-size:18px}
+    .slug{color:var(--muted);font-weight:800}
+    .grid{
+      margin-top:14px;
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+    }
+    .card{
+      border:1px solid var(--line);border-radius:var(--r);
+      background:rgba(255,255,255,.04);
+      padding:14px;
+    }
+    .kpi{font-size:12px;color:var(--muted);font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+    .val{margin-top:8px;font-size:26px;font-weight:950}
+    .hint{margin-top:6px;color:var(--muted);font-weight:650;line-height:1.4}
+    .btn{
+      margin-top:14px;display:inline-flex;align-items:center;justify-content:center;
+      border:none;border-radius:999px;padding:10px 14px;font-weight:950;cursor:pointer;
+      background:linear-gradient(135deg,var(--gold),#fde68a);color:#111;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <div class="title">🌡️ Température Business</div>
+        <div class="slug">slug: <span id="slugTxt">—</span></div>
+      </div>
+      <button class="btn" id="backBtn" type="button">← Retour HUB</button>
     </div>
-    <button class="urgentBtn" id="urgentBtn" type="button">Voir</button>
-  </div>
-</div>
 
-<div class="grid">
-  <div class="card">
-    <div class="title">Réservations</div>
-    <div class="value" id="kpiResa">…</div>
-    <div class="hint">Séjours confirmés</div>
-  </div>
-
-  <div class="card">
-    <div class="title">Solde Wallet</div>
-    <div class="value" id="kpiWallet">…</div>
-    <div class="hint">Argent disponible</div>
-  </div>
-
-  <div class="card">
-    <div class="title">Clients demain</div>
-    <div class="value" id="kpiTomorrow">…</div>
-    <div class="hint">Arrivées prévues</div>
-  </div>
-
-  <div class="card" id="msgCard">
-    <div class="title">
-      Messages
-      <span class="dueBadge" id="dueBadge">DÛ</span>
+    <div class="grid">
+      <div class="card">
+        <div class="kpi">Statut</div>
+        <div class="val" id="kpiStatus">OK</div>
+        <div class="hint">Page locale (zéro 404). Tu peux brancher Supabase ensuite.</div>
+      </div>
+      <div class="card">
+        <div class="kpi">Activité</div>
+        <div class="val" id="kpiActivity">—</div>
+        <div class="hint">Réservations / ventes / messages / pulses…</div>
+      </div>
+      <div class="card">
+        <div class="kpi">Alertes</div>
+        <div class="val" id="kpiAlerts">0</div>
+        <div class="hint">Erreurs, paiements en attente, outbox bloquée…</div>
+      </div>
+      <div class="card">
+        <div class="kpi">Score</div>
+        <div class="val" id="kpiScore">—</div>
+        <div class="hint">Plus tard: score Swarm global.</div>
+      </div>
     </div>
-    <div class="value" id="kpiMsg">…</div>
-    <div class="hint">
-      Rappels prévus : <span id="msgPlanned">0</span>
-      • Urgent maintenant : <span id="msgDue">0</span>
-      • Prévu demain : <span id="msgTomorrow">0</span>
-    </div>
+
+    <p style="margin-top:14px;color:var(--muted);font-weight:650;line-height:1.6">
+      Prochaine étape : on branche ton Supabase (tables KPI) et on calcule la température en live.
+    </p>
   </div>
-
-  <div class="card">
-    <div class="title">Ventes aujourd’hui</div>
-    <div class="value" id="kpiSalesToday">…</div>
-    <div class="hint">Tickets (caisse)</div>
-  </div>
-
-  <div class="card">
-    <div class="title">CA aujourd’hui</div>
-    <div class="value" id="kpiTurnoverToday">…</div>
-    <div class="hint">Total (FCFA)</div>
-  </div>
-
-  <div class="card">
-    <div class="title">Panier moyen</div>
-    <div class="value" id="kpiAvgBasket">…</div>
-    <div class="hint">Moyenne / ticket</div>
-  </div>
-</div>
-
-<!-- ✅ Température Globale -->
-<div class="tempBox">
-  🌡️ Température Business
-  <div class="temp" id="tempLevel">…</div>
-  <div class="subTemp" id="subTemp">—</div>
-</div>
-
-<footer>DIGIY • Ensemble, on avance ♾️</footer>
 
 <script>
-/* ===============================
-   DIGIY SWARM — Température Business (SESSION MODE)
-   - Guard déjà chargé (window.__digiy_sb__ / window.supa)
-   - Session obligatoire (owner_id + phone)
-   - Redirection vers login si absent
-================================ */
-
-function $(id){ return document.getElementById(id); }
-
-console.log("✅ SWARM DASHBOARD LOADED", location.href);
-
-const TZ = "Africa/Dakar";
-const NF = new Intl.NumberFormat("fr-FR");
-
-function moneyFCFA(v){
-  const n = Number(v || 0);
-  return NF.format(isFinite(n) ? n : 0);
-}
-
-function nowLabel(){
-  const d = new Date();
-  try { return d.toLocaleString("fr-FR", { timeZone: TZ }); } catch(e){ return d.toISOString(); }
-}
-
-function fmtDate(v){
-  if(!v) return "—";
-  const d = new Date(v);
-  if(isNaN(d.getTime())) return "—";
-  try { return d.toLocaleString("fr-FR", { timeZone: TZ }); } catch(e){ return d.toISOString(); }
-}
-
-function getSession(){
-  const raw =
-    localStorage.getItem("DIGIY_LOC_PRO_SESSION_V1") ||
-    localStorage.getItem("DIGIY_SESSION_V1") ||
-    "{}";
-  try { return JSON.parse(raw); } catch(e){ return {}; }
-}
-
-function safeLabel(x){
-  const s = String(x || "").trim();
-  if(!s) return "❄️ Calme";
-  return s.replace(/[\u0000-\u001F\u007F]/g, "");
-}
-
-function requireSession(){
-  const sess = getSession();
-  const ownerId = sess.owner_id;
-  const phone = sess.phone || sess.phone_number || sess.tel;
-
-  if(!ownerId || !phone){
-    $("status").textContent = "🔐 Connexion requise…";
-    setTimeout(()=>{ location.href = "./login.html"; }, 900);
-    return null;
+(function(){
+  function getSlug(){
+    try{
+      const s = new URL(location.href).searchParams.get("slug");
+      return (s||"").trim().toLowerCase();
+    }catch{ return ""; }
   }
-  return { ownerId, phone, sess };
-}
+  const slug = getSlug();
+  document.getElementById("slugTxt").textContent = slug || "(aucun slug)";
 
-function setUrgenceUI(data){
-  const due = Number(data.messages_due || 0);
-  const urgentBar = $("urgentBar");
-  const urgentText = $("urgentText");
-  const urgentBtn = $("urgentBtn");
-  const dueBadge = $("dueBadge");
-  const msgCard = $("msgCard");
+  // Retour HUB (garde le slug)
+  document.getElementById("backBtn").addEventListener("click", ()=>{
+    const u = new URL("./index.html", location.href);
+    if(slug) u.searchParams.set("slug", slug);
+    location.href = u.toString();
+  });
 
-  if(due > 0){
-    urgentBar.style.display = "block";
-    urgentText.textContent = `🚨 ${due} message(s) à envoyer MAINTENANT`;
-    dueBadge.style.display = "inline-flex";
-    dueBadge.textContent = `DÛ x${due}`;
-    dueBadge.classList.add("duePulse");
-    msgCard.classList.add("duePulse");
-
-    if(navigator.vibrate) navigator.vibrate([80,40,80]);
-
-    urgentBtn.onclick = () => { location.href = "./pulse.html"; };
-
-    $("tempLevel").textContent = "🚨 URGENCE : action immédiate";
-    return true;
-  } else {
-    urgentBar.style.display = "none";
-    dueBadge.style.display = "none";
-    dueBadge.classList.remove("duePulse");
-    msgCard.classList.remove("duePulse");
-    return false;
-  }
-}
-
-let __loading = false;
-
-async function loadTemperature(){
-  if(__loading) return;
-  __loading = true;
-
-  try{
-    const sb = window.__digiy_sb__ || window.supa;
-
-    if(!sb){
-      $("status").textContent = "⚠️ Guard absent (supa)";
-      return;
-    }
-
-    if(!navigator.onLine){
-      $("status").textContent = "📴 Hors ligne";
-      return;
-    }
-
-    const ident = requireSession();
-    if(!ident) return;
-
-    const { ownerId, phone } = ident;
-
-    $("status").textContent = "⏳ Live…";
-
-    // 1) LOC
-    const rLoc = await sb.rpc("rpc_swarm_temperature_owner_v2", {
-      p_owner: ownerId,
-      p_phone: phone
-    });
-
-    if(rLoc.error){
-      console.error(rLoc.error);
-      $("status").textContent = "❌ Erreur RPC LOC";
-      return;
-    }
-
-    const loc = rLoc.data || {};
-
-    // 2) CAISSE (fallback)
-    let caisse = { sales_today:0, turnover_today:0, avg_basket:0, top_payment_method:null, top_payment_method_n:0, last_sale_at:null };
-    let caisseOk = true;
-
-    const rCaisse = await sb.rpc("rpc_caisse_swarm_owner_v1", { p_owner: ownerId });
-    if(rCaisse.error){
-      caisseOk = false;
-      console.warn("RPC caisse fail:", rCaisse.error);
-    } else {
-      caisse = rCaisse.data || caisse;
-    }
-
-    $("status").textContent = caisseOk ? "✅ Live" : "✅ Live (caisse: off)";
-
-    // LOC KPIs
-    $("kpiResa").textContent = loc.reservations ?? 0;
-    $("kpiTomorrow").textContent = loc.tomorrow ?? 0;
-
-    const bal = Number(loc.wallet_balance || 0);
-    $("kpiWallet").textContent = moneyFCFA(bal);
-
-    $("kpiMsg").textContent = loc.messages_new ?? 0;
-    $("msgPlanned").textContent = loc.messages_new ?? 0;
-    $("msgDue").textContent = loc.messages_due ?? 0;
-    $("msgTomorrow").textContent = loc.messages_tomorrow ?? 0;
-
-    // CAISSE KPIs
-    $("kpiSalesToday").textContent = caisse.sales_today ?? 0;
-    $("kpiTurnoverToday").textContent = moneyFCFA(caisse.turnover_today ?? 0);
-    $("kpiAvgBasket").textContent = moneyFCFA(Math.round(caisse.avg_basket ?? 0));
-
-    // Température
-    const isUrgent = setUrgenceUI(loc);
-    if(!isUrgent){
-      $("tempLevel").textContent = safeLabel(loc.label || "❄️ Calme");
-    }
-
-    // Meta
-    const topPay = caisse.top_payment_method ? `${caisse.top_payment_method} (${caisse.top_payment_method_n||0})` : "—";
-    const lastSale = fmtDate(caisse.last_sale_at);
-
-    $("subTemp").textContent =
-      `Wallet: ${moneyFCFA(bal)} FCFA • Msg: ${loc.messages_new ?? 0} (dû: ${loc.messages_due ?? 0}, demain: ${loc.messages_tomorrow ?? 0}) • ` +
-      `Caisse: ${caisse.sales_today ?? 0} vente(s), CA ${moneyFCFA(caisse.turnover_today ?? 0)} • Top ${topPay} • Dernière vente ${lastSale} • Maj: ${nowLabel()}`;
-  } finally {
-    __loading = false;
-  }
-}
-
-console.log("guard present?", !!(window.__digiy_sb__ || window.supa));
-console.log("digiyGuard fn?", typeof window.digiyGuard);
-
-// Boot + refresh
-loadTemperature();
-setInterval(loadTemperature, 60000);
-document.addEventListener("visibilitychange", () => { if(!document.hidden) loadTemperature(); });
+  // placeholders KPI
+  document.getElementById("kpiActivity").textContent = slug ? "LIVE (à brancher)" : "—";
+  document.getElementById("kpiScore").textContent = slug ? "🦅" : "—";
+})();
 </script>
-
 </body>
 </html>
+
