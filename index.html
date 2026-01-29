@@ -225,10 +225,7 @@
     }
     .hubBrand{font-weight:950;letter-spacing:.08em;text-transform:uppercase}
     .hubTopBtns{display:flex;gap:10px}
-    .hubBtn{
-      border:none;border-radius:999px;padding:10px 12px;font-weight:950;
-      cursor:pointer;
-    }
+    .hubBtn{border:none;border-radius:999px;padding:10px 12px;font-weight:950;cursor:pointer;}
     .hubBtn.back{background:linear-gradient(135deg,var(--gold),#fde68a);color:#111827}
     .hubBtn.close{background:rgba(15,23,42,.98);color:#e5e7eb;border:1px solid rgba(148,163,184,.30)}
     #hubFrame{width:100%;height:100%;border:0;background:#fff}
@@ -297,10 +294,11 @@
         <strong>Un seul abonnement. 11 métiers. Paiement direct au pro.</strong>
       </p>
 
-     <button id="btnGetHub" class="hero-cta" type="button"><span>→</span> Entrer dans Supa APPS</button>
+      <!-- ✅ PORTE SUPA APPS (OFFICIELLE) -->
+      <button id="btnGetHub" class="hero-cta" type="button"><span>→</span> Entrer dans Supa APPS</button>
       <button id="btnDeals" class="hero-cta secondary" type="button">💥 Voir les Bonnes Affaires</button>
-<!-- 🦅 PORTE OFFICIELLE PRO (Supa APPS) -->
-<button id="btnProGate" class="hero-cta secondary" type="button">🦅 Accès Pro — Supa APPS</button>
+      <button id="btnProGate" class="hero-cta secondary" type="button">🦅 Accès Pro — Supa APPS</button>
+
       <div style="margin-top:10px;color:var(--muted);font-weight:650">
         Places pionniers limitées • Prix bloqué à vie pour les premiers
       </div>
@@ -416,7 +414,6 @@
           <div class="module-body">Menus, photos, horaires, localisation. Réservation directe.</div>
         </div>
 
-        <!-- ✅ AJOUT — RESA TABLE -->
         <div class="module" data-open="resaTable">
           <div class="module-top">
             <div style="display:flex;gap:10px;align-items:center">
@@ -431,7 +428,6 @@
           <div class="module-body">Réservations de tables, gestion simple, confirmation rapide.</div>
         </div>
 
-        <!-- ✅ AJOUT — NOTABLE -->
         <div class="module" data-open="notable">
           <div class="module-top">
             <div style="display:flex;gap:10px;align-items:center">
@@ -446,7 +442,6 @@
           <div class="module-body">Les pros recommandés, repères terrain, confiance & qualité.</div>
         </div>
 
-        <!-- ✅ AJOUT — ESPACE PRO -->
         <div class="module" data-open="espacePro">
           <div class="module-top">
             <div style="display:flex;gap:10px;align-items:center">
@@ -461,7 +456,6 @@
           <div class="module-body">Portail pro : accès, outils, raccourcis, pilotage.</div>
         </div>
 
-        <!-- ✅ AJOUT — ESPACE CLIENT -->
         <div class="module" data-open="espaceClient">
           <div class="module-top">
             <div style="display:flex;gap:10px;align-items:center">
@@ -574,20 +568,6 @@
           <div class="module-body">Transport marchandises 0% commission. GPS, paiements directs.</div>
         </div>
 
-        <div class="module" data-open="inscriptionClient">
-          <div class="module-top">
-            <div style="display:flex;gap:10px;align-items:center">
-              <div class="module-icon">♾️</div>
-              <div>
-                <div class="module-name">ACCÈS CLIENT</div>
-                <div class="module-tag">INSCRIPTION GRATUITE</div>
-              </div>
-            </div>
-            <div class="badge free">GRATUIT</div>
-          </div>
-          <div class="module-body">Crée ton compte gratuit et accède aux apps clients DIGIY.</div>
-        </div>
-
         <div class="module" data-open="inscription">
           <div class="module-top">
             <div style="display:flex;gap:10px;align-items:center">
@@ -623,13 +603,9 @@
     <div class="digiyBox">
       <div class="digiyTitle">♾️ NDIMBAL</div>
       <div class="digiyText"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t’aider simplement.</div>
-
-      <!-- ✅ IMPORTANT: class digiyAct (pas digiy-act) -->
       <button class="digiyAct" type="button" data-action="sell">📋 Publier une mission</button>
       <button class="digiyAct" type="button" data-action="job">💼 Trouver du travail</button>
       <button class="digiyAct" type="button" data-action="qr">📷 Ouvrir QR DIGIYLYFE</button>
-
-      <!-- ✅ IMPORTANT: id digiyCloseBtn -->
       <button class="digiyClose" type="button" id="digiyCloseBtn">❌ Quitter</button>
     </div>
   </div>
@@ -660,204 +636,251 @@
   </div>
 
   <script>
-(function(){
-  "use strict";
+  (function(){
+    "use strict";
 
-  const LINKS = {
-    ndimbal: "https://beauville.github.io/digiy-hub-drive/",
-    bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/",
-    driver: "https://beauville.github.io/digiy-driver/",
-    driverClient: "https://beauville.github.io/digiy-driver-client/",
-    loc: "https://beauville.github.io/digiy-loc/",
-    resto: "https://beauville.github.io/digiy-resto/",
-    caissePro: "https://beauville.github.io/Digiy-caisse-pro/index.html",
-    vasChez: "https://beauville.github.io/vas-chez-digiy/",
-    pay: "https://beauville.github.io/digiy-pay/",
-    build: "https://beauville.github.io/digiy-build/",
-    market: "https://beauville.github.io/digiy-market/",
-    job: "https://beauville.github.io/digiy-jobs/",
-    explore: "https://beauville.github.io/digiy-explore/",
-    ndimbalMap: "https://beauville.github.io/digiy-ndimbal-map/",
-    resaTable: "https://beauville.github.io/digiy-resa-table/",
-    notable: "https://beauville.github.io/digiy-notable/",
-    espacePro: "https://beauville.github.io/espace-pro/",
-    espaceClient: "https://beauville.github.io/digiy-espace-client/",
-    inscription: "https://beauville.github.io/inscription-digiy/",
-    inscriptionClient: "https://beauville.github.io/inscription-client.html",
-    dashboard: "https://beauville.github.io/mon-espace-digiy/",
-    tarifs: "https://beauville.github.io/digiy/",
-    home: "https://digiylyfe.com"
-  };
+    /* =========================================================
+       ✅ LIENS (ici tu changes, et NUL PART ailleurs)
+       Supa APPS = espacePro (URL vérifiée)
+    ========================================================= */
+    const LINKS = {
+      bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/",
+      driver: "https://beauville.github.io/digiy-driver/",
+      driverClient: "https://beauville.github.io/digiy-driver-client/",
+      loc: "https://beauville.github.io/digiy-loc/",
+      resto: "https://beauville.github.io/digiy-resto/",
+      caissePro: "https://beauville.github.io/Digiy-caisse-pro/index.html",
+      vasChez: "https://beauville.github.io/vas-chez-digiy/",
+      pay: "https://beauville.github.io/digiy-pay/",
+      build: "https://beauville.github.io/digiy-build/",
+      market: "https://beauville.github.io/digiy-market/",
+      job: "https://beauville.github.io/digiy-jobs/",
+      explore: "https://beauville.github.io/digiy-explore/",
+      ndimbalMap: "https://beauville.github.io/digiy-ndimbal-map/",
+      resaTable: "https://beauville.github.io/digiy-resa-table/",
+      notable: "https://beauville.github.io/digiy-notable/",
+      espacePro: "https://beauville.github.io/espace-pro/",   // ✅ SUPA APPS (réel)
+      espaceClient: "https://beauville.github.io/digiy-espace-client/",
+      inscription: "https://beauville.github.io/inscription-digiy/",
+      tarifs: "https://beauville.github.io/digiy/",
+      home: "https://digiylyfe.com"
+    };
 
-  const SLUG_KEYS = new Set([
-    "caissePro","loc","resto","driver","driverClient",
-    "pay","build","market","job","explore",
-    "ndimbalMap","resaTable","notable","espacePro","espaceClient",
-    "dashboard"
-  ]);
+    // ✅ Porte Supa APPS unique
+    const SUPA_GATE_KEY = "espacePro";
 
-  function getSlug(){
-    try{
-      const s = new URL(location.href).searchParams.get("slug");
-      return (s || "").trim().toLowerCase();
-    }catch{ return ""; }
-  }
-  function withSlug(url){
-    const slug = getSlug();
-    if(!slug) return url;
-    const u = new URL(url, location.href);
-    u.searchParams.set("slug", slug);
-    return u.toString();
-  }
-  function resolveUrl(key, url){
-    if(!url) return url;
-    if(key && SLUG_KEYS.has(key)) return withSlug(url);
-    return url;
-  }
+    // ✅ Slug passthrough (ciblé)
+    const SLUG_KEYS = new Set([
+      "caissePro","loc","resto","driver","driverClient",
+      "pay","build","market","job","explore",
+      "ndimbalMap","resaTable","notable","espacePro","espaceClient"
+    ]);
 
-  // Elements
-  const hubOverlay = document.getElementById("hubOverlay");
-  const hubFrame   = document.getElementById("hubFrame");
-  const ndimbal    = document.getElementById("digiy-ndimbal");
-  const qrModal    = document.getElementById("qrModal");
-
-  const btnLogin    = document.getElementById("btnLogin");
-  const btnGetHub   = document.getElementById("btnGetHub");
-  const btnProGate  = document.getElementById("btnProGate");
-  const btnDeals    = document.getElementById("btnDeals");
-  const btnTarifs   = document.getElementById("tarif-bubble-btn");
-  const btnHelp     = document.getElementById("digiy-help-btn");
-  const btnNdClose  = document.getElementById("digiyCloseBtn");
-  const btnQrClose  = document.getElementById("qrClose");
-  const hubBackBtn  = document.getElementById("hubBackBtn");
-  const hubCloseBtn = document.getElementById("hubCloseBtn");
-  const homeBrand   = document.getElementById("homeBrand");
-
-  // Helpers
-  function show(el){
-    if(!el) return;
-    el.classList.add("show");
-    el.style.display = "block";
-    el.style.pointerEvents = "auto";
-    el.setAttribute("aria-hidden","false");
-  }
-  function hide(el){
-    if(!el) return;
-    el.classList.remove("show");
-    el.style.display = "none";
-    el.style.pointerEvents = "none";
-    el.setAttribute("aria-hidden","true");
-  }
-  function hasOverlay(){
-    return !!(hubOverlay && hubFrame);
-  }
-
-  function openInside(url, key){
-    hide(ndimbal);
-    const finalUrl = resolveUrl(key, url);
-
-    if(!hasOverlay()){
-      location.href = finalUrl;
-      return;
+    function getSlug(){
+      try{
+        const s = new URL(location.href).searchParams.get("slug");
+        return (s || "").trim().toLowerCase();
+      }catch{
+        return "";
+      }
     }
-    hubFrame.src = finalUrl;
-    show(hubOverlay);
-    document.body.style.overflow = "hidden";
-  }
-
-  function openModule(key){
-    if(key && LINKS[key]){
-      openInside(LINKS[key], key);
-      return;
+    function withSlug(url){
+      const slug = getSlug();
+      if(!slug) return url;
+      const u = new URL(url, location.href);
+      u.searchParams.set("slug", slug);
+      return u.toString();
     }
-    alert("Module en préparation.");
-  }
+    function resolveUrl(key, url){
+      if(!url) return url;
+      if(key && SLUG_KEYS.has(key)) return withSlug(url);
+      return url;
+    }
 
-  function closeInside(){
-    if(!hasOverlay()) return;
-    hide(hubOverlay);
-    hubFrame.src = "about:blank";
-    document.body.style.overflow = "";
-  }
+    // Elements
+    const hubOverlay = document.getElementById("hubOverlay");
+    const hubFrame   = document.getElementById("hubFrame");
+    const ndimbal    = document.getElementById("digiy-ndimbal");
+    const qrModal    = document.getElementById("qrModal");
 
-  function openNdimbal(){ show(ndimbal); }
-  function closeNdimbal(){ hide(ndimbal); }
-  function openQR(){ show(qrModal); }
-  function closeQR(){ hide(qrModal); }
+    // Helpers show/hide
+    function show(el){
+      if(!el) return;
+      el.classList.add("show");
+      el.style.display = "block";
+      el.style.pointerEvents = "auto";
+      el.setAttribute("aria-hidden","false");
+    }
+    function hide(el){
+      if(!el) return;
+      el.classList.remove("show");
+      el.style.display = "none";
+      el.style.pointerEvents = "none";
+      el.setAttribute("aria-hidden","true");
+    }
 
-  // ✅ LISTENERS DIRECTS (priorité)
-  function goSupaApps(e){
-    e?.preventDefault();
-    openModule("dashboard");
-  }
-  btnLogin?.addEventListener("click", goSupaApps);
-  btnGetHub?.addEventListener("click", goSupaApps);
-  btnProGate?.addEventListener("click", goSupaApps);
+    function hasOverlay(){ return !!(hubOverlay && hubFrame); }
 
-  btnDeals?.addEventListener("click", (e)=>{ e.preventDefault(); openModule("bonneAffaire"); });
-  btnTarifs?.addEventListener("click", (e)=>{ e.preventDefault(); openModule("tarifs"); });
+    function openInside(url, key){
+      hide(ndimbal);
+      const finalUrl = resolveUrl(key, url);
 
-  btnHelp?.addEventListener("click", (e)=>{ e.preventDefault(); openNdimbal(); });
-  btnNdClose?.addEventListener("click", (e)=>{ e.preventDefault(); closeNdimbal(); });
+      if(!hasOverlay()){
+        window.location.href = finalUrl;
+        return;
+      }
+      hubFrame.src = finalUrl;
+      show(hubOverlay);
+      document.body.style.overflow = "hidden";
+    }
 
-  btnQrClose?.addEventListener("click", (e)=>{ e.preventDefault(); closeQR(); });
+    function openModule(key){
+      const url = LINKS[key];
+      if(url){
+        openInside(url, key);
+        return;
+      }
+      alert("Module en préparation.");
+    }
 
-  hubBackBtn?.addEventListener("click", (e)=>{ e.preventDefault(); closeInside(); });
-  hubCloseBtn?.addEventListener("click", (e)=>{ e.preventDefault(); closeInside(); });
+    function closeInside(){
+      if(!hasOverlay()) return;
+      hide(hubOverlay);
+      hubFrame.src = "about:blank";
+      document.body.style.overflow = "";
+    }
 
-  homeBrand?.addEventListener("click", (e)=>{
-    e.preventDefault();
-    closeInside();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+    function openNdimbal(){ show(ndimbal); }
+    function closeNdimbal(){ hide(ndimbal); }
 
-  // ✅ ROUTER GLOBAL (BUBBLE — PAS CAPTURE)
-  document.addEventListener("click", function(e){
-    const t = e.target;
+    function openQR(){ show(qrModal); }
+    function closeQR(){ hide(qrModal); }
 
-    // close overlay si click backdrop
-    if(hubOverlay && t === hubOverlay){ closeInside(); return; }
+    // =========================================================
+    // ✅ BOUTONS DIRECTS (anti-casse) — pas de “fantôme”
+    // =========================================================
+    function goSupaApps(e){
+      if(e){ e.preventDefault(); e.stopPropagation(); }
+      openModule(SUPA_GATE_KEY);
+    }
 
-    // close NDIMBAL si click backdrop
-    if(ndimbal && t === ndimbal){ closeNdimbal(); return; }
+    document.getElementById("btnLogin")?.addEventListener("click", goSupaApps);
+    document.getElementById("btnGetHub")?.addEventListener("click", goSupaApps);
+    document.getElementById("btnProGate")?.addEventListener("click", goSupaApps);
 
-    // close QR si click backdrop
-    if(qrModal && t === qrModal){ closeQR(); return; }
+    document.getElementById("btnDeals")?.addEventListener("click", (e)=>{
+      e.preventDefault(); e.stopPropagation();
+      openModule("bonneAffaire");
+    });
 
-    // NDIMBAL actions
-    const actBtn = t && t.closest ? t.closest(".digiyAct") : null;
-    if(actBtn){
-      e.preventDefault();
-      const action = actBtn.getAttribute("data-action");
+    document.getElementById("tarif-bubble-btn")?.addEventListener("click", (e)=>{
+      e.preventDefault(); e.stopPropagation();
+      openModule("tarifs");
+    });
+
+    // NDIMBAL (floating)
+    document.getElementById("digiy-help-btn")?.addEventListener("click", (e)=>{
+      e.preventDefault(); e.stopPropagation();
+      openNdimbal();
+    });
+    document.getElementById("digiyCloseBtn")?.addEventListener("click", (e)=>{
+      e.preventDefault(); e.stopPropagation();
       closeNdimbal();
-      if(action === "sell") openInside(LINKS.inscription + "#why", "inscription");
-      else if(action === "job") openModule("job");
-      else if(action === "qr") openQR();
-      return;
-    }
+    });
 
-    // Module cards
-    const card = t && t.closest ? t.closest(".module") : null;
-    if(card){
-      e.preventDefault();
-      const ext = card.getAttribute("data-external");
-      const key = card.getAttribute("data-open");
-      if(ext){ window.open(ext, "_blank", "noopener,noreferrer"); return; }
-      if(key){ openModule(key); return; }
-    }
-  });
+    // QR close
+    document.getElementById("qrClose")?.addEventListener("click", (e)=>{
+      e.preventDefault(); e.stopPropagation();
+      closeQR();
+    });
 
-  // ESC
-  document.addEventListener("keydown", function(e){
-    if(e.key !== "Escape") return;
-    if(qrModal && qrModal.classList.contains("show")){ closeQR(); return; }
-    if(ndimbal && ndimbal.classList.contains("show")){ closeNdimbal(); return; }
-    if(hubOverlay && hubOverlay.classList.contains("show")){ closeInside(); return; }
-  });
+    // =========================================================
+    // CLICK ROUTER (cartes + overlay + modals)
+    // =========================================================
+    document.addEventListener("click", function(e){
+      const t = e.target;
 
-  console.log("✅ DIGIY HUB ROUTER OK (stable) — listeners directs + bubble");
-})();
-</script>
+      // Overlay buttons
+      if(t && (t.id === "hubBackBtn" || t.id === "hubCloseBtn")){
+        e.preventDefault(); e.stopPropagation();
+        closeInside();
+        return;
+      }
+      // Backdrop overlay
+      if(hubOverlay && t === hubOverlay){
+        closeInside();
+        return;
+      }
+
+      // Backdrop NDIMBAL
+      if(ndimbal && t === ndimbal){
+        closeNdimbal();
+        return;
+      }
+
+      // NDIMBAL actions
+      const actBtn = (t && t.closest) ? t.closest(".digiyAct") : null;
+      if(actBtn){
+        e.preventDefault();
+        const action = actBtn.getAttribute("data-action");
+        closeNdimbal();
+
+        if(action === "sell"){
+          openInside(LINKS.inscription + "#why", "inscription");
+        } else if(action === "job"){
+          openModule("job");
+        } else if(action === "qr"){
+          openQR();
+        }
+        return;
+      }
+
+      // Backdrop QR
+      if(qrModal && t === qrModal){
+        closeQR();
+        return;
+      }
+
+      // Module cards
+      const card = (t && t.closest) ? t.closest(".module") : null;
+      if(card){
+        e.preventDefault();
+        const ext = card.getAttribute("data-external");
+        const key = card.getAttribute("data-open");
+
+        if(ext){
+          window.open(ext, "_blank", "noopener");
+          return;
+        }
+        if(key){
+          openModule(key);
+          return;
+        }
+        alert("Module en préparation.");
+        return;
+      }
+
+      // Brand home
+      if(t && t.closest && t.closest("#homeBrand")){
+        e.preventDefault();
+        closeInside();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+    }, true);
+
+    // ESC handling
+    document.addEventListener("keydown", function(e){
+      if(e.key !== "Escape") return;
+
+      if(qrModal && qrModal.classList.contains("show")){ closeQR(); return; }
+      if(ndimbal && ndimbal.classList.contains("show")){ closeNdimbal(); return; }
+      if(hubOverlay && hubOverlay.classList.contains("show")){ closeInside(); return; }
+    });
+
+    console.log("✅ DIGIY HUB OK — Porte Supa APPS =", LINKS[SUPA_GATE_KEY]);
+  })();
+  </script>
 
 </body>
 </html>
