@@ -803,36 +803,21 @@
     // 3) Hero / header buttons (PASSAGE OBLIGÉ SUPA APPS)
 if(t && t.closest && t.closest("#btnLogin")){
   e.preventDefault();
-  // ✅ porte officielle (login)
-  openInside("./login.html", null);
+  openModule("dashboard"); // ✅ porte Supa APPS existante
+  return;
+}
+
+if(t && t.closest && t.closest("#btnGetHub")){
+  e.preventDefault();
+  openModule("dashboard"); // ✅ même porte
   return;
 }
 
 if(t && t.closest && t.closest("#btnProGate")){
   e.preventDefault();
-  openInside("./login.html", null);
+  openModule("dashboard"); // ✅ même porte
   return;
 }
-    if(t && t.closest && t.closest("#btnGetHub")){
-      e.preventDefault();
-      openInside(LINKS.inscription + "#why", "inscription"); // pas besoin de slug ici
-      return;
-    }
-    if(t && t.closest && t.closest("#btnSignup")){
-      e.preventDefault();
-      openInside(LINKS.inscription + "#why", "inscription");
-      return;
-    }
-    if(t && t.closest && t.closest("#btnDeals")){
-      e.preventDefault();
-      openModule("bonneAffaire");
-      return;
-    }
-    if(t && t.closest && t.closest("#tarif-bubble-btn")){
-      e.preventDefault();
-      openModule("tarifs"); // slug non injecté (marketing)
-      return;
-    }
 
     // 4) Floating NDIMBAL
     if(t && t.closest && t.closest("#digiy-help-btn")){
