@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Guard DIGIY -->
-  <script src="./guard.js?v=swarm-peuple-5"></script>
+  <script src="./guard.js?v=swarm-peuple-6"></script>
 
   <style>
     :root{
@@ -65,6 +65,30 @@
       white-space:nowrap;
     }
 
+    /* 🔑 mini barre action */
+    .topActions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin:10px 0 12px;
+    }
+    .linkBtn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:950;
+      font-size:13px;
+      transition: transform .08s ease, opacity .08s ease;
+    }
+    .linkBtn:active{transform:translateY(1px); opacity:.92}
+
+    /* 🚨 URGENCE BAR */
     .urgentBar{
       display:none;
       margin:10px 0 14px;
@@ -121,6 +145,7 @@
       gap:8px;
     }
 
+    /* 🔴 Badge DÛ */
     .dueBadge{
       display:none;
       padding:4px 10px;
@@ -141,6 +166,7 @@
     @media (prefers-reduced-motion: reduce){
       .duePulse{ animation:none !important; }
       .urgentBtn{ transition:none !important; }
+      .linkBtn{ transition:none !important; }
     }
 
     .value{
@@ -193,6 +219,13 @@
   <div class="status" id="status" aria-live="polite">Chargement…</div>
 </header>
 
+<!-- 🔑 Actions -->
+<div class="topActions">
+  <a class="linkBtn" href="./login.html">🔑 Se connecter</a>
+  <a class="linkBtn" href="./">🏠 HUB</a>
+</div>
+
+<!-- 🚨 URGENCE -->
 <div class="urgentBar" id="urgentBar">
   <div class="urgentRow">
     <div>
@@ -254,6 +287,7 @@
   </div>
 </div>
 
+<!-- ✅ Température Globale -->
 <div class="tempBox">
   🌡️ Température Business
   <div class="temp" id="tempLevel">…</div>
@@ -263,6 +297,13 @@
 <footer>DIGIY • Ensemble, on avance ♾️</footer>
 
 <script>
+/* ===============================
+   DIGIY SWARM — Température Business (SESSION MODE)
+   - Guard déjà chargé (window.__digiy_sb__ / window.supa)
+   - Session obligatoire (owner_id + phone)
+   - Redirection vers login si absent
+================================ */
+
 function $(id){ return document.getElementById(id); }
 
 console.log("✅ SWARM DASHBOARD LOADED", location.href);
@@ -299,6 +340,19 @@ function safeLabel(x){
   const s = String(x || "").trim();
   if(!s) return "❄️ Calme";
   return s.replace(/[\u0000-\u001F\u007F]/g, "");
+}
+
+function requireSession(){
+  const sess = getSession();
+  const ownerId = sess.owner_id;
+  const phone = sess.phone || sess.phone_number || sess.tel;
+
+  if(!ownerId || !phone){
+    $("status").textContent = "🔐 Connexion requise…";
+    setTimeout(()=>{ location.href = "./login.html"; }, 900);
+    return null;
+  }
+  return { ownerId, phone, sess };
 }
 
 function setUrgenceUI(data){
@@ -342,16 +396,7 @@ async function loadTemperature(){
     const sb = window.__digiy_sb__ || window.supa;
 
     if(!sb){
-      $("status").textContent = "⚠️ Pas connecté (guard.js / supa absent)";
-      return;
-    }
-
-    const sess = getSession();
-    const ownerId = sess.owner_id;
-    const phone = sess.phone || sess.phone_number || sess.tel;
-
-    if(!ownerId || !phone){
-      $("status").textContent = "⚠️ Session manquante (owner/phone)";
+      $("status").textContent = "⚠️ Guard absent (supa)";
       return;
     }
 
@@ -360,8 +405,14 @@ async function loadTemperature(){
       return;
     }
 
+    const ident = requireSession();
+    if(!ident) return;
+
+    const { ownerId, phone } = ident;
+
     $("status").textContent = "⏳ Live…";
 
+    // 1) LOC
     const rLoc = await sb.rpc("rpc_swarm_temperature_owner_v2", {
       p_owner: ownerId,
       p_phone: phone
@@ -375,6 +426,7 @@ async function loadTemperature(){
 
     const loc = rLoc.data || {};
 
+    // 2) CAISSE (fallback)
     let caisse = { sales_today:0, turnover_today:0, avg_basket:0, top_payment_method:null, top_payment_method_n:0, last_sale_at:null };
     let caisseOk = true;
 
@@ -388,6 +440,7 @@ async function loadTemperature(){
 
     $("status").textContent = caisseOk ? "✅ Live" : "✅ Live (caisse: off)";
 
+    // LOC KPIs
     $("kpiResa").textContent = loc.reservations ?? 0;
     $("kpiTomorrow").textContent = loc.tomorrow ?? 0;
 
@@ -399,15 +452,18 @@ async function loadTemperature(){
     $("msgDue").textContent = loc.messages_due ?? 0;
     $("msgTomorrow").textContent = loc.messages_tomorrow ?? 0;
 
+    // CAISSE KPIs
     $("kpiSalesToday").textContent = caisse.sales_today ?? 0;
     $("kpiTurnoverToday").textContent = moneyFCFA(caisse.turnover_today ?? 0);
     $("kpiAvgBasket").textContent = moneyFCFA(Math.round(caisse.avg_basket ?? 0));
 
+    // Température
     const isUrgent = setUrgenceUI(loc);
     if(!isUrgent){
       $("tempLevel").textContent = safeLabel(loc.label || "❄️ Calme");
     }
 
+    // Meta
     const topPay = caisse.top_payment_method ? `${caisse.top_payment_method} (${caisse.top_payment_method_n||0})` : "—";
     const lastSale = fmtDate(caisse.last_sale_at);
 
@@ -418,10 +474,12 @@ async function loadTemperature(){
     __loading = false;
   }
 }
+
 console.log("guard present?", !!(window.__digiy_sb__ || window.supa));
 console.log("digiyGuard fn?", typeof window.digiyGuard);
 
-  loadTemperature();
+// Boot + refresh
+loadTemperature();
 setInterval(loadTemperature, 60000);
 document.addEventListener("visibilitychange", () => { if(!document.hidden) loadTemperature(); });
 </script>
