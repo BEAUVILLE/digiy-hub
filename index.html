@@ -669,178 +669,216 @@
 </div>
 
 <script>
-(function(){
-  "use strict";
+document.addEventListener('DOMContentLoaded', () => {
+  'use strict';
 
-  // 🔒 ZÉRO URL FANTÔME : que du concret + pages locales dans ce repo
+  // ============================
+  // CONFIG
+  // ============================
+  const HUB_BASE = "https://beauville.github.io/digiy-hub-drive/";
+  const HUB = (p)=> HUB_BASE + String(p||"").replace(/^\//,"");
+
+  const NDIMBAL_PUBLISH_URL = HUB("");
+  const NDIMBAL_JEF_URL = HUB("digiy-jef.html");
+
+  // ✅ TES URLS (je garde ton NDIMBAL tel quel)
   const LINKS = {
-    // pages locales (dans digiy-hub)
-    temperature: "./temperature-business.html",
-    qrFactory: "./qr-factory.html",
-
-    // modules externes (ceux que tu utilises déjà)
-    espacePro: "https://beauville.github.io/espace-pro/",
-    espaceClient: "https://beauville.github.io/digiy-espace-client/",
-    driver: "https://beauville.github.io/digiy-driver/",
+    go:           "https://beauville.github.io/digiy-go/",
+    driver:       "https://beauville.github.io/digiy-driver/",
     driverClient: "https://beauville.github.io/digiy-driver-client/",
-    loc: "https://beauville.github.io/digiy-loc/",
-    resto: "https://beauville.github.io/digiy-resto/",
-    caissePro: "https://beauville.github.io/Digiy-caisse-pro/index.html",
-    pay: "https://beauville.github.io/digiy-pay/",
-    build: "https://beauville.github.io/digiy-build/",
-    market: "https://beauville.github.io/digiy-market/",
-    job: "https://beauville.github.io/digiy-jobs/",
-    explore: "https://beauville.github.io/digiy-explore/",
-    ndimbalMap: "https://beauville.github.io/digiy-ndimbal-map/",
-    inscription: "https://beauville.github.io/inscription-digiy/",
+    loc:          "https://beauville.github.io/digiy-loc/",
+    resto:        "https://beauville.github.io/digiy-resto/",
+    resa:         "https://beauville.github.io/digiy-resa-table/",
+    caissePro:    "https://beauville.github.io/Digiy-caisse-pro/",
+    pay:          "https://beauville.github.io/digiy-pay/",
+    build:        "https://beauville.github.io/digiy-build/",
+    market:       "https://beauville.github.io/digiy-market/",
+    job:          "https://beauville.github.io/digiy-jobs/",
+    explore:      "https://beauville.github.io/digiy-explore/",
+
+    ndimbalMap:   "https://beauville.github.io/digiy-mdimbal-map/",
+
+    inscription:       "https://beauville.github.io/inscription-digiy/",
     inscriptionClient: "https://beauville.github.io/inscription-client.html",
-    dashboard: "https://beauville.github.io/mon-espace-digiy/",
-    tarifs: "https://beauville.github.io/digiy/",
-    home: "https://digiylyfe.com"
+    dashboard:         "https://beauville.github.io/mon-espace-digiy/",
+
+    ndimbalPublish: NDIMBAL_PUBLISH_URL,
+    ndimbalJef:     NDIMBAL_JEF_URL
   };
 
-  // Slug passthrough
-  function getSlug(){
-    try{
-      const s = new URL(location.href).searchParams.get("slug");
-      return (s||"").trim().toLowerCase();
-    }catch{ return ""; }
-  }
-  function withSlug(url){
-    const slug = getSlug();
-    if(!slug) return url;
-    const u = new URL(url, location.href);
-    u.searchParams.set("slug", slug);
-    return u.toString();
-  }
+  // ============================
+  // DOM
+  // ============================
+  const hubOverlay   = document.getElementById('hubOverlay');
+  const hubFrame     = document.getElementById('hubFrame');
+  const hubBackBtn   = document.getElementById('hubBackBtn');
+  const hubCloseBtn  = document.getElementById('hubCloseBtn');
 
-  const hubOverlay = document.getElementById("hubOverlay");
-  const hubFrame   = document.getElementById("hubFrame");
+  const ndimbalModal    = document.getElementById('digiy-ndimbal');
+  const ndimbalBtn      = document.getElementById('digiy-help-btn');
+  const ndimbalCloseBtn = document.getElementById('digiy-close');
 
-  const ndimbalModal = document.getElementById("digiy-ndimbal");
-  const ndimbalBtn   = document.getElementById("digiy-help-btn");
-  const ndimbalClose = document.getElementById("digiy-close");
+  const qrModal    = document.getElementById('qrModal');
+  const qrCloseBtn = document.getElementById('qrClose');
 
-  const qrModal   = document.getElementById("qrModal");
-  const qrClose   = document.getElementById("qrClose");
+  // ============================
+  // OPEN / CLOSE IFRAME
+  // ============================
+  function openInside(url){
+    if(ndimbalModal) ndimbalModal.classList.remove('show');
 
-  function show(el){
-    if(!el) return;
-    el.classList.add("show");
-    el.setAttribute("aria-hidden","false");
-  }
-  function hide(el){
-    if(!el) return;
-    el.classList.remove("show");
-    el.setAttribute("aria-hidden","true");
-  }
-
-  function openInside(rawUrl){
-    hide(ndimbalModal);
-    const url = withSlug(rawUrl);
-
+    // fallback si overlay absent
     if(!hubOverlay || !hubFrame){
       window.location.href = url;
       return;
     }
+
     hubFrame.src = url;
-    show(hubOverlay);
-    document.body.style.overflow = "hidden";
+    hubOverlay.classList.add('show');
+    hubOverlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
   }
+
   function closeInside(){
     if(!hubOverlay || !hubFrame) return;
-    hide(hubOverlay);
-    hubFrame.src = "about:blank";
-    document.body.style.overflow = "";
+    hubOverlay.classList.remove('show');
+    hubOverlay.setAttribute('aria-hidden','true');
+    hubFrame.src = 'about:blank';
+    document.body.style.overflow = '';
   }
 
-  // Top buttons
-  const btnLogin = document.getElementById("btnLogin");
-  const btnGetHub = document.getElementById("btnGetHub");
-  const menuBtn = document.getElementById("menuBtn");
-  const homeBrand = document.getElementById("homeBrand");
-  const tarifBtn = document.getElementById("tarif-bubble-btn");
+  // overlay buttons
+  if(hubBackBtn) hubBackBtn.addEventListener('click', closeInside);
+  if(hubCloseBtn) hubCloseBtn.addEventListener('click', closeInside);
+  if(hubOverlay) hubOverlay.addEventListener('click', (e)=>{ if(e.target === hubOverlay) closeInside(); });
 
-  btnLogin?.addEventListener("click", ()=>openInside(LINKS.dashboard));
-  btnGetHub?.addEventListener("click", ()=>openInside(LINKS.espacePro)); // ✅ Supa APPS = Espace Pro
-  menuBtn?.addEventListener("click", ()=>window.open(LINKS.home, "_blank", "noopener"));
-  tarifBtn?.addEventListener("click", ()=>openInside(LINKS.tarifs));
+  // ============================
+  // MODULE OPENERS (béton)
+  // ============================
+  function openKey(key){
+    const url = LINKS[key];
+    if(!url){ alert("Module en préparation."); return; }
+    openInside(url);
+  }
 
-  homeBrand?.addEventListener("click", (e)=>{
-    e.preventDefault();
-    closeInside();
-    window.scrollTo({top:0, behavior:"smooth"});
-  });
+  // ✅ Bind DIRECT sur chaque carte module
+  document.querySelectorAll('.module').forEach((card) => {
+    card.addEventListener('click', () => {
+      const ext = card.getAttribute('data-external');
+      const key = card.getAttribute('data-open');
 
-  // Overlay controls
-  document.getElementById("hubBackBtn")?.addEventListener("click", closeInside);
-  document.getElementById("hubCloseBtn")?.addEventListener("click", closeInside);
-  hubOverlay?.addEventListener("click", (e)=>{ if(e.target === hubOverlay) closeInside(); });
-
-  // Cards click
-  document.addEventListener("click", (e)=>{
-    const btn = e.target.closest(".module-btn");
-    if(btn){
-      const card = btn.closest(".module");
-      if(card) card.click();
-      return;
-    }
-    const card = e.target.closest(".module");
-    if(!card) return;
-
-    const key = card.getAttribute("data-open");
-    const ext = card.getAttribute("data-external");
-
-    if(ext){
-      window.open(withSlug(ext), "_blank", "noopener");
-      return;
-    }
-    if(key && LINKS[key]){
-      openInside(LINKS[key]);
-      return;
-    }
-    alert("Module en préparation.");
-  });
-
-  // NDIMBAL modal
-  ndimbalBtn?.addEventListener("click", ()=>show(ndimbalModal));
-  ndimbalClose?.addEventListener("click", ()=>hide(ndimbalModal));
-  ndimbalModal?.addEventListener("click", (e)=>{ if(e.target === ndimbalModal) hide(ndimbalModal); });
-
-  document.querySelectorAll(".digiy-act").forEach((b)=>{
-    b.addEventListener("click", ()=>{
-      const action = b.getAttribute("data-action");
-      hide(ndimbalModal);
-
-      if(action === "sell") openInside(LINKS.inscription);
-      else if(action === "job") openInside(LINKS.job);
-      else if(action === "qr") show(qrModal);
+      if(ext){
+        window.open(ext, '_blank', 'noopener');
+        return;
+      }
+      if(key){
+        openKey(key);
+        return;
+      }
     });
   });
 
-  // QR modal
-  qrClose?.addEventListener("click", ()=>hide(qrModal));
-  qrModal?.addEventListener("click", (e)=>{ if(e.target === qrModal) hide(qrModal); });
-
-  // ESC
-  document.addEventListener("keydown", (e)=>{
-    if(e.key !== "Escape") return;
-    if(qrModal?.classList.contains("show")) hide(qrModal);
-    else if(ndimbalModal?.classList.contains("show")) hide(ndimbalModal);
-    else if(hubOverlay?.classList.contains("show")) closeInside();
+  // ✅ Les boutons internes déclenchent la carte
+  document.querySelectorAll('.module .module-btn').forEach((btn)=>{
+    btn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      const card = btn.closest('.module');
+      if(card) card.click();
+    });
   });
 
-  // Pioneers anim
-  const pioneersEl = document.getElementById("pioneersLeft");
-  if(pioneersEl){
-    let v = parseInt(pioneersEl.textContent, 10);
-    if(Number.isNaN(v)) v = 87;
-    setInterval(()=>{ if(v>83 && Math.random()>.7){ v--; pioneersEl.textContent = v; } }, 30000);
+  // ============================
+  // TOP BUTTONS
+  // ============================
+  const loginBtn      = document.getElementById('btnLogin');
+  const getHubBtn     = document.getElementById('btnGetHub');
+  const menuBtn       = document.getElementById('menuBtn');
+  const seePacksBtn   = document.getElementById('btnSeePacks');
+  const fullSignupBtn = document.getElementById('btnFullSignup');
+  const homeBrand     = document.getElementById('homeBrand');
+  const tarifBtn      = document.getElementById('tarif-bubble-btn');
+
+  if(loginBtn) loginBtn.addEventListener('click', ()=> openInside(LINKS.dashboard));
+  if(getHubBtn) getHubBtn.addEventListener('click', ()=> openInside(LINKS.inscription));
+  if(fullSignupBtn) fullSignupBtn.addEventListener('click', ()=> openInside(LINKS.inscription));
+
+  if(seePacksBtn) seePacksBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    openInside(HUB("index.html")); // si tu as une page packs dédiée, on la met ici
+  });
+
+  if(homeBrand) homeBrand.addEventListener('click', (e)=>{
+    e.preventDefault();
+    closeInside();
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  if(tarifBtn) tarifBtn.addEventListener('click', ()=> openInside('https://beauville.github.io/DIGIY/'));
+
+  // ⚠️ Attention : digiylyfe.com peut BLOQUER l’iframe (X-Frame-Options). Si écran blanc → c’est normal.
+  if(menuBtn) menuBtn.addEventListener('click', ()=> window.open('https://digiylyfe.com/menus-pages','_blank','noopener'));
+
+  // ============================
+  // NDIMBAL MODAL
+  // ============================
+  function openNdimbal(){
+    if(!ndimbalModal) return;
+    ndimbalModal.classList.add('show');
+    ndimbalModal.setAttribute('aria-hidden','false');
+  }
+  function closeNdimbal(){
+    if(!ndimbalModal) return;
+    ndimbalModal.classList.remove('show');
+    ndimbalModal.setAttribute('aria-hidden','true');
   }
 
-  console.log("✅ DIGIY HUB — Router clean (Supa APPS = Espace Pro) + Température locale + Slug passthrough");
-})();
+  if(ndimbalBtn) ndimbalBtn.addEventListener('click', openNdimbal);
+  if(ndimbalCloseBtn) ndimbalCloseBtn.addEventListener('click', closeNdimbal);
+  if(ndimbalModal) ndimbalModal.addEventListener('click', (e)=>{ if(e.target===ndimbalModal) closeNdimbal(); });
+
+  document.querySelectorAll('.digiy-act').forEach((btn)=>{
+    btn.addEventListener('click', ()=>{
+      const action = btn.getAttribute('data-action');
+      if(action === 'sell'){ closeNdimbal(); openInside(LINKS.ndimbalPublish); }
+      if(action === 'job'){  closeNdimbal(); openInside(LINKS.ndimbalJef); }
+      if(action === 'qr'){
+        closeNdimbal();
+        if(qrModal){
+          qrModal.classList.add('show');
+          qrModal.setAttribute('aria-hidden','false');
+        }
+      }
+    });
+  });
+
+  function closeQR(){
+    if(!qrModal) return;
+    qrModal.classList.remove('show');
+    qrModal.setAttribute('aria-hidden','true');
+  }
+  if(qrCloseBtn) qrCloseBtn.addEventListener('click', closeQR);
+  if(qrModal) qrModal.addEventListener('click', (e)=>{ if(e.target===qrModal) closeQR(); });
+
+  // ESC
+  document.addEventListener('keydown', (e)=>{
+    if(e.key !== 'Escape') return;
+    if(qrModal && qrModal.classList.contains('show')) closeQR();
+    else if(ndimbalModal && ndimbalModal.classList.contains('show')) closeNdimbal();
+    else if(hubOverlay && hubOverlay.classList.contains('show')) closeInside();
+  });
+
+  // SW
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', ()=>{
+      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+    });
+  }
+
+  console.log("✅ HUB JS OK (events bind direct)");
+});
 </script>
+
 </body>
 </html>
 </html>
