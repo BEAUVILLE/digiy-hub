@@ -418,8 +418,10 @@ async function loadTemperature(){
     __loading = false;
   }
 }
+console.log("guard present?", !!(window.__digiy_sb__ || window.supa));
+console.log("digiyGuard fn?", typeof window.digiyGuard);
 
-loadTemperature();
+  loadTemperature();
 setInterval(loadTemperature, 60000);
 document.addEventListener("visibilitychange", () => { if(!document.hidden) loadTemperature(); });
 </script>
