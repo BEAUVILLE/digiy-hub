@@ -582,7 +582,8 @@
   inscription: "https://beauville.github.io/inscription-digiy/",
   inscriptionClient: "https://beauville.github.io/inscription-client.html",
   dashboard: "https://beauville.github.io/mon-espace-digiy/",
-  espacePro: "https://beauville.github.io/espace-pro/",  // ✅ NOUVEAU
+  espacePro: "https://beauville.github.io/espace-pro/",
+  hubDrive: "https://beauville.github.io/digiy-hub-drive/",  // ✅ PUBLIER MISSION NDIMBAL
   tarifs: "https://beauville.github.io/digiy/",
   home: "https://digiylyfe.com"
 };
@@ -675,7 +676,7 @@
       e.preventDefault();
       const action = act.getAttribute("data-action");
       closeNdimbal();
-      if(action === "sell") openInside(LINKS.bonneAffaire);
+      if(action === "sell") openInside(LINKS.hubDrive);  // ✅ PUBLIER MISSION
       else if(action === "job") openInside(LINKS.job);
       else if(action === "qr") openQR();
       return;
