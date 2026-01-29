@@ -34,14 +34,14 @@
       color:var(--gold);
     }
 
-    p{color:var(--muted);margin-bottom:14px}
+    p{color:var(--muted);margin-bottom:14px;line-height:1.45}
 
     .box{
       background:rgba(255,255,255,.04);
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:16px;
-      margin-bottom:16px;
+      margin-bottom:12px;
     }
 
     input{
@@ -56,8 +56,17 @@
       margin-top:8px;
     }
 
-    button{
+    .rowBtns{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
       margin-top:12px;
+    }
+    @media(max-width:560px){
+      .rowBtns{grid-template-columns:1fr}
+    }
+
+    button{
       width:100%;
       padding:12px;
       border:none;
@@ -67,11 +76,17 @@
       background:linear-gradient(135deg,var(--gold),#fde68a);
       color:#111;
     }
+    button.secondary{
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+    button:active{transform:translateY(1px)}
 
     .list{
       display:grid;
       gap:12px;
-      margin-top:16px;
+      margin-top:14px;
     }
 
     .item{
@@ -84,21 +99,31 @@
     .top{
       display:flex;
       justify-content:space-between;
-      align-items:center;
+      align-items:flex-start;
       gap:10px;
     }
 
     .name{font-weight:950}
-    .tag{font-size:12px;color:var(--muted)}
+    .tag{font-size:12px;color:var(--muted);margin-top:2px}
 
     .link{
-      margin-top:8px;
+      margin-top:10px;
       font-size:13px;
       word-break:break-all;
       color:#fff;
+      opacity:.95;
     }
 
-    .copy{
+    .actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+      min-width:150px;
+    }
+
+    .btnMini{
       border:1px solid var(--line);
       background:rgba(255,255,255,.08);
       color:var(--text);
@@ -106,21 +131,27 @@
       border-radius:12px;
       cursor:pointer;
       font-weight:850;
+      font-size:12px;
     }
-
-    .copy:active{transform:translateY(1px)}
+    .btnMini:hover{border-color:rgba(250,204,21,.55)}
   </style>
 </head>
 
 <body>
 
   <h1>♾️ DIGIY QR FACTORY</h1>
-  <p>Slug → QR + liens (HUB / CAISSE / LOC / RESTO / TEMP…)</p>
+  <p>Slug → liens (HUB / CAISSE / LOC / RESTO / TEMP…).<br>
+     Astuce : pour éviter les 404, la version SAFE de Température utilise un fichier <strong>sans accent</strong> : <code>temperature-business.html</code>.
+  </p>
 
   <div class="box">
     <div><strong>Slug :</strong></div>
     <input id="slugInput" placeholder="ex: chez-astou-saly" />
-    <button id="btnGen">⚡ Générer</button>
+
+    <div class="rowBtns">
+      <button id="btnGen" type="button">⚡ Générer</button>
+      <button id="btnCopyAll" class="secondary" type="button">📋 Copier tous les liens</button>
+    </div>
   </div>
 
   <div class="list" id="results"></div>
@@ -128,36 +159,48 @@
 <script>
 /* ===============================
    DIGIY QR FACTORY — FULL CLEAN
-   ✅ Avec Température Business ajouté
+   ✅ Température Business SAFE + Legacy
+   ✅ Ouvrir / Copier / Copier Tous
 ================================ */
 
 const BASE = {
-  hub:        "https://beauville.github.io/digiy-hub/",
-  caisse:     "https://beauville.github.io/Digiy-caisse-pro/index.html",
-  espacePro:  "https://beauville.github.io/espace-pro/",
+  hub:         "https://beauville.github.io/digiy-hub/",
+  caisse:      "https://beauville.github.io/Digiy-caisse-pro/index.html",
+  espacePro:   "https://beauville.github.io/espace-pro/",
   espaceClient:"https://beauville.github.io/digiy-espace-client/",
-  loc:        "https://beauville.github.io/digiy-loc/",
-  resto:      "https://beauville.github.io/digiy-resto/",
-  resa:       "https://beauville.github.io/digiy-resa-table/",
-  notable:    "https://beauville.github.io/digiy-notable/",
+  loc:         "https://beauville.github.io/digiy-loc/",
+  resto:       "https://beauville.github.io/digiy-resto/",
+  resa:        "https://beauville.github.io/digiy-resa-table/",
+  notable:     "https://beauville.github.io/digiy-notable/",
 
-  /* ✅ AJOUT OFFICIEL */
-  temperature:"https://beauville.github.io/digiy-hub/Temp%C3%A9rature-Business.html"
+  // ✅ TEMPÉRATURE — RECOMMANDÉ (sans accent)
+  temperature: "https://beauville.github.io/digiy-hub/temperature-business.html",
+
+  // ✅ TEMPÉRATURE — LEGACY (si tu gardes l’ancien nom)
+  temperatureLegacy: "https://beauville.github.io/digiy-hub/Temp%C3%A9rature-Business.html"
 };
 
 const LABELS = {
-  hub: "DIGIY HUB — Entrée Cockpit",
-  caisse: "DIGIY CAISSE PRO — POS",
-  espacePro: "ESPACE PRO — Portail",
-  espaceClient: "ESPACE CLIENT — Suivi",
-  loc: "DIGIY LOC — Location",
-  resto: "DIGIY RESTO — Restaurant",
-  resa: "RESA TABLE — Réservations",
-  notable: "DIGIY NOTABLE — Visibilité",
+  hub: "DIGIY HUB — ENTRÉE • COCKPIT",
+  caisse: "DIGIY CAISSE PRO — POS • PRO",
+  espacePro: "ESPACE PRO — PORTAIL • OUTILS",
+  espaceClient: "ESPACE CLIENT — COMPTE • SUIVI",
+  loc: "DIGIY LOC — LOCATION",
+  resto: "DIGIY RESTO — RESTAURANT",
+  resa: "RESA TABLE — RÉSERVATIONS",
+  notable: "DIGIY NOTABLE — VISIBILITÉ",
 
-  /* ✅ AJOUT */
-  temperature: "TEMPÉRATURE BUSINESS — KPI SWARM"
+  temperature: "TEMPÉRATURE BUSINESS — KPI SWARM (SAFE)",
+  temperatureLegacy: "TEMPÉRATURE BUSINESS — KPI SWARM (LEGACY)"
 };
+
+function cleanSlug(raw){
+  return String(raw||"")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g,"-")
+    .replace(/[^a-z0-9\-]/g,"");
+}
 
 function buildUrl(base, slug){
   const u = new URL(base);
@@ -165,17 +208,32 @@ function buildUrl(base, slug){
   return u.toString();
 }
 
-function copyText(txt){
-  navigator.clipboard.writeText(txt);
-  alert("✅ Lien copié !");
+function qrPng(url){
+  // PNG QR direct (simple, propre)
+  const api = new URL("https://api.qrserver.com/v1/create-qr-code/");
+  api.searchParams.set("size","320x320");
+  api.searchParams.set("data", url);
+  return api.toString();
+}
+
+async function copyText(txt){
+  try{
+    await navigator.clipboard.writeText(txt);
+    alert("✅ Copié !");
+  }catch{
+    alert("⚠️ Copie impossible (permissions).");
+  }
 }
 
 function render(slug){
   const wrap = document.getElementById("results");
   wrap.innerHTML = "";
 
-  Object.keys(BASE).forEach((key)=>{
+  const keys = Object.keys(BASE);
+
+  keys.forEach((key)=>{
     const url = buildUrl(BASE[key], slug);
+    const qr  = qrPng(url);
 
     const div = document.createElement("div");
     div.className="item";
@@ -183,26 +241,48 @@ function render(slug){
     div.innerHTML = `
       <div class="top">
         <div>
-          <div class="name">${LABELS[key]}</div>
+          <div class="name">${LABELS[key] || key}</div>
           <div class="tag">${key.toUpperCase()}</div>
         </div>
-        <button class="copy">Copier</button>
+        <div class="actions">
+          <button class="btnMini open" type="button">Ouvrir</button>
+          <button class="btnMini copy" type="button">Copier</button>
+          <button class="btnMini qr" type="button">QR / PNG</button>
+        </div>
       </div>
       <div class="link">${url}</div>
     `;
 
+    div.querySelector(".open").onclick = ()=>window.open(url, "_blank", "noopener");
     div.querySelector(".copy").onclick = ()=>copyText(url);
+    div.querySelector(".qr").onclick  = ()=>window.open(qr, "_blank", "noopener");
+
     wrap.appendChild(div);
   });
 }
 
+function getAllLinks(slug){
+  return Object.keys(BASE)
+    .map((k)=>`${LABELS[k] || k}\n${buildUrl(BASE[k], slug)}`)
+    .join("\n\n");
+}
+
 document.getElementById("btnGen").onclick = ()=>{
-  const slug = document.getElementById("slugInput").value.trim().toLowerCase();
+  const slug = cleanSlug(document.getElementById("slugInput").value);
   if(!slug){
     alert("⚠️ Mets un slug frérot !");
     return;
   }
   render(slug);
+};
+
+document.getElementById("btnCopyAll").onclick = ()=>{
+  const slug = cleanSlug(document.getElementById("slugInput").value);
+  if(!slug){
+    alert("⚠️ Mets un slug d’abord frérot !");
+    return;
+  }
+  copyText(getAllLinks(slug));
 };
 
 // Auto test Chez Astou
