@@ -210,7 +210,6 @@
       .digiy-fab small{display:none}
     }
 
-    /* Footer mini */
     footer{
       margin-top:14px;
       text-align:center;
@@ -360,7 +359,6 @@
     // ✅ CONFIG (MODIFIE ICI)
     // =========================
     const CONFIG = {
-      // Tes pages principales
       urls: {
         commencer_a_payer: "https://beauville.github.io/commencer-a-payer/",
         tarif_digiy:       "https://beauville.github.io/tarif-digiy/",
@@ -371,45 +369,86 @@
         inscription_pro:   "https://beauville.github.io/inscription-pro/"
       },
 
-      // Cartes (tu peux pointer vers des repos/pages existants)
       // status: "ok" | "soon" | "lock"
       cards: {
-        // ESPACE DIGIY
+        // =====================
+        // ✅ ESPACE DIGIY
+        // =====================
         digiy_market: [
-          { key:"bonne_affaire", name:"BONNE AFFAIRE", desc:"Petites annonces • occasions • direct.", status:"ok",   href:"https://beauville.github.io/digiy-bonne-affaire/" },
-          { key:"market",        name:"MARKET",        desc:"Achat/vente local • direct • sans abus.", status:"soon", href:"https://beauville.github.io/digiy-market/" }
-        ],
-        digiy_terrain: [
-          { key:"ndimbal", name:"NDIMBAL", desc:"Entraide • solidarité • terrain.", status:"ok", href:"https://beauville.github.io/ndimbal/" },
-          { key:"ndimbal_map", name:"NDIMBAL MAP", desc:"Carte solidarité • bons plans • points.", status:"ok", href:"https://beauville.github.io/ndimbal-map/" }
-        ],
-        digiy_explore: [
-          { key:"explore", name:"EXPLORE", desc:"Découvrir l’Afrique • guides • visibilité.", status:"ok", href:"https://beauville.github.io/digiy-explore/" }
-        ],
-        digiy_transport: [
-          { key:"fret_client", name:"FRET CLIENT", desc:"Suivi • paiement • réception (côté client).", status:"soon", href:"https://beauville.github.io/digiy-fret-client/" }
+          { key:"bonne_affaire", name:"BONNE AFFAIRE", desc:"Petites annonces • occasions • direct.", status:"ok",
+            href:"https://beauville.github.io/digiy-bonne-affaire/" },
+
+          { key:"market", name:"MARKET", desc:"Achat/vente local • direct • sans abus.", status:"soon",
+            href:"https://beauville.github.io/digiy-market/" }
         ],
 
-        // ESPACE PRO
+        digiy_terrain: [
+          { key:"ndimbal", name:"NDIMBAL", desc:"Entraide • solidarité • terrain.", status:"ok",
+            href:"https://beauville.github.io/ndimbal/" },
+
+          { key:"ndimbal_map", name:"NDIMBAL MAP", desc:"Carte solidarité • bons plans • points.", status:"ok",
+            href:"https://beauville.github.io/ndimbal-map/" }
+        ],
+
+        digiy_explore: [
+          { key:"explore", name:"EXPLORE", desc:"Découvrir l’Afrique • guides • visibilité.", status:"ok",
+            href:"https://beauville.github.io/digiy-explore/" }
+        ],
+
+        digiy_transport: [
+          { key:"fret_client", name:"FRET CLIENT", desc:"Suivi • paiement • réception (côté client).", status:"soon",
+            href:"https://beauville.github.io/digiy-fret-client/" },
+
+          // Optionnel côté DIGIY (si tu as une page publique de réservation)
+          { key:"resa_client", name:"RESA", desc:"Réserver / consulter (côté client).", status:"soon",
+            href:"https://beauville.github.io/digiy-resa-client/" }
+        ],
+
+        // =====================
+        // ✅ ESPACE PRO
+        // =====================
         pro_terrain: [
-          { key:"caisse_pro", name:"CAISSE PRO", desc:"Encaissement • tickets • clôture.", status:"soon", href:"https://beauville.github.io/digiy-caisse-pro/" },
-          { key:"resa",      name:"RESA",      desc:"Réservations • planning • confirmations.", status:"ok", href:"https://beauville.github.io/digiy-resa/" },
-          { key:"fret",      name:"FRET",      desc:"Transport marchandises (côté PRO).", status:"soon", href:"https://beauville.github.io/digiy-fret/" }
+          { key:"caisse_pro", name:"CAISSE PRO", desc:"Encaissement • tickets • clôture.", status:"soon",
+            href:"https://beauville.github.io/digiy-caisse-pro/" },
+
+          { key:"resa", name:"RESA", desc:"Réservations • planning • confirmations.", status:"ok",
+            href:"https://beauville.github.io/digiy-resa/" },
+
+          { key:"fret", name:"FRET", desc:"Transport marchandises (côté PRO).", status:"soon",
+            href:"https://beauville.github.io/digiy-fret/" }
         ],
+
         pro_market: [
-          { key:"market_pro", name:"MARKET PRO", desc:"Vendre • livrer • direct pro.", status:"soon", href:"https://beauville.github.io/digiy-market-pro/" },
-          { key:"explore_pro", name:"EXPLORE PRO", desc:"Boost visibilité • apporteurs d’affaires.", status:"ok", href:"https://beauville.github.io/digiy-explore-pro/" }
+          { key:"market_pro", name:"MARKET PRO", desc:"Vendre • livrer • direct pro.", status:"soon",
+            href:"https://beauville.github.io/digiy-market-pro/" },
+
+          { key:"explore_pro", name:"EXPLORE PRO", desc:"Boost visibilité • apporteurs d’affaires.", status:"ok",
+            href:"https://beauville.github.io/digiy-explore-pro/" }
         ],
+
         pro_docs: [
-          { key:"notable", name:"NOTABLE", desc:"Notes • fiches terrain • procédures.", status:"soon", href:"https://beauville.github.io/digiy-notable/" }
+          { key:"notable", name:"NOTABLE", desc:"Notes • fiches terrain • procédures.", status:"soon",
+            href:"https://beauville.github.io/digiy-notable/" }
         ],
+
         pro_ecosys: [
-          { key:"loc_pro",    name:"LOC PRO",    desc:"Location directe • 0% commission.", status:"ok",   href:"https://beauville.github.io/digiy-loc-pro/" },
-          { key:"pay_pro",    name:"PAY PRO",    desc:"Paiements • QR • Wallet pro.", status:"ok", href:"https://beauville.github.io/digiy-pay-pro/" },
-          { key:"jobs",       name:"JOBS",       desc:"Emploi • dossiers • accompagnement.", status:"ok", href:"https://beauville.github.io/digiy-jobs/" },
-          { key:"driver",     name:"DRIVER",     desc:"VTC • transport • direct.", status:"soon", href:"https://beauville.github.io/digiy-driver-pro/" },
-          { key:"build",      name:"BUILD",      desc:"Artisans • chantiers • devis.", status:"ok", href:"https://beauville.github.io/digiy-build/" },
-          { key:"store_pro",  name:"STORE PRO",  desc:"Boutique • stock • caisse.", status:"soon", href:"https://beauville.github.io/digiy-store-pro/" }
+          { key:"loc_pro", name:"LOC PRO", desc:"Location directe • 0% commission.", status:"ok",
+            href:"https://beauville.github.io/digiy-loc-pro/" },
+
+          { key:"pay_pro", name:"PAY PRO", desc:"Paiements • QR • Wallet pro.", status:"ok",
+            href:"https://beauville.github.io/digiy-pay-pro/" },
+
+          { key:"jobs", name:"JOBS", desc:"Emploi • dossiers • accompagnement.", status:"ok",
+            href:"https://beauville.github.io/digiy-jobs/" },
+
+          { key:"driver", name:"DRIVER", desc:"VTC • transport • direct.", status:"soon",
+            href:"https://beauville.github.io/digiy-driver-pro/" },
+
+          { key:"build", name:"BUILD", desc:"Artisans • chantiers • devis.", status:"ok",
+            href:"https://beauville.github.io/digiy-build/" },
+
+          { key:"store_pro", name:"STORE PRO", desc:"Boutique • stock • caisse.", status:"soon",
+            href:"https://beauville.github.io/digiy-store-pro/" }
         ]
       }
     };
@@ -530,7 +569,6 @@
       tabPro.setAttribute("aria-selected",   isDigiy ? "false" : "true");
       spaceDigiy.style.display = isDigiy ? "" : "none";
       spacePro.style.display   = isDigiy ? "none" : "";
-      // mini persistance
       try{ localStorage.setItem("digiy_hub_space", which); }catch(_){}
     }
 
@@ -543,7 +581,7 @@
       if(saved === "pro") setTab("pro");
     }catch(_){}
 
-    // Petit bonus UX: si on a un slug => on favorise PRO
+    // si slug => favorise PRO (si rien sauvegardé)
     if(ctx.slug){
       try{
         const saved = localStorage.getItem("digiy_hub_space");
@@ -551,7 +589,7 @@
       }catch(_){}
     }
 
-    // Bonus: si déjà sur commencer-a-payer, grise le bouton
+    // si déjà sur commencer-a-payer, grise le bouton
     if (location.href.includes("commencer-a-payer")) {
       const pay = document.getElementById("fabPay");
       pay.style.opacity = ".55";
