@@ -1,0 +1,30 @@
+🦅🔥🔥 VALIDÉ FRÉROT. Le pulse est terminé : sent → seen OK.
+Là on a un pipeline PROD-READY.
+
+Voici le “pack final” à garder sous le coude (et à coller dans ton repo / doc) :
+
+✅ Règles d’état (chez toi)
+
+status = 'archived' → en file / à traiter
+
+status = 'seen' → terminé / confirmé
+
+locked_at/locked_by → claim atomique (anti doublon)
+
+sent_at → envoyé
+
+seen_at/ack_at → accusé / vu
+
+last_error → diagnostic
+
+✅ RPCs FINAL (4 pièces)
+
+digiy_loc_pulse_claim_batch(p_limit)
+
+digiy_loc_pulse_mark_sent(p_id)
+
+digiy_loc_pulse_mark_seen(p_id)
+
+digiy_loc_pulse_retry(p_id, p_error, p_delay_seconds)
+
+(ce sont celles qu’on a posées ensemble)
