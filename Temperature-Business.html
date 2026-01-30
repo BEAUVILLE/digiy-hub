@@ -4,13 +4,13 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <meta name="theme-color" content="#061b14"/>
-  <title>DIGIY — Température Business</title>
+  <title>DIGIY — Température Business (PRO)</title>
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Guard DIGIY -->
-  <script src="./guard-lite.js?v=1"></script>
+  <!-- DIGIY Guard (universel) -->
+  <script src="./guard.js?v=1"></script>
 
   <style>
     :root{
@@ -26,19 +26,20 @@
       --red:#ef4444;
 
       --radius:20px;
+      --shadow:0 12px 28px rgba(0,0,0,.35);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     body{
       font-family:system-ui,-apple-system,sans-serif;
-      background:radial-gradient(circle at 20% 10%, rgba(250,204,21,.12), transparent 55%),
-                 radial-gradient(circle at 80% 90%, rgba(34,197,94,.10), transparent 60%),
-                 var(--bg);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(250,204,21,.12), transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(34,197,94,.10), transparent 60%),
+        var(--bg);
       color:var(--text);
       min-height:100vh;
       padding:22px;
     }
-
     .wrap{max-width:1120px;margin:0 auto}
 
     header{
@@ -48,7 +49,6 @@
       margin-bottom:12px;
       gap:12px;
     }
-
     .logo{
       font-size:28px;
       font-weight:900;
@@ -56,7 +56,6 @@
       letter-spacing:.2px;
       white-space:nowrap;
     }
-
     .status{
       padding:10px 14px;
       border-radius:999px;
@@ -67,7 +66,6 @@
       white-space:nowrap;
     }
 
-    /* 🔑 mini barre action */
     .topActions{
       display:flex;
       justify-content:flex-end;
@@ -88,10 +86,41 @@
       font-weight:950;
       font-size:13px;
       transition: transform .08s ease, opacity .08s ease;
+      cursor:pointer;
     }
     .linkBtn:active{transform:translateY(1px); opacity:.92}
 
-    /* 🚨 URGENCE BAR */
+    .panel{
+      border:1px solid rgba(250,204,21,.22);
+      background:rgba(250,204,21,.07);
+      border-radius:18px;
+      padding:14px;
+      box-shadow:0 12px 28px rgba(0,0,0,.25);
+      margin:10px 0 14px;
+      display:none;
+    }
+    .panel h2{
+      font-size:14px;
+      font-weight:950;
+      color:var(--gold);
+      letter-spacing:.2px;
+      margin-bottom:8px;
+    }
+    .panel p{
+      font-size:13px;
+      color:rgba(234,255,241,.78);
+      line-height:1.55;
+    }
+    .panel code{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:12px;
+      background:rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.12);
+      padding:2px 6px;
+      border-radius:10px;
+      color:rgba(234,255,241,.92);
+    }
+
     .urgentBar{
       display:none;
       margin:10px 0 14px;
@@ -99,7 +128,7 @@
       border-radius:16px;
       border:1px solid rgba(239,68,68,.55);
       background:rgba(239,68,68,.12);
-      box-shadow:0 14px 30px rgba(0,0,0,.35);
+      box-shadow:var(--shadow);
     }
     .urgentRow{
       display:flex;
@@ -119,6 +148,10 @@
       font-weight:950;
       cursor:pointer;
       transition: transform .08s ease, opacity .08s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
     .urgentBtn:active{transform:translateY(1px); opacity:.92}
 
@@ -127,18 +160,16 @@
       grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
       gap:14px;
     }
-
     .card{
       background:rgba(255,255,255,.04);
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:18px;
-      box-shadow:0 12px 28px rgba(0,0,0,.35);
+      box-shadow:var(--shadow);
       text-align:center;
       position:relative;
       overflow:hidden;
     }
-
     .titleRow{
       font-size:16px;
       font-weight:900;
@@ -150,7 +181,6 @@
       flex-wrap:wrap;
     }
 
-    /* 🔴 Badge DÛ */
     .dueBadge{
       display:none;
       padding:4px 10px;
@@ -160,7 +190,6 @@
       border:1px solid rgba(239,68,68,.65);
       background:rgba(239,68,68,.14);
     }
-
     @keyframes digiyPulse{
       0%   { transform: scale(1);    box-shadow:0 0 0 rgba(239,68,68,0); }
       50%  { transform: scale(1.04); box-shadow:0 0 22px rgba(239,68,68,.22); }
@@ -181,10 +210,10 @@
       color:var(--gold);
       line-height:1;
     }
-
     .hint{
       font-size:13px;
       color:var(--muted);
+      line-height:1.4;
     }
 
     .tempBox{
@@ -194,49 +223,35 @@
       border:1px solid var(--line);
       background:rgba(255,255,255,.03);
       text-align:center;
+      box-shadow:0 10px 22px rgba(0,0,0,.18);
     }
-
     .temp{
       font-size:28px;
       font-weight:950;
       margin-top:8px;
     }
-
     .subTemp{
       margin-top:6px;
       font-size:12px;
       color:rgba(234,255,241,.55);
+      line-height:1.35;
     }
 
-    /* 🧠 DIGIY SWARM CORE */
-    .swarmCore{
-      margin-top:14px;
-      border:1px solid rgba(250,204,21,.25);
-      background:rgba(250,204,21,.07);
-      border-radius:18px;
-      padding:14px;
-      box-shadow:0 12px 28px rgba(0,0,0,.25);
+    .miniRow{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
     }
-    .swarmCore h2{
-      font-size:14px;
-      font-weight:950;
-      color:var(--gold);
-      letter-spacing:.2px;
-      margin-bottom:8px;
-    }
-    .swarmCore p{
-      font-size:13px;
-      color:rgba(234,255,241,.78);
-      line-height:1.55;
-    }
-    .swarmCore code{
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+    .chip{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      border-radius:999px;
+      padding:8px 10px;
       font-size:12px;
-      background:rgba(0,0,0,.25);
-      border:1px solid rgba(255,255,255,.12);
-      padding:2px 6px;
-      border-radius:10px;
-      color:rgba(234,255,241,.92);
+      color:rgba(234,255,241,.78);
+      font-weight:800;
     }
 
     footer{
@@ -252,95 +267,102 @@
   <div class="wrap">
     <header>
       <div class="logo">♾️ DIGIY</div>
-      <div class="status" id="status" aria-live="polite">Chargement…</div>
+      <div class="status" id="status" aria-live="polite">Vérification…</div>
     </header>
 
-    <!-- 🔑 Actions -->
     <div class="topActions">
-      <a class="linkBtn" id="loginLink" href="./login.html">🔑 Se connecter</a>
       <a class="linkBtn" id="hubLink" href="./">🏠 HUB</a>
+      <a class="linkBtn" id="pulseLink" href="./pulse.html">📬 Pulse</a>
+      <a class="linkBtn" id="refreshBtn" href="#">🔄 Rafraîchir</a>
+      <a class="linkBtn" id="logoutBtn" href="#">🚪 Déconnexion</a>
     </div>
 
-    <!-- 🚨 Urgence -->
+    <div class="panel" id="swarmPanel">
+      <h2>DIGIY SWARM CORE</h2>
+      <p>
+        Ici c’est <b>PRO</b> : accès protégé par <code>guard.js</code>.
+        La Température, c’est le résumé Swarm : activité + alertes + pulse + régularité.
+      </p>
+    </div>
+
     <div class="urgentBar" id="urgentBar">
       <div class="urgentRow">
         <div>
           <div class="urgentTitle">🚨 Action urgente</div>
           <div class="urgentText" id="urgentText">—</div>
         </div>
-        <button class="urgentBtn" id="urgentBtn" type="button">Voir</button>
+        <a class="urgentBtn" id="urgentBtn" href="./">Voir</a>
       </div>
     </div>
 
-    <!-- KPIs -->
     <div class="grid">
       <div class="card" id="cardActivity">
         <div class="titleRow">
-          📈 Activité
-          <span class="dueBadge" id="badgeActivityDue">DÛ</span>
+          📈 Activité <span class="dueBadge" id="badgeActivityDue">DÛ</span>
         </div>
         <div class="value" id="kpiActivity">—</div>
-        <div class="hint">Réservations / ventes / demandes / messages</div>
+        <div class="hint">Derniers 7 jours (réservations / ventes / demandes)</div>
       </div>
 
       <div class="card" id="cardAlerts">
         <div class="titleRow">
-          🚨 Alertes
-          <span class="dueBadge" id="badgeAlertsDue">DÛ</span>
+          🚨 Alertes <span class="dueBadge" id="badgeAlertsDue">DÛ</span>
         </div>
-        <div class="value" id="kpiAlerts">0</div>
-        <div class="hint">Erreurs, paiements en attente, outbox bloquée</div>
+        <div class="value" id="kpiAlerts">—</div>
+        <div class="hint">Pannes, paiements dûs, erreurs, blocages</div>
       </div>
 
       <div class="card" id="cardPulse">
         <div class="titleRow">
-          📬 Pulse
-          <span class="dueBadge" id="badgePulseDue">DÛ</span>
+          📬 Pulse <span class="dueBadge" id="badgePulseDue">DÛ</span>
         </div>
         <div class="value" id="kpiPulse">—</div>
-        <div class="hint">Messages automatiques (J-1, J+1, relances)</div>
+        <div class="hint">Outbox: pending / failed / retry</div>
       </div>
 
       <div class="card" id="cardScore">
         <div class="titleRow">
-          🦅 Score Swarm
-          <span class="dueBadge" id="badgeScoreDue">DÛ</span>
+          🦅 Score Swarm <span class="dueBadge" id="badgeScoreDue">DÛ</span>
         </div>
         <div class="value" id="kpiScore">—</div>
-        <div class="hint">Plus tard: score Swarm global (multi-modules)</div>
+        <div class="hint">Synthèse (0–100) → température</div>
       </div>
     </div>
 
-    <!-- Température -->
     <div class="tempBox">
       <div class="hint">🌡️ Température Business</div>
       <div class="temp" id="tempTxt">—</div>
       <div class="subTemp" id="subTemp">—</div>
-    </div>
-
-    <!-- 🧠 DIGIY SWARM CORE -->
-    <div class="swarmCore">
-      <h2>DIGIY SWARM CORE</h2>
-      <p>
-        Ici on ne “discute” pas : on <b>orchestre</b>.
-        Un Swarm propre = des modules qui bossent ensemble, sous contrôle :
-        <code>Guard</code> vérifie, <code>Pulse</code> agit, <code>Pay</code> sécurise,
-        et toi tu gardes la main.
-      </p>
+      <div class="miniRow">
+        <div class="chip" id="chipSlug">slug: —</div>
+        <div class="chip" id="chipRole">role: —</div>
+        <div class="chip" id="chipUser">user: —</div>
+      </div>
     </div>
 
     <footer>♾️ DIGIY — 0% commission • Paiement direct • Souveraineté</footer>
   </div>
 
 <script>
-/* ============================
-   DIGIY — Température Business
-   Nettoyé (1 seul HTML)
-   + Swarm Core + placeholders
-   ============================ */
+/* =========================================================
+   DIGIY — Temperature-Business.html (PRO)
+   ✅ Protégé par guard.js
+   ✅ Slug propagation + liens safe
+   ✅ KPIs placeholders + hooks Supabase
+   ========================================================= */
 
 (function(){
-  // --- slug depuis URL ou localStorage (fallback)
+  const $ = (id)=>document.getElementById(id);
+
+  function safeText(id, txt){
+    const el = $(id);
+    if(el) el.textContent = (txt === undefined || txt === null) ? "—" : String(txt);
+  }
+
+  function setStatus(txt){
+    safeText("status", txt);
+  }
+
   function getSlug(){
     try{
       const s = new URL(location.href).searchParams.get("slug");
@@ -353,25 +375,13 @@
     return "";
   }
 
-  const slug = getSlug();
-
-  // --- propage slug sur liens (login / hub)
-  function withSlug(href){
+  function withSlug(href, slug){
     try{
       const u = new URL(href, location.href);
       if(slug) u.searchParams.set("slug", slug);
       return u.toString();
     }catch(e){ return href; }
   }
-  const loginLink = document.getElementById("loginLink");
-  const hubLink   = document.getElementById("hubLink");
-  if(loginLink) loginLink.href = withSlug("./login.html");
-  if(hubLink)   hubLink.href   = withSlug("./");
-
-  // --- UI helpers
-  const $ = (id)=>document.getElementById(id);
-
-  function setStatus(txt){ if($("status")) $("status").textContent = txt; }
 
   function setDue(cardId, badgeId, isDue){
     const card = $(cardId);
@@ -381,72 +391,147 @@
     card.classList.toggle("duePulse", !!isDue);
   }
 
-  function showUrgent(text, onClick){
+  function showUrgent(text, href){
     const bar = $("urgentBar");
     const t   = $("urgentText");
     const b   = $("urgentBtn");
     if(!bar || !t || !b) return;
     t.textContent = text || "—";
+    b.href = href || "./";
     bar.style.display = "block";
-    b.onclick = (e)=>{ e.preventDefault(); try{ onClick && onClick(); }catch(_){} };
   }
 
-  // --- placeholders KPI (en attendant branchement Supabase)
-  // (tu peux remplacer par tes requêtes Supabase / RPC)
-  function computePlaceholders(){
-    const kpiActivity = $("kpiActivity");
-    const kpiAlerts   = $("kpiAlerts");
-    const kpiPulse    = $("kpiPulse");
-    const kpiScore    = $("kpiScore");
-    const tempTxt     = $("tempTxt");
-    const subTemp     = $("subTemp");
+  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
 
-    // Si pas de slug → mode vitrine
-    if(!slug){
-      if(kpiActivity) kpiActivity.textContent = "—";
-      if(kpiAlerts)   kpiAlerts.textContent   = "0";
-      if(kpiPulse)    kpiPulse.textContent    = "—";
-      if(kpiScore)    kpiScore.textContent    = "—";
-      if(tempTxt)     tempTxt.textContent     = "MODE VITRINE";
-      if(subTemp)     subTemp.textContent     = "Ajoute ?slug=chez-astou-saly pour activer le mode business.";
-      setStatus("Vitrine • Ajoute un slug");
+  function scoreToTemp(score){
+    // score 0..100
+    if(score >= 80) return { label:"🔥 CHAUD", hint:"Machine qui tourne. Tu peux scaler.", due:false };
+    if(score >= 55) return { label:"🌤️ TIÈDE", hint:"OK mais y’a des réglages à faire.", due:false };
+    if(score >= 35) return { label:"🌥️ FROID", hint:"Activité faible ou alertes. On relance le moteur.", due:true };
+    return { label:"🧊 GLACÉ", hint:"Urgence: action terrain + vérif système.", due:true };
+  }
+
+  // --- KPIs placeholder (tu peux remplacer par tes tables/rpc)
+  // IMPORTANT: ici on ne sort AUCUNE donnée sans RLS + auth (guard ok)
+  async function fetchKPIs(sb, ctx){
+    // ctx: { user_id, profile, slug }
+    // ⚠️ Par défaut: placeholder safe
+    // 🔧 Branche plus tard: digiy_loc_reservations, digiy_market_sales, digiy_loc_pulse_outbox, digiy_admin_outbox...
+    return {
+      activity_7d: "LIVE",
+      alerts: 0,
+      pulse_pending: "—",
+      pulse_failed: "—",
+      score: 72,         // placeholder
+      due_payment: false // placeholder
+    };
+  }
+
+  async function main(){
+    // 0) Guard obligatoire
+    setStatus("🔐 Contrôle d'accès…");
+    if(!window.digiyGuard){
+      setStatus("❌ guard.js introuvable");
       return;
     }
 
-    // Mode business (placeholder)
-    if(kpiActivity) kpiActivity.textContent = "LIVE";
-    if(kpiAlerts)   kpiAlerts.textContent   = "—";
-    if(kpiPulse)    kpiPulse.textContent    = "—";
-    if(kpiScore)    kpiScore.textContent    = "🦅";
-
-    if(tempTxt) tempTxt.textContent = "EN BRANCHEMENT";
-    if(subTemp) subTemp.textContent = `slug: ${slug} • prochaine étape: KPIs Supabase`;
-
-    setStatus(`OK • ${slug}`);
-
-    // exemple d'alerte “due” (demo)
-    setDue("cardScore","badgeScoreDue", true); // juste pour montrer le pulse
-    // et une urgence demo
-    showUrgent("Brancher Supabase KPIs (activité/alertes/pulse) pour calculer la température.", ()=>{
-      // vers un futur dashboard / admin / doc
-      alert("GO: prochaine étape = requêtes Supabase / RPC KPIs.");
+    const guardRes = await window.digiyGuard({
+      allow_admin: true,
+      redirect_to: "./login.html"
     });
+
+    if(!guardRes || !guardRes.ok){
+      // redirect déjà fait par guard
+      return;
+    }
+
+    // 1) Contexte user
+    const userId = guardRes.user_id;
+    const profile = guardRes.profile || {};
+    const role = (profile.role_auto || profile.role || (guardRes.admin ? "admin" : "pro"));
+
+    // 2) slug
+    const slug = getSlug();
+    safeText("chipSlug", "slug: " + (slug || "—"));
+    safeText("chipRole", "role: " + (role || "—"));
+    safeText("chipUser", "user: " + (userId ? (String(userId).slice(0,8) + "…") : "—"));
+
+    // 3) Liens safe
+    $("hubLink").href   = withSlug("./", slug);
+    $("pulseLink").href = withSlug("./pulse.html", slug);
+
+    $("refreshBtn").addEventListener("click", (e)=>{
+      e.preventDefault();
+      location.reload();
+    });
+
+    $("logoutBtn").addEventListener("click", async (e)=>{
+      e.preventDefault();
+      try{
+        const sb = window.__digiy_sb__ || window.supa;
+        if(sb && sb.auth && sb.auth.signOut){
+          await sb.auth.signOut();
+        }
+      }catch(_){}
+      location.href = "./login.html";
+    });
+
+    // 4) Afficher doctrine Swarm
+    const panel = $("swarmPanel");
+    if(panel) panel.style.display = "block";
+
+    // 5) Chargement KPIs
+    setStatus("📡 Chargement KPIs…");
+    const sb = window.__digiy_sb__ || window.supa;
+    if(!sb){
+      setStatus("❌ Supabase client non initialisé");
+      return;
+    }
+
+    const ctx = { user_id:userId, profile, slug };
+    const k = await fetchKPIs(sb, ctx);
+
+    // 6) Render KPIs
+    safeText("kpiActivity", k.activity_7d ?? "—");
+    safeText("kpiAlerts",   (k.alerts ?? 0));
+    // Pulse: on affiche pending sinon failed si dispo
+    const pulseTxt = (k.pulse_pending && k.pulse_pending !== "—")
+      ? String(k.pulse_pending)
+      : ((k.pulse_failed && k.pulse_failed !== "—") ? ("KO:" + k.pulse_failed) : "—");
+    safeText("kpiPulse", pulseTxt);
+
+    const score = clamp(Number(k.score ?? 0), 0, 100);
+    safeText("kpiScore", score);
+
+    // 7) Température
+    const t = scoreToTemp(score);
+    safeText("tempTxt", t.label);
+    safeText("subTemp", `${t.hint}${slug ? (" • " + slug) : ""}`);
+
+    // 8) Due / urgence
+    const due = !!(t.due || k.due_payment || (Number(k.alerts || 0) >= 3));
+    setDue("cardScore","badgeScoreDue", due);
+    setDue("cardAlerts","badgeAlertsDue", Number(k.alerts || 0) >= 3);
+    setDue("cardPulse","badgePulseDue",  (String(k.pulse_failed || "") !== "" && String(k.pulse_failed || "") !== "—"));
+    setDue("cardActivity","badgeActivityDue", (k.activity_7d === "—" || k.activity_7d === 0));
+
+    if(k.due_payment){
+      showUrgent("Paiement dû détecté. Va régler / vérifier le statut.", withSlug("./packs.html", slug));
+    } else if(Number(k.alerts || 0) >= 3){
+      showUrgent("Plusieurs alertes. Vérifie Pulse/Outbox + logs.", withSlug("./pulse.html", slug));
+    } else if(!slug){
+      showUrgent("Pas de slug. Ajoute ?slug=chez-astou-saly pour viser un business.", withSlug("./Temperature-Business.html?slug=chez-astou-saly", ""));
+    }
+
+    // 9) Status final
+    setStatus(`✅ OK • ${role}${guardRes.admin ? " (admin)" : ""}`);
   }
 
-  computePlaceholders();
-
-  /* =========================
-     HOOKS FUTURS (prêts)
-     =========================
-     - Ici tu branches:
-       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-     - Puis tu fais:
-       - count réservations / ventes / demandes sur 7 jours
-       - count pulses pending / failed
-       - count alertes (paiement dû, outbox bloquée, etc.)
-       - score = pondération
-       - température = chaud/tiède/froid
-  */
+  main().catch((err)=>{
+    try{ console.log("Temperature error:", err); }catch(_){}
+    setStatus("❌ Erreur");
+    safeText("subTemp", "Une erreur est arrivée. Ouvre la console et on corrige.");
+  });
 
 })();
 </script>
