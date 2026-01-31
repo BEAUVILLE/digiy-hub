@@ -1,23 +1,26 @@
-// pulse-worker.mjs (ESM)
+// pulse-worker.mjs v2.0 — Claim atomique + retry logic pro
 import { createClient } from "@supabase/supabase-js";
+import { randomUUID } from "crypto";
 
 // ===================== CONFIG =====================
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://wesqmwjjtsefyjnluosj.supabase.co";
 const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE || "";
 const PULSE_API_BASE = process.env.PULSE_API_BASE || "http://127.0.0.1:3200";
 const PULSE_SEND_PATH = process.env.PULSE_SEND_PATH || "/loc/pulse/send";
+const PULSE_API_TOKEN = process.env.PULSE_API_TOKEN || "";
 
-// Token optionnel si ton endpoint est protégé (sinon laisse vide)
-const PULSE_API_TOKEN = process.env.PULSE_API_TOKEN || ""; // ex: "xxx"
-
-// cadence
+// Cadence
 const TICK_MS = Number(process.env.PULSE_TICK_MS || 15000); // 15s
 const BATCH = Number(process.env.PULSE_BATCH || 10);
-const FAIL_COOLDOWN_MIN = Number(process.env.PULSE_FAIL_COOLDOWN_MIN || 10); // 10 minutes
+const RETRY_DELAYS = [5, 15, 30, 60]; // minutes selon attempt
+const MAX_ATTEMPTS = 5;
+
+// Worker ID unique (pour traçabilité multi-workers)
+const WORKER_ID = `worker-${randomUUID().slice(0, 8)}`;
 
 // ===================================================
 if (!SUPABASE_SERVICE_ROLE) {
-  console.error("❌ Missing SUPABASE_SERVICE_ROLE_KEY in env (service role requis pour worker).");
+  console.error("❌ Missing SUPABASE_SERVICE_ROLE_KEY");
   process.exit(1);
 }
 
@@ -25,54 +28,37 @@ const sb = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE, {
   auth: { persistSession: false, autoRefreshToken: false }
 });
 
-function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
-function isoNow(){ return new Date().toISOString(); }
-function addMinutesISO(min){
-  return new Date(Date.now() + min*60*1000).toISOString();
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function isoNow() { return new Date().toISOString(); }
+function addMinutesISO(min) {
+  return new Date(Date.now() + min * 60 * 1000).toISOString();
 }
 
-// ⚠️ Ta table autorise seulement new/seen/archived.
-// Pour éviter les doubles envois, on “claim” en décalant next_try_at un peu dans le futur.
-async function claimDue(batch = 10) {
-  // 1) sélectionner due
-  const { data: due, error: e1 } = await sb
-    .from("digiy_loc_pulse_outbox")
-    .select("id, phone, channel, message, payload, next_try_at, status")
-    .eq("status", "new")
-    .not("next_try_at", "is", null)
-    .lte("next_try_at", isoNow())
-    .order("next_try_at", { ascending: true })
-    .limit(batch);
+// ===================== CLAIM ATOMIQUE =====================
+async function claimBatch(batch = 10) {
+  const { data, error } = await sb.rpc("claim_digiy_loc_pulse_outbox", {
+    p_worker_id: WORKER_ID,
+    p_batch_size: batch
+  });
 
-  if (e1) throw e1;
-  if (!due || due.length === 0) return [];
+  if (error) {
+    console.error("❌ Claim RPC error:", error.message);
+    throw error;
+  }
 
-  const ids = due.map(x => x.id);
-
-  // 2) “claim” = repousser next_try_at de 60s pour éviter que 2 workers prennent la même chose
-  // (on garde status='new' pour respecter le check constraint)
-  const claimUntil = addMinutesISO(1);
-
-  const { data: claimed, error: e2 } = await sb
-    .from("digiy_loc_pulse_outbox")
-    .update({ next_try_at: claimUntil, updated_at: isoNow() })
-    .in("id", ids)
-    .eq("status", "new")
-    .select("id, phone, channel, message, payload");
-
-  if (e2) throw e2;
-  return claimed || [];
+  return data || [];
 }
 
+// ===================== SEND VIA API =====================
 async function sendViaApi(pulse) {
   const url = new URL(PULSE_SEND_PATH, PULSE_API_BASE);
 
-  // payload minimal, adapte si ton API attend autre chose
   const body = {
     id: pulse.id,
     phone: pulse.phone,
     channel: pulse.channel || "whatsapp",
     message: pulse.message || "",
+    title: pulse.title || "",
     payload: pulse.payload || {}
   };
 
@@ -85,66 +71,118 @@ async function sendViaApi(pulse) {
     body: JSON.stringify(body)
   });
 
-  // si l’API renvoie du JSON
   let out = null;
   try { out = await res.json(); } catch { out = null; }
 
   return { ok: res.ok, status: res.status, out };
 }
 
-async function markSeen(id) {
+// ===================== MARK SUCCESS =====================
+async function markSuccess(id) {
   const { error } = await sb
     .from("digiy_loc_pulse_outbox")
-    .update({ status: "seen", updated_at: isoNow() })
-    .eq("id", id)
-    .eq("status", "new");
-  if (error) throw error;
+    .update({
+      status: "seen",
+      sent_at: isoNow(),
+      locked_at: null,
+      locked_by: null,
+      updated_at: isoNow()
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.error("❌ markSuccess error:", error.message);
+    throw error;
+  }
 }
 
-async function reschedule(id, minutes) {
+// ===================== MARK FAILURE + RETRY =====================
+async function markFailure(id, attempt, errorMsg) {
+  const nextDelay = RETRY_DELAYS[Math.min(attempt - 1, RETRY_DELAYS.length - 1)];
+  
+  const update = {
+    last_error: errorMsg?.substring(0, 500) || "Unknown error",
+    locked_at: null,
+    locked_by: null,
+    updated_at: isoNow()
+  };
+
+  // Si max attempts atteint → on archive (ou tu peux créer un status 'failed')
+  if (attempt >= MAX_ATTEMPTS) {
+    update.status = "archived";
+    update.next_try_at = null;
+  } else {
+    update.next_try_at = addMinutesISO(nextDelay);
+  }
+
   const { error } = await sb
     .from("digiy_loc_pulse_outbox")
-    .update({ next_try_at: addMinutesISO(minutes), updated_at: isoNow() })
-    .eq("id", id)
-    .eq("status", "new");
-  if (error) throw error;
+    .update(update)
+    .eq("id", id);
+
+  if (error) {
+    console.error("❌ markFailure error:", error.message);
+    throw error;
+  }
+
+  return attempt >= MAX_ATTEMPTS ? "archived" : `retry +${nextDelay}m`;
 }
 
+// ===================== TICK =====================
 async function tick() {
-  const claimed = await claimDue(BATCH);
+  const claimed = await claimBatch(BATCH);
+  
   if (claimed.length === 0) {
-    console.log(`🟢 tick: nothing due`);
+    console.log(`🟢 [${WORKER_ID}] tick: rien à envoyer`);
     return;
   }
 
-  console.log(`🟡 tick: claimed ${claimed.length} pulse(s)`);
+  console.log(`🟡 [${WORKER_ID}] tick: ${claimed.length} pulse(s) claimed`);
 
-  for (const p of claimed) {
+  for (const pulse of claimed) {
+    const attempt = pulse.attempts || 1;
+    
     try {
-      const r = await sendViaApi(p);
-      if (r.ok) {
-        await markSeen(p.id);
-        console.log(`✅ sent -> seen: ${p.id} (${p.phone})`);
+      const result = await sendViaApi(pulse);
+      
+      if (result.ok) {
+        await markSuccess(pulse.id);
+        console.log(`✅ [${pulse.kind}] ${pulse.phone} → seen (attempt ${attempt})`);
       } else {
-        await reschedule(p.id, FAIL_COOLDOWN_MIN);
-        console.log(`⚠️ send failed ${r.status} -> reschedule +${FAIL_COOLDOWN_MIN}m: ${p.id}`);
+        const action = await markFailure(
+          pulse.id,
+          attempt,
+          `HTTP ${result.status}: ${JSON.stringify(result.out)}`
+        );
+        console.log(`⚠️ [${pulse.kind}] ${pulse.phone} → ${action} (attempt ${attempt})`);
       }
     } catch (err) {
-      await reschedule(p.id, FAIL_COOLDOWN_MIN);
-      console.log(`❌ exception -> reschedule +${FAIL_COOLDOWN_MIN}m: ${p.id}`, err?.message || err);
+      const action = await markFailure(pulse.id, attempt, err.message);
+      console.log(`❌ [${pulse.kind}] ${pulse.phone} → ${action} (attempt ${attempt}): ${err.message}`);
     }
   }
 }
 
+// ===================== MAIN LOOP =====================
 async function main() {
-  console.log("✅ DIGIY PULSE WORKER started");
-  console.log("➡️  Supabase:", SUPABASE_URL);
-  console.log("➡️  Pulse API:", `${PULSE_API_BASE}${PULSE_SEND_PATH}`);
+  console.log("🦅 DIGIY PULSE WORKER v2.0 — Atomique + Retry");
+  console.log(`➡️  Worker ID: ${WORKER_ID}`);
+  console.log(`➡️  Supabase: ${SUPABASE_URL}`);
+  console.log(`➡️  Pulse API: ${PULSE_API_BASE}${PULSE_SEND_PATH}`);
+  console.log(`➡️  Tick: ${TICK_MS}ms | Batch: ${BATCH} | Max attempts: ${MAX_ATTEMPTS}`);
+  console.log(`➡️  Retry delays: ${RETRY_DELAYS.join(', ')} minutes\n`);
+
   while (true) {
-    try { await tick(); }
-    catch (e) { console.log("❌ tick error:", e?.message || e); }
+    try {
+      await tick();
+    } catch (err) {
+      console.error("❌ tick error:", err.message);
+    }
     await sleep(TICK_MS);
   }
 }
 
-main();
+main().catch(err => {
+  console.error("💥 Fatal error:", err);
+  process.exit(1);
+});
