@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>🦅 DIGIY Pulse Swarm Manager</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./guard.js?v=1"></script>
+  <style>
+    :root{
+      --bg:#061b14;
+      --card:#0b2a1f;
+      --line:rgba(255,255,255,.12);
+      --text:#eafff1;
+      --muted:rgba(234,255,241,.7);
+      --gold:#facc15;
+      --green:#22c55e;
+      --orange:#f59e0b;
+      --red:#ef4444;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:system-ui,-apple-system,sans-serif;
+      background:radial-gradient(circle at 20% 10%,rgba(250,204,21,.12),transparent 55%),
+                 radial-gradient(circle at 80% 90%,rgba(34,197,94,.10),transparent 60%),
+                 var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      padding:20px;
+    }
+    .wrap{max-width:1200px;margin:0 auto}
+    
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    .logo{
+      font-size:28px;
+      font-weight:900;
+      color:var(--gold);
+    }
+    .backBtn{
+      padding:10px 16px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+    }
+    
+    .section{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:20px;
+      margin-bottom:20px;
+      box-shadow:0 12px 28px rgba(0,0,0,.35);
+    }
+    .section h2{
+      font-size:18px;
+      font-weight:900;
+      margin-bottom:16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    
+    .statusCard{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:16px;
+    }
+    .stat{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      text-align:center;
+    }
+    .stat-label{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+    .stat-value{
+      font-size:32px;
+      font-weight:900;
+      color:var(--gold);
+    }
+    .stat-hint{
+      font-size:12px;
+      color:rgba(234,255,241,.5);
+      margin-top:6px;
+    }
+    
+    .status-running{color:var(--green)}
+    .status-stopped{color:var(--red)}
+    
+    .pulseList{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .pulseItem{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:12px;
+      align-items:center;
+    }
+    .pulseIcon{font-size:24px}
+    .pulseInfo{}
+    .pulseKind{
+      font-weight:900;
+      font-size:14px;
+      color:var(--gold);
+    }
+    .pulsePhone{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:4px;
+    }
+    .pulseMsg{
+      font-size:12px;
+      color:rgba(234,255,241,.6);
+      margin-top:4px;
+      max-width:400px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .pulseMeta{
+      font-size:12px;
+      text-align:right;
+    }
+    .pulseRetry{
+      color:var(--orange);
+      font-weight:600;
+    }
+    .pulseError{
+      color:var(--red);
+      font-size:11px;
+      margin-top:4px;
+    }
+    
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .btn{
+      padding:12px 18px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.10);
+      color:var(--text);
+      font-weight:900;
+      font-size:14px;
+      cursor:pointer;
+      transition:all .2s;
+    }
+    .btn:hover{
+      background:rgba(255,255,255,.15);
+      transform:translateY(-1px);
+    }
+    .btn:active{transform:translateY(0)}
+    .btn:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+    
+    .logBox{
+      background:rgba(0,0,0,.4);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;
+      padding:14px;
+      font-family:ui-monospace,monospace;
+      font-size:12px;
+      max-height:300px;
+      overflow-y:auto;
+      line-height:1.6;
+      color:rgba(234,255,241,.8);
+    }
+    .logBox div{margin-bottom:4px}
+    
+    @keyframes blink{
+      0%,100%{opacity:1}
+      50%{opacity:.3}
+    }
+    .loading{animation:blink 1.5s infinite}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">🦅 DIGIY PULSE SWARM</div>
+      <a class="backBtn" href="./">← HUB</a>
+    </header>
+
+    <div class="section">
+      <h2>📊 Worker Status</h2>
+      <div class="statusCard">
+        <div class="stat">
+          <div class="stat-label">Status</div>
+          <div class="stat-value" id="workerStatus">—</div>
+          <div class="stat-hint" id="workerHint">Chargement...</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Uptime</div>
+          <div class="stat-value" id="workerUptime">—</div>
+          <div class="stat-hint">Temps actif</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Pulses traités</div>
+          <div class="stat-value" id="workerProcessed">—</div>
+          <div class="stat-hint">Total envoyés</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Last ping</div>
+          <div class="stat-value" id="workerPing">—</div>
+          <div class="stat-hint">Dernière activité</div>
+        </div>
+      </div>
+      
+      <div class="actions">
+        <button class="btn" id="btnRefresh">🔄 Rafraîchir</button>
+        <button class="btn" id="btnDeploy" disabled>🚀 Deploy Worker</button>
+        <button class="btn" id="btnRestart" disabled>♻️ Restart Worker</button>
+        <button class="btn" id="btnLogs" disabled>📝 View Logs</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📋 Pulses en attente (<span id="pulseCount">0</span>)</h2>
+      <div class="pulseList" id="pulseList">
+        <div class="loading">Chargement...</div>
+      </div>
+    </div>
+
+    <div class="section" style="display:none" id="logSection">
+      <h2>📝 Logs</h2>
+      <div class="logBox" id="logBox">
+        <div>Logs non disponibles (nécessite intégration MCP)</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const $ = (id) => document.getElementById(id);
+
+  let sb = null;
+  let refreshInterval = null;
+
+  function formatUptime(seconds){
+    if(!seconds) return "—";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    return `${h}h ${m}m`;
+  }
+
+  function formatTimeAgo(isoDate){
+    if(!isoDate) return "—";
+    const diff = Math.floor((Date.now() - new Date(isoDate)) / 1000);
+    if(diff < 60) return `${diff}s ago`;
+    if(diff < 3600) return `${Math.floor(diff/60)}m ago`;
+    return `${Math.floor(diff/3600)}h ago`;
+  }
+
+  async function loadWorkerStatus(){
+    try{
+      const {data, error} = await sb.rpc('get_worker_status', {p_worker_type: 'pulse_loc'});
+      if(error) throw error;
+      
+      if(!data || data.length === 0){
+        $('workerStatus').textContent = '🔴';
+        $('workerStatus').className = 'stat-value status-stopped';
+        $('workerHint').textContent = 'Worker non démarré';
+        $('workerUptime').textContent = '—';
+        $('workerProcessed').textContent = '—';
+        $('workerPing').textContent = '—';
+        return;
+      }
+
+      const w = data[0];
+      const isAlive = w.is_alive;
+      
+      $('workerStatus').textContent = isAlive ? '🟢' : '🔴';
+      $('workerStatus').className = isAlive ? 'stat-value status-running' : 'stat-value status-stopped';
+      $('workerHint').textContent = isAlive ? 'Running' : 'Stopped';
+      $('workerUptime').textContent = formatUptime(w.uptime_seconds);
+      $('workerProcessed').textContent = w.pulses_processed || 0;
+      $('workerPing').textContent = formatTimeAgo(w.last_ping);
+      
+    }catch(err){
+      console.error('loadWorkerStatus error:', err);
+      $('workerHint').textContent = 'Erreur chargement';
+    }
+  }
+
+  async function loadPendingPulses(){
+    try{
+      const {data, error} = await sb.rpc('get_pending_pulses', {p_limit: 20});
+      if(error) throw error;
+      
+      $('pulseCount').textContent = data?.length || 0;
+      
+      const list = $('pulseList');
+      if(!data || data.length === 0){
+        list.innerHTML = '<div style="text-align:center;color:rgba(234,255,241,.5);padding:20px">Aucun pulse en attente 🎉</div>';
+        return;
+      }
+
+      list.innerHTML = data.map(p => {
+        const retryIn = p.next_try_at ? formatTimeAgo(p.next_try_at) : '—';
+        const icon = p.kind === 'arrival' ? '📥' : '📤';
+        return `
+          <div class="pulseItem">
+            <div class="pulseIcon">${icon}</div>
+            <div class="pulseInfo">
+              <div class="pulseKind">${p.kind}</div>
+              <div class="pulsePhone">${p.phone || '—'}</div>
+              <div class="pulseMsg">${p.message || '—'}</div>
+              ${p.last_error ? `<div class="pulseError">❌ ${p.last_error}</div>` : ''}
+            </div>
+            <div class="pulseMeta">
+              <div>Attempt ${p.attempts || 1}</div>
+              ${p.next_try_at ? `<div class="pulseRetry">Retry ${retryIn}</div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+    }catch(err){
+      console.error('loadPendingPulses error:', err);
+      $('pulseList').innerHTML = '<div style="color:var(--red)">Erreur chargement pulses</div>';
+    }
+  }
+
+  async function refresh(){
+    await Promise.all([
+      loadWorkerStatus(),
+      loadPendingPulses()
+    ]);
+  }
+
+  async function main(){
+    // Guard
+    if(!window.digiyGuard){
+      alert('guard.js requis');
+      return;
+    }
+
+    const guardRes = await window.digiyGuard({
+      allow_admin: true,
+      redirect_to: './login.html'
+    });
+
+    if(!guardRes || !guardRes.ok) return;
+
+    // Supabase
+    sb = window.__digiy_sb__ || window.supa;
+    if(!sb){
+      alert('Supabase client non initialisé');
+      return;
+    }
+
+    // Load
+    await refresh();
+
+    // Auto-refresh every 15s
+    refreshInterval = setInterval(refresh, 15000);
+
+    // Actions
+    $('btnRefresh').addEventListener('click', refresh);
+    
+    $('btnLogs').addEventListener('click', () => {
+      $('logSection').style.display = 'block';
+    });
+  }
+
+  main().catch(err => {
+    console.error('main error:', err);
+    alert('Erreur initialisation Swarm Manager');
+  });
+})();
+</script>
+</body>
+</html>
