@@ -337,6 +337,7 @@
       <div class="subTemp" id="subTemp">—</div>
       <div class="miniRow">
         <div class="chip" id="chipSlug">slug: —</div>
+        <div class="chip" id="chipPhone">phone: —</div>
         <div class="chip" id="chipRole">role: —</div>
         <div class="chip" id="chipUser">user: —</div>
       </div>
@@ -347,11 +348,9 @@
 
 <script>
 /* =========================================================
-   DIGIY — Temperature-Business.html v2.0 (PRO)
+   DIGIY — Temperature-Business.html v2.1 (PRO)
    ✅ Protégé par guard.js
-   ✅ Slug propagation + liens safe
-   ✅ KPIs RÉELS branchés sur Supabase RPC
-   🦅 Pierre par pierre, le rail de l'infini
+   ✅ slug + phone propagation (anti-flash / anti-404 context)
    ========================================================= */
 
 (function(){
@@ -361,16 +360,25 @@
     const el = $(id);
     if(el) el.textContent = (txt === undefined || txt === null) ? "—" : String(txt);
   }
+  function setStatus(txt){ safeText("status", txt); }
 
-  function setStatus(txt){
-    safeText("status", txt);
+  function qs(name){
+    try{ return new URL(location.href).searchParams.get(name) || ""; }catch(e){ return ""; }
+  }
+  function normPhone(p){
+    p = String(p||"").trim().replace(/\s+/g,"").replace(/[^\d+]/g,"");
+    if(p.startsWith("00221")) p = "+221" + p.slice(5);
+    if(!p.startsWith("+") && p.startsWith("221")) p = "+" + p;
+    if(!p.startsWith("+221") && /^\d{9}$/.test(p)) p = "+221" + p;
+    return p;
   }
 
   function getSlug(){
-    try{
-      const s = new URL(location.href).searchParams.get("slug");
-      if(s && String(s).trim()) return String(s).trim().toLowerCase();
-    }catch(e){}
+    // priorité URL
+    const s = (qs("slug") || "").trim();
+    if(s) return s.toLowerCase();
+
+    // fallback localStorage si besoin
     try{
       const ls = localStorage.getItem("digiy_slug") || localStorage.getItem("slug");
       if(ls && String(ls).trim()) return String(ls).trim().toLowerCase();
@@ -378,10 +386,25 @@
     return "";
   }
 
-  function withSlug(href, slug){
+  function getPhone(){
+    // priorité URL
+    const p = normPhone(qs("phone") || "");
+    if(p) return p;
+
+    // fallback localStorage si tu le stockes
+    try{
+      const lp = localStorage.getItem("digiy_phone") || localStorage.getItem("phone");
+      const np = normPhone(lp || "");
+      if(np) return np;
+    }catch(e){}
+    return "";
+  }
+
+  function withCtx(href, slug, phone){
     try{
       const u = new URL(href, location.href);
-      if(slug) u.searchParams.set("slug", slug);
+      if(slug)  u.searchParams.set("slug", slug);
+      if(phone) u.searchParams.set("phone", phone);
       return u.toString();
     }catch(e){ return href; }
   }
@@ -413,47 +436,37 @@
     return { label:"🧊 GLACÉ", hint:"Urgence: action terrain + vérif système.", due:true };
   }
 
-  // 🦅 FONCTION BRANCHÉE SUR VRAIES DONNÉES
+  // 🦅 VRAIES DONNÉES : get_all_modules_status
   async function fetchKPIs(sb, ctx){
     try {
-      // Appel RPC vers get_all_modules_status
-      const { data: modules, error } = await sb.rpc('get_all_modules_status');
-      
-      if(error) {
-        console.error('🦅 RPC error:', error);
-        throw error;
-      }
+      const { data: modules, error } = await sb.rpc("get_all_modules_status");
+      if(error) throw error;
 
-      console.log('🦅 Modules status:', modules);
-      
-      // Transformer en objet stats
       const stats = {};
-      modules?.forEach(m => {
-        stats[m.module] = {
-          alive: m.worker_alive,
+      (modules || []).forEach(m => {
+        stats[String(m.module || "").toLowerCase()] = {
+          alive: !!m.worker_alive,
           pending: Number(m.pulses_pending || 0),
           failed: Number(m.pulses_failed || 0)
         };
       });
-      
-      // Pour l'instant on a que LOC
-      const loc = stats.loc || { alive: false, pending: 0, failed: 0 };
-      
+
+      const loc = stats.loc || { alive:false, pending:0, failed:0 };
+
       const totalModules = 1;
       const aliveModules = loc.alive ? 1 : 0;
       const totalPending = loc.pending;
-      const totalFailed = loc.failed;
-      
-      // Calcul du score (0-100)
+      const totalFailed  = loc.failed;
+
       let score = 0;
       if(totalModules > 0){
-        score += (aliveModules / totalModules) * 50; // 50 points si worker alive
-        score += Math.max(0, 30 - totalPending);     // -1 point par pulse pending
-        score += Math.max(0, 20 - (totalFailed * 5)); // -5 points par failed
+        score += (aliveModules / totalModules) * 50;         // 0..50
+        score += Math.max(0, 30 - totalPending);            // 0..30
+        score += Math.max(0, 20 - (totalFailed * 5));       // 0..20
       }
-      
-      const globalScore = Math.round(Math.max(0, Math.min(100, score)));
-      
+
+      const globalScore = Math.round(clamp(score, 0, 100));
+
       return {
         activity_7d: loc.alive ? "🟢 LIVE" : "🔴 OFF",
         alerts: totalFailed,
@@ -462,9 +475,9 @@
         score: globalScore,
         due_payment: false
       };
-      
+
     } catch(err) {
-      console.error('🦅 fetchKPIs error:', err);
+      console.error("🦅 fetchKPIs error:", err);
       return {
         activity_7d: "❌",
         alerts: 0,
@@ -498,19 +511,23 @@
     const profile = guardRes.profile || {};
     const role = (profile.role_auto || profile.role || (guardRes.admin ? "admin" : "pro"));
 
-    // 2) slug
-    const slug = getSlug();
-    safeText("chipSlug", "slug: " + (slug || "—"));
-    safeText("chipRole", "role: " + (role || "—"));
-    safeText("chipUser", "user: " + (userId ? (String(userId).slice(0,8) + "…") : "—"));
+    // 2) slug + phone (IMPORTANT)
+    const slug  = getSlug();
+    const phone = getPhone();
 
-    // 3) Liens safe
-    $("hubLink").href   = withSlug("./", slug);
-    $("pulseLink").href = withSlug("./pulse.html", slug);
+    safeText("chipSlug",  "slug: " + (slug  || "—"));
+    safeText("chipPhone", "phone: " + (phone || "—"));
+    safeText("chipRole",  "role: " + (role  || "—"));
+    safeText("chipUser",  "user: " + (userId ? (String(userId).slice(0,8) + "…") : "—"));
+
+    // 3) Liens safe (slug+phone)
+    $("hubLink").href     = withCtx("./", slug, phone);
+    $("pulseLink").href   = withCtx("./pulse.html", slug, phone);
 
     $("refreshBtn").addEventListener("click", (e)=>{
       e.preventDefault();
-      location.reload();
+      // refresh sans perdre context
+      location.href = withCtx(location.pathname, slug, phone);
     });
 
     $("logoutBtn").addEventListener("click", async (e)=>{
@@ -528,21 +545,22 @@
     const panel = $("swarmPanel");
     if(panel) panel.style.display = "block";
 
-    // 5) Chargement KPIs RÉELS
+    // 5) Chargement KPIs
     setStatus("📡 Chargement KPIs…");
     const sb = window.__digiy_sb__ || window.supa;
     if(!sb){
       setStatus("❌ Supabase client non initialisé");
+      safeText("subTemp", "⚠️ Vérifie que guard.js met bien window.__digiy_sb__ ou window.supa.");
       return;
     }
 
-    const ctx = { user_id:userId, profile, slug };
+    const ctx = { user_id:userId, profile, slug, phone };
     const k = await fetchKPIs(sb, ctx);
 
     // 6) Render KPIs
     safeText("kpiActivity", k.activity_7d ?? "—");
     safeText("kpiAlerts",   (k.alerts ?? 0));
-    safeText("kpiPulse", k.pulse_pending ?? 0);
+    safeText("kpiPulse",    (k.pulse_pending ?? 0));
 
     const score = clamp(Number(k.score ?? 0), 0, 100);
     safeText("kpiScore", score);
@@ -560,15 +578,20 @@
     setDue("cardActivity","badgeActivityDue", k.activity_7d === "🔴 OFF");
 
     if(k.activity_7d === "🔴 OFF"){
-      showUrgent("Worker DIGIY LOC offline. Vérifie le serveur.", withSlug("./pulse.html", slug));
+      showUrgent("Worker DIGIY LOC offline. Vérifie le serveur.", withCtx("./pulse.html", slug, phone));
     } else if(Number(k.alerts || 0) >= 3){
-      showUrgent("Plusieurs pulses ont échoué. Vérifie les logs.", withSlug("./pulse.html", slug));
+      showUrgent("Plusieurs pulses ont échoué. Vérifie les logs.", withCtx("./pulse.html", slug, phone));
     } else if(Number(k.pulse_pending || 0) > 10){
-      showUrgent(`${k.pulse_pending} pulses en attente. Le worker rattrape.`, withSlug("./pulse.html", slug));
+      showUrgent(`${k.pulse_pending} pulses en attente. Le worker rattrape.`, withCtx("./pulse.html", slug, phone));
     }
 
     // 9) Status final
     setStatus(`✅ OK • ${role}${guardRes.admin ? " (admin)" : ""}`);
+
+    // Optionnel: si phone/slug manquant, on affiche un message stable (pas de jump)
+    if(!slug || !phone){
+      safeText("subTemp", "🔒 Ouvre avec ?slug=...&phone=+221... pour un contexte complet.");
+    }
   }
 
   main().catch((err)=>{
@@ -582,3 +605,4 @@
 
 </body>
 </html>
+
