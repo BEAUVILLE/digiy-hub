@@ -278,10 +278,12 @@
     </div>
 
     <div class="panel" id="swarmPanel">
-      <h2>DIGIY SWARM CORE</h2>
+      <h2>🦅 DIGIY SWARM CORE — TEMPÉRATURE BUSINESS</h2>
       <p>
-        Ici c’est <b>PRO</b> : accès protégé par <code>guard.js</code>.
-        La Température, c’est le résumé Swarm : activité + alertes + pulse + régularité.
+        Ici c'est <b>PRO</b> : accès protégé par <code>guard.js</code>.
+        La Température affiche l'état réel de tes modules : workers actifs, pulses en attente, alertes système.
+        <br><br>
+        <b>Pierre par pierre</b>, le rail de l'infini se construit. 🛤️∞
       </p>
     </div>
 
@@ -301,7 +303,7 @@
           📈 Activité <span class="dueBadge" id="badgeActivityDue">DÛ</span>
         </div>
         <div class="value" id="kpiActivity">—</div>
-        <div class="hint">Derniers 7 jours (réservations / ventes / demandes)</div>
+        <div class="hint">Workers actifs / Modules en ligne</div>
       </div>
 
       <div class="card" id="cardAlerts">
@@ -309,7 +311,7 @@
           🚨 Alertes <span class="dueBadge" id="badgeAlertsDue">DÛ</span>
         </div>
         <div class="value" id="kpiAlerts">—</div>
-        <div class="hint">Pannes, paiements dûs, erreurs, blocages</div>
+        <div class="hint">Pulses failed (≥3 attempts)</div>
       </div>
 
       <div class="card" id="cardPulse">
@@ -317,7 +319,7 @@
           📬 Pulse <span class="dueBadge" id="badgePulseDue">DÛ</span>
         </div>
         <div class="value" id="kpiPulse">—</div>
-        <div class="hint">Outbox: pending / failed / retry</div>
+        <div class="hint">Pulses en attente (pending)</div>
       </div>
 
       <div class="card" id="cardScore">
@@ -325,7 +327,7 @@
           🦅 Score Swarm <span class="dueBadge" id="badgeScoreDue">DÛ</span>
         </div>
         <div class="value" id="kpiScore">—</div>
-        <div class="hint">Synthèse (0–100) → température</div>
+        <div class="hint">Santé globale (0–100)</div>
       </div>
     </div>
 
@@ -345,10 +347,11 @@
 
 <script>
 /* =========================================================
-   DIGIY — Temperature-Business.html (PRO)
+   DIGIY — Temperature-Business.html v2.0 (PRO)
    ✅ Protégé par guard.js
    ✅ Slug propagation + liens safe
-   ✅ KPIs placeholders + hooks Supabase
+   ✅ KPIs RÉELS branchés sur Supabase RPC
+   🦅 Pierre par pierre, le rail de l'infini
    ========================================================= */
 
 (function(){
@@ -404,27 +407,73 @@
   function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
 
   function scoreToTemp(score){
-    // score 0..100
     if(score >= 80) return { label:"🔥 CHAUD", hint:"Machine qui tourne. Tu peux scaler.", due:false };
-    if(score >= 55) return { label:"🌤️ TIÈDE", hint:"OK mais y’a des réglages à faire.", due:false };
+    if(score >= 55) return { label:"🌤️ TIÈDE", hint:"OK mais y'a des réglages à faire.", due:false };
     if(score >= 35) return { label:"🌥️ FROID", hint:"Activité faible ou alertes. On relance le moteur.", due:true };
     return { label:"🧊 GLACÉ", hint:"Urgence: action terrain + vérif système.", due:true };
   }
 
-  // --- KPIs placeholder (tu peux remplacer par tes tables/rpc)
-  // IMPORTANT: ici on ne sort AUCUNE donnée sans RLS + auth (guard ok)
+  // 🦅 FONCTION BRANCHÉE SUR VRAIES DONNÉES
   async function fetchKPIs(sb, ctx){
-    // ctx: { user_id, profile, slug }
-    // ⚠️ Par défaut: placeholder safe
-    // 🔧 Branche plus tard: digiy_loc_reservations, digiy_market_sales, digiy_loc_pulse_outbox, digiy_admin_outbox...
-    return {
-      activity_7d: "LIVE",
-      alerts: 0,
-      pulse_pending: "—",
-      pulse_failed: "—",
-      score: 72,         // placeholder
-      due_payment: false // placeholder
-    };
+    try {
+      // Appel RPC vers get_all_modules_status
+      const { data: modules, error } = await sb.rpc('get_all_modules_status');
+      
+      if(error) {
+        console.error('🦅 RPC error:', error);
+        throw error;
+      }
+
+      console.log('🦅 Modules status:', modules);
+      
+      // Transformer en objet stats
+      const stats = {};
+      modules?.forEach(m => {
+        stats[m.module] = {
+          alive: m.worker_alive,
+          pending: Number(m.pulses_pending || 0),
+          failed: Number(m.pulses_failed || 0)
+        };
+      });
+      
+      // Pour l'instant on a que LOC
+      const loc = stats.loc || { alive: false, pending: 0, failed: 0 };
+      
+      const totalModules = 1;
+      const aliveModules = loc.alive ? 1 : 0;
+      const totalPending = loc.pending;
+      const totalFailed = loc.failed;
+      
+      // Calcul du score (0-100)
+      let score = 0;
+      if(totalModules > 0){
+        score += (aliveModules / totalModules) * 50; // 50 points si worker alive
+        score += Math.max(0, 30 - totalPending);     // -1 point par pulse pending
+        score += Math.max(0, 20 - (totalFailed * 5)); // -5 points par failed
+      }
+      
+      const globalScore = Math.round(Math.max(0, Math.min(100, score)));
+      
+      return {
+        activity_7d: loc.alive ? "🟢 LIVE" : "🔴 OFF",
+        alerts: totalFailed,
+        pulse_pending: totalPending,
+        pulse_failed: totalFailed,
+        score: globalScore,
+        due_payment: false
+      };
+      
+    } catch(err) {
+      console.error('🦅 fetchKPIs error:', err);
+      return {
+        activity_7d: "❌",
+        alerts: 0,
+        pulse_pending: 0,
+        pulse_failed: 0,
+        score: 0,
+        due_payment: false
+      };
+    }
   }
 
   async function main(){
@@ -441,7 +490,6 @@
     });
 
     if(!guardRes || !guardRes.ok){
-      // redirect déjà fait par guard
       return;
     }
 
@@ -480,7 +528,7 @@
     const panel = $("swarmPanel");
     if(panel) panel.style.display = "block";
 
-    // 5) Chargement KPIs
+    // 5) Chargement KPIs RÉELS
     setStatus("📡 Chargement KPIs…");
     const sb = window.__digiy_sb__ || window.supa;
     if(!sb){
@@ -494,11 +542,7 @@
     // 6) Render KPIs
     safeText("kpiActivity", k.activity_7d ?? "—");
     safeText("kpiAlerts",   (k.alerts ?? 0));
-    // Pulse: on affiche pending sinon failed si dispo
-    const pulseTxt = (k.pulse_pending && k.pulse_pending !== "—")
-      ? String(k.pulse_pending)
-      : ((k.pulse_failed && k.pulse_failed !== "—") ? ("KO:" + k.pulse_failed) : "—");
-    safeText("kpiPulse", pulseTxt);
+    safeText("kpiPulse", k.pulse_pending ?? 0);
 
     const score = clamp(Number(k.score ?? 0), 0, 100);
     safeText("kpiScore", score);
@@ -511,16 +555,16 @@
     // 8) Due / urgence
     const due = !!(t.due || k.due_payment || (Number(k.alerts || 0) >= 3));
     setDue("cardScore","badgeScoreDue", due);
-    setDue("cardAlerts","badgeAlertsDue", Number(k.alerts || 0) >= 3);
-    setDue("cardPulse","badgePulseDue",  (String(k.pulse_failed || "") !== "" && String(k.pulse_failed || "") !== "—"));
-    setDue("cardActivity","badgeActivityDue", (k.activity_7d === "—" || k.activity_7d === 0));
+    setDue("cardAlerts","badgeAlertsDue", Number(k.alerts || 0) >= 1);
+    setDue("cardPulse","badgePulseDue", Number(k.pulse_pending || 0) > 5);
+    setDue("cardActivity","badgeActivityDue", k.activity_7d === "🔴 OFF");
 
-    if(k.due_payment){
-      showUrgent("Paiement dû détecté. Va régler / vérifier le statut.", withSlug("./packs.html", slug));
+    if(k.activity_7d === "🔴 OFF"){
+      showUrgent("Worker DIGIY LOC offline. Vérifie le serveur.", withSlug("./pulse.html", slug));
     } else if(Number(k.alerts || 0) >= 3){
-      showUrgent("Plusieurs alertes. Vérifie Pulse/Outbox + logs.", withSlug("./pulse.html", slug));
-    } else if(!slug){
-      showUrgent("Pas de slug. Ajoute ?slug=chez-astou-saly pour viser un business.", withSlug("./Temperature-Business.html?slug=chez-astou-saly", ""));
+      showUrgent("Plusieurs pulses ont échoué. Vérifie les logs.", withSlug("./pulse.html", slug));
+    } else if(Number(k.pulse_pending || 0) > 10){
+      showUrgent(`${k.pulse_pending} pulses en attente. Le worker rattrape.`, withSlug("./pulse.html", slug));
     }
 
     // 9) Status final
@@ -528,7 +572,7 @@
   }
 
   main().catch((err)=>{
-    try{ console.log("Temperature error:", err); }catch(_){}
+    try{ console.log("🦅 Temperature error:", err); }catch(_){}
     setStatus("❌ Erreur");
     safeText("subTemp", "Une erreur est arrivée. Ouvre la console et on corrige.");
   });
