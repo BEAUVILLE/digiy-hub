@@ -50,12 +50,73 @@ const L = {
     el.setAttribute("aria-hidden","true");
   }
 
-  function openInside(url){
-    hide(ndimbal);
-    if(!hubOverlay || !hubFrame){
-      window.location.href = url;
-      return;
-    }
+  function openInside(url, key){
+  hide(ndimbal);
+
+  const slug = getStickySlug();
+  const trial = shouldPassTrial();
+
+  // ✅ si module PRO, on colle slug (et trial si présent)
+  if(key && shouldPassSlug(key)){
+    url = appendParams(url, { slug, trial });
+  }else{
+    // modules non-pro: on peut juste propager trial (optionnel)
+    if(trial) url = appendParams(url, { trial });
+  }
+
+  if(!hubOverlay || !hubFrame){
+    window.location.href = url;
+    return;
+  }
+  hubFrame.src = url;
+  show(hubOverlay);
+  document.body.style.overflow = "hidden";
+}
+function getParam(name){
+  try { return (new URL(location.href)).searchParams.get(name) || ""; }
+  catch { return ""; }
+}
+
+function getStickySlug(){
+  const s = (getParam("slug") || "").trim();
+  if(s){
+    sessionStorage.setItem("DIGIY_LAST_SLUG", s);
+    return s;
+  }
+  return (sessionStorage.getItem("DIGIY_LAST_SLUG") || "").trim();
+}
+
+function appendParams(url, params){
+  try{
+    const u = new URL(url, location.href);
+    Object.entries(params).forEach(([k,v])=>{
+      if(v !== undefined && v !== null && String(v).trim() !== ""){
+        u.searchParams.set(k, String(v).trim());
+      }
+    });
+    return u.toString();
+  }catch(e){
+    // fallback simple
+    const qs = Object.entries(params)
+      .filter(([_,v]) => v !== undefined && v !== null && String(v).trim() !== "")
+      .map(([k,v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v).trim())}`)
+      .join("&");
+    if(!qs) return url;
+    return url.includes("?") ? (url + "&" + qs) : (url + "?" + qs);
+  }
+}
+
+function shouldPassSlug(key){
+  // ✅ modules PRO qui exigent slug + pin
+  return ["caissePro","driverPro","build","espacePro","dashboard","inscriptionPro"].includes(key);
+}
+
+function shouldPassTrial(){
+  // si le hub est en mode demo => on propage
+  const t = (getParam("trial") || "").trim();
+  return t === "1" ? "1" : "";
+}
+    
     hubFrame.src = url;
     show(hubOverlay);
     document.body.style.overflow = "hidden";
@@ -173,9 +234,9 @@ const L = {
         return;
       }
       if(key && L[key]){
-        openInside(L[key]);
-        return;
-      }
+  openInside(L[key], key);
+  return;
+}
       alert("Module en préparation.");
       return;
     }
