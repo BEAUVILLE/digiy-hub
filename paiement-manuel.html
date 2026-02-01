@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#061b14"/>
+  <title>DIGIY HUB — Paiement Manuel</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root{
+      --bg:#061b14; --card:#0b2a1f; --card2:#0a241b; --line:rgba(255,255,255,.12);
+      --text:#eafff1; --muted:rgba(234,255,241,.72);
+      --gold:#facc15; --green:#22c55e; --red:#fb7185;
+      --shadow:0 14px 40px rgba(0,0,0,.35); --r:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(900px 500px at 20% -10%, rgba(250,204,21,.10), transparent 60%),
+                  radial-gradient(900px 500px at 100% 0%, rgba(34,197,94,.08), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      padding:22px;
+    }
+    .wrap{max-width:860px;margin:0 auto}
+    .title{display:flex;align-items:center;gap:10px;margin:4px 0 14px}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      border:1px solid var(--line); border-radius:999px;
+      padding:7px 10px; font-weight:700; font-size:12px;
+      background:rgba(255,255,255,.04);
+    }
+    .dot{width:9px;height:9px;border-radius:999px;background:rgba(250,204,21,1)}
+    .dot.green{background:rgba(34,197,94,1)}
+    .dot.red{background:rgba(251,113,133,1)}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid var(--line); border-radius:var(--r);
+      box-shadow:var(--shadow); overflow:hidden;
+    }
+    .card .hd{
+      padding:16px 16px 12px;
+      display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+      background:linear-gradient(180deg, rgba(11,42,31,.55), rgba(10,36,27,.20));
+    }
+    .card h1{font-size:16px;margin:0}
+    .card p{margin:8px 0 0;color:var(--muted);line-height:1.35;font-size:13px}
+    .bd{padding:16px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:680px){.grid{grid-template-columns:1fr}}
+    label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
+    input{
+      width:100%; padding:12px 12px; border-radius:14px;
+      background:rgba(0,0,0,.18); border:1px solid var(--line);
+      color:var(--text); outline:none;
+    }
+    input:focus{border-color:rgba(250,204,21,.55); box-shadow:0 0 0 3px rgba(250,204,21,.10)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{
+      border:1px solid var(--line); background:rgba(255,255,255,.06);
+      color:var(--text); padding:12px 14px; border-radius:14px;
+      font-weight:800; cursor:pointer;
+    }
+    .btn.primary{
+      border-color:rgba(250,204,21,.30);
+      background:linear-gradient(180deg, rgba(250,204,21,.18), rgba(250,204,21,.10));
+    }
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .note{
+      margin-top:10px; font-size:12px; color:var(--muted);
+      border-top:1px solid var(--line); padding-top:10px;
+    }
+    .msg{margin-top:10px;font-size:13px}
+    .msg.ok{color:rgba(34,197,94,1)}
+    .msg.err{color:rgba(251,113,133,1)}
+    .mini{
+      margin-top:10px; padding:10px 12px; border:1px dashed rgba(255,255,255,.16);
+      border-radius:14px; background:rgba(0,0,0,.12); color:var(--muted); font-size:12px;
+    }
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="title">
+    <div class="badge"><span class="dot" id="statusDot"></span><span id="statusTxt">MANUEL — à configurer</span></div>
+    <div class="badge">DIGIY PAY — 0% commission</div>
+  </div>
+
+  <div class="card">
+    <div class="hd">
+      <div>
+        <h1>Paiement Manuel (obligatoire)</h1>
+        <p>On n’est pas une banque. Tu déclares juste <b>Nom</b> + <b>Numéro</b>. Les paiements suivront naturellement.</p>
+      </div>
+      <div class="badge"><span class="mono" id="ownerShort">owner: —</span></div>
+    </div>
+
+    <div class="bd">
+      <div class="grid">
+        <div>
+          <label for="paymentName">Nom du receveur</label>
+          <input id="paymentName" placeholder="Ex: Astou Ndiaye" autocomplete="name">
+        </div>
+        <div>
+          <label for="paymentPhone">Numéro Wave / Orange</label>
+          <input id="paymentPhone" placeholder="Ex: +221 77 888 99 00" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="row">
+        <button class="btn primary" id="btnSave">✅ Enregistrer</button>
+        <button class="btn" id="btnReload">🔄 Recharger</button>
+      </div>
+
+      <div class="msg" id="msg"></div>
+
+      <div class="note">
+        <b>Règle DIGIY :</b> DIGIY ne crée pas de comptes Wave/Orange. Le pro fait ses démarches. Ici, on enregistre juste le contact pour recevoir en manuel.
+      </div>
+
+      <div class="mini" id="debugBox" style="display:none"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/** =========================
+ *  CONFIG SUPABASE (à remplir)
+ *  ========================= */
+const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+    const SUPABASE_ANON_KEY =
+      const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/** =========================
+ *  DIGIY SESSION (fallback)
+ *  =========================
+ *  Ici on essaie de retrouver owner_id depuis tes sessions locales.
+ *  Ajuste les clés si besoin.
+ */
+function getDigiySession() {
+  const keys = [
+    "DIGIY_HUB_SESSION",
+    "DIGIY_LOC_PRO_SESSION",
+    "DIGIY_DRIVER_SESSION",
+    "DIGIY_BUILD_SESSION",
+    "DIGIY_EXPLORE_SESSION"
+  ];
+  for (const k of keys) {
+    try {
+      const raw = localStorage.getItem(k);
+      if (!raw) continue;
+      const s = JSON.parse(raw);
+
+      // on cherche un owner_id / ownerId / pro_id selon tes variantes
+      const owner_id =
+        s.owner_id || s.ownerId || s.pro_id || s.user_id || s.uid || null;
+
+      if (owner_id) return { owner_id, raw: s, key: k };
+    } catch(e) {}
+  }
+  return null;
+}
+
+function setStatus(state, text) {
+  const dot = document.getElementById("statusDot");
+  const txt = document.getElementById("statusTxt");
+  dot.classList.remove("green","red");
+  if (state === "ok") dot.classList.add("green");
+  if (state === "err") dot.classList.add("red");
+  txt.textContent = text;
+}
+
+function showMsg(type, text) {
+  const el = document.getElementById("msg");
+  el.className = "msg " + (type || "");
+  el.textContent = text || "";
+}
+
+function normalizePhone(x){
+  return (x||"").trim().replace(/\s+/g," ");
+}
+
+function shortId(x){
+  if(!x) return "—";
+  return x.slice(0,8) + "…" + x.slice(-4);
+}
+
+async function loadExisting(owner_id){
+  const { data, error } = await sb
+    .from("digiy_pro_payment_manual")
+    .select("payment_name, payment_phone, updated_at")
+    .eq("owner_id", owner_id)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data || null;
+}
+
+async function upsertManual(owner_id, payment_name, payment_phone){
+  // upsert sur owner_id (unique)
+  const { data, error } = await sb
+    .from("digiy_pro_payment_manual")
+    .upsert({
+      owner_id,
+      payment_name,
+      payment_phone
+    }, { onConflict: "owner_id" })
+    .select("payment_name, payment_phone, updated_at")
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+async function boot(){
+  showMsg("", "");
+  setStatus("","MANUEL — à configurer");
+
+  const sess = getDigiySession();
+  const ownerBox = document.getElementById("ownerShort");
+  const debug = document.getElementById("debugBox");
+
+  if(!sess){
+    ownerBox.textContent = "owner: introuvable";
+    setStatus("err","MANUEL — session introuvable");
+    showMsg("err","Je ne trouve pas owner_id dans tes sessions localStorage. Ouvre le HUB avec ton guard/session, puis reviens ici.");
+    debug.style.display = "block";
+    debug.innerHTML = "Ajuste getDigiySession() si ta clé de session est différente.";
+    return;
+  }
+
+  ownerBox.textContent = "owner: " + shortId(sess.owner_id);
+
+  // (Optionnel) debug discret
+  // debug.style.display = "block";
+  // debug.innerHTML = "Session key: <b>"+sess.key+"</b><br><span class='mono'>"+JSON.stringify(sess.raw,null,2)+"</span>";
+
+  try{
+    const existing = await loadExisting(sess.owner_id);
+    if(existing){
+      document.getElementById("paymentName").value = existing.payment_name || "";
+      document.getElementById("paymentPhone").value = existing.payment_phone || "";
+      setStatus("ok","MANUEL — prêt à recevoir");
+    } else {
+      setStatus("","MANUEL — à configurer");
+    }
+  } catch(e){
+    console.error(e);
+    setStatus("err","MANUEL — erreur base");
+    showMsg("err","Erreur lecture Supabase. Vérifie RLS/policies ou passe en RPC SECURITY DEFINER si tu n’utilises pas auth.uid().");
+  }
+}
+
+document.getElementById("btnReload").addEventListener("click", boot);
+
+document.getElementById("btnSave").addEventListener("click", async () => {
+  showMsg("", "");
+  const btn = document.getElementById("btnSave");
+  btn.disabled = true;
+
+  try{
+    const sess = getDigiySession();
+    if(!sess) throw new Error("session_owner_id_missing");
+
+    const name = (document.getElementById("paymentName").value || "").trim();
+    const phone = normalizePhone(document.getElementById("paymentPhone").value);
+
+    if(!name || name.length < 2){
+      showMsg("err","Nom obligatoire (min 2 caractères).");
+      btn.disabled = false; return;
+    }
+    if(!phone || phone.length < 6){
+      showMsg("err","Numéro obligatoire.");
+      btn.disabled = false; return;
+    }
+
+    await upsertManual(sess.owner_id, name, phone);
+    setStatus("ok","MANUEL — prêt à recevoir");
+    showMsg("ok","✅ Enregistré. Nom + Numéro OK. Les paiements suivront.");
+  } catch(e){
+    console.error(e);
+    setStatus("err","MANUEL — sauvegarde KO");
+    showMsg("err","Sauvegarde KO. Si tu n’utilises pas auth Supabase, il faut passer par une RPC SECURITY DEFINER (je te la fais).");
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+boot();
+</script>
+
+</body>
+</html>
