@@ -505,6 +505,17 @@ const hubOverlay=document.getElementById("hubOverlay"),
       ndimbal=document.getElementById("digiy-ndimbal"),
       qrModal=document.getElementById("qrModal");
 
+/* ✅ RESET OVERLAYS (ANTI BLOCAGE) — À COLLER ICI */
+window.addEventListener("load", () => {
+  try{
+    hide(hubOverlay);
+    if(hubFrame) hubFrame.src = "about:blank";
+    hide(ndimbal);
+    hide(qrModal);
+    document.body.style.overflow = "";
+  }catch(e){}
+});
+
 function show(e){if(!e)return;e.classList.add("show");e.style.display="block";e.style.pointerEvents="auto";e.setAttribute("aria-hidden","false")}
 function hide(e){if(!e)return;e.classList.remove("show");e.style.display="none";e.style.pointerEvents="none";e.setAttribute("aria-hidden","true")}
 function openInside(u){hide(ndimbal);if(!hubOverlay||!hubFrame){window.location.href=u;return}hubFrame.src=u;show(hubOverlay);document.body.style.overflow="hidden"}
