@@ -1,380 +1,176 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#020617">
-  <title>digiy hub ∞ — 0% commission • paiement direct</title>
-  <meta name="description" content="Tous tes modules business DIGIY : chauffeur, resto, location, artisan. 0% commission. Paiement direct au pro.">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#061b14"/>
+  <title>DIGIY HUB ♾️ — Vitrine</title>
+  <meta name="description" content="DIGIYLYFE — 0% commission. Paiement direct. Modules PRO pour digitaliser l’économie locale." />
 
-  <!-- ✅ CSS séparé -->
-  <link rel="stylesheet" href="./hub.css?v=hub-1">
-
-  <!-- ✅ Supabase + JS séparé (defer) -->
-  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script defer src="./hub.js?v=hub-1"></script>
+  <style>
+    :root{
+      --bg:#061b14; --card:#0b2a1f; --line:rgba(255,255,255,.12);
+      --text:#eafff1; --muted:rgba(234,255,241,.72);
+      --gold:#facc15; --green:#22c55e; --danger:#fb7185;
+      --shadow:0 18px 60px rgba(0,0,0,.45); --r:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:
+        radial-gradient(1000px 700px at 12% 0%, rgba(34,197,94,.15), transparent 55%),
+        radial-gradient(900px 650px at 100% 10%, rgba(250,204,21,.14), transparent 60%),
+        linear-gradient(180deg, #061b14 0%, #04130f 100%);
+      min-height:100vh;
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:18px 14px 28px}
+    .top{
+      border:1px solid var(--line); border-radius:26px;
+      background:rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+      padding:16px;
+      display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+    }
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{
+      width:44px;height:44px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.08);
+      display:grid;place-items:center;font-weight:900;
+    }
+    h1{margin:0;font-size:16px}
+    .sub{margin:2px 0 0;color:var(--muted);font-size:12px}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:12px 14px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.08);
+      color:var(--text);text-decoration:none;
+      font-weight:700;font-size:13px;
+    }
+    .btn.primary{border-color:rgba(34,197,94,.30);background:rgba(34,197,94,.16)}
+    .btn.gold{border-color:rgba(250,204,21,.30);background:rgba(250,204,21,.14)}
+    .hero{
+      margin-top:12px;
+      border:1px solid var(--line); border-radius:26px;
+      background:rgba(255,255,255,.05);
+      padding:16px;
+    }
+    .hero h2{margin:0 0 6px;font-size:18px}
+    .hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width:950px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:560px){ .grid{grid-template-columns:1fr} }
+    .card{
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:rgba(255,255,255,.06);
+      box-shadow:0 10px 28px rgba(0,0,0,.25);
+      padding:14px;
+      cursor:pointer;
+      transition:transform .10s ease, background .15s ease, border-color .15s ease;
+      position:relative; overflow:hidden;
+    }
+    .card:hover{transform:translateY(-1px);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
+    .row{display:flex;gap:12px;align-items:flex-start}
+    .ico{
+      width:42px;height:42px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.08);
+      display:grid;place-items:center;
+      flex:0 0 auto;
+    }
+    .t{margin:0;font-size:15px}
+    .d{margin:6px 0 0;font-size:12px;color:var(--muted);line-height:1.35}
+    .tag{
+      margin-top:10px;display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;font-size:12px;
+      border:1px solid rgba(251,113,133,.28);
+      background:rgba(251,113,133,.10);
+    }
+    .dot{width:9px;height:9px;border-radius:999px;background:rgba(251,113,133,.95)}
+    .foot{margin-top:14px;color:var(--muted);font-size:12px;text-align:center}
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
 
-<div class="app">
-  <header>
-    <a href="#" class="brand" id="homeBrand">
-      <div class="brand-logo">∞</div>
-      <div>
-        <h1>digiy hub</h1>
-        <p>0% commission • paiement direct</p>
+    <div class="top">
+      <div class="brand">
+        <div class="logo">∞</div>
+        <div>
+          <h1>DIGIY HUB — Vitrine</h1>
+          <div class="sub">0% commission · Paiement direct · Terrain ready</div>
+        </div>
       </div>
-    </a>
-    <button class="btn" type="button" id="btnLogin">🔐 connexion</button>
-  </header>
-
-  <section class="hero">
-    <div class="hero-eyebrow">l'afrique enracinée, connectée au monde</div>
-    <h1 class="hero-title">Tout ton business dans ta main.<br><span>0% commission.</span></h1>
-    <p class="hero-subtitle">
-      Chauffeur, restaurant, boutique, logement, artisan.<br>
-      <strong>Un seul abonnement. 11 métiers. Paiement direct au pro.</strong>
-    </p>
-    <button id="btnGetHub" class="hero-cta" type="button"><span>→</span> je veux mon hub digiy</button>
-    <button id="btnDeals" class="hero-cta secondary" type="button">💥 voir les bonnes affaires</button>
-    <div class="urgency-strip">
-      <span>🔥</span><span>Places restantes :</span>
-      <span id="pioneersLeft" class="urgency-number">87</span>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn primary" href="./hub.html">🚀 J’ai déjà mon accès</a>
+        <a class="btn gold" href="https://beauville.github.io/commencer-a-payer/">⚡ Activer un module</a>
+      </div>
     </div>
-  </section>
 
-  <section class="section">
-    <h2>tous tes modules digiy</h2>
-    <p>Clique pour ouvrir un module dans le HUB. Retour avec <strong>← retour hub</strong>.</p>
-
-    <div class="modules-grid">
-
-      <div class="module" data-open="bonneAffaire">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">💥</div>
-            <div>
-              <div class="module-name">digiy bonne affaire</div>
-              <div class="module-tag">bons plans • promos</div>
-            </div>
-          </div>
-          <div class="badge new">officiel</div>
-        </div>
-        <div class="module-body">Les meilleures opportunités locales : promos, deals, bonnes affaires terrain.</div>
-      </div>
-
-      <div class="module" data-open="driver">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🚗</div>
-            <div>
-              <div class="module-name">digiy driver pro</div>
-              <div class="module-tag">chauffeur professionnel</div>
-            </div>
-          </div>
-          <div class="badge">live</div>
-        </div>
-        <div class="module-body">Accepter courses, GPS temps réel, encaissements directs.</div>
-      </div>
-
-      <div class="module" data-open="driverClient">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🚕</div>
-            <div>
-              <div class="module-name">digiy driver client</div>
-              <div class="module-tag">commander une course</div>
-            </div>
-          </div>
-          <div class="badge">live</div>
-        </div>
-        <div class="module-body">Commande ta course VTC au Sénégal. Paiement direct. 0% commission.</div>
-      </div>
-
-      <div class="module" data-open="caissePro">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🧾</div>
-            <div>
-              <div class="module-name">digiy caisse pro</div>
-              <div class="module-tag">pos + sync batch</div>
-            </div>
-          </div>
-          <div class="badge new">nouveau</div>
-        </div>
-        <div class="module-body">Caisse pro + sync ultra-légère. Encaissement terrain.</div>
-      </div>
-
-      <div class="module" data-open="vasChez">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🏃</div>
-            <div>
-              <div class="module-name">vas chez digiy</div>
-              <div class="module-tag">coursier express</div>
-            </div>
-          </div>
-          <div class="badge new">nouveau</div>
-        </div>
-        <div class="module-body">Livraison & courses rapides. 0% commission. Paiement direct.</div>
-      </div>
-
-      <div class="module" data-open="loc">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🏠</div>
-            <div>
-              <div class="module-name">digiy loc</div>
-              <div class="module-tag">location sans ota</div>
-            </div>
-          </div>
-          <div class="badge">live</div>
-        </div>
-        <div class="module-body">Alternative Booking/Airbnb, sans commission, en direct propriétaire.</div>
-      </div>
-
-      <div class="module" data-open="resto">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🍽️</div>
-            <div>
-              <div class="module-name">digiy resto</div>
-              <div class="module-tag">vitrine restaurant</div>
-            </div>
-          </div>
-          <div class="badge">live</div>
-        </div>
-        <div class="module-body">Menus, photos, horaires, localisation. Réservation directe.</div>
-      </div>
-
-      <div class="module" data-open="pay">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">💳</div>
-            <div>
-              <div class="module-name">digiy pay</div>
-              <div class="module-tag">wallet unifié</div>
-            </div>
-          </div>
-          <div class="badge prio">priorité</div>
-        </div>
-        <div class="module-body">Wave / OM / CB. Historique, suivi, activation modules.</div>
-      </div>
-
-      <div class="module" data-open="paiementManuel">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🧾</div>
-            <div>
-              <div class="module-name">paiement manuel</div>
-              <div class="module-tag">nom + numéro</div>
-            </div>
-          </div>
-          <div class="payPill">
-            <span class="payDot" id="payManualDot"></span>
-            <span id="payManualTxt">chargement</span>
-          </div>
-        </div>
-        <div class="module-body">Déclare juste le receveur : <strong>Nom + Numéro</strong>. DIGIY n’est pas une banque.</div>
-      </div>
-
-      <div class="module" data-open="build">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🏗️</div>
-            <div>
-              <div class="module-name">digiy build</div>
-              <div class="module-tag">artisans & btp</div>
-            </div>
-          </div>
-          <div class="badge">live</div>
-        </div>
-        <div class="module-body">Devis, galerie, contact. Humain. Direct. Sans commission.</div>
-      </div>
-
-      <div class="module" data-open="market">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🛍️</div>
-            <div>
-              <div class="module-name">digiy market</div>
-              <div class="module-tag">marketplace locale</div>
-            </div>
-          </div>
-          <div class="badge prio">priorité</div>
-        </div>
-        <div class="module-body">Acheter/vendre local. Annonces propres. Sans commission.</div>
-      </div>
-
-      <div class="module" data-open="job">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">💼</div>
-            <div>
-              <div class="module-name">digiy jobs</div>
-              <div class="module-tag">emploi & talents</div>
-            </div>
-          </div>
-          <div class="badge prio">priorité</div>
-        </div>
-        <div class="module-body">Offres, candidatures, profils. Pont talents–employeurs.</div>
-      </div>
-
-      <div class="module" data-open="ndimbalMap">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🗺️</div>
-            <div>
-              <div class="module-name">digiy ndimbal map</div>
-              <div class="module-tag">carte communauté</div>
-            </div>
-          </div>
-          <div class="badge free">gratuit</div>
-        </div>
-        <div class="module-body">Annuaire géolocalisé du Sénégal : pros, quartiers, filtres.</div>
-      </div>
-
-      <div class="module" data-external="https://beauville.github.io/commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🚚</div>
-            <div>
-              <div class="module-name">digiy fret</div>
-              <div class="module-tag">transport marchandises</div>
-            </div>
-          </div>
-          <div class="badge new">nouveau</div>
-        </div>
-        <div class="module-body">Transport marchandises 0% commission. GPS, paiements directs.</div>
-      </div>
-
-      <div class="module" data-open="inscriptionClient">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">♾️</div>
-            <div>
-              <div class="module-name">accès client</div>
-              <div class="module-tag">inscription gratuite</div>
-            </div>
-          </div>
-          <div class="badge free">gratuit</div>
-        </div>
-        <div class="module-body">Crée ton compte gratuit et accède aux apps clients DIGIY.</div>
-      </div>
-
-      <div class="module" data-open="inscription">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">📝</div>
-            <div>
-              <div class="module-name">inscription pro</div>
-              <div class="module-tag">nouveau compte pro</div>
-            </div>
-          </div>
-          <div class="badge new">nouveau</div>
-        </div>
-        <div class="module-body">Inscription intelligente. Choisis ton module, on calcule ton tarif.</div>
-      </div>
-
-      <div class="module" data-open="resaTable">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🪑</div>
-            <div>
-              <div class="module-name">digiy resa table</div>
-              <div class="module-tag">réservation restaurant</div>
-            </div>
-          </div>
-          <div class="badge">live</div>
-        </div>
-        <div class="module-body">Réservations de tables restaurant. Plan de salle, disponibilités en temps réel.</div>
-      </div>
-
-      <div class="module" data-open="notable">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">📓</div>
-            <div>
-              <div class="module-name">digiy notable</div>
-              <div class="module-tag">notes & docs</div>
-            </div>
-          </div>
-          <div class="badge prio">priorité</div>
-        </div>
-        <div class="module-body">Notes, fiches terrain, procédures. Organise ton savoir pro.</div>
-      </div>
-
-      <div class="module" data-open="explore">
-        <div class="module-top">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="module-icon">🧭</div>
-            <div>
-              <div class="module-name">digiy explore</div>
-              <div class="module-tag">tourisme & découverte</div>
-            </div>
-          </div>
-          <div class="badge">live</div>
-        </div>
-        <div class="module-body">Découvrir l'Afrique • guides • visibilité • expériences authentiques.</div>
-      </div>
-
+    <div class="hero">
+      <h2>Tout DIGIY, visible. Accès PRO sur demande 🦅</h2>
+      <p>
+        Ici c’est la vitrine : tu vois les modules.  
+        Pour utiliser, tu actives (Wave/QR) ou tu entres dans ton HUB PRO.
+      </p>
     </div>
-  </section>
 
-  <footer>
-    <div style="font-weight:950;color:#fff;margin-bottom:6px">L'Afrique enracinée, connectée au monde — DIGIYLYFE ♾️</div>
-    <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:8px">
-      <a href="https://digiylyfe.com" target="_blank" rel="noopener">Accueil DIGIYLYFE</a>
-      <a href="https://wa.me/221771342889" target="_blank" rel="noopener">Contact WhatsApp</a>
-      <a href="https://beauville.github.io/DIGIY/" target="_blank" rel="noopener">Tarifs détaillés</a>
-    </div>
-    <div>© DIGIYLYFE — Made in Sénégal • 0% commission • Paiement direct</div>
-  </footer>
-</div>
+    <div class="grid" id="grid"></div>
 
-<button id="tarif-bubble-btn" type="button">🏷️ tarifs digiy</button>
-<button id="espace-pro-btn" type="button">🧰 espace pro</button>
-<button id="digiy-help-btn" type="button">♾️ ndimbal</button>
-
-<!-- ndimbal -->
-<div id="digiy-ndimbal" aria-hidden="true">
-  <div class="digiyBox">
-    <div class="digiyTitle">♾️ NDIMBAL</div>
-    <div class="digiyText"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t'aider simplement.</div>
-    <button class="digiyAct" type="button" data-action="sell">📋 publier une mission</button>
-    <button class="digiyAct" type="button" data-action="job">💼 trouver du travail</button>
-    <button class="digiyAct" type="button" data-action="qr">📷 ouvrir qr digiylyfe</button>
-    <button class="digiyClose" type="button" id="digiyCloseBtn">❌ quitter</button>
+    <div class="foot">DIGIYLYFE ♾️ — souveraineté digitale · paiement direct</div>
   </div>
-</div>
 
-<!-- qr -->
-<div id="qrModal" aria-hidden="true">
-  <div class="qrContent">
-    <div class="qrHeader">
-      <div class="qrTitle">♾️ qr digiylyfe</div>
-      <button id="qrClose" class="qrCloseBtn" type="button">✖ fermer</button>
-    </div>
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://digiylyfe.com" alt="QR DIGIYLYFE" class="qrImg" loading="lazy">
-    <div class="qrHint">📱 scanne pour ouvrir digiylyfe</div>
-    <a href="https://digiylyfe.com" target="_blank" rel="noopener" class="qrLink">ouvrir le site →</a>
-  </div>
-</div>
+  <script>
+    const PAY_URL = "https://beauville.github.io/commencer-a-payer/";
+    const HUB_URL = "./hub.html";
 
-<!-- hub overlay -->
-<div id="hubOverlay" aria-hidden="true">
-  <div class="hubCard" role="dialog" aria-modal="true">
-    <div class="hubTop">
-      <div class="hubBrand">♾️ digiy hub</div>
-      <div class="hubTopBtns">
-        <button class="hubBtn back" id="hubBackBtn" type="button">← retour hub</button>
-        <button class="hubBtn close" id="hubCloseBtn" type="button">✖ fermer</button>
-      </div>
-    </div>
-    <iframe id="hubFrame" title="Module DIGIY" allow="geolocation; camera; microphone"></iframe>
-  </div>
-</div>
+    const MODULES = [
+      { code:"loc",     title:"DIGIY LOC PRO",    desc:"Locations · hébergements · planning.", icon:"🏠" },
+      { code:"driver",  title:"DIGIY DRIVER PRO", desc:"Chauffeur · courses · cockpit.",       icon:"🚗" },
+      { code:"build",   title:"DIGIY BUILD PRO",  desc:"Artisans · devis · chantiers.",        icon:"🧱" },
+      { code:"market",  title:"DIGIY MARKET",     desc:"Marketplace · deals · terrain.",      icon:"🛒" },
+      { code:"jobs",    title:"DIGIY JOBS",       desc:"Emploi · dossiers · accompagnement.", icon:"🧰" },
+      { code:"explore", title:"DIGIY EXPLORE",    desc:"Spots · tourisme · visibilité.",      icon:"🗺️" },
+      { code:"store",   title:"DIGIY STORE PRO",  desc:"Boutique PRO · commandes.",           icon:"🏪" },
+      { code:"style",   title:"DIGIY STYLE",      desc:"Identité · vitrine · branding.",      icon:"✨" },
+      { code:"pay",     title:"DIGIY PAY",        desc:"Activation · QR · paiement direct.",  icon:"💳" },
+    ];
 
+    const grid = document.querySelector("#grid");
+
+    MODULES.forEach(m=>{
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="row">
+          <div class="ico">${m.icon}</div>
+          <div style="min-width:0">
+            <h3 class="t">${m.title}</h3>
+            <div class="d">${m.desc}</div>
+            <div class="tag"><span class="dot"></span> <span>Accès PRO requis</span></div>
+          </div>
+        </div>
+      `;
+
+      // clic = on envoie vers activation (ou hub)
+      card.onclick = ()=> {
+        // logique simple: module -> page paiement (avec ?module)
+        const u = new URL(PAY_URL);
+        u.searchParams.set("module", m.code);
+        location.href = u.toString();
+      };
+
+      grid.appendChild(card);
+    });
+  </script>
 </body>
 </html>
