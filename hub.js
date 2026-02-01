@@ -1,122 +1,140 @@
 (() => {
   "use strict";
 
- // ✅ LIENS (corrigés)
-// - Driver PRO : digiy-pro-driver
-// - Caisse PRO : choisis UNE casse et garde-la partout (ici: digiy-caisse-pro)
-const L = {
-  bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/",
-  driverPro:    "https://beauville.github.io/digiy-pro-driver/",
-  driverClient: "https://beauville.github.io/digiy-driver-client/",
-  loc:          "https://beauville.github.io/digiy-loc/",
-  resto:        "https://beauville.github.io/digiy-resto/",
-  resa:         "https://beauville.github.io/digiy-resa/",
-  resaTable:    "https://beauville.github.io/digiy-resa-table/",
+  // =========================================================
+  // ✅ LIENS (corrigés)
+  // - Driver PRO : digiy-pro-driver
+  // - Caisse PRO : digiy-caisse-pro (index.html)
+  // =========================================================
+  const L = {
+    bonneAffaire:  "https://beauville.github.io/digiy-bonne-affaire/",
+    driverPro:     "https://beauville.github.io/digiy-pro-driver/",
+    driverClient:  "https://beauville.github.io/digiy-driver-client/",
+    loc:           "https://beauville.github.io/digiy-loc/",
+    resto:         "https://beauville.github.io/digiy-resto/",
+    resa:          "https://beauville.github.io/digiy-resa/",
+    resaTable:     "https://beauville.github.io/digiy-resa-table/",
+    caissePro:     "https://beauville.github.io/digiy-caisse-pro/index.html",
+    pay:           "https://beauville.github.io/digiy-pay/",
+    build:         "https://beauville.github.io/digiy-build/",
+    market:        "https://beauville.github.io/digiy-market/",
+    jobs:          "https://beauville.github.io/digiy-jobs/",
+    explore:       "https://beauville.github.io/digiy-explore/",
+    notable:       "https://beauville.github.io/digiy-notable/",
+    ndimbalMap:    "https://beauville.github.io/digiy-mdimbal-map/",
+    inscriptionPro:"https://beauville.github.io/inscription-digiy/",
+    espacePro:     "https://beauville.github.io/espace-pro/",
+    tarifs:        "https://beauville.github.io/digiy/",
+    hubDrive:      "https://beauville.github.io/digiy-hub-drive/",
+    dashboard:     "https://beauville.github.io/mon-espace-digiy/"
+  };
 
-  // ✅ CAISSE PRO (entrée officielle)
-  caissePro:    "https://beauville.github.io/digiy-caisse-pro/index.html",
-
-  pay:          "https://beauville.github.io/digiy-pay/",
-  build:        "https://beauville.github.io/digiy-build/",
-  market:       "https://beauville.github.io/digiy-market/",
-  jobs:         "https://beauville.github.io/digiy-jobs/",
-  explore:      "https://beauville.github.io/digiy-explore/",
-  notable:      "https://beauville.github.io/digiy-notable/",
-  ndimbalMap:   "https://beauville.github.io/digiy-mdimbal-map/",
-  inscriptionPro:"https://beauville.github.io/inscription-digiy/",
-  espacePro:    "https://beauville.github.io/espace-pro/",
-  tarifs:       "https://beauville.github.io/digiy/",
-  hubDrive:     "https://beauville.github.io/digiy-hub-drive/",
-  dashboard:    "https://beauville.github.io/mon-espace-digiy/"
-};
-
+  // =========================================================
+  // DOM
+  // =========================================================
   const hubOverlay = document.getElementById("hubOverlay");
   const hubFrame   = document.getElementById("hubFrame");
   const ndimbal    = document.getElementById("digiy-ndimbal");
   const qrModal    = document.getElementById("qrModal");
 
+  // =========================================================
+  // UI helpers
+  // =========================================================
   function show(el){
     if(!el) return;
     el.classList.add("show");
     el.style.display = "block";
     el.style.pointerEvents = "auto";
-    el.setAttribute("aria-hidden","false");
+    el.setAttribute("aria-hidden", "false");
   }
+
   function hide(el){
     if(!el) return;
     el.classList.remove("show");
     el.style.display = "none";
     el.style.pointerEvents = "none";
-    el.setAttribute("aria-hidden","true");
+    el.setAttribute("aria-hidden", "true");
   }
 
+  // =========================================================
+  // URL helpers (slug sticky + trial)
+  // =========================================================
+  function getParam(name){
+    try {
+      return (new URL(location.href)).searchParams.get(name) || "";
+    } catch {
+      return "";
+    }
+  }
+
+  function getStickySlug(){
+    const s = (getParam("slug") || "").trim();
+    if(s){
+      sessionStorage.setItem("DIGIY_LAST_SLUG", s);
+      return s;
+    }
+    return (sessionStorage.getItem("DIGIY_LAST_SLUG") || "").trim();
+  }
+
+  function shouldPassTrial(){
+    const t = (getParam("trial") || "").trim();
+    return (t === "1") ? "1" : "";
+  }
+
+  function appendParams(url, params){
+    try{
+      const u = new URL(url, location.href);
+      Object.entries(params).forEach(([k,v])=>{
+        if(v !== undefined && v !== null && String(v).trim() !== ""){
+          u.searchParams.set(k, String(v).trim());
+        }
+      });
+      return u.toString();
+    }catch{
+      const qs = Object.entries(params)
+        .filter(([_,v]) => v !== undefined && v !== null && String(v).trim() !== "")
+        .map(([k,v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v).trim())}`)
+        .join("&");
+      if(!qs) return url;
+      return url.includes("?") ? (url + "&" + qs) : (url + "?" + qs);
+    }
+  }
+
+  function shouldPassSlug(key){
+    // ✅ Modules PRO qui exigent slug (donc ensuite PIN)
+    return [
+      "caissePro",
+      "driverPro",
+      "build",
+      "espacePro",
+      "dashboard",
+      "inscriptionPro"
+    ].includes(key);
+  }
+
+  // =========================================================
+  // HUB overlay open/close
+  // =========================================================
   function openInside(url, key){
-  hide(ndimbal);
+    hide(ndimbal);
 
-  const slug = getStickySlug();
-  const trial = shouldPassTrial();
+    const slug  = getStickySlug();
+    const trial = shouldPassTrial();
 
-  // ✅ si module PRO, on colle slug (et trial si présent)
-  if(key && shouldPassSlug(key)){
-    url = appendParams(url, { slug, trial });
-  }else{
-    // modules non-pro: on peut juste propager trial (optionnel)
-    if(trial) url = appendParams(url, { trial });
-  }
+    // ✅ Propagation propre
+    if(key && shouldPassSlug(key)){
+      url = appendParams(url, { slug, trial });
+    } else {
+      // modules "publics" -> on peut juste propager trial si besoin
+      if(trial) url = appendParams(url, { trial });
+    }
 
-  if(!hubOverlay || !hubFrame){
-    window.location.href = url;
-    return;
-  }
-  hubFrame.src = url;
-  show(hubOverlay);
-  document.body.style.overflow = "hidden";
-}
-function getParam(name){
-  try { return (new URL(location.href)).searchParams.get(name) || ""; }
-  catch { return ""; }
-}
+    // fallback si overlay absent
+    if(!hubOverlay || !hubFrame){
+      window.location.href = url;
+      return;
+    }
 
-function getStickySlug(){
-  const s = (getParam("slug") || "").trim();
-  if(s){
-    sessionStorage.setItem("DIGIY_LAST_SLUG", s);
-    return s;
-  }
-  return (sessionStorage.getItem("DIGIY_LAST_SLUG") || "").trim();
-}
-
-function appendParams(url, params){
-  try{
-    const u = new URL(url, location.href);
-    Object.entries(params).forEach(([k,v])=>{
-      if(v !== undefined && v !== null && String(v).trim() !== ""){
-        u.searchParams.set(k, String(v).trim());
-      }
-    });
-    return u.toString();
-  }catch(e){
-    // fallback simple
-    const qs = Object.entries(params)
-      .filter(([_,v]) => v !== undefined && v !== null && String(v).trim() !== "")
-      .map(([k,v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v).trim())}`)
-      .join("&");
-    if(!qs) return url;
-    return url.includes("?") ? (url + "&" + qs) : (url + "?" + qs);
-  }
-}
-
-function shouldPassSlug(key){
-  // ✅ modules PRO qui exigent slug + pin
-  return ["caissePro","driverPro","build","espacePro","dashboard","inscriptionPro"].includes(key);
-}
-
-function shouldPassTrial(){
-  // si le hub est en mode demo => on propage
-  const t = (getParam("trial") || "").trim();
-  return t === "1" ? "1" : "";
-}
-    
     hubFrame.src = url;
     show(hubOverlay);
     document.body.style.overflow = "hidden";
@@ -132,15 +150,12 @@ function shouldPassTrial(){
   function openNdimbal(){ show(ndimbal); }
   function closeNdimbal(){ hide(ndimbal); }
 
-  function openQR(){
-    if(!qrModal) return;
-    show(qrModal);
-  }
-  function closeQR(){
-    if(!qrModal) return;
-    hide(qrModal);
-  }
+  function openQR(){ if(qrModal) show(qrModal); }
+  function closeQR(){ if(qrModal) hide(qrModal); }
 
+  // =========================================================
+  // EVENTS
+  // =========================================================
   document.addEventListener("click", (e) => {
     const t = e.target;
 
@@ -159,29 +174,29 @@ function shouldPassTrial(){
     // top actions
     if(t && t.closest && t.closest("#btnLogin")){
       e.preventDefault();
-      openInside(L.dashboard);
+      openInside(L.dashboard, "dashboard");
       return;
     }
     if(t && t.closest && t.closest("#btnGetHub")){
       e.preventDefault();
-      openInside(L.inscriptionPro);
+      openInside(L.inscriptionPro, "inscriptionPro");
       return;
     }
     if(t && t.closest && t.closest("#btnDeals")){
       e.preventDefault();
-      openInside(L.bonneAffaire);
+      openInside(L.bonneAffaire, "bonneAffaire");
       return;
     }
 
     // bubbles
     if(t && t.closest && t.closest("#tarif-bubble-btn")){
       e.preventDefault();
-      openInside(L.tarifs);
+      openInside(L.tarifs, "tarifs");
       return;
     }
     if(t && t.closest && t.closest("#espace-pro-btn")){
       e.preventDefault();
-      openInside(L.espacePro);
+      openInside(L.espacePro, "espacePro");
       return;
     }
     if(t && t.closest && t.closest("#digiy-help-btn")){
@@ -190,18 +205,20 @@ function shouldPassTrial(){
       return;
     }
 
-    // ndimbal modal
+    // ndimbal modal background click
     if(ndimbal && t === ndimbal){
       closeNdimbal();
       return;
     }
+
+    // ndimbal actions
     const act = t && t.closest ? t.closest(".digiyAct") : null;
     if(act){
       e.preventDefault();
       const action = act.getAttribute("data-action");
       closeNdimbal();
-      if(action === "sell") openInside(L.hubDrive);
-      else if(action === "job") openInside(L.jobs);
+      if(action === "sell") openInside(L.hubDrive, "hubDrive");
+      else if(action === "job") openInside(L.jobs, "jobs");
       else if(action === "qr") openQR();
       return;
     }
@@ -234,9 +251,9 @@ function shouldPassTrial(){
         return;
       }
       if(key && L[key]){
-  openInside(L[key], key);
-  return;
-}
+        openInside(L[key], key);
+        return;
+      }
       alert("Module en préparation.");
       return;
     }
