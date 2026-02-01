@@ -12,7 +12,7 @@
     resto:        "https://beauville.github.io/digiy-resto/",
     resa:         "https://beauville.github.io/digiy-resa/",
     resaTable:    "https://beauville.github.io/digiy-resa-table/",
-    caissePro:    "https://beauville.github.io/Digiy-caisse-pro/",
+   caissePro: "https://beauville.github.io/digiy-caisse-pro/start.html",
     pay:          "https://beauville.github.io/digiy-pay/",
     build:        "https://beauville.github.io/digiy-build/",
     market:       "https://beauville.github.io/digiy-market/",
