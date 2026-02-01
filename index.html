@@ -4,50 +4,531 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <meta name="theme-color" content="#061b14"/>
-  <title>DIGIY HUB ♾️ — Ecosystème Local</title>
-  <meta name="description" content="DIGIYLYFE — 0% commission. Paiement direct. Modules PRO pour digitaliser l’économie locale." />
+  <title>DIGIY HUB ∞ — Tour de Contrôle</title>
+  <meta name="description" content="DIGIY HUB — Portail central DIGIYLYFE. Accès modules, espaces DIGIY & PRO. 0% commission. Paiement direct." />
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    :root{
+      --bg:#061b14;
+      --card:#0b2a1f;
+      --card2:#0a241b;
+      --line:rgba(255,255,255,.12);
+      --text:#eafff1;
+      --muted:rgba(234,255,241,.72);
+      --gold:#facc15;
+      --green:#22c55e;
+      --danger:#fb7185;
+      --cyan:#22d3ee;
+      --shadow:0 18px 60px rgba(0,0,0,.45);
+      --r:18px;
+      --r2:24px;
+    }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:system-ui,Arial;
-      background:linear-gradient(180deg,#061b14,#02110c);
-      color:white;
-      text-align:center;
-      padding:50px 16px;
+      font-family: Outfit, Manrope, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 700px at 12% 0%, rgba(34,197,94,.15), transparent 55%),
+        radial-gradient(900px 650px at 100% 10%, rgba(250,204,21,.14), transparent 60%),
+        radial-gradient(1100px 800px at 50% 115%, rgba(34,211,238,.10), transparent 55%),
+        linear-gradient(180deg, #061b14 0%, #04130f 100%);
+      min-height:100vh;
     }
-    h1{font-size:32px;margin-bottom:10px}
-    p{opacity:.85;max-width:520px;margin:0 auto 25px}
-    .btn{
-      display:inline-block;
-      padding:14px 18px;
-      border-radius:999px;
-      background:#22c55e;
-      color:black;
-      font-weight:700;
-      text-decoration:none;
-      margin:8px;
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px 14px 28px}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(11,42,31,.86), rgba(10,36,27,.86));
+      border-radius:var(--r2);
+      box-shadow:var(--shadow);
+      position:sticky;top:10px;z-index:10;
+      backdrop-filter: blur(10px);
     }
-    .btn.alt{
-      background:#facc15;
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .logo{
+      width:42px;height:42px;border-radius:14px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(250,204,21,.9), rgba(250,204,21,0) 60%),
+        radial-gradient(22px 18px at 60% 65%, rgba(34,197,94,.85), rgba(34,197,94,0) 65%),
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 10px 25px rgba(0,0,0,.35);
+      display:grid;place-items:center;flex:0 0 auto;
     }
+    .logo span{font-size:18px}
+    .brand h1{
+      margin:0;font-size:15px;line-height:1.1;letter-spacing:.2px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .brand p{
+      margin:2px 0 0;font-size:12px;color:var(--muted);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-size:13px;cursor:pointer;user-select:none;
+      transition:transform .08s ease, background .15s ease, border-color .15s ease;
+    }
+    .pill:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.18)}
+    .pill:active{transform:scale(.98)}
+    .pill.primary{
+      background:linear-gradient(180deg, rgba(250,204,21,.18), rgba(250,204,21,.10));
+      border-color:rgba(250,204,21,.28);
+    }
+    .pill.danger{
+      background:linear-gradient(180deg, rgba(251,113,133,.16), rgba(251,113,133,.08));
+      border-color:rgba(251,113,133,.28);
+    }
+
+    .hero{margin:14px 0 12px;display:grid;grid-template-columns: 1.2fr .8fr;gap:12px}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}}
+    .card{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(11,42,31,.78), rgba(10,36,27,.78));
+      border-radius:var(--r2);
+      box-shadow:var(--shadow);
+      padding:16px;
+      position:relative;overflow:hidden;
+    }
+    .card:before{
+      content:"";
+      position:absolute;inset:-2px;
+      background:radial-gradient(600px 240px at 20% 0%, rgba(34,197,94,.12), transparent 55%),
+                 radial-gradient(600px 260px at 100% 20%, rgba(250,204,21,.10), transparent 58%);
+      pointer-events:none;
+    }
+    .card>*{position:relative}
+    .hero h2{margin:0 0 6px;font-size:18px}
+    .hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+
+    .statusRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      font-size:13px;
+    }
+    .dot{width:10px;height:10px;border-radius:99px;background:rgba(255,255,255,.35)}
+    .dot.ok{background:rgba(34,197,94,.95)}
+    .dot.warn{background:rgba(250,204,21,.95)}
+    .dot.no{background:rgba(251,113,133,.95)}
+
+    .grid{display:grid;grid-template-columns: repeat(3, 1fr);gap:12px;margin-top:12px}
+    @media (max-width:950px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:560px){ .grid{grid-template-columns:1fr} }
+
+    .mod{
+      border:1px solid var(--line);
+      border-radius:var(--r2);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      padding:14px;
+      min-height:118px;
+      position:relative;overflow:hidden;
+      cursor:pointer;
+      transition:transform .10s ease, border-color .15s ease, background .15s ease;
+    }
+    .mod:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.07)}
+    .mod:active{transform:translateY(0px) scale(.99)}
+    .modTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .modIcon{
+      width:40px;height:40px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.07);
+      display:grid;place-items:center;
+      flex:0 0 auto;
+      box-shadow:0 10px 22px rgba(0,0,0,.25);
+    }
+    .modTitle{margin:0;font-size:15px;letter-spacing:.2px}
+    .modDesc{margin:6px 0 0;font-size:12px;color:var(--muted);line-height:1.35}
+    .tag{
+      margin-top:10px;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      font-size:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+    }
+    .tag .miniDot{width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.35)}
+    .tag.active{border-color:rgba(34,197,94,.30);background:rgba(34,197,94,.12)}
+    .tag.active .miniDot{background:rgba(34,197,94,.95)}
+    .tag.locked{border-color:rgba(251,113,133,.28);background:rgba(251,113,133,.10)}
+    .tag.locked .miniDot{background:rgba(251,113,133,.95)}
+
+    .lockedOverlay{
+      position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(4,19,15,.35), rgba(4,19,15,.62));
+      display:none;pointer-events:none;
+    }
+    .mod.locked .lockedOverlay{display:block}
+    .lockHint{
+      position:absolute;right:12px;bottom:12px;
+      font-size:12px;color:rgba(234,255,241,.85);
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+      backdrop-filter: blur(8px);
+    }
+
+    .notice{
+      margin-top:12px;
+      border:1px solid rgba(250,204,21,.25);
+      background:rgba(250,204,21,.10);
+      border-radius:var(--r2);
+      padding:14px;
+      color:rgba(234,255,241,.92);
+      display:none;
+    }
+    .notice strong{color:#fff}
+    .notice .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .footer{margin-top:14px;color:var(--muted);font-size:12px;text-align:center;opacity:.9}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .small{font-size:12px;color:var(--muted)}
   </style>
 </head>
 
 <body>
+  <div class="wrap">
 
-  <h1>DIGIY HUB ♾️</h1>
-  <p>
-    L’écosystème digital enraciné en Afrique.  
-    Modules PRO · Paiement direct · 0% commission.
-  </p>
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"><span>∞</span></div>
+        <div style="min-width:0">
+          <h1>DIGIY HUB — Tour de Contrôle</h1>
+          <p id="subline">0% commission · Paiement direct · Terrain ready</p>
+        </div>
+      </div>
 
-  <a class="btn" href="./hub.html">🚀 Entrer dans mon HUB</a>
-  <a class="btn alt" href="https://beauville.github.io/commencer-a-payer/">⚡ Activer un module</a>
+      <div class="actions">
+        <div class="pill primary" id="btnRefresh">↻ Rafraîchir</div>
+        <div class="pill" id="btnClearCache">🧹 Vider cache</div>
+        <div class="pill" id="btnSupport">💬 Support</div>
+      </div>
+    </div>
 
-  <p style="margin-top:40px;font-size:13px;opacity:.6">
-    DIGIYLYFE — souveraineté numérique · Dakar · Saly · Afrique ♾️
-  </p>
+    <div class="hero">
+      <div class="card">
+        <h2>Bienvenue frérot 🦅</h2>
+        <p>
+          Ton HUB lit tes modules depuis Supabase, met en cache (terrain), et ouvre direct ce qui est actif.
+          Si un module est verrouillé, on t’envoie au paiement — propre.
+        </p>
 
+        <div class="statusRow">
+          <div class="badge"><span class="dot" id="dotAuth"></span> <span id="txtAuth">Session…</span></div>
+          <div class="badge"><span class="dot" id="dotData"></span> <span id="txtData">Modules…</span></div>
+          <div class="badge"><span class="dot" id="dotCache"></span> <span id="txtCache">Cache…</span></div>
+        </div>
+
+        <div style="margin-top:10px" class="small">
+          Téléphone: <span class="mono" id="phoneOut">—</span> · Cache TTL: <span class="mono">6h</span>
+        </div>
+
+        <div class="notice" id="noticeNoPhone">
+          <strong>⚠️ Aucun téléphone détecté.</strong><br/>
+          Pour afficher tes modules, ouvre le HUB avec :
+          <div style="margin-top:6px" class="mono" id="hintUrl">hub.html?phone=+22177xxxxxxx</div>
+
+          <div class="row">
+            <a class="pill primary" id="btnGoPay" href="#">⚡ Activer / Se connecter</a>
+            <a class="pill" id="btnSetPhone" href="#">📱 Mettre mon numéro</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Commandement</h2>
+        <p>
+          Objectif: tout ton business dans ta main.  
+          Le HUB est ton OS. Supabase pilote, toi tu voles.
+        </p>
+        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px">
+          <a class="pill" href="https://beauville.github.io/commencer-a-payer/" target="_blank" rel="noopener">⚡ Activer un module</a>
+          <a class="pill" href="https://beauville.github.io/digiy-hub/" target="_blank" rel="noopener">🏠 Accueil HUB</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" id="modulesGrid"></div>
+
+    <div class="footer">
+      DIGIYLYFE ♾️ — souveraineté digitale · paiement direct · “survol léger”
+    </div>
+  </div>
+
+  <script>
+  /* ==========================================================
+     ✅ F17.2 — Fix "Aucun module visible"
+     - Récupère phone depuis ?phone=...
+     - Sinon localStorage
+     - Sinon affiche notice + action
+  ========================================================== */
+
+  const SUPABASE_URL  = "PASTE_YOUR_SUPABASE_URL_HERE";
+  const SUPABASE_ANON = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+
+  const CACHE_KEY = "DIGIY_MODULES_CACHE";
+  const CACHE_TTL_HOURS = 6;
+
+  const PAY_URL = "https://beauville.github.io/commencer-a-payer/";
+  const SUPPORT_WHATSAPP = "+221771342889";
+
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  const MODULES = [
+    { code:"loc",     title:"DIGIY LOC PRO",    desc:"Locations · hébergements · planning.", icon:"🏠", url:"https://beauville.github.io/digiy-loc-pro/" },
+    { code:"driver",  title:"DIGIY DRIVER PRO", desc:"Chauffeur · courses · cockpit.",       icon:"🚗", url:"https://beauville.github.io/digiy-driver-pro/" },
+    { code:"build",   title:"DIGIY BUILD PRO",  desc:"Artisans · devis · chantiers.",        icon:"🧱", url:"https://beauville.github.io/digiy-build-pro/" },
+    { code:"market",  title:"DIGIY MARKET",     desc:"Marketplace · deals · terrain.",      icon:"🛒", url:"https://beauville.github.io/digiy-market/" },
+    { code:"jobs",    title:"DIGIY JOBS",       desc:"Emploi · dossiers · accompagnement.", icon:"🧰", url:"https://beauville.github.io/digiy-jobs/" },
+    { code:"explore", title:"DIGIY EXPLORE",    desc:"Spots · tourisme · visibilité.",      icon:"🗺️", url:"https://beauville.github.io/digiy-explore/" },
+    { code:"pay",     title:"DIGIY PAY",        desc:"Activation · QR · paiement direct.",  icon:"💳", url:"https://beauville.github.io/commencer-a-payer/" },
+    { code:"store",   title:"DIGIY STORE PRO",  desc:"Boutique PRO · commandes.",           icon:"🏪", url:"https://beauville.github.io/digiy-store-pro/" },
+    { code:"style",   title:"DIGIY STYLE",      desc:"Identité · vitrine · branding.",      icon:"✨", url:"https://beauville.github.io/digiy-style/" },
+  ];
+
+  const $ = (s)=>document.querySelector(s);
+  const nowTs = ()=>Date.now();
+
+  function setDot(id, state){
+    const el = $(id);
+    el.classList.remove("ok","warn","no");
+    if(state==="ok") el.classList.add("ok");
+    else if(state==="warn") el.classList.add("warn");
+    else if(state==="no") el.classList.add("no");
+  }
+
+  function normalizePhone(p){
+    if(!p) return "";
+    p = String(p).trim();
+    // autorise +221..., 221..., 77..., etc (on ne casse pas, on garde tel quel)
+    return p;
+  }
+
+  function getPhoneFromUrl(){
+    const sp = new URLSearchParams(location.search);
+    const p = sp.get("phone");
+    return normalizePhone(p);
+  }
+
+  function getPhoneFromStorage(){
+    const direct = localStorage.getItem("DIGIY_PHONE");
+    if(direct && direct.trim()) return normalizePhone(direct);
+
+    const candidates = ["DIGIY_LOC_PRO_SESSION","DIGIY_DRIVER_SESSION","DIGIY_BUILD_SESSION","DIGIY_HUB_SESSION"];
+    for(const k of candidates){
+      try{
+        const raw = localStorage.getItem(k);
+        if(!raw) continue;
+        const j = JSON.parse(raw);
+        if(j && j.phone) return normalizePhone(j.phone);
+      }catch(e){}
+    }
+    return "";
+  }
+
+  function setPhoneEverywhere(phone){
+    localStorage.setItem("DIGIY_PHONE", phone);
+  }
+
+  function loadModulesCache(){
+    try{
+      const raw = localStorage.getItem(CACHE_KEY);
+      if(!raw) return { ok:false, modules:null, source:"none" };
+      const data = JSON.parse(raw);
+      const ageHours = (nowTs() - data.timestamp) / 3600000;
+      if(ageHours > CACHE_TTL_HOURS) return { ok:false, modules:null, source:"expired" };
+      return { ok:true, modules:data.modules || [], source:"cache" };
+    }catch(e){
+      return { ok:false, modules:null, source:"broken" };
+    }
+  }
+
+  function saveModulesCache(modules){
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: nowTs(), modules }));
+  }
+
+  async function fetchModulesFromSupabase(phone){
+    const { data, error } = await sb
+      .from("digiy_subscription_modules")
+      .select("module,is_active,expires_at")
+      .eq("phone", phone);
+
+    if(error){
+      console.warn("DIGIY modules fetch error:", error.message);
+      return { ok:false, modules:[], error:error.message };
+    }
+    return { ok:true, modules:data || [], error:null };
+  }
+
+  function isModuleActive(modules, code){
+    const m = (modules || []).find(x => x.module === code);
+    return !!(m && m.is_active === true);
+  }
+
+  function buildPayUrl(phone, moduleCode){
+    const u = new URL(PAY_URL);
+    if(phone) u.searchParams.set("phone", phone);
+    if(moduleCode) u.searchParams.set("module", moduleCode);
+    return u.toString();
+  }
+
+  function renderModules(modules, phone){
+    const grid = $("#modulesGrid");
+    grid.innerHTML = "";
+    MODULES.forEach(m => {
+      const active = isModuleActive(modules, m.code);
+      const card = document.createElement("div");
+      card.className = "mod" + (active ? "" : " locked");
+      card.setAttribute("data-code", m.code);
+
+      card.innerHTML = `
+        <div class="modTop">
+          <div style="display:flex;gap:12px;min-width:0;align-items:flex-start">
+            <div class="modIcon" aria-hidden="true">${m.icon}</div>
+            <div style="min-width:0">
+              <h3 class="modTitle">${m.title}</h3>
+              <p class="modDesc">${m.desc}</p>
+              <div class="tag ${active ? "active" : "locked"}">
+                <span class="miniDot"></span>
+                <span>${active ? "ACTIF" : "VERROUILLÉ"}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lockedOverlay"></div>
+        ${active ? "" : `<div class="lockHint">⚡ Activer</div>`}
+      `;
+
+      card.addEventListener("click", () => {
+        if(active) window.location.href = m.url;
+        else window.location.href = buildPayUrl(phone, m.code);
+      });
+
+      grid.appendChild(card);
+    });
+  }
+
+  async function digiy_modules_bootstrap(phone){
+    const c = loadModulesCache();
+    if(c.ok){
+      setDot("#dotCache","ok");
+      $("#txtCache").textContent = "Cache: OK";
+      return { source:"cache", modules:c.modules };
+    }
+    setDot("#dotCache","warn");
+    $("#txtCache").textContent = (c.source==="expired") ? "Cache: expiré" : "Cache: vide";
+
+    const res = await fetchModulesFromSupabase(phone);
+    if(res.ok){
+      saveModulesCache(res.modules);
+      return { source:"supabase", modules:res.modules };
+    }
+    return { source:"fallback", modules:[] };
+  }
+
+  function setAuthUI(ok, phone){
+    if(ok){
+      setDot("#dotAuth","ok");
+      $("#txtAuth").textContent = "Session: OK";
+      $("#phoneOut").textContent = phone || "—";
+      $("#noticeNoPhone").style.display = "none";
+    } else {
+      setDot("#dotAuth","no");
+      $("#txtAuth").textContent = "Session: KO";
+      $("#phoneOut").textContent = "—";
+      $("#noticeNoPhone").style.display = "block";
+      $("#hintUrl").textContent = "hub.html?phone=+22177xxxxxxx";
+    }
+  }
+
+  function setDataUI(state, source){
+    if(state==="ok"){
+      setDot("#dotData","ok");
+      $("#txtData").textContent = "Modules: OK ("+source+")";
+    } else {
+      setDot("#dotData","no");
+      $("#txtData").textContent = "Modules: KO ("+source+")";
+    }
+  }
+
+  async function boot(){
+    setDot("#dotAuth","warn"); $("#txtAuth").textContent = "Session…";
+    setDot("#dotData","warn"); $("#txtData").textContent = "Modules…";
+
+    // ✅ 1) URL ?phone=
+    let phone = getPhoneFromUrl();
+
+    // ✅ 2) sinon localStorage
+    if(!phone) phone = getPhoneFromStorage();
+
+    // si trouvé, on le persiste
+    if(phone) setPhoneEverywhere(phone);
+
+    const okPhone = !!phone;
+    setAuthUI(okPhone, phone);
+
+    if(!okPhone){
+      setDataUI("no","no-phone");
+      renderModules([], "");
+      $("#btnGoPay").href = buildPayUrl("", "");
+      return;
+    }
+
+    $("#btnGoPay").href = buildPayUrl(phone, "");
+
+    const pack = await digiy_modules_bootstrap(phone);
+    if(pack.source==="fallback") setDataUI("no","fallback");
+    else setDataUI("ok", pack.source);
+
+    renderModules(pack.modules, phone);
+  }
+
+  /* Buttons */
+  $("#btnRefresh").addEventListener("click", async () => {
+    localStorage.removeItem(CACHE_KEY);
+    await boot();
+  });
+
+  $("#btnClearCache").addEventListener("click", async () => {
+    localStorage.removeItem(CACHE_KEY);
+    setDot("#dotCache","warn");
+    $("#txtCache").textContent = "Cache: vidé";
+  });
+
+  $("#btnSupport").addEventListener("click", () => {
+    const phone = (SUPPORT_WHATSAPP || "").replace(/\D/g,"");
+    const msg = encodeURIComponent("DIGIY Support — besoin d’aide (HUB). Mon téléphone: " + (getPhoneFromStorage()||getPhoneFromUrl()||"—"));
+    window.open("https://wa.me/" + phone + "?text=" + msg, "_blank");
+  });
+
+  $("#btnSetPhone").addEventListener("click", (e) => {
+    e.preventDefault();
+    const p = prompt("Entre ton numéro (ex: +221771234567) :");
+    const phone = normalizePhone(p);
+    if(phone){
+      setPhoneEverywhere(phone);
+      location.href = "hub.html?phone=" + encodeURIComponent(phone);
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", boot);
+  </script>
 </body>
 </html>
