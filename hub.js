@@ -1,31 +1,34 @@
 (() => {
   "use strict";
 
-  // ✅ LIENS (corrigés)
-  // - Driver PRO : digiy-pro-driver
-  // - Caisse PRO : choisis UNE casse et garde-la partout (ici: Digiy-caisse-pro)
-  const L = {
-    bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/",
-    driverPro:    "https://beauville.github.io/digiy-pro-driver/",
-    driverClient: "https://beauville.github.io/digiy-driver-client/",
-    loc:          "https://beauville.github.io/digiy-loc/",
-    resto:        "https://beauville.github.io/digiy-resto/",
-    resa:         "https://beauville.github.io/digiy-resa/",
-    resaTable:    "https://beauville.github.io/digiy-resa-table/",
-   caissePro: "https://beauville.github.io/digiy-caisse-pro/start.html",
-    pay:          "https://beauville.github.io/digiy-pay/",
-    build:        "https://beauville.github.io/digiy-build/",
-    market:       "https://beauville.github.io/digiy-market/",
-    jobs:         "https://beauville.github.io/digiy-jobs/",
-    explore:      "https://beauville.github.io/digiy-explore/",
-    notable:      "https://beauville.github.io/digiy-notable/",
-    ndimbalMap:   "https://beauville.github.io/digiy-mdimbal-map/",
-    inscriptionPro:"https://beauville.github.io/inscription-digiy/",
-    espacePro:    "https://beauville.github.io/espace-pro/",
-    tarifs:       "https://beauville.github.io/digiy/",
-    hubDrive:     "https://beauville.github.io/digiy-hub-drive/",
-    dashboard:    "https://beauville.github.io/mon-espace-digiy/"
-  };
+ // ✅ LIENS (corrigés)
+// - Driver PRO : digiy-pro-driver
+// - Caisse PRO : choisis UNE casse et garde-la partout (ici: digiy-caisse-pro)
+const L = {
+  bonneAffaire: "https://beauville.github.io/digiy-bonne-affaire/",
+  driverPro:    "https://beauville.github.io/digiy-pro-driver/",
+  driverClient: "https://beauville.github.io/digiy-driver-client/",
+  loc:          "https://beauville.github.io/digiy-loc/",
+  resto:        "https://beauville.github.io/digiy-resto/",
+  resa:         "https://beauville.github.io/digiy-resa/",
+  resaTable:    "https://beauville.github.io/digiy-resa-table/",
+
+  // ✅ CAISSE PRO (entrée officielle)
+  caissePro:    "https://beauville.github.io/digiy-caisse-pro/index.html",
+
+  pay:          "https://beauville.github.io/digiy-pay/",
+  build:        "https://beauville.github.io/digiy-build/",
+  market:       "https://beauville.github.io/digiy-market/",
+  jobs:         "https://beauville.github.io/digiy-jobs/",
+  explore:      "https://beauville.github.io/digiy-explore/",
+  notable:      "https://beauville.github.io/digiy-notable/",
+  ndimbalMap:   "https://beauville.github.io/digiy-mdimbal-map/",
+  inscriptionPro:"https://beauville.github.io/inscription-digiy/",
+  espacePro:    "https://beauville.github.io/espace-pro/",
+  tarifs:       "https://beauville.github.io/digiy/",
+  hubDrive:     "https://beauville.github.io/digiy-hub-drive/",
+  dashboard:    "https://beauville.github.io/mon-espace-digiy/"
+};
 
   const hubOverlay = document.getElementById("hubOverlay");
   const hubFrame   = document.getElementById("hubFrame");
