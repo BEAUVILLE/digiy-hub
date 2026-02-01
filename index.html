@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <meta name="theme-color" content="#061b14"/>
   <title>DIGIY HUB ♾️ — Vitrine</title>
-  <meta name="description" content="DIGIYLYFE — 0% commission. Paiement direct. Modules PRO pour digitaliser l’économie locale." />
+  <meta name="description" content="DIGIYLYFE — 0% commission. Paiement direct. Les modules DIGIY pour digitaliser l’économie locale." />
 
   <style>
     :root{
-      --bg:#061b14; --card:#0b2a1f; --line:rgba(255,255,255,.12);
+      --bg:#061b14; --line:rgba(255,255,255,.12);
       --text:#eafff1; --muted:rgba(234,255,241,.72);
       --gold:#facc15; --green:#22c55e; --danger:#fb7185;
-      --shadow:0 18px 60px rgba(0,0,0,.45); --r:22px;
+      --shadow:0 18px 60px rgba(0,0,0,.45);
     }
     *{box-sizing:border-box}
     body{
@@ -61,6 +61,25 @@
     }
     .hero h2{margin:0 0 6px;font-size:18px}
     .hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+    .filters{
+      margin-top:12px;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .chip{
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .chip.active{
+      border-color:rgba(250,204,21,.30);
+      background:rgba(250,204,21,.12);
+    }
 
     .grid{
       display:grid;
@@ -89,6 +108,7 @@
       background:rgba(255,255,255,.08);
       display:grid;place-items:center;
       flex:0 0 auto;
+      font-size:18px;
     }
     .t{margin:0;font-size:15px}
     .d{margin:6px 0 0;font-size:12px;color:var(--muted);line-height:1.35}
@@ -98,9 +118,13 @@
       border:1px solid rgba(251,113,133,.28);
       background:rgba(251,113,133,.10);
     }
+    .tag.pay{
+      border-color:rgba(34,197,94,.30);
+      background:rgba(34,197,94,.14);
+    }
     .dot{width:9px;height:9px;border-radius:999px;background:rgba(251,113,133,.95)}
+    .tag.pay .dot{background:rgba(34,197,94,.95)}
     .foot{margin-top:14px;color:var(--muted);font-size:12px;text-align:center}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
   </style>
 </head>
 
@@ -124,12 +148,14 @@
     </div>
 
     <div class="hero">
-      <h2>Tout DIGIY, visible. Accès PRO sur demande 🦅</h2>
+      <h2>Les 19 modules DIGIY — visibles pour tous 🦅</h2>
       <p>
-        Ici c’est la vitrine : tu vois les modules.  
-        Pour utiliser, tu actives (Wave/QR) ou tu entres dans ton HUB PRO.
+        Ici c’est la vitrine publique. Tu explores les modules.  
+        Pour utiliser : activation (Wave/QR) ou entrée dans ton HUB PRO.
       </p>
       <p style="margin-top:10px" class="mono" id="hint"></p>
+
+      <div class="filters" id="filters"></div>
     </div>
 
     <div class="grid" id="grid"></div>
@@ -141,94 +167,126 @@
     const PAY_URL = "https://beauville.github.io/commencer-a-payer/";
     const HUB_URL = "./hub.html";
 
+    // ✅ 19 modules vitrine (ajuste les titres si tu veux)
     const MODULES = [
-      { code:"loc",     title:"DIGIY LOC PRO",    desc:"Locations · hébergements · planning.", icon:"🏠" },
-      { code:"driver",  title:"DIGIY DRIVER PRO", desc:"Chauffeur · courses · cockpit.",       icon:"🚗" },
-      { code:"build",   title:"DIGIY BUILD PRO",  desc:"Artisans · devis · chantiers.",        icon:"🧱" },
-      { code:"market",  title:"DIGIY MARKET",     desc:"Marketplace · deals · terrain.",      icon:"🛒" },
-      { code:"jobs",    title:"DIGIY JOBS",       desc:"Emploi · dossiers · accompagnement.", icon:"🧰" },
-      { code:"explore", title:"DIGIY EXPLORE",    desc:"Spots · tourisme · visibilité.",      icon:"🗺️" },
-      { code:"store",   title:"DIGIY STORE PRO",  desc:"Boutique PRO · commandes.",           icon:"🏪" },
-      { code:"style",   title:"DIGIY STYLE",      desc:"Identité · vitrine · branding.",      icon:"✨" },
-      { code:"pay",     title:"DIGIY PAY",        desc:"Activation · QR · paiement direct.",  icon:"💳" },
+      { code:"hub",        title:"DIGIY HUB",        desc:"Portail central · cockpit · accès modules.",        icon:"♾️", cat:"core" },
+      { code:"pay",        title:"DIGIY PAY",        desc:"Activation · QR · paiement direct (Wave).",        icon:"💳", cat:"core", isPay:true },
+
+      { code:"loc",        title:"DIGIY LOC PRO",    desc:"Locations · hébergements · planning.",             icon:"🏠", cat:"pro" },
+      { code:"driver",     title:"DIGIY DRIVER PRO", desc:"Chauffeur · courses · cockpit.",                  icon:"🚗", cat:"pro" },
+      { code:"build",      title:"DIGIY BUILD PRO",  desc:"Artisans · devis · chantiers.",                   icon:"🧱", cat:"pro" },
+      { code:"store",      title:"DIGIY STORE PRO",  desc:"Boutique PRO · commandes · stock.",              icon:"🏪", cat:"pro" },
+      { code:"market",     title:"DIGIY MARKET",     desc:"Marketplace · annonces · terrain.",               icon:"🛒", cat:"public" },
+      { code:"jobs",       title:"DIGIY JOBS",       desc:"Emploi · dossiers · accompagnement.",            icon:"🧰", cat:"public" },
+      { code:"explore",    title:"DIGIY EXPLORE",    desc:"Spots · tourisme · visibilité.",                 icon:"🗺️", cat:"public" },
+      { code:"style",      title:"DIGIY STYLE",      desc:"Identité · vitrine · branding.",                 icon:"✨", cat:"public" },
+
+      // ✅ le reste (modules existants “19”) — adapte les noms à ta vérité
+      { code:"langue",     title:"DIGIY LANGUE",     desc:"Langues locales · microcopies · traduction.",     icon:"🗣️", cat:"public" },
+      { code:"services",   title:"DIGIY SERVICES",   desc:"Services terrain · pros autour de toi.",          icon:"🧰", cat:"public" },
+      { code:"rent",       title:"DIGIY LOCATION",   desc:"Location d’objets · véhicules · matériel.",       icon:"📦", cat:"public" },
+      { code:"qr",         title:"DIGIY QR",         desc:"QR pro · pages de paiement · menus · liens.",     icon:"🔳", cat:"core" },
+      { code:"caisse",     title:"DIGIY CAISSE",     desc:"Caisse / POS · ventes · tickets.",               icon:"🧾", cat:"pro" },
+      { code:"menu",       title:"DIGIY MENU",       desc:"Menus restaurants · commande rapide.",            icon:"🍽️", cat:"public" },
+      { code:"ndimbal",    title:"NDIMBAL MAP",      desc:"Solidarité · entraide · points utiles.",         icon:"🫂", cat:"public" },
+      { code:"ads",        title:"DIGIY BOOST",      desc:"Boost visibilité · annonces sponsorisées.",       icon:"🚀", cat:"pro" },
+      { code:"sap",        title:"SAP DIGIYLYFE",    desc:"Progiciel commerçant · pilotage business.",       icon:"📊", cat:"pro" },
+    ];
+
+    const CATS = [
+      { key:"all",   label:"Tout" },
+      { key:"core",  label:"Core" },
+      { key:"public",label:"Public" },
+      { key:"pro",   label:"PRO" },
     ];
 
     const grid = document.querySelector("#grid");
     const hint = document.querySelector("#hint");
+    const filters = document.querySelector("#filters");
 
-    function normalizePhone(p){
-      if(!p) return "";
-      return String(p).trim();
+    function normalizePhone(p){ return (p||"").toString().trim(); }
+    function savePhone(phone){ localStorage.setItem("DIGIY_PHONE", phone); }
+    function getSavedPhone(){ return normalizePhone(localStorage.getItem("DIGIY_PHONE")); }
+    function goHubWithPhone(phone){ location.href = HUB_URL + "?phone=" + encodeURIComponent(phone); }
+
+    let activeCat = "all";
+
+    function renderFilters(){
+      filters.innerHTML = "";
+      CATS.forEach(c=>{
+        const b = document.createElement("div");
+        b.className = "chip" + (activeCat===c.key ? " active":"");
+        b.textContent = c.label;
+        b.onclick = ()=>{ activeCat = c.key; renderFilters(); renderGrid(); };
+        filters.appendChild(b);
+      });
     }
 
-    function savePhone(phone){
-      localStorage.setItem("DIGIY_PHONE", phone);
-    }
+    function renderGrid(){
+      grid.innerHTML = "";
+      const list = MODULES.filter(m => activeCat==="all" ? true : m.cat===activeCat);
 
-    function getSavedPhone(){
-      return normalizePhone(localStorage.getItem("DIGIY_PHONE"));
-    }
+      list.forEach(m=>{
+        const card = document.createElement("div");
+        card.className = "card";
 
-    function goHubWithPhone(phone){
-      const url = HUB_URL + "?phone=" + encodeURIComponent(phone);
-      location.href = url;
-    }
+        const tagClass = m.isPay ? "tag pay" : "tag";
+        const tagText  = m.isPay ? "✅ Activation immédiate" : "🔒 Accès PRO requis";
 
-    // ✅ Affiche modules en vitrine (toujours visibles)
-    MODULES.forEach(m=>{
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <div class="row">
-          <div class="ico">${m.icon}</div>
-          <div style="min-width:0">
-            <h3 class="t">${m.title}</h3>
-            <div class="d">${m.desc}</div>
-            <div class="tag"><span class="dot"></span> <span>Accès PRO requis</span></div>
+        card.innerHTML = `
+          <div class="row">
+            <div class="ico">${m.icon}</div>
+            <div style="min-width:0">
+              <h3 class="t">${m.title}</h3>
+              <div class="d">${m.desc}</div>
+              <div class="${tagClass}"><span class="dot"></span> <span>${tagText}</span></div>
+            </div>
           </div>
-        </div>
-      `;
+        `;
 
-      // clic = activation avec ?module
-      card.onclick = ()=> {
-        const u = new URL(PAY_URL);
-        u.searchParams.set("module", m.code);
+        // clic = activation (avec module + phone si connu)
+        card.onclick = ()=> {
+          if(m.code === "hub"){
+            const saved = getSavedPhone();
+            if(saved) goHubWithPhone(saved);
+            else document.querySelector("#btnEnter").click();
+            return;
+          }
 
-        const saved = getSavedPhone();
-        if(saved) u.searchParams.set("phone", saved);
+          const u = new URL(PAY_URL);
+          u.searchParams.set("module", m.code);
 
-        location.href = u.toString();
-      };
+          const saved = getSavedPhone();
+          if(saved) u.searchParams.set("phone", saved);
 
-      grid.appendChild(card);
-    });
+          location.href = u.toString();
+        };
 
-    // ✅ Bouton "Entrer dans mon HUB" (entrée rapide)
+        grid.appendChild(card);
+      });
+    }
+
+    // ✅ Entrée rapide HUB (prompt si besoin)
     document.querySelector("#btnEnter").addEventListener("click", ()=>{
       const saved = getSavedPhone();
-
-      if(saved){
-        goHubWithPhone(saved);
-        return;
-      }
+      if(saved){ goHubWithPhone(saved); return; }
 
       const p = prompt("DIGIY HUB — Entre ton numéro (ex: +221771234567) :");
       const phone = normalizePhone(p);
-
-      if(!phone){
-        alert("Numéro requis pour entrer dans ton HUB PRO.");
-        return;
-      }
+      if(!phone){ alert("Numéro requis pour entrer dans ton HUB PRO."); return; }
 
       savePhone(phone);
       goHubWithPhone(phone);
     });
 
-    // petit hint
+    // hint
     const saved = getSavedPhone();
     hint.textContent = saved
       ? ("📱 Numéro mémorisé : " + saved + " — bouton ‘Entrer’ t’emmène direct au HUB.")
       : "💡 Astuce : clique ‘Entrer dans mon HUB’ et mets ton numéro une fois. Après, c’est automatique.";
+
+    renderFilters();
+    renderGrid();
   </script>
 </body>
 </html>
