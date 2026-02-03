@@ -1,199 +1,346 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <meta name="theme-color" content="#061b14"/>
-  <title>DIGIY HUB ∞ — 0% commission • paiement direct</title>
-  <meta name="description" content="DIGIY HUB — Tous tes modules business. Chauffeur, resto, location, artisan. 0% commission. Paiement direct au pro. Terrain ready." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#020617">
+  <title>DIGIY HUB ∞ — 0% Commission • Paiement Direct</title>
+  <meta name="description" content="Tous tes modules business DIGIY : chauffeur, resto, location, artisan. 0% commission. Paiement direct au pro.">
 
-  <link rel="stylesheet" href="./hub-enhanced.css?v=enhanced1"/>
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" href="./icon-192.png" sizes="192x192">
-  <link rel="apple-touch-icon" href="./icon-192.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <script defer src="./hub-enhanced.js?v=enhanced1"></script>
+  <link rel="stylesheet" href="./hub.css?v=20260201">
+  <script src="./hub.js?v=20260201" defer></script>
 </head>
-
 <body>
-  <div class="bg"></div>
 
   <div class="app">
-    <header class="top">
-      <a class="brand" href="#" id="homeBrand" aria-label="Retour haut de page">
-        <div class="logo">∞</div>
-        <div class="brandText">
-          <div class="title">DIGIY HUB</div>
-          <div class="subtitle">0% commission · paiement direct · terrain ready</div>
+    <header>
+      <a href="#" class="brand" id="homeBrand">
+        <div class="brand-logo">∞</div>
+        <div>
+          <h1>DIGIY HUB</h1>
+          <p>0% Commission • Paiement Direct</p>
         </div>
       </a>
-
-      <div class="hero">
-        <div class="heroLeft">
-          <div class="eyebrow">L'Afrique enracinée, connectée au monde</div>
-          <h1>Tout ton business dans ta main.<br><span class="gold">0% commission</span>.<span class="dot">●</span></h1>
-
-          <p>
-            <strong>Chauffeur, restaurant, boutique, logement, artisan.</strong><br>
-            Un seul abonnement. 27 modules. Paiement direct au pro.
-          </p>
-
-          <div class="ctaRow">
-            <button id="btnGetHub" class="btn primary" type="button">🚀 Je veux mon HUB DIGIY</button>
-            <button id="btnDeals" class="btn outline" type="button">💥 Voir les Bonnes Affaires</button>
-          </div>
-
-          <div class="miniRow">
-            <div class="chip" title="Le HUB peut envoyer ton numéro à certains modules si supporté">
-              <span class="chipK">📱 Numéro</span>
-              <span id="phoneText" class="chipV">non mémorisé</span>
-            </div>
-            <button id="btnEditPhone" class="btn tiny" type="button">Modifier</button>
-            <button id="btnClearPhone" class="btn tiny danger" type="button">Effacer</button>
-          </div>
-
-          <div class="pioneerStrip" aria-hidden="true">
-            <div class="pioneerLeft">
-              <div class="pioneerTitle">🔥 Places pionniers limitées</div>
-              <div class="pioneerText">Prix bloqué à vie pour les premiers · Terrain, simple, efficace.</div>
-            </div>
-            <div class="pioneerRight">
-              <div class="pioneerN" id="pioneersLeft">87</div>
-              <div class="pioneerL">restantes</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="heroRight">
-          <div class="panel">
-            <div class="panelTitle">🧭 Navigation F16 Enhanced</div>
-            <div class="panelHint">Filtre + recherche + modules data-driven. Business ready.</div>
-
-            <div class="controls">
-              <div class="tabs" role="tablist" aria-label="Filtres">
-                <button class="tab active" data-filter="all" type="button">Tous</button>
-                <button class="tab" data-filter="public" type="button">Public</button>
-                <button class="tab" data-filter="pro" type="button">PRO</button>
-              </div>
-
-              <div class="searchBox">
-                <input id="searchInput" type="search" placeholder="Chercher… (ex: driver, resto, caisse, pay)" autocomplete="off"/>
-                <button id="btnReset" class="btn tiny" type="button">Reset</button>
-              </div>
-            </div>
-
-            <div class="stats" role="status" aria-live="polite">
-              <div class="stat"><div class="statN" id="statTotal">0</div><div class="statL">Total</div></div>
-              <div class="stat"><div class="statN" id="statPublic">0</div><div class="statL">Public</div></div>
-              <div class="stat"><div class="statN" id="statPro">0</div><div class="statL">PRO</div></div>
-            </div>
-
-            <div class="note">
-              <b>💡 Astuce terrain :</b> si ton numéro est mémorisé, le HUB peut l'envoyer en paramètre aux modules
-              (quand le module le supporte). Sinon, navigation simple frérot.
-            </div>
-          </div>
-        </div>
-      </div>
+      <button class="btn" type="button" id="btnLogin">🔐 Connexion</button>
     </header>
 
-    <main class="main">
-      <section class="section">
-        <div class="sectionHead">
-          <h2>Tous tes modules DIGIY</h2>
-          <div class="legend">
-            <span class="pill officiel">OFFICIEL</span>
-            <span class="pill nouveau">NOUVEAU</span>
-            <span class="pill live">LIVE</span>
-            <span class="pill priorite">PRIORITÉ</span>
-            <span class="pill gratuit">GRATUIT</span>
+    <section class="hero">
+      <div class="hero-eyebrow">L'Afrique enracinée, connectée au monde</div>
+      <h1 class="hero-title">Tout ton business dans ta main.<br><span>0% commission.</span></h1>
+      <p class="hero-subtitle">
+        Chauffeur, restaurant, boutique, logement, artisan.<br>
+        <strong>Un seul abonnement. 11 métiers. Paiement direct au pro.</strong>
+      </p>
+      <button id="btnGetHub" class="hero-cta" type="button"><span>→</span> Je veux mon HUB DIGIY</button>
+      <button id="btnDeals" class="hero-cta secondary" type="button">💥 Voir les Bonnes Affaires</button>
+
+      <div style="margin-top:10px;color:var(--muted);font-weight:650">
+        Places pionniers limitées • Prix bloqué à vie pour les premiers
+      </div>
+      <div class="urgency-strip">
+        <span>🔥</span>
+        <span>Places restantes :</span>
+        <span id="pioneersLeft" class="urgency-number">87</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Tous tes modules DIGIY (19 modules)</h2>
+      <p>Clique pour ouvrir un module dans le HUB. Retour avec <strong>← Retour HUB</strong>.</p>
+
+      <div class="modules-grid">
+
+        <div class="module" data-open="bonneAffaire">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">💥</div>
+              <div>
+                <div class="module-name">DIGIY BONNE AFFAIRE</div>
+                <div class="module-tag">BONS PLANS • PROMOS</div>
+              </div>
+            </div>
+            <div class="badge new">OFFICIEL</div>
           </div>
+          <div class="module-body">Les meilleures opportunités locales : promos, deals, bonnes affaires terrain.</div>
         </div>
 
-        <div id="modulesGrid" class="grid" aria-live="polite"></div>
-      </section>
-
-      <footer class="footer">
-        <div class="footLine">
-          <span class="footBrand">DIGIYLYFE ∞</span>
-          <span class="sep">·</span>
-          <span>0% commission</span>
-          <span class="sep">·</span>
-          <span>paiement direct</span>
-          <span class="sep">·</span>
-          <span>L'Afrique enracinée, connectée au monde</span>
-        </div>
-        <div class="footTiny">F16 Enhanced · Data-driven · Business-ready · Made in Sénégal 🇸🇳</div>
-      </footer>
-    </main>
-
-    <!-- Boutons flottants -->
-    <button id="tarif-bubble-btn" class="floatBtn" type="button">🏷️ Tarifs</button>
-    <button id="espace-pro-btn" class="floatBtn" type="button">🧰 PRO</button>
-    <button id="digiy-help-btn" class="floatBtn" type="button">♾️</button>
-
-    <!-- NDIMBAL popup -->
-    <div id="digiy-ndimbal" class="ndimbal hidden" aria-hidden="true">
-      <div class="ndimbalBox" role="dialog" aria-modal="true">
-        <div class="ndimbalTitle">♾️ NDIMBAL</div>
-        <div class="ndimbalText"><b>Naka nga def frérot ?</b><br>Dis-moi ce que tu veux faire, je te pointe au bon endroit.</div>
-
-        <div class="ndimbalActions">
-          <button class="btn primary" type="button" data-action="sell">📋 Publier une mission</button>
-          <button class="btn outline" type="button" data-action="job">💼 Trouver du travail</button>
-          <button class="btn ghost" type="button" data-action="qr">📷 QR DIGIYLYFE</button>
-        </div>
-
-        <button class="btn tiny danger" type="button" id="digiyCloseBtn" style="margin-top:10px">❌ Quitter</button>
-      </div>
-    </div>
-
-    <!-- QR modal -->
-    <div id="qrModal" class="qrModal hidden" aria-hidden="true">
-      <div class="qrContent" role="dialog" aria-modal="true">
-        <div class="qrHeader">
-          <div class="qrTitle">♾️ QR DIGIYLYFE</div>
-          <button id="qrClose" class="btn tiny" type="button">✖ Fermer</button>
-        </div>
-
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=https://digiylyfe.com"
-             alt="QR DIGIYLYFE" class="qrImg">
-
-        <div class="qrText">📱 Scanne pour ouvrir DIGIYLYFE</div>
-        <a href="https://digiylyfe.com" target="_blank" rel="noopener" class="qrLink">Ouvrir le site →</a>
-      </div>
-    </div>
-
-    <!-- HUB overlay (iframe) -->
-    <div id="hubOverlay" class="hubOverlay hidden" aria-hidden="true">
-      <div class="hubCard" role="dialog" aria-modal="true">
-        <div class="hubTop">
-          <div class="hubBrand">♾️ DIGIY HUB</div>
-          <div class="hubTopBtns">
-            <button class="hubBtn back" id="hubBackBtn" type="button">← Retour HUB</button>
-            <button class="hubBtn close" id="hubCloseBtn" type="button">✖ Fermer</button>
+        <div class="module" data-open="driverPro">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🚗</div>
+              <div>
+                <div class="module-name">DIGIY DRIVER PRO</div>
+                <div class="module-tag">CHAUFFEUR PROFESSIONNEL</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
           </div>
+          <div class="module-body">Accepter courses, GPS temps réel, encaissements directs.</div>
         </div>
-        <iframe id="hubFrame" title="Module DIGIY" allow="geolocation; camera; microphone"></iframe>
-      </div>
-    </div>
 
-    <!-- Modal simple -->
-    <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="modalCard">
-        <div class="modalTitle" id="modalTitle">Titre</div>
-        <div class="modalText" id="modalText">Texte</div>
-        <div class="modalActions">
-          <button id="modalCancel" class="btn ghost" type="button">Annuler</button>
-          <button id="modalOk" class="btn primary" type="button">OK</button>
+        <div class="module" data-open="driverClient">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🚕</div>
+              <div>
+                <div class="module-name">DIGIY DRIVER CLIENT</div>
+                <div class="module-tag">COMMANDER UNE COURSE</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Commande ta course VTC au Sénégal. Paiement direct. 0% commission.</div>
         </div>
-      </div>
-    </div>
 
+        <div class="module" data-open="caissePro">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🧾</div>
+              <div>
+                <div class="module-name">DIGIY CAISSE PRO</div>
+                <div class="module-tag">POS + SYNC BATCH</div>
+              </div>
+            </div>
+            <div class="badge new">NOUVEAU</div>
+          </div>
+          <div class="module-body">Caisse pro + sync ultra-légère. Encaissement terrain.</div>
+        </div>
+
+        <div class="module" data-open="loc">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🏠</div>
+              <div>
+                <div class="module-name">DIGIY LOC</div>
+                <div class="module-tag">LOCATION SANS OTA</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Alternative Booking/Airbnb, sans commission, en direct propriétaire.</div>
+        </div>
+
+        <div class="module" data-open="resto">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🍽️</div>
+              <div>
+                <div class="module-name">DIGIY RESTO</div>
+                <div class="module-tag">VITRINE RESTAURANT</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Menus, photos, horaires, localisation. Réservation directe.</div>
+        </div>
+
+        <div class="module" data-open="pay">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">💳</div>
+              <div>
+                <div class="module-name">DIGIY PAY</div>
+                <div class="module-tag">WALLET UNIFIÉ</div>
+              </div>
+            </div>
+            <div class="badge prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">Wave / OM / CB. Historique, suivi, activation modules.</div>
+        </div>
+
+        <div class="module" data-open="build">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🏗️</div>
+              <div>
+                <div class="module-name">DIGIY BUILD</div>
+                <div class="module-tag">ARTISANS & BTP</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Devis, galerie, contact. Humain. Direct. Sans commission.</div>
+        </div>
+
+        <div class="module" data-open="market">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🛍️</div>
+              <div>
+                <div class="module-name">DIGIY MARKET</div>
+                <div class="module-tag">MARKETPLACE LOCALE</div>
+              </div>
+            </div>
+            <div class="badge prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">Acheter/vendre local. Annonces propres. Sans commission.</div>
+        </div>
+
+        <div class="module" data-open="jobs">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">💼</div>
+              <div>
+                <div class="module-name">DIGIY JOBS</div>
+                <div class="module-tag">EMPLOI & TALENTS</div>
+              </div>
+            </div>
+            <div class="badge prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">Offres, candidatures, profils. Pont talents–employeurs.</div>
+        </div>
+
+        <div class="module" data-open="ndimbalMap">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🗺️</div>
+              <div>
+                <div class="module-name">DIGIY NDIMBAL MAP</div>
+                <div class="module-tag">CARTE COMMUNAUTÉ</div>
+              </div>
+            </div>
+            <div class="badge free">GRATUIT</div>
+          </div>
+          <div class="module-body">Annuaire géolocalisé du Sénégal : pros, quartiers, filtres.</div>
+        </div>
+
+        <div class="module" data-open="resa">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">📅</div>
+              <div>
+                <div class="module-name">DIGIY RESA</div>
+                <div class="module-tag">RÉSERVATIONS</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Planning, confirmations, gestion des réservations. Direct, sans commission.</div>
+        </div>
+
+        <div class="module" data-open="resaTable">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🪑</div>
+              <div>
+                <div class="module-name">DIGIY RESA TABLE</div>
+                <div class="module-tag">RÉSA RESTAURANT</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Réservations de tables restaurant. Plan de salle, dispos temps réel.</div>
+        </div>
+
+        <div class="module" data-open="notable">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">📓</div>
+              <div>
+                <div class="module-name">DIGIY NOTABLE</div>
+                <div class="module-tag">NOTES & DOCS</div>
+              </div>
+            </div>
+            <div class="badge prio">PRIORITÉ</div>
+          </div>
+          <div class="module-body">Notes, fiches terrain, procédures. Organise ton savoir pro.</div>
+        </div>
+
+        <div class="module" data-open="explore">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🧭</div>
+              <div>
+                <div class="module-name">DIGIY EXPLORE</div>
+                <div class="module-tag">TOURISME & DÉCOUVERTE</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Découvrir l'Afrique • guides • visibilité • expériences authentiques.</div>
+        </div>
+
+        <div class="module" data-open="inscriptionPro">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">📝</div>
+              <div>
+                <div class="module-name">INSCRIPTION PRO</div>
+                <div class="module-tag">NOUVEAU COMPTE PRO</div>
+              </div>
+            </div>
+            <div class="badge new">NOUVEAU</div>
+          </div>
+          <div class="module-body">Inscription intelligente. Choisis ton module, on calcule ton tarif.</div>
+        </div>
+
+        <div class="module" data-open="espacePro">
+          <div class="module-top">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="module-icon">🧰</div>
+              <div>
+                <div class="module-name">ESPACE PRO</div>
+                <div class="module-tag">PORTAIL PRO</div>
+              </div>
+            </div>
+            <div class="badge">LIVE</div>
+          </div>
+          <div class="module-body">Ouvre tes modules (après paiement). Slug + PIN. Tour de contrôle.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <div style="font-weight:950;color:#fff;margin-bottom:6px">L'Afrique enracinée, connectée au monde — DIGIYLYFE ♾️</div>
+      <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:8px">
+        <a href="https://digiylyfe.com" target="_blank" rel="noopener">Accueil DIGIYLYFE</a>
+        <a href="https://wa.me/221771342889" target="_blank" rel="noopener">Contact WhatsApp</a>
+        <a href="https://beauville.github.io/DIGIY/" target="_blank" rel="noopener">Tarifs détaillés</a>
+      </div>
+      <div>© DIGIYLYFE — Made in Sénégal • 0% commission • Paiement direct</div>
+    </footer>
   </div>
+
+  <button id="tarif-bubble-btn" type="button">🏷️ Tarifs DIGIY</button>
+  <button id="espace-pro-btn" type="button">🧰 ESPACE PRO</button>
+  <button id="digiy-help-btn" type="button">♾️ NDIMBAL</button>
+
+  <div id="digiy-ndimbal" aria-hidden="true">
+    <div class="digiyBox">
+      <div class="digiyTitle">♾️ NDIMBAL</div>
+      <div class="digiyText"><strong>Naka nga def frérot ?</strong><br>Je suis là pour t'aider simplement.</div>
+      <button class="digiyAct" type="button" data-action="sell">📋 Publier une mission</button>
+      <button class="digiyAct" type="button" data-action="job">💼 Trouver du travail</button>
+      <button class="digiyAct" type="button" data-action="qr">📷 Ouvrir QR DIGIYLYFE</button>
+      <button class="digiyClose" type="button" id="digiyCloseBtn">❌ Quitter</button>
+    </div>
+  </div>
+
+  <div id="qrModal" aria-hidden="true">
+    <div class="qrContent">
+      <div class="qrHeader">
+        <div class="qrTitle">♾️ QR DIGIYLYFE</div>
+        <button id="qrClose" class="qrCloseBtn" type="button">✖ Fermer</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://digiylyfe.com" alt="QR DIGIYLYFE" class="qrImg">
+      <div class="qrText">📱 Scanne pour ouvrir DIGIYLYFE</div>
+      <a href="https://digiylyfe.com" target="_blank" rel="noopener" class="qrLink">Ouvrir le site →</a>
+    </div>
+  </div>
+
+  <div id="hubOverlay" aria-hidden="true">
+    <div class="hubCard" role="dialog" aria-modal="true">
+      <div class="hubTop">
+        <div class="hubBrand">♾️ DIGIY HUB</div>
+        <div class="hubTopBtns">
+          <button class="hubBtn back" id="hubBackBtn" type="button">← Retour HUB</button>
+          <button class="hubBtn close" id="hubCloseBtn" type="button">✖ Fermer</button>
+        </div>
+      </div>
+      <iframe id="hubFrame" title="Module DIGIY" allow="geolocation; camera; microphone"></iframe>
+    </div>
+  </div>
+
 </body>
 </html>
