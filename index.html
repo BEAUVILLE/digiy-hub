@@ -17,13 +17,13 @@
   <meta property="og:url" content="https://digiylyfe.com/"/>
   <meta property="og:title" content="DIGIYLYFE — Territoire vivant Sénégal"/>
   <meta property="og:description" content="Trouver un chauffeur, un logement, une réservation, un artisan ou une boutique. 0% commission, paiement direct au professionnel."/>
-  <meta property="og:image" content="https://digiylyfe.com/wp-content/uploads/2025/09/Image-6.jpeg"/>
+  <meta property="og:image" content="https://digiylyfe.net/wp-content/uploads/2026/04/ChatGPT-Image-30-avr.-2026-21_41_18.png"/>
   <meta property="og:locale" content="fr_SN"/>
   <meta property="og:site_name" content="DIGIYLYFE"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="DIGIYLYFE — Territoire vivant Sénégal"/>
   <meta name="twitter:description" content="Taxi, logement, réservation, artisans, boutiques. Saly, Mbour, Petite Côte. Paiement direct au professionnel."/>
-  <meta name="twitter:image" content="https://digiylyfe.com/wp-content/uploads/2025/09/Image-6.jpeg"/>
+  <meta name="twitter:image" content="https://digiylyfe.net/wp-content/uploads/2026/04/ChatGPT-Image-30-avr.-2026-21_41_18.png"/>
   <meta name="geo.region" content="SN-TH"/>
   <meta name="geo.placename" content="Saly, Mbour, Petite Côte, Sénégal"/>
   <meta name="geo.position" content="14.4500;-16.9833"/>
@@ -271,6 +271,388 @@
 
 
 
+
+    /* ── DIGIY GARE MOBILE : une entrée, une action ── */
+    #digiy-action-stations{
+      margin:16px 18px 0;
+      border:1px solid rgba(246,196,83,.28);
+      border-radius:26px;
+      background:
+        radial-gradient(760px 260px at 12% 0%,rgba(246,196,83,.13),transparent 58%),
+        radial-gradient(680px 280px at 88% 28%,rgba(0,166,81,.15),transparent 62%),
+        linear-gradient(180deg,rgba(10,48,34,.84),rgba(8,28,20,.76));
+      box-shadow:var(--shadow),0 0 0 1px rgba(246,196,83,.06);
+      padding:18px;
+    }
+
+    #digiy-action-stations .station-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 11px;
+      border-radius:999px;
+      border:1px solid rgba(246,196,83,.32);
+      background:rgba(246,196,83,.10);
+      color:#fff3cf;
+      font-family:var(--fontA);
+      font-size:11px;
+      font-weight:1000;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    #digiy-action-stations .station-title{
+      margin:12px 0 0;
+      font-family:var(--fontA);
+      font-size:clamp(28px,4.8vw,48px);
+      line-height:1.02;
+      letter-spacing:-.045em;
+      font-weight:1000;
+      color:#fff;
+      max-width:12ch;
+    }
+
+    #digiy-action-stations .station-title span{color:var(--gold);}
+
+    #digiy-action-stations .station-text{
+      margin:10px 0 0;
+      color:#dbe8e0;
+      font-size:16px;
+      line-height:1.65;
+      font-weight:750;
+      max-width:74ch;
+    }
+
+    #digiy-action-stations .station-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    #digiy-action-stations .station-card{
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:12px;
+      min-height:190px;
+      padding:16px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.13);
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.035)),
+        radial-gradient(circle at top left,rgba(246,196,83,.09),transparent 44%);
+      box-shadow:0 14px 34px rgba(0,0,0,.20);
+      color:#fff;
+      text-decoration:none;
+      transition:transform .16s ease,border-color .16s ease;
+    }
+
+    #digiy-action-stations .station-card:hover{
+      transform:translateY(-2px);
+      border-color:rgba(246,196,83,.42);
+    }
+
+    #digiy-action-stations .station-icon{
+      width:62px;
+      height:62px;
+      border-radius:22px;
+      display:grid;
+      place-items:center;
+      font-size:32px;
+      background:rgba(246,196,83,.12);
+      border:1px solid rgba(246,196,83,.24);
+    }
+
+    #digiy-action-stations .station-card h2{
+      margin:0 0 7px;
+      font-family:var(--fontA);
+      font-size:23px;
+      line-height:1.06;
+      font-weight:1000;
+      letter-spacing:-.03em;
+    }
+
+    #digiy-action-stations .station-card p{
+      margin:0;
+      color:rgba(248,250,252,.80);
+      line-height:1.55;
+      font-size:14px;
+      font-weight:750;
+    }
+
+    #digiy-action-stations .station-cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      border-radius:999px;
+      border:1px solid rgba(246,196,83,.30);
+      background:rgba(246,196,83,.10);
+      color:#fff3cf;
+      font-family:var(--fontA);
+      font-size:13px;
+      font-weight:1000;
+      margin-top:auto;
+    }
+
+    #digiy-action-stations .station-card.primary .station-cta{
+      color:#06140f;
+      border-color:rgba(246,196,83,.72);
+      background:linear-gradient(135deg,#f6c453,#22c55e);
+    }
+
+    .digiy-mobile-dock{
+      display:none;
+    }
+
+    @media(max-width:760px){
+      .wrap{
+        padding:10px 10px 112px;
+      }
+
+      .topbar{
+        padding:12px;
+        align-items:flex-start;
+      }
+
+      .brand{
+        width:100%;
+      }
+
+      .logo{
+        width:54px;
+        height:54px;
+        border-radius:18px;
+      }
+
+      .brandText .title{
+        font-size:21px;
+      }
+
+      .brandText .subtitle{
+        font-size:14px;
+        line-height:1.35;
+      }
+
+      .brandText .byline{
+        font-size:18px;
+      }
+
+      .topSignals{
+        display:none;
+      }
+
+      .menuToggleBtn{
+        display:inline-flex;
+      }
+
+      .menuBar{
+        display:none;
+      }
+
+      .menuBar.open{
+        display:block;
+      }
+
+      #intro-bonheur{
+        margin:12px 12px 0;
+        border-radius:24px;
+      }
+
+      #intro-bonheur .wrap{
+        padding:28px 16px 24px;
+      }
+
+      #intro-bonheur h1{
+        font-size:clamp(42px,13vw,62px);
+      }
+
+      #intro-bonheur .lead{
+        font-size:17px;
+        line-height:1.6;
+      }
+
+      #intro-bonheur .cta{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      #intro-bonheur .btnx{
+        width:100%;
+        min-height:58px;
+        border-radius:18px;
+        font-size:16px;
+      }
+
+      #digiy-action-stations{
+        margin:14px 12px 0;
+        padding:16px;
+        border-radius:24px;
+      }
+
+      #digiy-action-stations .station-title{
+        font-size:clamp(34px,11vw,48px);
+        max-width:10ch;
+      }
+
+      #digiy-action-stations .station-text{
+        font-size:16px;
+        line-height:1.6;
+      }
+
+      #digiy-action-stations .station-grid{
+        grid-template-columns:1fr;
+      }
+
+      #digiy-action-stations .station-card{
+        min-height:auto;
+        display:grid;
+        grid-template-columns:72px 1fr;
+        align-items:center;
+        gap:13px;
+        padding:15px;
+      }
+
+      #digiy-action-stations .station-icon{
+        width:72px;
+        height:72px;
+        font-size:36px;
+        grid-row:1 / span 2;
+      }
+
+      #digiy-action-stations .station-card h2{
+        font-size:24px;
+      }
+
+      #digiy-action-stations .station-card p{
+        font-size:15px;
+      }
+
+      #digiy-action-stations .station-cta{
+        grid-column:1/-1;
+        min-height:54px;
+        border-radius:18px;
+        font-size:15px;
+      }
+
+      #esprit-digiylyfe,
+      #net-bridge,
+      #quick-business-doors,
+      #digiy-circulation,
+      .section,
+      .showcaseSection{
+        margin-left:12px;
+        margin-right:12px;
+        border-radius:22px;
+      }
+
+      .sectionHead h2,
+      .favTitle{
+        font-size:clamp(25px,8vw,36px);
+        line-height:1.05;
+      }
+
+      .sectionSub{
+        font-size:15px !important;
+        line-height:1.55;
+      }
+
+      .moduleBtn{
+        min-width:82vw;
+        min-height:190px;
+        border-radius:24px;
+      }
+
+      .moduleName{
+        font-size:21px;
+      }
+
+      .moduleHint{
+        font-size:15px;
+      }
+
+      .focusLabel{
+        font-size:25px;
+      }
+
+      .focusText{
+        font-size:16px;
+      }
+
+      .floatBtn{
+        display:none !important;
+      }
+
+      .digiy-mobile-dock{
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        z-index:100000;
+        display:block;
+        padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));
+        background:linear-gradient(180deg,rgba(4,19,13,0),rgba(4,19,13,.94) 26%,rgba(4,19,13,.99));
+        backdrop-filter:blur(12px);
+      }
+
+      .digiy-mobile-dock-inner{
+        max-width:760px;
+        margin:0 auto;
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:7px;
+        border:1px solid rgba(255,255,255,.12);
+        background:rgba(6,20,14,.94);
+        border-radius:22px;
+        padding:7px;
+        box-shadow:0 16px 44px rgba(0,0,0,.38);
+      }
+
+      .digiy-mobile-dock a,
+      .digiy-mobile-dock button{
+        min-height:58px;
+        border-radius:16px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:3px;
+        color:rgba(248,250,252,.84);
+        font-family:var(--fontA);
+        font-size:11px;
+        font-weight:950;
+        border:1px solid rgba(255,255,255,.08);
+        text-align:center;
+        background:rgba(255,255,255,.04);
+        text-decoration:none;
+      }
+
+      .digiy-mobile-dock .primary{
+        color:#06140f;
+        border-color:rgba(246,196,83,.70);
+        background:linear-gradient(135deg,#f6c453,#22c55e);
+      }
+
+      .digiy-mobile-dock strong{
+        font-size:20px;
+        line-height:1;
+      }
+    }
+
+    @media(max-width:430px){
+      #digiy-action-stations .station-card{
+        grid-template-columns:64px 1fr;
+      }
+
+      #digiy-action-stations .station-icon{
+        width:64px;
+        height:64px;
+        font-size:32px;
+      }
+    }
+
+
     /* ── INTRO ESPRIT DIGIYLYFE — SOUS LE HERO ── */
     #esprit-digiylyfe{
       margin:16px 18px 0;
@@ -468,11 +850,113 @@
     .showcaseCta{margin:14px auto 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;max-width:940px;}
     .showcaseDesc{font-size:13px;color:rgba(248,250,252,.72);line-height:1.5;max-width:55ch;}
 
-    /* ── SIGNATURE ── */
-    #signature-digiy{margin-top:18px;}
-    #signature-digiy .showcaseImgWrap{max-width:760px;height:auto;background:#071710;border-color:rgba(246,196,83,.34);box-shadow:0 18px 50px rgba(0,0,0,.42);}
-    #signature-digiy .showcaseImgWrap img{width:100%;height:auto;object-fit:contain;object-position:center;display:block;}
-    #signature-digiy .showcaseDesc{text-align:center;max-width:60ch;margin:0 auto;}
+    /* ── SIGNATURE DIAMANT — VISION DIGIYLYFE ── */
+    #signature-digiy{
+      margin-top:18px;
+      border-color:rgba(246,196,83,.34);
+      background:
+        radial-gradient(780px 320px at 50% 0%,rgba(246,196,83,.14),transparent 62%),
+        radial-gradient(720px 360px at 50% 82%,rgba(0,166,81,.14),transparent 66%),
+        linear-gradient(180deg,rgba(10,48,34,.86),rgba(5,18,13,.88));
+      box-shadow:var(--shadow),0 0 0 1px rgba(246,196,83,.07);
+    }
+    #signature-digiy .showcaseInner{padding:20px 18px 22px;}
+    #signature-digiy .showcaseTitle{
+      justify-content:center;
+      text-align:center;
+      color:#fff3cf;
+      letter-spacing:.12em;
+    }
+    #signature-digiy .signatureIntro{
+      max-width:760px;
+      margin:0 auto 16px;
+      text-align:center;
+      color:#dbe8e0;
+      font-size:15px;
+      line-height:1.7;
+      font-weight:750;
+    }
+    #signature-digiy .signatureIntro strong{color:#fff3cf;}
+    #signature-digiy .showcaseImgWrap{
+      max-width:760px;
+      height:auto;
+      background:#071710;
+      border-radius:28px;
+      border-color:rgba(246,196,83,.42);
+      box-shadow:
+        0 0 0 6px rgba(246,196,83,.055),
+        0 22px 58px rgba(0,0,0,.48),
+        0 0 34px rgba(246,196,83,.12);
+    }
+    #signature-digiy .showcaseImgWrap img{
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      object-position:center;
+      display:block;
+    }
+    #signature-digiy .showcaseImgWrap::before{
+      background:linear-gradient(135deg,rgba(246,196,83,.08) 0%,transparent 42%,rgba(0,166,81,.08) 100%);
+    }
+    #signature-digiy .showcaseCta{
+      justify-content:center;
+      max-width:760px;
+      text-align:center;
+      gap:12px;
+    }
+    #signature-digiy .showcaseDesc{
+      text-align:center;
+      max-width:68ch;
+      margin:0 auto;
+      font-size:14px;
+      color:rgba(248,250,252,.78);
+      line-height:1.65;
+    }
+    #signature-digiy .signatureLine{
+      display:block;
+      font-family:var(--fontA);
+      font-size:18px;
+      font-weight:1000;
+      color:#fff3cf;
+      margin-bottom:8px;
+      letter-spacing:.01em;
+    }
+    #signature-digiy .signatureActions{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:4px;
+    }
+    #signature-digiy .signatureBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:48px;
+      padding:0 16px;
+      border-radius:14px;
+      border:1px solid rgba(246,196,83,.34);
+      background:rgba(246,196,83,.10);
+      color:#fff3cf;
+      font-family:var(--fontA);
+      font-size:13px;
+      font-weight:1000;
+      text-decoration:none;
+      transition:transform .15s,border-color .15s,background .15s;
+    }
+    #signature-digiy .signatureBtn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(246,196,83,.58);
+      background:rgba(246,196,83,.16);
+    }
+    @media(max-width:640px){
+      #signature-digiy .showcaseInner{padding:18px 14px 20px;}
+      #signature-digiy .signatureIntro{font-size:13.5px;margin-bottom:14px;}
+      #signature-digiy .showcaseImgWrap{border-radius:22px;}
+      #signature-digiy .signatureBtn{width:100%;min-height:52px;}
+    }
 
     /* ── BANDEAU VISION + REVUE ── */
     #net-bridge{
@@ -487,6 +971,31 @@
       display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
       box-shadow:0 16px 42px rgba(0,0,0,.22),0 0 0 1px rgba(246,196,83,.05);
     }
+    #net-bridge .bridge-visual{
+      display:block;
+      width:clamp(170px,22vw,260px);
+      flex:0 0 auto;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(246,196,83,.34);
+      background:rgba(0,0,0,.18);
+      box-shadow:0 16px 38px rgba(0,0,0,.30),0 0 0 4px rgba(246,196,83,.06);
+      transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+    }
+    #net-bridge .bridge-visual:hover{
+      transform:translateY(-2px);
+      border-color:rgba(246,196,83,.62);
+      box-shadow:0 20px 46px rgba(0,0,0,.36),0 0 0 5px rgba(246,196,83,.09);
+    }
+    #net-bridge .bridge-visual img{
+      display:block;
+      width:100%;
+      aspect-ratio:1.18/1;
+      height:auto;
+      object-fit:cover;
+      object-position:center;
+    }
+
     #net-bridge .bridge-text{
       font-family:var(--fontA);font-size:14px;font-weight:800;color:#fff3cf;line-height:1.5;
       max-width:680px;
@@ -540,6 +1049,14 @@
       #net-bridge{
         align-items:stretch;
         padding:16px;
+      }
+      #net-bridge .bridge-visual{
+        width:100%;
+        max-width:520px;
+        margin:0 auto 2px;
+      }
+      #net-bridge .bridge-visual img{
+        aspect-ratio:16/10;
       }
       #net-bridge .bridge-text{
         width:100%;
@@ -1047,6 +1564,48 @@
 
       
 
+
+      <section id="digiy-action-stations" aria-label="Choisir une action DIGIYLYFE">
+        <div class="station-kicker">🚉 La gare DIGIYLYFE</div>
+        <h2 class="station-title">Choisis ta <span>voie.</span></h2>
+        <p class="station-text">
+          DIGIYLYFE n’est pas un scroll sans fin. Tu arrives, tu choisis une voie, puis tu avances :
+          trouver quelque chose, explorer le territoire vivant, ou entrer côté activité.
+        </p>
+        <p class="station-text" style="margin-top:8px;color:#fff3cf">
+          EXPLORE ouvre la route. Les autres portes donnent les outils pour agir.
+        </p>
+
+        <div class="station-grid">
+          <a class="station-card primary" href="#public">
+            <div class="station-icon">🔎</div>
+            <div>
+              <h2>Trouver</h2>
+              <p>Chauffeur, logement, boutique, service, réservation ou lieu à découvrir.</p>
+            </div>
+            <span class="station-cta">Voir les portes</span>
+          </a>
+
+          <a class="station-card" href="https://explore.digiylyfe.com/">
+            <div class="station-icon">🗺️</div>
+            <div>
+              <h2>Explorer</h2>
+              <p>Découvrir ou faire connaître un lieu, un pro, une adresse utile ou un coin vivant du territoire.</p>
+            </div>
+            <span class="station-cta">Ouvrir EXPLORE</span>
+          </a>
+
+          <a class="station-card" href="#pro">
+            <div class="station-icon">🏢</div>
+            <div>
+              <h2>Côté pro</h2>
+              <p>Publier son activité, choisir son outil, recevoir les clients directement.</p>
+            </div>
+            <span class="station-cta">Entrer côté activité</span>
+          </a>
+        </div>
+      </section>
+
       <!-- INTRO → ESPRIT DIGIYLYFE -->
       <section id="esprit-digiylyfe" aria-label="Écouter et comprendre l’esprit DIGIYLYFE">
         <div class="espritInner">
@@ -1117,28 +1676,32 @@
       </section>
 
 
-      <!-- BANDEAU → VISION + REVUE DIGIYLYFE -->
-      <div id="net-bridge" aria-label="Vision et revue DIGIYLYFE">
+      <!-- BANDEAU → ARTICLE VISION + REVUE DIGIYLYFE -->
+      <div id="net-bridge" aria-label="Article vision DIGIYLYFE">
+        <a class="bridge-visual" href="https://digiylyfe.net/uber-veut-garder-le-client-dans-son-application-digiy-veut-lamener-chez-le-professionnel/" target="_blank" rel="noopener noreferrer" aria-label="Lire l’article DIGIYLYFE sur Uber et les écosystèmes locaux">
+          <img src="https://digiylyfe.net/wp-content/uploads/2026/04/ChatGPT-Image-30-avr.-2026-15_19_48.png" alt="DIGIYLYFE — plateforme ou écosystème local" loading="lazy" decoding="async"/>
+        </a>
+
         <div class="bridge-text">
-          📖 La vision, le manifeste, les phrases du territoire — tout est sur notre revue.
+          🧭 Uber veut garder le client dans son application. DIGIY veut l’amener chez le professionnel.
           <span>
-            Force de territoire · Logiciels business · L'Afrique enracinée, connectée au monde ∞
+            Le monde va vers des écosystèmes : se déplacer, dormir, vendre, réserver, payer, découvrir.
             <br/>
-            📜 Nouvelle page forte : quand l’IA organise le travail, le terrain doit garder la main.
+            La vraie question devient : qui possède la relation avec le client ?
             <br/>
-            🔐 Les données servent l’outil, pas l’enfermement. Paiement direct, relation humaine, marge chez le pro.
+            DIGIYLYFE choisit une voie simple : 0% commission, paiement direct, QR terrain, outils métier et relation chez le pro.
             <br/>
-            ✨ DIGIY ne possède pas le terrain. DIGIY lui rend sa puissance.
+            ✨ Uber : super-app de plateforme. DIGIYLYFE : super-écosystème local.
           </span>
         </div>
 
         <div class="bridge-actions">
-          <a class="bridge-btn bridge-btn-main" href="https://digiylyfe.com/le-terrain-garde-la-main.html">
-            🎧 Lire et écouter la vision DIGIYLYFE →
+          <a class="bridge-btn bridge-btn-main" href="https://digiylyfe.net/uber-veut-garder-le-client-dans-son-application-digiy-veut-lamener-chez-le-professionnel/" target="_blank" rel="noopener noreferrer">
+            📖 Lire l’article : plateforme ou écosystème local →
           </a>
 
-          <a class="bridge-btn bridge-btn-secondary" href="https://digiylyfe.net/" target="_blank" rel="noopener">
-            📖 Lire la revue DIGIYLYFE →
+          <a class="bridge-btn bridge-btn-secondary" href="https://digiylyfe.com/le-terrain-garde-la-main.html">
+            🎧 Lire et écouter la vision DIGIYLYFE →
           </a>
 
           <a class="bridge-btn bridge-btn-secondary" href="https://esprit-digiylyfe.digiylyfe.com/" target="_blank" rel="noopener noreferrer">
@@ -1310,29 +1873,58 @@
           </div>
         </section>
 
-        <!-- SIGNATURE -->
-        <section class="showcaseSection" id="signature-digiy">
+        <!-- SIGNATURE DIAMANT DIGIYLYFE -->
+        <section class="showcaseSection" id="signature-digiy" aria-label="Vision DIGIYLYFE — diamant aux mille reflets">
           <div class="showcaseInner">
-            <div class="showcaseTitle">DIGIYLYFE · SIGNATURE</div>
+            <div class="showcaseTitle">DIGIYLYFE · VISION</div>
+
+            <p class="signatureIntro">
+              <strong>Un diamant aux mille reflets.</strong><br/>
+              Chaque langue, chaque métier, chaque quartier porte une lumière.
+              DIGIYLYFE aide ces lumières à devenir visibles, utiles et reliées.
+            </p>
+
             <div class="showcaseImgWrap">
-              <img src="https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg"
-                alt="DIGIYLYFE — logo et QR" loading="lazy"/>
+              <img
+                src="https://digiylyfe.net/wp-content/uploads/2026/04/ChatGPT-Image-30-avr.-2026-21_41_18.png"
+                alt="DIGIYLYFE — Un diamant aux mille reflets. Chaque langue est une lumière. Ensemble, nous brillons."
+                loading="lazy"
+                decoding="async"
+              />
             </div>
-            <div class="showcaseCta" style="justify-content:center;">
+
+            <div class="showcaseCta">
               <div class="showcaseDesc">
-                <span style="display:block;font-size:18px;font-weight:1000;color:#fff3cf;margin-bottom:8px;">Le bonheur business est là.</span>
-                <a href="https://digiylyfe.net/digiylyfe-com/" target="_blank" rel="noopener noreferrer"
-                  style="color:#fff3cf;font-weight:1000;text-decoration:none;border-bottom:1px solid rgba(246,196,83,.35);word-break:break-word;">
-                 https://digiylyfe.com/
+                <span class="signatureLine">Chaque lumière du terrain mérite d’être vue.</span>
+                DIGIYLYFE complète WhatsApp avec une présence digitale simple, humaine et directe.
+                Les pros restent visibles, travaillent mieux et reçoivent leur argent directement — sans commission : 0%.
+              </div>
+
+              <div class="signatureActions">
+                <a class="signatureBtn" href="https://esprit-digiylyfe.digiylyfe.com/" target="_blank" rel="noopener noreferrer">
+                  🎧 Écouter l’esprit DIGIYLYFE
+                </a>
+                <a class="signatureBtn" href="https://digiylyfe.net/" target="_blank" rel="noopener noreferrer">
+                  📖 Lire la revue DIGIY
                 </a>
               </div>
             </div>
           </div>
         </section>
 
+
       </main>
     </div>
   </div>
+
+
+  <nav class="digiy-mobile-dock" aria-label="Navigation rapide DIGIYLYFE">
+    <div class="digiy-mobile-dock-inner">
+      <a class="primary" href="#public"><strong>🔎</strong><span>Trouver</span></a>
+      <a href="https://explore.digiylyfe.com/"><strong>🗺️</strong><span>Explorer</span></a>
+      <a href="#pro"><strong>🏢</strong><span>Pro</span></a>
+    </div>
+  </nav>
 
   <!-- FLOAT BUTTONS -->
   <button id="espace-pro-btn"    class="floatBtn" type="button">🧰 Mon activité pro</button>
