@@ -3,277 +3,756 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <meta name="theme-color" content="#061b14"/>
-  <title>DIGIY HUB — Paiement Manuel</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta name="theme-color" content="#04130d"/>
+  <meta name="color-scheme" content="dark"/>
+  <title>DIGIY HUB — Paiement manuel</title>
+  <meta name="description" content="DIGIY HUB — Paiement manuel : activer un pack ou un outil DIGIYLYFE par WhatsApp, avec paiement direct et 0% commission."/>
+  <link rel="canonical" href="https://digiy-hub.digiylyfe.com/paiement-manuel.html"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
 
   <style>
     :root{
-      --bg:#061b14; --card:#0b2a1f; --line:rgba(255,255,255,.12);
-      --text:#eafff1; --muted:rgba(234,255,241,.72);
-      --gold:#facc15; --green:#22c55e; --red:#fb7185;
-      --shadow:0 14px 40px rgba(0,0,0,.35); --r:18px;
+      --bg:#04130d;
+      --card:#082016;
+      --card2:#0b2a1d;
+      --line:rgba(255,255,255,.13);
+      --text:#f8fafc;
+      --muted:rgba(248,250,252,.74);
+      --gold:#f6c453;
+      --green:#00a651;
+      --green2:#00853f;
+      --red:#fb7185;
+      --radius:24px;
+      --fontA:"Outfit",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      --fontB:"Manrope",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     }
+
     *{box-sizing:border-box}
+    html,body{min-height:100%}
     body{
-      margin:0; padding:22px; color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: radial-gradient(900px 500px at 20% -10%, rgba(250,204,21,.10), transparent 60%),
-                  radial-gradient(900px 500px at 100% 0%, rgba(34,197,94,.08), transparent 55%),
-                  var(--bg);
+      margin:0;
+      padding:18px;
+      font-family:var(--fontB);
+      color:var(--text);
+      background:
+        radial-gradient(950px 520px at 10% -10%, rgba(246,196,83,.18), transparent 60%),
+        radial-gradient(900px 500px at 110% 0%, rgba(0,166,81,.20), transparent 60%),
+        linear-gradient(180deg,#063b24 0%, var(--bg) 48%, #020806 100%);
     }
-    .wrap{max-width:860px;margin:0 auto}
-    .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      border:1px solid var(--line); border-radius:999px;
-      padding:7px 10px; font-weight:800; font-size:12px;
-      background:rgba(255,255,255,.04);
+
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+
+    .shell{
+      width:min(1040px,100%);
+      margin:0 auto;
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:
+        radial-gradient(760px 320px at 14% 0%, rgba(246,196,83,.09), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.025)),
+        rgba(8,32,22,.92);
+      box-shadow:0 22px 70px rgba(0,0,0,.52);
+      overflow:hidden;
     }
-    .dot{width:9px;height:9px;border-radius:999px;background:rgba(250,204,21,1)}
-    .dot.green{background:rgba(34,197,94,1)}
-    .dot.red{background:rgba(251,113,133,1)}
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(4,19,13,.46);
+      backdrop-filter:blur(12px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .logo{
+      width:52px;
+      height:52px;
+      border-radius:17px;
+      border:1px solid rgba(246,196,83,.34);
+      background:
+        radial-gradient(circle at 30% 28%, rgba(246,196,83,.95), rgba(246,196,83,.22) 56%, rgba(0,166,81,.16) 100%),
+        linear-gradient(135deg,var(--green),var(--green2));
+      box-shadow:
+        0 14px 40px rgba(246,196,83,.14),
+        0 0 0 5px rgba(246,196,83,.06);
+      flex:0 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      font-weight:900;
+    }
+
+    .brand strong{
+      display:block;
+      font-family:var(--fontA);
+      font-size:20px;
+      line-height:1;
+      font-weight:900;
+      letter-spacing:.5px;
+    }
+
+    .brand span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:800;
+      line-height:1.25;
+    }
+
+    .top-actions{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:9px;
+    }
+
+    .top-link{
+      min-height:44px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:0 15px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-family:var(--fontA);
+      font-weight:900;
+      font-size:13px;
+      white-space:nowrap;
+      transition:transform .12s ease,border-color .15s ease,background .15s ease;
+    }
+    .top-link:hover{
+      transform:translateY(-1px);
+      border-color:rgba(246,196,83,.35);
+      background:rgba(255,255,255,.10);
+    }
+    .top-link.gold{
+      color:#06140f;
+      border-color:rgba(246,196,83,.72);
+      background:linear-gradient(135deg,#f6c453,#22c55e);
+    }
+
+    .hero{
+      padding:34px clamp(18px,4vw,44px) 22px;
+      text-align:center;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:8px 13px;
+      border-radius:999px;
+      border:1px solid rgba(246,196,83,.35);
+      background:rgba(246,196,83,.10);
+      color:#fff3cf;
+      font-family:var(--fontA);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+      margin-bottom:16px;
+    }
+
+    h1,h2,h3,p{margin:0}
+
+    h1{
+      font-family:var(--fontA);
+      font-size:clamp(40px,6.7vw,78px);
+      line-height:.90;
+      letter-spacing:-.055em;
+      font-weight:900;
+      color:#fff;
+    }
+    h1 span{color:var(--gold)}
+
+    .lead{
+      max-width:800px;
+      margin:18px auto 0;
+      color:#dbe8e0;
+      font-size:clamp(17px,1.7vw,21px);
+      line-height:1.65;
+      font-weight:800;
+    }
+    .lead strong{color:#fff3cf}
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px;
+      margin:22px auto 0;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      min-height:36px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.13);
+      background:rgba(255,255,255,.06);
+      color:rgba(248,250,252,.86);
+      font-family:var(--fontA);
+      font-size:12px;
+      font-weight:900;
+    }
+    .chip.gold{color:#fff3cf;border-color:rgba(246,196,83,.28);background:rgba(246,196,83,.08)}
+    .chip.green{color:#dcffe8;border-color:rgba(0,166,81,.30);background:rgba(0,166,81,.10)}
+
+    .content{
+      padding:0 clamp(18px,4vw,44px) 38px;
+      display:grid;
+      grid-template-columns:minmax(0,1.06fr) minmax(320px,.94fr);
+      gap:18px;
+      align-items:start;
+    }
+
     .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-      border:1px solid var(--line); border-radius:var(--r);
-      box-shadow:var(--shadow); overflow:hidden;
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:26px;
+      background:
+        radial-gradient(540px 240px at 18% 0%,rgba(246,196,83,.09),transparent 62%),
+        linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.035));
+      padding:22px;
+      box-shadow:0 16px 42px rgba(0,0,0,.24);
     }
-    .hd{
-      padding:16px; display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-      background:linear-gradient(180deg, rgba(11,42,31,.55), rgba(10,36,27,.20));
+
+    .card h2{
+      font-family:var(--fontA);
+      font-size:28px;
+      line-height:1.05;
+      font-weight:900;
+      color:#fff;
+      letter-spacing:-.02em;
+      margin-bottom:10px;
     }
-    h1{margin:0;font-size:16px}
-    p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
-    .bd{padding:16px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:680px){.grid{grid-template-columns:1fr}}
-    label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
-    input{
-      width:100%; padding:12px; border-radius:14px;
-      background:rgba(0,0,0,.18); border:1px solid var(--line);
-      color:var(--text); outline:none;
+
+    .card p{
+      color:rgba(248,250,252,.78);
+      font-size:15px;
+      line-height:1.62;
+      font-weight:800;
     }
-    input:focus{border-color:rgba(250,204,21,.55); box-shadow:0 0 0 3px rgba(250,204,21,.10)}
-    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+    .steps{
+      display:grid;
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .step{
+      display:grid;
+      grid-template-columns:44px 1fr;
+      gap:12px;
+      align-items:start;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.12);
+    }
+
+    .num{
+      width:44px;
+      height:44px;
+      border-radius:15px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(246,196,83,.30);
+      background:rgba(246,196,83,.09);
+      color:#fff3cf;
+      font-family:var(--fontA);
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .step strong{
+      display:block;
+      font-family:var(--fontA);
+      font-size:17px;
+      font-weight:900;
+      color:#fff;
+      margin-bottom:4px;
+    }
+
+    .step span{
+      display:block;
+      color:rgba(248,250,252,.74);
+      font-size:14px;
+      line-height:1.46;
+      font-weight:800;
+    }
+
+    .form{
+      display:grid;
+      gap:13px;
+      margin-top:16px;
+    }
+
+    label{
+      display:block;
+      color:rgba(248,250,252,.72);
+      font-size:13px;
+      font-weight:900;
+      margin:0 0 7px;
+    }
+
+    input,select,textarea{
+      width:100%;
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:16px;
+      background:rgba(0,0,0,.16);
+      color:#fff;
+      padding:13px 14px;
+      outline:none;
+      font-weight:800;
+    }
+    input:focus,select:focus,textarea:focus{
+      border-color:rgba(246,196,83,.48);
+      box-shadow:0 0 0 4px rgba(246,196,83,.08);
+    }
+    textarea{
+      min-height:92px;
+      resize:vertical;
+      line-height:1.45;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
     .btn{
-      border:1px solid var(--line); background:rgba(255,255,255,.06);
-      color:var(--text); padding:12px 14px; border-radius:14px;
-      font-weight:900; cursor:pointer;
+      min-height:58px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border:0;
+      border-radius:18px;
+      padding:0 18px;
+      background:rgba(255,255,255,.07);
+      color:#fff;
+      font-family:var(--fontA);
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      text-align:center;
+      transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease,background .14s ease;
     }
+    .btn:hover{transform:translateY(-2px)}
     .btn.primary{
-      border-color:rgba(250,204,21,.30);
-      background:linear-gradient(180deg, rgba(250,204,21,.18), rgba(250,204,21,.10));
+      color:#06140f;
+      background:linear-gradient(135deg,#f6c453,#22c55e);
+      box-shadow:0 14px 34px rgba(0,0,0,.28),0 0 0 4px rgba(246,196,83,.08);
     }
-    .btn:disabled{opacity:.55;cursor:not-allowed}
-    .msg{margin-top:10px;font-size:13px}
-    .msg.ok{color:rgba(34,197,94,1)}
-    .msg.err{color:rgba(251,113,133,1)}
+    .btn.outline{
+      border:1px solid rgba(246,196,83,.30);
+      background:rgba(246,196,83,.08);
+      color:#fff3cf;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:4px;
+    }
+    .actions .btn{flex:1;min-width:180px}
+
     .note{
-      margin-top:10px; font-size:12px; color:var(--muted);
-      border-top:1px solid var(--line); padding-top:10px;
+      margin-top:16px;
+      border:1px dashed rgba(246,196,83,.33);
+      background:rgba(246,196,83,.065);
+      border-radius:18px;
+      padding:14px;
+      color:rgba(248,250,252,.84);
+      font-size:14px;
+      line-height:1.55;
+      font-weight:850;
     }
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace}
+    .note strong{color:#fff3cf}
+
+    .status{
+      min-height:22px;
+      margin-top:10px;
+      color:#bbf7d0;
+      font-size:14px;
+      font-weight:900;
+      line-height:1.45;
+    }
+    .status.err{color:var(--red)}
+
+    .wallets{
+      display:grid;
+      gap:10px;
+      margin-top:15px;
+    }
+
+    .wallet{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:13px 14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.12);
+    }
+
+    .wallet strong{
+      display:block;
+      font-family:var(--fontA);
+      font-size:16px;
+      color:#fff;
+    }
+
+    .wallet span{
+      display:block;
+      margin-top:3px;
+      color:rgba(248,250,252,.66);
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .wallet b{
+      color:#fff3cf;
+      font-family:var(--fontA);
+      font-size:14px;
+      white-space:nowrap;
+    }
+
+    .footer{
+      padding:16px clamp(18px,4vw,44px);
+      border-top:1px solid rgba(255,255,255,.08);
+      color:rgba(248,250,252,.54);
+      font-size:13px;
+      font-weight:800;
+      line-height:1.5;
+    }
+    .footer a{color:#fff3cf}
+
+    @media(max-width:860px){
+      .content{grid-template-columns:1fr}
+    }
+
+    @media(max-width:640px){
+      body{padding:10px}
+      .shell{border-radius:22px}
+      .topbar{align-items:flex-start;flex-direction:column}
+      .top-actions{width:100%}
+      .top-link{flex:1;min-width:140px}
+      .hero{padding:26px 16px 18px}
+      .lead{font-size:16px}
+      .content{padding:0 14px 30px}
+      .card{padding:18px;border-radius:22px}
+      .grid2{grid-template-columns:1fr}
+      .actions{flex-direction:column}
+      .actions .btn{width:100%;min-width:0}
+      .wallet{align-items:flex-start;flex-direction:column}
+      .footer{padding:14px}
+    }
   </style>
 </head>
 
 <body>
-<div class="wrap">
-
-  <div class="top">
-    <div class="badge"><span class="dot" id="statusDot"></span><span id="statusTxt">MANUEL — chargement…</span></div>
-    <div class="badge">DIGIY PAY — 0% commission</div>
-    <div class="badge"><span class="mono" id="ownerShort">owner: —</span></div>
-  </div>
-
-  <div class="card">
-    <div class="hd">
-      <div>
-        <h1>Paiement Manuel (Nom + Numéro)</h1>
-        <p>On n’est pas une banque. Tu déclares juste <b>Nom</b> + <b>Numéro</b>. Le reste suit.</p>
-      </div>
-      <div class="badge"><span class="mono" id="lastUpdate">maj: —</span></div>
-    </div>
-
-    <div class="bd">
-      <div class="grid">
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" id="backHub" href="./" aria-label="Retour au DIGIY HUB">
+        <div class="logo" aria-hidden="true">∞</div>
         <div>
-          <label for="paymentName">Nom du receveur</label>
-          <input id="paymentName" placeholder="Ex: Astou Ndiaye" autocomplete="name">
+          <strong>DIGIY HUB</strong>
+          <span>Paiement manuel · activation humaine</span>
         </div>
-        <div>
-          <label for="paymentPhone">Numéro Wave / Orange</label>
-          <input id="paymentPhone" placeholder="Ex: +221 77 999 00 11" autocomplete="tel">
+      </a>
+
+      <nav class="top-actions" aria-label="Liens rapides">
+        <a class="top-link" href="./">← Retour HUB</a>
+        <a class="top-link" href="./packs.html">📦 Voir les packs</a>
+        <a class="top-link gold" href="https://digiylyfe.com/">🌍 digiylyfe.com</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="kicker">💳 Paiement manuel · 0% commission</div>
+      <h1>Payer dehors,<br><span>activer dedans.</span></h1>
+      <p class="lead">
+        DIGIYLYFE ne garde pas l’argent du professionnel. Le paiement se fait selon le canal convenu,
+        puis DIGIY confirme humainement l’activation du pack ou de l’outil demandé.
+        <strong>Simple, clair, sans commission sur l’activité.</strong>
+      </p>
+
+      <div class="chips" aria-label="Promesse paiement manuel">
+        <span class="chip gold">Paiement direct</span>
+        <span class="chip green">Activation WhatsApp</span>
+        <span class="chip">Wave / Orange / espèces</span>
+        <span class="chip">0% commission</span>
+      </div>
+    </section>
+
+    <section class="content">
+      <article class="card">
+        <h2>Comment ça marche ?</h2>
+        <p>
+          Le paiement manuel garde la logique DIGIY : le terrain reste simple.
+          Tu choisis ton pack, tu envoies tes informations, puis l’équipe DIGIY t’accompagne pour l’ouverture.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            <div>
+              <strong>Choisir le pack ou l’outil</strong>
+              <span>Mobilité, commerce, territoire, ou un besoin précis selon ton activité.</span>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="num">2</div>
+            <div>
+              <strong>Envoyer la demande WhatsApp</strong>
+              <span>Ton nom, ton téléphone, ta ville, ton activité, et le canal de paiement souhaité.</span>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="num">3</div>
+            <div>
+              <strong>Activation humaine</strong>
+              <span>DIGIY vérifie, confirme, puis ouvre l’accès au bon espace.</span>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <button class="btn primary" id="btnSave">✅ Enregistrer</button>
-        <button class="btn" id="btnReload">🔄 Recharger</button>
-      </div>
+        <div class="note">
+          <strong>Important :</strong> DIGIYLYFE n’est pas une banque, ne stocke pas les fonds et ne remplace pas Wave,
+          Orange Money ou les autres canaux. Le paiement reste direct et manuel.
+        </div>
 
-      <div class="msg" id="msg"></div>
+        <div class="wallets" aria-label="Canaux possibles">
+          <div class="wallet">
+            <div>
+              <strong>Wave</strong>
+              <span>Canal terrain recommandé quand disponible.</span>
+            </div>
+            <b>manuel</b>
+          </div>
+          <div class="wallet">
+            <div>
+              <strong>Orange Money / Free Money</strong>
+              <span>Selon le pays, la ville et le pro.</span>
+            </div>
+            <b>manuel</b>
+          </div>
+          <div class="wallet">
+            <div>
+              <strong>Espèces / autre canal</strong>
+              <span>À valider directement avec DIGIY.</span>
+            </div>
+            <b>sur demande</b>
+          </div>
+        </div>
+      </article>
 
-      <div class="note">
-        <b>Note :</b> Wave/Orange sont externes. Le pro fait ses démarches. DIGIY gère juste le statut “prêt” (manuel).
-      </div>
-    </div>
-  </div>
+      <article class="card">
+        <h2>Préparer ma demande</h2>
+        <p>
+          Remplis ces champs. DIGIY prépare ton message WhatsApp pour éviter les oublis.
+          Aucune donnée n’est enregistrée ici : le message part directement vers le support.
+        </p>
 
-</div>
+        <form class="form" id="payForm">
+          <div>
+            <label for="name">Nom complet</label>
+            <input id="name" name="name" placeholder="Ex : Astou Ndiaye" autocomplete="name"/>
+          </div>
 
-<script>
-/** =========================
- *  CONFIG SUPABASE (à remplir)
- *  ========================= */
-const SUPABASE_URL = "https://XXXXXXXXXXXX.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6...";
+          <div class="grid2">
+            <div>
+              <label for="phone">Téléphone</label>
+              <input id="phone" name="phone" placeholder="Ex : +221 77 999 00 11" autocomplete="tel"/>
+            </div>
+            <div>
+              <label for="city">Ville / zone</label>
+              <input id="city" name="city" placeholder="Ex : Saly, Mbour, Sarlat"/>
+            </div>
+          </div>
 
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          <div>
+            <label for="activity">Activité</label>
+            <input id="activity" name="activity" placeholder="Ex : chauffeur, boutique, location, service"/>
+          </div>
 
-/** =========================
- *  SESSION DIGIY (owner_id)
- *  ========================= */
-function getDigiySession() {
-  const keys = [
-    "DIGIY_HUB_SESSION",
-    "DIGIY_LOC_PRO_SESSION",
-    "DIGIY_DRIVER_SESSION",
-    "DIGIY_BUILD_SESSION",
-    "DIGIY_EXPLORE_SESSION"
-  ];
-  for (const k of keys) {
-    try {
-      const raw = localStorage.getItem(k);
-      if (!raw) continue;
-      const s = JSON.parse(raw);
-      const owner_id = s.owner_id || s.ownerId || s.pro_id || s.user_id || s.uid || null;
-      if (owner_id) return { owner_id, key: k };
-    } catch(e) {}
-  }
-  return null;
-}
+          <div class="grid2">
+            <div>
+              <label for="pack">Pack souhaité</label>
+              <select id="pack" name="pack">
+                <option value="À conseiller">Je veux être conseillé</option>
+                <option value="Pack Mobilité">Pack Mobilité</option>
+                <option value="Pack Commerce">Pack Commerce</option>
+                <option value="Pack Territoire">Pack Territoire</option>
+                <option value="Un outil seul">Un outil seul</option>
+              </select>
+            </div>
+            <div>
+              <label for="channel">Canal préféré</label>
+              <select id="channel" name="channel">
+                <option value="Wave">Wave</option>
+                <option value="Orange Money">Orange Money</option>
+                <option value="Free Money">Free Money</option>
+                <option value="Espèces">Espèces</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+          </div>
 
-function shortId(x){ return x ? (x.slice(0,8) + "…" + x.slice(-4)) : "—"; }
+          <div>
+            <label for="note">Note utile</label>
+            <textarea id="note" name="note" placeholder="Ex : je veux équiper une boutique à Saly, ou je suis chauffeur entre Saly et AIBD."></textarea>
+          </div>
 
-function setStatus(state, text) {
-  const dot = document.getElementById("statusDot");
-  dot.classList.remove("green","red");
-  if (state === "ok") dot.classList.add("green");
-  if (state === "err") dot.classList.add("red");
-  document.getElementById("statusTxt").textContent = text;
-}
+          <div class="actions">
+            <button class="btn primary" type="submit">💬 Envoyer sur WhatsApp</button>
+            <a class="btn outline" href="./packs.html">📦 Voir les packs</a>
+          </div>
 
-function showMsg(type, text) {
-  const el = document.getElementById("msg");
-  el.className = "msg " + (type || "");
-  el.textContent = text || "";
-}
+          <div class="status" id="status" aria-live="polite"></div>
+        </form>
 
-function normalizePhone(x){
-  return (x||"").trim().replace(/\s+/g," ");
-}
+        <div class="note">
+          <strong>Astuce :</strong> plus le message est clair, plus l’activation est rapide.
+          Indique ton métier, ta ville et le pack souhaité.
+        </div>
+      </article>
+    </section>
 
-function fmtIso(iso){
-  if(!iso) return "—";
-  try{
-    const d = new Date(iso);
-    return d.toISOString().replace("T"," ").replace("Z"," UTC");
-  }catch(e){ return iso; }
-}
+    <footer class="footer">
+      DIGIY HUB · <a href="https://digiy-hub.digiylyfe.com/">digiy-hub.digiylyfe.com</a>
+      · paiement manuel · 0% commission · paiement direct au professionnel
+    </footer>
+  </main>
 
-async function rpcGet(ownerId){
-  return await sb.rpc("digiy_get_payment_manual", { p_owner_id: ownerId });
-}
+  <script>
+    "use strict";
 
-async function rpcSet(ownerId, name, phone){
-  return await sb.rpc("digiy_set_payment_manual", {
-    p_owner_id: ownerId,
-    p_payment_name: name,
-    p_payment_phone: phone
-  });
-}
+    const DIGIY_SUPPORT_PHONE = "221771342889";
 
-async function boot(){
-  showMsg("", "");
-  setStatus("", "MANUEL — chargement…");
-
-  const sess = getDigiySession();
-  if(!sess){
-    setStatus("err", "MANUEL — session introuvable");
-    document.getElementById("ownerShort").textContent = "owner: introuvable";
-    showMsg("err", "Owner_id introuvable dans localStorage. Ouvre ton HUB/guard puis reviens.");
-    return;
-  }
-
-  const ownerId = sess.owner_id;
-  document.getElementById("ownerShort").textContent = "owner: " + shortId(ownerId);
-
-  const { data, error } = await rpcGet(ownerId);
-  if(error){
-    console.error(error);
-    setStatus("err", "MANUEL — erreur RPC");
-    showMsg("err", "Erreur RPC (get). Vérifie permissions / function.");
-    return;
-  }
-
-  if(data?.manual_status === "ready"){
-    document.getElementById("paymentName").value = data.payment_name || "";
-    document.getElementById("paymentPhone").value = data.payment_phone || "";
-    document.getElementById("lastUpdate").textContent = "maj: " + fmtIso(data.updated_at);
-    setStatus("ok", "MANUEL — prêt à recevoir");
-  } else {
-    document.getElementById("paymentName").value = "";
-    document.getElementById("paymentPhone").value = "";
-    document.getElementById("lastUpdate").textContent = "maj: —";
-    setStatus("", "MANUEL — à configurer");
-  }
-}
-
-document.getElementById("btnReload").addEventListener("click", boot);
-
-document.getElementById("btnSave").addEventListener("click", async () => {
-  showMsg("", "");
-  const btn = document.getElementById("btnSave");
-  btn.disabled = true;
-
-  try{
-    const sess = getDigiySession();
-    if(!sess) throw new Error("session_missing");
-
-    const ownerId = sess.owner_id;
-    const name = (document.getElementById("paymentName").value || "").trim();
-    const phone = normalizePhone(document.getElementById("paymentPhone").value);
-
-    if(name.length < 2){ showMsg("err","Nom obligatoire."); btn.disabled=false; return; }
-    if(phone.length < 6){ showMsg("err","Numéro obligatoire."); btn.disabled=false; return; }
-
-    const { data, error } = await rpcSet(ownerId, name, phone);
-    if(error){
-      console.error(error);
-      setStatus("err","MANUEL — sauvegarde KO");
-      showMsg("err","Sauvegarde KO (RPC).");
-      btn.disabled = false;
-      return;
+    function normalizeText(value){
+      return String(value || "").trim();
     }
 
-    if(data?.ok){
-      setStatus("ok","MANUEL — prêt à recevoir");
-      showMsg("ok","✅ Enregistré. Nom + Numéro OK.");
-      await boot(); // refresh infos + updated_at
-    } else {
-      setStatus("err","MANUEL — refus");
-      showMsg("err","Refus: " + (data?.reason || "unknown"));
-    }
-  } catch(e){
-    console.error(e);
-    setStatus("err","MANUEL — erreur");
-    showMsg("err","Erreur interne.");
-  } finally {
-    btn.disabled = false;
-  }
-});
+    function getSlug(){
+      try{
+        const s = new URL(location.href).searchParams.get("slug");
+        if(s && String(s).trim()) return normalizeSlug(s);
+      }catch(e){}
 
-boot();
-</script>
+      try{
+        const keys = ["DIGIY_LAST_SLUG", "digiy_slug", "slug"];
+        for(const k of keys){
+          const s = localStorage.getItem(k);
+          if(s && String(s).trim()) return normalizeSlug(s);
+        }
+      }catch(e){}
+
+      return "";
+    }
+
+    function normalizeSlug(value){
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9\-]/g, "")
+        .replace(/\-+/g, "-")
+        .replace(/^\-|\-$/g, "");
+    }
+
+    function updateBackLinks(){
+      const slug = getSlug();
+      document.querySelectorAll('a[href="./"]').forEach((a) => {
+        a.href = slug ? ("./?slug=" + encodeURIComponent(slug)) : "./";
+      });
+    }
+
+    function openWhatsApp(message){
+      const whatsappURL = `https://wa.me/${DIGIY_SUPPORT_PHONE}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, "_blank", "noopener,noreferrer");
+    }
+
+    function setStatus(text, isError){
+      const el = document.getElementById("status");
+      if(!el) return;
+      el.textContent = text || "";
+      el.classList.toggle("err", !!isError);
+    }
+
+    document.getElementById("payForm").addEventListener("submit", function(event){
+      event.preventDefault();
+      setStatus("", false);
+
+      const name = normalizeText(document.getElementById("name").value);
+      const phone = normalizeText(document.getElementById("phone").value);
+      const city = normalizeText(document.getElementById("city").value);
+      const activity = normalizeText(document.getElementById("activity").value);
+      const pack = normalizeText(document.getElementById("pack").value);
+      const channel = normalizeText(document.getElementById("channel").value);
+      const note = normalizeText(document.getElementById("note").value);
+      const slug = getSlug();
+
+      if(name.length < 2){
+        setStatus("Nom obligatoire pour préparer la demande.", true);
+        return;
+      }
+
+      if(phone.length < 6){
+        setStatus("Téléphone obligatoire pour être rappelé.", true);
+        return;
+      }
+
+      const message =
+`💳 DIGIY — Demande paiement manuel
+
+Je souhaite activer un pack ou un outil DIGIY.
+
+━━━━━━━━━━━━━━━━━━━━
+Nom complet : ${name}
+Téléphone : ${phone}
+Ville / zone : ${city || "—"}
+Activité : ${activity || "—"}
+Pack souhaité : ${pack || "—"}
+Canal préféré : ${channel || "—"}
+Slug (si connu) : ${slug || "—"}
+
+Note :
+${note || "—"}
+
+Merci de m'accompagner pour le paiement manuel et l'activation.`;
+
+      setStatus("Ouverture de WhatsApp…", false);
+      openWhatsApp(message);
+    });
+
+    updateBackLinks();
+  </script>
 </body>
 </html>
