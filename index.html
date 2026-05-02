@@ -1343,5 +1343,64 @@
   <!-- MENU DESKTOP SIMPLE -->
   <a id="digiyDesktopMenu" href="./menu.html" aria-label="Ouvrir le menu DIGIY">☰ Menu DIGIY</a>
 
+
+<script>
+/* DIGIY HUB — sécurité menu : si le drawer local ne s'ouvre pas, on ouvre menu.html */
+(function(){
+  "use strict";
+
+  const MENU_URL = "./menu.html";
+
+  function goMenu(){
+    try { window.location.href = MENU_URL; }
+    catch(e){ location.href = MENU_URL; }
+  }
+
+  function bindMenuFallback(){
+    const selectors = [
+      "#digiyDesktopMenu",
+      ".headerMenuBtn",
+      ".menuToggleBtn",
+      "[data-menu]",
+      "[data-open-menu]",
+      "[aria-label*='Menu']",
+      "a[href='#menu']"
+    ];
+
+    document.querySelectorAll(selectors.join(",")).forEach(function(el){
+      if(el.__digiyMenuSafe) return;
+      el.__digiyMenuSafe = true;
+
+      if(el.tagName === "A"){
+        const href = (el.getAttribute("href") || "").trim();
+        if(!href || href === "#" || href === "#menu" || href === "https://digiylyfe.com/menu.html"){
+          el.setAttribute("href", MENU_URL);
+        }
+        return;
+      }
+
+      el.addEventListener("click", function(ev){
+        const drawer = document.getElementById("navDrawer");
+        const beforeOpen = drawer && drawer.classList.contains("open");
+
+        setTimeout(function(){
+          const afterOpen = drawer && drawer.classList.contains("open");
+          if(!drawer || (!beforeOpen && !afterOpen)){
+            ev.preventDefault();
+            goMenu();
+          }
+        }, 120);
+      }, { passive:false });
+    });
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", bindMenuFallback);
+  }else{
+    bindMenuFallback();
+  }
+})();
+</script>
+
 </body>
 </html>
