@@ -1373,7 +1373,7 @@
 
       if(el.tagName === "A"){
         const href = (el.getAttribute("href") || "").trim();
-        if(!href || href === "#" || href === "#menu" || href === "https://digiylyfe.com/menu.html"){
+        if(!href || href === "#" || href === "#menu" || href === "./menu.html"){
           el.setAttribute("href", MENU_URL);
         }
         return;
