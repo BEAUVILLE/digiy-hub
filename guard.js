@@ -18,10 +18,10 @@
 
     publicPages: new Set(["index.html", "offline.html"]),
     protectedPages: new Set([
-      "packs.html",
-      "pulse.html",
-      "digiylyfe.html"
-    ]),
+  "admin.html",
+  "cockpit.html",
+  "espace.html"
+]),
 
     // si true: pages protégées exigent un slug (sinon retour index)
     requireSlugOnProtected: true,
