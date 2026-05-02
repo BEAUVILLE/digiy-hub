@@ -281,7 +281,7 @@
       <h2>🦅 DIGIY SWARM CORE — TEMPÉRATURE BUSINESS</h2>
       <p>
         Ici c'est <b>PRO</b> : accès protégé par <code>guard.js</code>.
-        La Température affiche l'état réel de tes modules : workers actifs, pulses en attente, alertes système.
+        La Température affiche l'état réel de tes modules : workers actifs, pulses en attente, alertes système. Le worker VPS envoie, cette page surveille.
         <br><br>
         <b>Pierre par pierre</b>, le rail de l'infini se construit. 🛤️∞
       </p>
@@ -522,7 +522,8 @@
 
     // 3) Liens safe (slug+phone)
     $("hubLink").href     = withCtx("./", slug, phone);
-    $("pulseLink").href   = withCtx("./pulse.html", slug, phone);
+    // Pulse outbox neutralisé : pulse.html renommé en pulse.backup
+    // $("pulseLink").href = withCtx("./pulse.html", slug, phone);
 
     $("refreshBtn").addEventListener("click", (e)=>{
       e.preventDefault();
@@ -578,11 +579,11 @@
     setDue("cardActivity","badgeActivityDue", k.activity_7d === "🔴 OFF");
 
     if(k.activity_7d === "🔴 OFF"){
-      showUrgent("Worker DIGIY LOC offline. Vérifie le serveur.", withCtx("./pulse.html", slug, phone));
+      showUrgent("Worker DIGIY LOC offline. Contacte le support serveur.", "https://wa.me/221771342889");
     } else if(Number(k.alerts || 0) >= 3){
-      showUrgent("Plusieurs pulses ont échoué. Vérifie les logs.", withCtx("./pulse.html", slug, phone));
+      showUrgent("Plusieurs pulses ont échoué. Contacte le support serveur.", "https://wa.me/221771342889");
     } else if(Number(k.pulse_pending || 0) > 10){
-      showUrgent(`${k.pulse_pending} pulses en attente. Le worker rattrape.`, withCtx("./pulse.html", slug, phone));
+      showUrgent(`${k.pulse_pending} pulses en attente. Le worker rattrape.`, "https://wa.me/221771342889");
     }
 
     // 9) Status final
@@ -605,4 +606,3 @@
 
 </body>
 </html>
-
