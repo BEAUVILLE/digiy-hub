@@ -1,5 +1,5 @@
 /* DIGIY HUB — Service Worker stable + safe cache */
-const CACHE_NAME = "digiy-hub-v1.0.6";
+const CACHE_NAME = "digiy-hub-v1.0.7";
 
 const ASSETS = [
   "./",
