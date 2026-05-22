@@ -47,20 +47,20 @@ const LINKS = {
   pay: "https://pay.digiylyfe.com/",
   resaTable: "https://resa-table-resto.digiylyfe.com/",
 
-  inscriptionPro: "https://commencer-a-payer.digiylyfe.com/",
+    inscriptionPro: "https://commencer-a-payer.digiylyfe.com/",
   espacePro: "https://pro-espace.digiylyfe.com/",
 
-  driverPro: "https://pro-driver.digiylyfe.com/",
-  locPro: "https://pro-loc.digiylyfe.com/",
-  caissePro: "https://commerce-pro.digiylyfe.com/",
-  buildPro: "https://pro-build.digiylyfe.com/",
-  marketPro: "https://pro-market.digiylyfe.com/",
-  jobsPro: "https://pro-job.digiylyfe.com/",
-  restoPro: "https://pro-resto.digiylyfe.com/",
-  resaTablePro: "https://pro-resa-resto.digiylyfe.com/",
-  payPro: "https://pro-pay.digiylyfe.com/pin.html?redirect=cockpit",
-  explorePro: "https://explore.digiylyfe.com/admin-pin.html"
-};
+  /* PRO — depuis le HUB général, on ouvre les PIN métiers directement */
+  driverPro: "https://pro-driver.digiylyfe.com/pin.html",
+  locPro: "https://pro-loc.digiylyfe.com/pin.html",
+  caissePro: "https://commerce-pro.digiylyfe.com/pin.html",
+  buildPro: "https://pro-build.digiylyfe.com/pin.html",
+  marketPro: "https://pro-market.digiylyfe.com/pin.html",
+  jobsPro: "https://pro-job.digiylyfe.com/pin.html",
+  restoPro: "https://pro-resa-resto.digiylyfe.com/pin.html",
+  resaTablePro: "https://pro-resa-resto.digiylyfe.com/pin.html",
+  payPro: "https://pro-pay.digiylyfe.com/pin.html?redirect=hub",
+  explorePro: "https://pro-explore.digiylyfe.com/pin.html?v=explore-pin-boost-20260522"
 
 const PRO_DEFAULT_URL = LINKS.espacePro;
 
