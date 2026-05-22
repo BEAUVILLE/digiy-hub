@@ -262,6 +262,7 @@ button,input{font:inherit}
 <script>
 (function(){
   "use strict";
+  /* DIGIY FIX 20260522 — PRO cards open module PIN directly, not pro-espace */
   const HOME="https://digiy-hub.digiylyfe.com/";
   const FAVORITES_KEY="digiy_hub_favorites_v2";
   const FAVORITES_MAX=3;
@@ -287,15 +288,16 @@ button,input{font:inherit}
     {key:"espacePro",name:"Mon activité",icon:"🏢",desc:"Entrée centrale abonné.",href:"https://pro-espace.digiylyfe.com/"},
     {key:"activer",name:"Commencer à payer",icon:"💳",desc:"Activer ou régler un accès DIGIY.",href:"https://commencer-a-payer.digiylyfe.com/"},
     {key:"tarifs",name:"Nos tarifs",icon:"📦",desc:"Voir les offres et choisir son plan.",href:"https://tarifs.digiylyfe.com/"},
-    {key:"commercePro",name:"Mon commerce",icon:"💰",desc:"Encaisser et suivre les ventes.",href:"https://commerce-pro.digiylyfe.com/"},
-    {key:"marketPro",name:"Je vends",icon:"🛍️",desc:"Produits, boutique et ventes directes.",href:"https://pro-market.digiylyfe.com/"},
-    {key:"locPro",name:"Je loue",icon:"🏠",desc:"Logements, disponibilités, clients.",href:"https://pro-loc.digiylyfe.com/"},
-    {key:"resaPro",name:"Je réserve",icon:"📅",desc:"Créneaux, planning, réservations.",href:"https://pro-resa-resto.digiylyfe.com/"},
-    {key:"driverPro",name:"Je conduis",icon:"🚗",desc:"Courses, tarifs, profil chauffeur.",href:"https://pro-driver.digiylyfe.com/"},
-    {key:"jobsPro",name:"Je recrute",icon:"💼",desc:"Offres, candidats, suivi.",href:"https://pro-job.digiylyfe.com/"},
-    {key:"buildPro",name:"Mes services",icon:"🏗️",desc:"Services, chantiers, demandes.",href:"https://pro-build.digiylyfe.com/"},
-    {key:"explorePro",name:"Me faire connaître",icon:"🗺️",desc:"Lieu, visibilité, territoire.",href:"https://pro-explore.digiylyfe.com/"},
-    {key:"payPro",name:"Mon argent",icon:"💳",desc:"Entrées, sorties, reste, notes rapides.",href:"https://pro-pay.digiylyfe.com/pin.html?redirect=cockpit"}
+
+    {key:"commercePro",name:"Mon commerce",icon:"💰",desc:"Encaisser et suivre les ventes.",href:"https://commerce-pro.digiylyfe.com/pin.html"},
+    {key:"marketPro",name:"Je vends",icon:"🛍️",desc:"Produits, boutique et ventes directes.",href:"https://pro-market.digiylyfe.com/pin.html"},
+    {key:"locPro",name:"Je loue",icon:"🏠",desc:"Logements, disponibilités, clients.",href:"https://pro-loc.digiylyfe.com/pin.html"},
+    {key:"resaPro",name:"Je réserve",icon:"📅",desc:"Créneaux, planning, réservations.",href:"https://pro-resa-resto.digiylyfe.com/pin.html"},
+    {key:"driverPro",name:"Je conduis",icon:"🚗",desc:"Courses, tarifs, profil chauffeur.",href:"https://pro-driver.digiylyfe.com/pin.html"},
+    {key:"jobsPro",name:"Je recrute",icon:"💼",desc:"Offres, candidats, suivi.",href:"https://pro-job.digiylyfe.com/pin.html"},
+    {key:"buildPro",name:"Mes services",icon:"🏗️",desc:"Services, chantiers, demandes.",href:"https://pro-build.digiylyfe.com/pin.html"},
+    {key:"explorePro",name:"Me faire connaître",icon:"🗺️",desc:"Lieu, visibilité, territoire.",href:"https://pro-explore.digiylyfe.com/pin.html?v=explore-pin-boost-20260522"},
+    {key:"payPro",name:"Mon argent",icon:"💳",desc:"Entrées, sorties, reste, notes rapides.",href:"https://pro-pay.digiylyfe.com/pin.html?redirect=hub"}
   ];
 
   const $=id=>document.getElementById(id);
@@ -323,12 +325,6 @@ button,input{font:inherit}
   window.clearFavs=function(){favs=[];saveFavs();renderAll();};
 
   function safeHref(item,kind){
-    /* HUB public : une carte PRO ne doit pas forcer le téléphone dans un module
-       sans session. Sinon le guard peut rediriger vers l’activation et donner
-       l’impression qu’il faut repayer. */
-    if(kind === "pro" && !["espacePro","activer","tarifs"].includes(item.key)){
-      return "https://pro-espace.digiylyfe.com/";
-    }
     return item.href || HOME;
   }
 
@@ -381,6 +377,11 @@ button,input{font:inherit}
 </script>
 </body>
 </html>
+
+
+
+
+
 
 
 
