@@ -117,6 +117,93 @@ button,input{font:inherit}
 @media(max-width:760px){.page{padding:0 0 94px}.shell{border-radius:0;border-left:0;border-right:0}.topbar{padding:10px 11px}.brandSub{max-width:190px}.badgeHub{display:none}.topBtn{display:none}.actionStrip{top:69px;padding:8px 10px}.heroMini{padding:12px 12px 8px}.heroCard{padding:14px;border-radius:22px}.quickStack{width:100%;justify-content:stretch}.bigCta{flex:1 1 160px}.section{margin:12px 12px 0;border-radius:22px}.sectionHead{align-items:flex-start;flex-direction:column}.tools{justify-content:flex-start}.grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px;gap:10px}.card{min-height:166px;padding:13px}.name{font-size:16px}.desc{font-size:12.3px}.actionsBlock{margin:12px;padding:12px}.actionsGrid{grid-template-columns:1fr 1fr}.footer{padding-bottom:24px}}
 @media(max-width:430px){.grid{grid-template-columns:1fr}.card{min-height:148px}.heroCopy h1{font-size:30px}.actionsGrid{grid-template-columns:1fr}.drawerGrid{grid-template-columns:1fr}.iconBtn{width:42px}.logo{width:44px;height:44px}.brandTitle{font-size:17px}.brandSub{max-width:160px;font-size:11.5px}}
 @media(min-width:761px){.bottomNav{display:none}.page{padding-bottom:28px}}
+
+/* ══ LECTEUR DIGIY — HUB GÉNÉRAL ══ */
+.hubReader{
+  margin:14px 18px 0;
+  display:grid;
+  gap:12px;
+  padding:16px;
+  border-radius:24px;
+  border:1px solid rgba(246,196,83,.30);
+  background:
+    radial-gradient(620px 220px at 10% 0%,rgba(246,196,83,.14),transparent 62%),
+    linear-gradient(135deg,rgba(255,255,255,.08),rgba(0,166,81,.07));
+  box-shadow:0 14px 36px rgba(0,0,0,.20);
+}
+.hubReaderTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.hubReaderKicker{
+  color:#fff3cf;
+  font-family:var(--fontA);
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.hubReader h2{
+  margin:0;
+  color:#fff;
+  font-family:var(--fontA);
+  font-size:clamp(24px,5vw,38px);
+  line-height:.98;
+  letter-spacing:-.04em;
+  font-weight:1000;
+}
+.hubReaderText{
+  color:rgba(248,250,252,.76);
+  font-size:13.5px;
+  font-weight:850;
+  line-height:1.48;
+  max-width:790px;
+}
+.hubReaderActions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.hubReaderActions button{
+  min-height:50px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  padding:0 15px;
+  font-family:var(--fontA);
+  font-size:13px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.hubReaderActions .main{
+  background:linear-gradient(135deg,var(--gold),#22c55e);
+  color:#06140f;
+  border-color:rgba(246,196,83,.48);
+  box-shadow:0 10px 26px rgba(0,0,0,.24);
+}
+.hubReaderActions .stop{
+  background:rgba(251,113,133,.12);
+  color:#ffe3e8;
+  border-color:rgba(251,113,133,.34);
+}
+.hubReaderStatus{
+  min-height:20px;
+  color:#fff3cf;
+  font-family:var(--fontA);
+  font-size:12px;
+  font-weight:1000;
+}
+@media(max-width:760px){
+  .hubReader{margin:12px 12px 0;padding:14px;border-radius:22px}
+  .hubReaderActions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .hubReaderActions button{width:100%}
+}
+
 </style>
 </head>
 <body>
@@ -168,6 +255,27 @@ button,input{font:inherit}
         </div>
       </div>
     </section>
+
+
+    <section class="hubReader" aria-label="Lecteur DIGIY HUB">
+      <div class="hubReaderTop">
+        <div>
+          <div class="hubReaderKicker">🎧 Lecteur DIGIY · HUB</div>
+          <h2>Comprendre les portes.</h2>
+        </div>
+        <div class="hubReaderActions">
+          <button class="main" id="digiyHubAudioPlay" type="button">▶ Écouter</button>
+          <button class="stop" id="digiyHubAudioStop" type="button">⏹ Stop</button>
+        </div>
+      </div>
+      <div class="hubReaderText" id="digiyHubAudioText">
+        Le HUB est le rond-point DIGIY : il rassemble les portes publiques, les portes pro, les favoris,
+        les tarifs, l’activation et l’espace abonné. Le client choisit vite, le pro retrouve son outil,
+        et tout reste direct.
+      </div>
+      <div class="hubReaderStatus" id="digiyHubAudioStatus">Prêt à lire · guide court</div>
+    </section>
+
 
     <section class="section" id="favoris">
       <div class="sectionHead">
@@ -375,8 +483,125 @@ button,input{font:inherit}
   renderAll();
 })();
 </script>
+
+<script>
+/* ══ DIGIY VOICE — HUB GÉNÉRAL ══ */
+(function(){
+  "use strict";
+
+  var SPEAK =
+    "Bienvenue dans le HUB DIGIY de Di-ji-laïf. " +
+    "Le HUB est le rond-point des portes : il enlève les détours et garde les accès utiles au même endroit. " +
+    "Côté public, on peut trouver un chauffeur, un logement, une réservation, une boutique, un artisan, une mission, un paiement ou une découverte du territoire. " +
+    "Côté pro, chaque professionnel retrouve son module : commerce, MARKET, LOC, RESA, DRIVER, JOBS, Mes services, EXPLORE ou PAY. " +
+    "Les favoris servent à garder les trois portes les plus utilisées sur ce téléphone. Les tarifs montrent les offres. Commencer à payer sert à activer ou régler un accès. L’espace pro rassemble les entrées abonnés. " +
+    "Règle DIGIY : le client arrive vite à la bonne porte, le pro garde son nom, son contact, son argent et sa relation. Zéro commission, contact direct, terrain organisé.";
+
+  var play = document.getElementById("digiyHubAudioPlay");
+  var stop = document.getElementById("digiyHubAudioStop");
+  var status = document.getElementById("digiyHubAudioStatus");
+
+  function digiySpeakText(text){
+    return String(text || "")
+      .replace(/\bWave\b/g, "Wéïv")
+      .replace(/\bWouève\b/g, "Wéïv")
+      .replace(/\bWhatsApp\b/g, "Ouatsap")
+      .replace(/\bDIGIYLYFE\b/g, "Di-ji-laïf");
+  }
+
+  function setStatus(message){
+    if(status) status.textContent = message;
+  }
+
+  function canSpeak(){
+    return "speechSynthesis" in window;
+  }
+
+  function pickVoice(){
+    if(!canSpeak()) return null;
+    var voices = window.speechSynthesis.getVoices() || [];
+    return voices.find(function(v){ return /^fr/i.test(v.lang || "") && /FR/i.test(v.lang || ""); })
+        || voices.find(function(v){ return /^fr/i.test(v.lang || ""); })
+        || voices[0]
+        || null;
+  }
+
+  function stopSpeech(){
+    if(canSpeak()) window.speechSynthesis.cancel();
+    if(play) play.textContent = "▶ Écouter";
+    setStatus("Lecture arrêtée");
+  }
+
+  function speak(){
+    if(!canSpeak()){
+      setStatus("Lecture vocale non disponible ici");
+      return;
+    }
+
+    if(window.speechSynthesis.paused){
+      window.speechSynthesis.resume();
+      if(play) play.textContent = "⏸ Pause";
+      setStatus("▶ Reprise…");
+      return;
+    }
+
+    if(window.speechSynthesis.speaking){
+      window.speechSynthesis.pause();
+      if(play) play.textContent = "▶ Reprendre";
+      setStatus("⏸ En pause");
+      return;
+    }
+
+    stopSpeech();
+
+    var u = new SpeechSynthesisUtterance(digiySpeakText(SPEAK));
+    u.lang = "fr-FR";
+    u.rate = 0.86;
+    u.pitch = 1.02;
+    u.volume = 1;
+
+    var voice = pickVoice();
+    if(voice) u.voice = voice;
+
+    u.onstart = function(){
+      if(play) play.textContent = "⏸ Pause";
+      setStatus("▶ DIGIY explique le HUB…");
+    };
+    u.onend = function(){
+      if(play) play.textContent = "▶ Écouter";
+      setStatus("✓ Lecture terminée");
+    };
+    u.onerror = function(){
+      if(play) play.textContent = "▶ Écouter";
+      setStatus("Lecture interrompue");
+    };
+
+    window.speechSynthesis.speak(u);
+  }
+
+  if(play) play.addEventListener("click", speak);
+  if(stop) stop.addEventListener("click", stopSpeech);
+
+  if(canSpeak()){
+    window.speechSynthesis.onvoiceschanged = pickVoice;
+  }
+
+  window.addEventListener("pagehide", stopSpeech);
+})();
+</script>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 
 
