@@ -11,6 +11,7 @@ const STORAGE_SEARCH = "DIGIY_HUB_SEARCH";
 const STORAGE_FAVORITES = "DIGIY_HUB_FAVORITES";
 const STORAGE_ANALYTICS = "DIGIY_HUB_ANALYTICS";
 const STORAGE_CITY = "DIGIY_HUB_CITY";
+const DEFAULT_FAVORITES = ["actionDigiy"];
 
 const state = {
   phone: "",
@@ -29,6 +30,7 @@ const LINKS = {
   admin: "https://admin.digiylyfe.com/",
   audio: "https://apps.digiylyfe.com/audio/",
   tarifs: "https://tarifs.digiylyfe.com/",
+  actionDigiy: "https://pro-action-digiy.digiylyfe.com/",
 
   vasChezDigiy: "https://vas-chez-digiy.digiylyfe.com/",
 
@@ -47,7 +49,7 @@ const LINKS = {
   pay: "https://pay.digiylyfe.com/",
   resaTable: "https://resa-table-resto.digiylyfe.com/",
 
-    inscriptionPro: "https://commencer-a-payer.digiylyfe.com/",
+  inscriptionPro: "https://commencer-a-payer.digiylyfe.com/",
   espacePro: "https://pro-espace.digiylyfe.com/",
 
   /* PRO — depuis le HUB général, on ouvre les PIN métiers directement */
@@ -61,6 +63,7 @@ const LINKS = {
   resaTablePro: "https://pro-resa-resto.digiylyfe.com/pin.html",
   payPro: "https://pro-pay.digiylyfe.com/pin.html?redirect=hub",
   explorePro: "https://pro-explore.digiylyfe.com/pin.html?v=explore-pin-boost-20260522"
+};
 
 const PRO_DEFAULT_URL = LINKS.espacePro;
 
@@ -133,6 +136,7 @@ const MODULES = [
   { key: "ndimbalLoc", name: "NDIMBAL Loc", icon: "🏡", tag: "ndimbal", desc: "Locations NDIMBAL", kind: "public", status: "live", statusLabel: "LIVE", phoneParam: true, createdAt: "2025-12-20", featured: false },
 
   // === PRO ===
+  { key: "actionDigiy", name: "ACTION DIGIY", icon: "🎙️", tag: "voix", desc: "Clique. Parle métier. DIGIY prépare. Tu valides.", kind: "pro", status: "live", statusLabel: "LIVE", phoneParam: false, createdAt: "2026-05-26", featured: true },
   { key: "inscriptionPro", name: "Inscription PRO", icon: "✍️", tag: "auth", desc: "Créer compte professionnel", kind: "pro", status: "live", statusLabel: "LIVE", phoneParam: true, createdAt: "2025-09-01", featured: true },
   { key: "espacePro", name: "Espace PRO", icon: "🏢", tag: "dashboard", desc: "Tableau de bord pro", kind: "pro", status: "live", statusLabel: "LIVE", phoneParam: true, createdAt: "2025-09-01", featured: true },
   { key: "driverPro", name: "DIGIY DRIVER PRO", icon: "🚗", tag: "vtc", desc: "Gérer ta flotte VTC", kind: "pro", status: "live", statusLabel: "LIVE", phoneParam: true, createdAt: "2025-10-15", featured: true },
@@ -899,6 +903,12 @@ function boot() {
   } catch (e) {
     state.favorites = [];
   }
+
+  if (!Array.isArray(state.favorites)) state.favorites = [];
+  DEFAULT_FAVORITES.slice().reverse().forEach(key => {
+    if (!state.favorites.includes(key)) state.favorites.unshift(key);
+  });
+  localStorage.setItem(STORAGE_FAVORITES, JSON.stringify(state.favorites));
 
   $("#btnEditPhone")?.addEventListener("click", askPhone);
 
