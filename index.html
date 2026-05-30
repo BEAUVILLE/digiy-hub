@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>DIGIY HUB — Toutes les portes</title>
 <meta name="theme-color" content="#00853f" />
+<meta name="digiy-fix-top-readable" content="paves-ecriture-doctrine-20260530" />
+<meta name="digiy-fix" content="tarifs-vers-activer-mon-module-20260530" />
+<meta name="digiy-fix-doublon-activation" content="activation-module-dedoublonnee-20260530" />
 <meta name="description" content="DIGIY HUB — Toutes les portes DIGIYLYFE : modules publics, outils pro, favoris, tarifs et accès abonné. Choisir vite, avancer direct." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://digiy-hub.digiylyfe.com/" />
@@ -368,6 +371,109 @@ button,input{font:inherit}
   .actionDigiyButtons{grid-template-columns:1fr}
 }
 
+
+/* ══ DIGIY — HAUT DE PAGE PLUS LISIBLE 20260530 ══ */
+.doctrineLine{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:14px 18px 0;
+  padding:16px 18px;
+  border-radius:24px;
+  border:1px solid rgba(246,196,83,.32);
+  background:
+    radial-gradient(520px 180px at 10% 0%,rgba(246,196,83,.16),transparent 62%),
+    linear-gradient(135deg,rgba(255,255,255,.08),rgba(0,166,81,.07));
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+}
+.doctrineLine span,
+.doctrineLine strong{
+  font-family:var(--fontA);
+  font-size:clamp(18px,2.4vw,27px);
+  line-height:1.05;
+  font-weight:1000;
+  letter-spacing:-.035em;
+  color:#fff;
+  white-space:nowrap;
+}
+.doctrineLine i{
+  font-style:normal;
+  color:rgba(246,196,83,.58);
+  font-size:clamp(16px,2vw,22px);
+  font-weight:900;
+}
+.doctrineLine strong{
+  color:var(--gold);
+  letter-spacing:.055em;
+  text-shadow:0 0 22px rgba(246,196,83,.18);
+}
+
+.actionStrip{
+  gap:12px !important;
+  padding:14px 18px !important;
+}
+.actionStrip a,
+.actionStrip button{
+  min-height:58px !important;
+  padding:0 22px !important;
+  border-radius:999px !important;
+  font-size:17px !important;
+  font-weight:1000 !important;
+  letter-spacing:.01em !important;
+  box-shadow:0 8px 20px rgba(0,0,0,.16);
+}
+.heroPills{
+  gap:10px !important;
+}
+.heroPills .pill{
+  min-height:42px !important;
+  padding:10px 15px !important;
+  border-radius:999px !important;
+  font-size:15px !important;
+  font-weight:1000 !important;
+  letter-spacing:.005em !important;
+}
+.heroPills .pill.gold,
+.heroPills .pill.green{
+  box-shadow:0 8px 18px rgba(0,0,0,.12);
+}
+
+@media(max-width:760px){
+  .doctrineLine{
+    margin:10px 10px 0;
+    padding:14px 12px;
+    gap:8px;
+    border-radius:20px;
+    justify-content:flex-start;
+  }
+  .doctrineLine span,
+  .doctrineLine strong{
+    font-size:17px;
+    line-height:1.12;
+  }
+  .doctrineLine i{
+    font-size:14px;
+  }
+  .actionStrip{
+    top:69px !important;
+    gap:10px !important;
+    padding:11px 10px !important;
+  }
+  .actionStrip a,
+  .actionStrip button{
+    min-height:54px !important;
+    padding:0 18px !important;
+    font-size:16px !important;
+  }
+  .heroPills .pill{
+    min-height:40px !important;
+    padding:9px 13px !important;
+    font-size:14.5px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -385,19 +491,27 @@ button,input{font:inherit}
       <span class="badgeHub">🧭 HUB · route directe</span>
       <nav class="headerActions" aria-label="Actions principales">
         <a class="topBtn green" href="https://digiylyfe.com/">🌍 Site</a>
-        <a class="topBtn gold" href="https://tarifs.digiylyfe.com/">📦 Tarifs</a>
-        <a class="topBtn green" href="https://commencer-a-payer.digiylyfe.com/">💳 Commencer à payer</a>
+        <a class="topBtn gold" href="https://commencer-a-payer.digiylyfe.com/">✍️ Activer mon module</a>
         <button class="iconBtn" type="button" onclick="openMenu()" aria-label="Ouvrir le menu">☰</button>
       </nav>
     </header>
+
+    <div class="doctrineLine" aria-label="Doctrine DIGIYLYFE">
+      <span>Je clique.</span><i>·</i>
+      <span>Je parle.</span><i>·</i>
+      <span>J’existe.</span><i>·</i>
+      <span>Je suis visible.</span><i>·</i>
+      <span>Je suis reconnu.</span><i>·</i>
+      <span>J’avance.</span><i>·</i>
+      <strong>DIGIYLYFE</strong>
+    </div>
 
     <nav class="actionStrip" aria-label="Navigation HUB">
       <a href="#favoris" class="gold">⭐ Favoris</a>
       <a href="#action-digiy" class="actionDigiyNav">🎙️ DIGIY GO</a>
       <a href="#public" class="green">🌍 Public</a>
       <a href="#pro" class="green">🏢 Pro</a>
-      <a href="https://tarifs.digiylyfe.com/" class="gold">📦 Tarifs</a>
-      <a href="https://commencer-a-payer.digiylyfe.com/" class="green">💳 Commencer à payer</a>
+      <a href="https://commencer-a-payer.digiylyfe.com/" class="gold">✍️ Activer mon module</a>
       <a href="https://pro-espace.digiylyfe.com/" class="red">🔐 Espace pro</a>
       <a href="https://digiylyfe.com/">← Site</a>
     </nav>
@@ -503,7 +617,7 @@ button,input{font:inherit}
           <div class="sectionSub">Pour les abonnés : gérer, publier, encaisser, suivre, voir son argent.</div>
         </div>
         <div class="tools">
-          <a class="miniBtn gold" href="https://commencer-a-payer.digiylyfe.com/">Activer</a>
+          <a class="miniBtn gold" href="https://commencer-a-payer.digiylyfe.com/">Activer mon module</a>
           <a class="miniBtn" href="#public">Public ↑</a>
         </div>
       </div>
@@ -514,15 +628,14 @@ button,input{font:inherit}
       <div class="actionsGrid">
         <a class="actionCard actionDigiyNav" href="https://pro-action-digiy.digiylyfe.com/">🎙️ DIGIY GO</a>
         <a class="actionCard" href="https://digiylyfe.com/">🌍 Retour site</a>
-        <a class="actionCard gold" href="https://tarifs.digiylyfe.com/">📦 Tarifs</a>
-        <a class="actionCard green" href="https://commencer-a-payer.digiylyfe.com/">💳 Commencer à payer</a>
+        <a class="actionCard gold" href="https://commencer-a-payer.digiylyfe.com/">✍️ Activer mon module</a>
         <a class="actionCard red" href="https://pro-espace.digiylyfe.com/">🔐 Espace pro</a>
       </div>
     </section>
 
     <footer class="footer">
       <div><strong>DIGIYLYFE ∞</strong> · le HUB enlève les détours, il garde les portes.</div>
-      <div><a href="#haut">Remonter</a> · <a href="https://digiylyfe.com/">Site</a> · <a href="https://tarifs.digiylyfe.com/">Tarifs</a></div>
+      <div><a href="#haut">Remonter</a> · <a href="https://digiylyfe.com/">Site</a> · <a href="https://commencer-a-payer.digiylyfe.com/">Activer mon module</a></div>
     </footer>
   </div>
 </div>
@@ -542,8 +655,7 @@ button,input{font:inherit}
       <a class="actionDigiyNav" href="https://pro-action-digiy.digiylyfe.com/">🎙️ DIGIY GO</a>
       <a class="green" href="#public" onclick="closeMenu()">🌍 Portes publiques</a>
       <a class="green" href="#pro" onclick="closeMenu()">🏢 Portes pro</a>
-      <a class="gold" href="https://tarifs.digiylyfe.com/">📦 Tarifs</a>
-      <a class="green" href="https://commencer-a-payer.digiylyfe.com/">💳 Commencer à payer</a>
+      <a class="gold" href="https://commencer-a-payer.digiylyfe.com/">✍️ Activer mon module</a>
       <a class="red" href="https://pro-espace.digiylyfe.com/">🔐 Espace pro</a>
       <a href="https://digiylyfe.com/">← Retour site</a>
       <a href="https://digiylyfe.net/">📰 Revue</a>
@@ -557,7 +669,7 @@ button,input{font:inherit}
     <a href="https://pro-action-digiy.digiylyfe.com/"><strong>🎙️</strong><span>DIGIY GO</span></a>
     <a href="#favoris"><strong>⭐</strong><span>Favoris</span></a>
     <a href="#pro"><strong>🏢</strong><span>Pro</span></a>
-    <a href="https://tarifs.digiylyfe.com/"><strong>📦</strong><span>Tarifs</span></a>
+    <a href="https://commencer-a-payer.digiylyfe.com/"><strong>📦</strong><span>Activer mon module</span></a>
     <button type="button" onclick="openMenu()"><strong>☰</strong><span>Menu</span></button>
   </div>
 </nav>
@@ -591,8 +703,8 @@ button,input{font:inherit}
   const PRO=[
     {key:"actionDigiy",name:"DIGIY GO",icon:"🎙️",desc:"Clique. Parle métier. DIGIY prépare. Tu valides.",href:"https://pro-action-digiy.digiylyfe.com/"},
     {key:"espacePro",name:"Mon activité",icon:"🏢",desc:"Entrée centrale abonné.",href:"https://pro-espace.digiylyfe.com/"},
-    {key:"activer",name:"Commencer à payer",icon:"💳",desc:"Activer ou régler un accès DIGIY.",href:"https://commencer-a-payer.digiylyfe.com/"},
-    {key:"tarifs",name:"Nos tarifs",icon:"📦",desc:"Voir les offres et choisir son plan.",href:"https://tarifs.digiylyfe.com/"},
+    {key:"activer",name:"Activer mon module",icon:"💳",desc:"Ouvrir ou régler son module DIGIY.",href:"https://commencer-a-payer.digiylyfe.com/"},
+    {key:"tarifs",name:"Nos tarifs",icon:"📦",desc:"Choisir son module et ouvrir l’activation.",href:"https://commencer-a-payer.digiylyfe.com/"},
 
     {key:"commercePro",name:"Mon commerce",icon:"💰",desc:"Encaisser et suivre les ventes.",href:"https://commerce-pro.digiylyfe.com/pin.html"},
     {key:"marketPro",name:"Je vends",icon:"🛍️",desc:"Produits, boutique et ventes directes.",href:"https://pro-market.digiylyfe.com/pin.html"},
@@ -707,7 +819,7 @@ button,input{font:inherit}
     "Nouvelle porte pro : DIGIY GO. Le professionnel clique sur le micro, parle métier simplement, DIGIY prépare le brouillon, le bon module se réveille, puis le professionnel valide. " +
     "Côté public, on peut trouver un chauffeur, un logement, une réservation, une boutique, un artisan, une mission, un paiement ou une découverte du territoire. " +
     "Côté pro, chaque professionnel retrouve son module : commerce, MARKET, LOC, RESA, DRIVER, JOBS, Mes services, EXPLORE ou PAY. " +
-    "Les favoris servent à garder les trois portes les plus utilisées sur ce téléphone. Les tarifs montrent les offres. Commencer à payer sert à activer ou régler un accès. L’espace pro rassemble les entrées abonnés. " +
+    "Les favoris servent à garder les trois portes les plus utilisées sur ce téléphone. Activer mon module sert à voir l’offre, choisir son module, ouvrir ou régler un accès. L’espace pro rassemble les entrées abonnés. " +
     "Règle DIGIY : le client arrive vite à la bonne porte, le pro garde son nom, son contact, son argent et sa relation. Zéro commission, contact direct, terrain organisé.";
 
   var play = document.getElementById("digiyHubAudioPlay");
@@ -807,6 +919,166 @@ button,input{font:inherit}
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
