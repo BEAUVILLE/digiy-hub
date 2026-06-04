@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>DIGIY HUB — Toutes les portes</title>
+<title>DIGIY HUB — La Voix du Business en tête</title>
 <meta name="theme-color" content="#00853f" />
 <meta name="digiy-fix-top-readable" content="paves-ecriture-doctrine-20260530" />
 <meta name="digiy-fix" content="tarifs-vers-activer-mon-module-20260530" />
 <meta name="digiy-fix-doublon-activation" content="activation-module-dedoublonnee-20260530" />
-<meta name="description" content="DIGIY HUB — Toutes les portes DIGIYLYFE : modules publics, outils pro, favoris, tarifs et accès abonné. Choisir vite, avancer direct." />
+<meta name="description" content="DIGIY HUB — La Voix du Business en tête : le public exprime un besoin, ACTION DIGIY route vers le bon métier, le module prépare, l’humain valide." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://digiy-hub.digiylyfe.com/" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://digiy-hub.digiylyfe.com/" />
-<meta property="og:title" content="DIGIY HUB — Toutes les portes" />
-<meta property="og:description" content="Choisir une porte DIGIYLYFE sans détour : public, pro, tarifs, activation et espace abonné." />
+<meta property="og:title" content="DIGIY HUB — La Voix du Business en tête" />
+<meta property="og:description" content="La Voix du Business devient la tête du HUB : besoin public, fiches, contact direct, puis action pro protégée." />
 <meta property="og:image" content="https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg" />
 <meta property="og:locale" content="fr_SN" />
 <meta property="og:site_name" content="DIGIYLYFE" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="DIGIY HUB — Toutes les portes" />
-<meta name="twitter:description" content="Modules publics, outils pro, favoris, tarifs et accès abonné. Le HUB va droit aux portes." />
+<meta name="twitter:title" content="DIGIY HUB — La Voix du Business en tête" />
+<meta name="twitter:description" content="Le HUB met La Voix du Business en tête : public ouvert, pro protégé, validation humaine." />
 <meta name="twitter:image" content="https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg" />
 <link href="./icon-192.png" rel="icon" sizes="192x192" />
 <link href="./icon-192.png" rel="apple-touch-icon" />
@@ -159,6 +159,134 @@ button,input{font:inherit}
 @media(max-width:430px){.grid{grid-template-columns:1fr}.card{min-height:148px}.heroCopy h1{font-size:30px}.actionsGrid{grid-template-columns:1fr}.drawerGrid{grid-template-columns:1fr}.iconBtn{width:42px}.logo{width:44px;height:44px}.brandTitle{font-size:17px}.brandSub{max-width:160px;font-size:11.5px}}
 @media(min-width:761px){.bottomNav{display:none}.page{padding-bottom:28px}}
 
+
+/* ══ LECTEUR NOUVEAUTÉ — INTUITION VOCALE DIGIY ══ */
+.voiceNewsReader{
+  margin:14px 18px 0;
+  display:grid;
+  gap:12px;
+  padding:16px;
+  border-radius:26px;
+  border:1px solid rgba(246,196,83,.38);
+  background:
+    radial-gradient(720px 260px at 0% 0%,rgba(246,196,83,.18),transparent 64%),
+    radial-gradient(620px 260px at 100% 10%,rgba(0,166,81,.18),transparent 64%),
+    linear-gradient(135deg,rgba(255,255,255,.085),rgba(0,166,81,.075));
+  box-shadow:0 16px 40px rgba(0,0,0,.22);
+}
+.voiceNewsTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.voiceNewsKicker{
+  color:#fff3cf;
+  font-family:var(--fontA);
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.voiceNewsReader h2{
+  margin:0;
+  color:#fff;
+  font-family:var(--fontA);
+  font-size:clamp(26px,5.2vw,44px);
+  line-height:.95;
+  letter-spacing:-.045em;
+  font-weight:1000;
+}
+.voiceNewsReader h2 span{color:var(--gold)}
+.voiceNewsText{
+  color:rgba(248,250,252,.80);
+  font-size:14px;
+  font-weight:850;
+  line-height:1.5;
+  max-width:860px;
+}
+.voiceNewsFlow{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+}
+.voiceNewsStep{
+  min-height:74px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.065);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:10px;
+  color:#fff;
+  font-family:var(--fontA);
+  font-size:12px;
+  font-weight:1000;
+  line-height:1.2;
+}
+.voiceNewsStep.gold{
+  border-color:rgba(246,196,83,.36);
+  background:rgba(246,196,83,.11);
+  color:#fff3cf;
+}
+.voiceNewsActions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.voiceNewsActions button,
+.voiceNewsActions a{
+  min-height:50px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  padding:0 15px;
+  font-family:var(--fontA);
+  font-size:13px;
+  font-weight:1000;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.voiceNewsActions .main{
+  background:linear-gradient(135deg,var(--gold),#22c55e);
+  color:#06140f;
+  border-color:rgba(246,196,83,.48);
+  box-shadow:0 10px 26px rgba(0,0,0,.24);
+}
+.voiceNewsActions .stop{
+  background:rgba(251,113,133,.12);
+  color:#ffe3e8;
+  border-color:rgba(251,113,133,.34);
+}
+.voiceNewsStatus{
+  min-height:20px;
+  color:#fff3cf;
+  font-family:var(--fontA);
+  font-size:12px;
+  font-weight:1000;
+}
+@media(max-width:900px){
+  .voiceNewsFlow{grid-template-columns:1fr 1fr}
+  .voiceNewsStep:last-child{grid-column:1/-1}
+}
+@media(max-width:760px){
+  .voiceNewsReader{margin:12px 12px 0;padding:14px;border-radius:22px}
+  .voiceNewsActions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .voiceNewsActions button,.voiceNewsActions a{width:100%}
+}
+@media(max-width:430px){
+  .voiceNewsFlow{grid-template-columns:1fr}
+  .voiceNewsActions{grid-template-columns:1fr}
+}
+
 /* ══ LECTEUR DIGIY — HUB GÉNÉRAL ══ */
 .hubReader{
   margin:14px 18px 0;
@@ -245,7 +373,7 @@ button,input{font:inherit}
   .hubReaderActions button{width:100%}
 }
 
-/* ══ DIGIY GO — PORTE VOCALE TRANSVERSALE HUB ══ */
+/* ══ LA VOIX DU BUSINESS — TÊTE DE MISSILE DU HUB ══ */
 .actionDigiyBridge{
   margin:14px 18px 0;
   scroll-margin-top:128px;
@@ -267,7 +395,7 @@ button,input{font:inherit}
   box-shadow:0 18px 46px rgba(0,0,0,.28);
 }
 .actionDigiyBridgeCard::after{
-  content:"Porte PRO";
+  content:"PUBLIC + PRO";
   position:absolute;
   right:14px;
   top:12px;
@@ -512,6 +640,336 @@ button,input{font:inherit}
   }
 }
 
+
+/* ══ LECTEUR NOUVEAUTÉ VISIBLE — TÊTE DE HUB ══ */
+.voiceMissileReader{
+  margin:14px 0 0;
+  padding:16px;
+  border-radius:24px;
+  border:2px solid rgba(246,196,83,.58);
+  background:
+    radial-gradient(520px 190px at 0% 0%,rgba(246,196,83,.24),transparent 62%),
+    radial-gradient(520px 190px at 100% 0%,rgba(0,166,81,.20),transparent 62%),
+    linear-gradient(135deg,rgba(6,20,14,.96),rgba(11,38,24,.95));
+  box-shadow:0 18px 42px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.06) inset;
+}
+.voiceMissileKicker{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-bottom:8px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(246,196,83,.44);
+  background:rgba(246,196,83,.12);
+  color:#fff3cf;
+  font-family:var(--fontA);
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.voiceMissileReader h2{
+  margin:0;
+  color:#fff;
+  font-family:var(--fontA);
+  font-size:clamp(24px,4.6vw,42px);
+  line-height:.98;
+  letter-spacing:-.045em;
+  font-weight:1000;
+}
+.voiceMissileReader h2 span{color:var(--gold)}
+.voiceMissileText{
+  margin-top:9px;
+  color:rgba(248,250,252,.82);
+  font-size:14px;
+  font-weight:850;
+  line-height:1.5;
+  max-width:900px;
+}
+.voiceMissileActions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.voiceMissileActions button,
+.voiceMissileActions a{
+  min-height:52px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  padding:0 16px;
+  font-family:var(--fontA);
+  font-size:13px;
+  font-weight:1000;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.voiceMissileActions .main{
+  background:linear-gradient(135deg,var(--gold),#22c55e);
+  color:#06140f;
+  border-color:rgba(246,196,83,.62);
+  box-shadow:0 10px 26px rgba(0,0,0,.24);
+}
+.voiceMissileActions .stop{
+  background:rgba(251,113,133,.12);
+  color:#ffe3e8;
+  border-color:rgba(251,113,133,.34);
+}
+.voiceMissileFlow{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+  margin-top:12px;
+}
+.voiceMissileStep{
+  min-height:58px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.065);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:8px;
+  color:#fff;
+  font-family:var(--fontA);
+  font-size:11.5px;
+  font-weight:1000;
+  line-height:1.15;
+}
+.voiceMissileStep.gold{
+  border-color:rgba(246,196,83,.38);
+  background:rgba(246,196,83,.12);
+  color:#fff3cf;
+}
+.voiceMissileStatus{
+  min-height:18px;
+  margin-top:8px;
+  color:#fff3cf;
+  font-family:var(--fontA);
+  font-size:12px;
+  font-weight:1000;
+}
+@media(max-width:900px){
+  .voiceMissileFlow{grid-template-columns:1fr 1fr}
+  .voiceMissileStep:last-child{grid-column:1/-1}
+}
+@media(max-width:760px){
+  .voiceMissileReader{padding:14px;border-radius:21px}
+  .voiceMissileActions{display:grid;grid-template-columns:1fr;width:100%}
+  .voiceMissileActions button,.voiceMissileActions a{width:100%}
+  .voiceMissileFlow{grid-template-columns:1fr}
+}
+
+
+/* ══ LECTEUR FLOTTANT — NOUVEAUTÉ INTUITION VOCALE ══ */
+.voiceFloatReader{
+  position:fixed;
+  right:14px;
+  bottom:22px;
+  z-index:72;
+  width:min(390px,calc(100% - 28px));
+  border:2px solid rgba(246,196,83,.56);
+  border-radius:24px;
+  background:
+    radial-gradient(420px 180px at 0% 0%,rgba(246,196,83,.22),transparent 62%),
+    radial-gradient(360px 180px at 100% 0%,rgba(0,166,81,.18),transparent 62%),
+    rgba(5,20,14,.96);
+  box-shadow:0 20px 50px rgba(0,0,0,.38);
+  backdrop-filter:blur(14px);
+  color:#fff;
+  overflow:hidden;
+}
+.voiceFloatReader.is-mini .voiceFloatBody{display:none}
+.voiceFloatHead{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 12px;
+}
+.voiceFloatIcon{
+  width:42px;
+  height:42px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  font-size:22px;
+  color:#06140f;
+  background:linear-gradient(135deg,#fff1bd,var(--gold),#22c55e);
+  box-shadow:0 10px 22px rgba(0,0,0,.24);
+}
+.voiceFloatTitle{
+  min-width:0;
+  flex:1;
+}
+.voiceFloatTitle b{
+  display:block;
+  font-family:var(--fontA);
+  font-size:14px;
+  font-weight:1000;
+  color:#fff3cf;
+  line-height:1.05;
+}
+.voiceFloatTitle span{
+  display:block;
+  margin-top:3px;
+  color:rgba(248,250,252,.78);
+  font-family:var(--fontB);
+  font-size:11.5px;
+  font-weight:850;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.voiceFloatToggle{
+  width:34px;
+  height:34px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.08);
+  color:#fff3cf;
+  font-family:var(--fontA);
+  font-weight:1000;
+  cursor:pointer;
+}
+.voiceFloatBody{
+  padding:0 12px 12px;
+}
+.voiceFloatText{
+  color:rgba(248,250,252,.80);
+  font-size:12.5px;
+  line-height:1.42;
+  font-weight:800;
+}
+.voiceFloatActions{
+  display:grid;
+  grid-template-columns:1fr 84px;
+  gap:8px;
+  margin-top:10px;
+}
+.voiceFloatActions button,
+.voiceFloatActions a{
+  min-height:44px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:0 12px;
+  font-family:var(--fontA);
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+  text-decoration:none;
+}
+.voiceFloatActions .play{
+  background:linear-gradient(135deg,var(--gold),#22c55e);
+  color:#06140f;
+  border-color:rgba(246,196,83,.58);
+}
+.voiceFloatActions .stop{
+  background:rgba(251,113,133,.12);
+  color:#ffe3e8;
+  border-color:rgba(251,113,133,.34);
+}
+.voiceFloatOpen{
+  grid-column:1/-1;
+  background:rgba(255,255,255,.075);
+  color:#fff3cf;
+  border-color:rgba(246,196,83,.28) !important;
+}
+.voiceFloatStatus{
+  margin-top:8px;
+  min-height:16px;
+  color:#fff3cf;
+  font-family:var(--fontA);
+  font-size:11px;
+  font-weight:1000;
+}
+@media(max-width:760px){
+  .voiceFloatReader{
+    left:10px;
+    right:10px;
+    bottom:92px;
+    width:auto;
+    border-radius:22px;
+  }
+  .voiceFloatHead{padding:10px}
+  .voiceFloatIcon{width:40px;height:40px;border-radius:15px}
+}
+
+.voiceFloatHelp{
+  margin-top:8px;
+  padding:9px 10px;
+  border-radius:15px;
+  border:1px solid rgba(246,196,83,.24);
+  background:rgba(246,196,83,.08);
+  color:#fff3cf;
+  font-size:11.5px;
+  line-height:1.35;
+  font-weight:900;
+}
+.voiceFloatHelp strong{color:#fff}
+.voiceFloatReader.is-speaking{
+  border-color:rgba(34,197,94,.70);
+  box-shadow:0 20px 50px rgba(0,0,0,.38),0 0 0 3px rgba(34,197,94,.12);
+}
+.voiceFloatReader.is-error{
+  border-color:rgba(251,113,133,.72);
+  box-shadow:0 20px 50px rgba(0,0,0,.38),0 0 0 3px rgba(251,113,133,.12);
+}
+
+@media(max-width:430px){
+  .voiceFloatActions{grid-template-columns:1fr 74px}
+  .voiceFloatTitle b{font-size:13px}
+  .voiceFloatTitle span{font-size:11px}
+}
+
+
+.voiceFloatSettings{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:6px;
+  margin-top:8px;
+}
+.voiceFloatSettings label{
+  color:rgba(248,250,252,.82);
+  font-family:var(--fontA);
+  font-size:11px;
+  font-weight:1000;
+}
+.voiceFloatSelect{
+  width:100%;
+  min-height:42px;
+  border-radius:14px;
+  border:1px solid rgba(246,196,83,.28);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  padding:0 10px;
+  font-family:var(--fontB);
+  font-size:12px;
+  font-weight:850;
+  outline:none;
+}
+.voiceFloatSelect option{
+  background:#07150f;
+  color:#fff;
+}
+.voiceFloatQuality{
+  color:rgba(248,250,252,.68);
+  font-size:11px;
+  font-weight:850;
+  line-height:1.35;
+}
+
 </style>
 </head>
 <body>
@@ -523,11 +981,12 @@ button,input{font:inherit}
         <span class="logo"><img src="https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg" alt="Logo DIGIYLYFE" /></span>
         <span>
           <span class="brandTitle">DIGIY HUB</span>
-          <span class="brandSub">Toutes les portes, sans détour</span>
+          <span class="brandSub">La Voix du Business en tête</span>
         </span>
       </a>
-      <span class="badgeHub">🧭 HUB · route directe</span>
+      <span class="badgeHub">🎙️ Voix · tête de route</span>
       <nav class="headerActions" aria-label="Actions principales">
+        <a class="topBtn gold" href="https://pro-action-digiy.digiylyfe.com/">🎙️ La Voix</a>
         <a class="topBtn green" href="https://digiylyfe.com/">🌍 Site</a>
         <a class="topBtn gold" href="https://commencer-a-payer.digiylyfe.com/">✍️ Activer mon module</a>
         <button class="iconBtn" type="button" onclick="openMenu()" aria-label="Ouvrir le menu">☰</button>
@@ -545,8 +1004,8 @@ button,input{font:inherit}
     </div>
 
     <nav class="actionStrip" aria-label="Navigation HUB">
+      <a href="#action-digiy" class="actionDigiyNav">🎙️ La Voix du Business</a>
       <a href="#favoris" class="gold">⭐ Favoris</a>
-      <a href="#action-digiy" class="actionDigiyNav">🎙️ DIGIY GO</a>
       <a href="#public" class="green">🌍 Public</a>
       <a href="#pro" class="green">🏢 Pro</a>
       <a href="https://commencer-a-payer.digiylyfe.com/" class="gold">✍️ Activer mon module</a>
@@ -557,54 +1016,77 @@ button,input{font:inherit}
     <section class="heroMini" id="haut">
       <div class="heroCard">
         <div class="heroCopy">
-          <h1>Choisis ta porte.<br><span>DIGIY ouvre la route.</span></h1>
+          <h1>La Voix du Business.<br><span>DIGIY ouvre la route.</span></h1>
           <div class="hubArchitectureTitle" aria-label="Architecture DIGIY dans le HUB">
-            <h2>Le HUB rassemble les portes de l’architecture DIGIY.</h2>
-            <p>Vitrine allégée. Routes claires. Le terrain choisit, clique et avance sans détour.</p>
+            <h2>La Voix du Business est la tête de l’architecture DIGIY.</h2>
+            <p>Le public exprime un besoin. Les fiches remontent. Le pro reçoit une action protégée. L’humain valide.</p>
           </div>
-          <p>Pas de côte, pas de virage, pas de bla-bla. Le HUB garde seulement les portes utiles : public, pro, tarifs, paiement et retour site.</p>
+          <p>Le HUB garde les portes utiles, mais la tête de route devient claire : parler, orienter, afficher les fiches, contacter direct, puis travailler côté pro protégé.</p>
           <div class="heroPills" aria-label="Repères DIGIY">
             <span class="pill gold">0% commission</span>
             <span class="pill green">Paiement direct</span>
             <span class="pill">Favoris rapides</span>
             <span class="pill">Public + Pro</span>
           </div>
+          <div class="voiceMissileReader" aria-label="Lecteur nouveauté intuition vocale">
+            <div class="voiceMissileKicker">🚀 Nouveauté · intuition vocale</div>
+            <h2>Le logiciel entend la voix.<br><span>Le pro confirme, DIGIY instruit.</span></h2>
+            <div class="voiceMissileText" id="digiyVoiceNewsText">
+              Le pro parle naturellement. DIGIY entend, comprend l’intention, classe la demande,
+              range l’information dans le bon métier et prépare le brouillon. Rien ne part tout seul :
+              après confirmation du pro, DIGIY instruit la demande dans le module adapté.
+            </div>
+            <div class="voiceMissileActions">
+              <button class="main" id="digiyVoiceNewsPlay" type="button">▶ Écouter la nouveauté</button>
+              <button class="stop" id="digiyVoiceNewsStop" type="button">⏹ Stop</button>
+              <a href="https://pro-action-digiy.digiylyfe.com/">🎙️ Essayer La Voix</a>
+            </div>
+            <div class="voiceMissileFlow" aria-label="Flux vocal DIGIY">
+              <div class="voiceMissileStep gold">🎙️ Le pro parle</div>
+              <div class="voiceMissileStep">🧠 DIGIY comprend</div>
+              <div class="voiceMissileStep">🗂️ Classe et range</div>
+              <div class="voiceMissileStep">📋 Prépare le brouillon</div>
+              <div class="voiceMissileStep gold">✅ Confirmation pro</div>
+            </div>
+            <div class="voiceMissileStatus" id="digiyVoiceNewsStatus">Prêt à annoncer · lecture courte</div>
+          </div>
+
         </div>
         <div class="quickStack">
-          <a class="bigCta" href="https://pro-action-digiy.digiylyfe.com/">🎙️ DIGIY GO</a>
+          <a class="bigCta" href="https://pro-action-digiy.digiylyfe.com/">🎙️ La Voix du Business</a>
           <a class="bigCta" href="#public">🌍 Entrer côté public</a>
-          <a class="bigCta dark" href="#pro">🏢 Entrer côté pro</a>
+          <a class="bigCta" href="https://commencer-a-payer.digiylyfe.com/">✍️ S’inscrire côté pro</a>
+          <a class="bigCta dark" href="#pro">🔐 Espace pro protégé</a>
         </div>
       </div>
     </section>
 
 
-    <section class="actionDigiyBridge" id="action-digiy" aria-label="DIGIY GO — porte vocale transversale">
+    <section class="actionDigiyBridge" id="action-digiy" aria-label="La Voix du Business — porte vocale transversale">
       <div class="actionDigiyBridgeCard">
         <div class="actionDigiyMark" aria-hidden="true">🎙️</div>
         <div class="actionDigiyCopy">
-          <div class="actionDigiyKicker">Porte PRO · Oreille transversale</div>
-          <h2>DIGIY GO</h2>
+          <div class="actionDigiyKicker">Tête de missile · Public + Pro</div>
+          <h2>La Voix du Business</h2>
           <p>
-            Clique sur le micro, parle métier simplement :
-            <strong>vente, dépense, course, réservation, annonce ou devis</strong>. DIGIY prépare le brouillon,
-            réveille le bon module, puis le terrain valide avant toute action.
+            Côté public, la personne parle ou écrit son besoin et les fiches remontent.
+            Côté pro, <strong>ACTION DIGIY</strong> route vers le bon métier : vente, dépense, course,
+            réservation, annonce ou devis. Le module prépare, l’humain valide.
           </p>
-          <div class="actionDigiyPills" aria-label="Repères DIGIY GO">
-            <span>Bouton volontaire</span>
-            <span>Pas d’écoute cachée</span>
-            <span>Module réveillé</span>
+          <div class="actionDigiyPills" aria-label="Repères La Voix du Business">
+            <span>Public ouvert</span>
+            <span>Pro protégé</span>
+            <span>Fiches + contact</span>
             <span>Validation humaine</span>
           </div>
         </div>
         <div class="actionDigiyButtons">
-          <a class="actionDigiyMain" href="https://pro-action-digiy.digiylyfe.com/">🎙️ Ouvrir DIGIY GO</a>
-          <a class="actionDigiyGhost" href="https://pro-action-digiy.digiylyfe.com/#examples">Voir les exemples</a>
+          <a class="actionDigiyMain" href="https://pro-action-digiy.digiylyfe.com/">🎙️ Ouvrir La Voix</a>
+          <a class="actionDigiyGhost" href="https://commencer-a-payer.digiylyfe.com/">✍️ S’inscrire / activer</a>
+          <a class="actionDigiyGhost" href="https://pro-action-digiy.digiylyfe.com/pin.html">🔒 ACTION DIGIY PRO</a>
         </div>
       </div>
     </section>
-
-
     <section class="hubReader" aria-label="Lecteur DIGIY HUB">
       <div class="hubReaderTop">
         <div>
@@ -618,7 +1100,7 @@ button,input{font:inherit}
       </div>
       <div class="hubReaderText" id="digiyHubAudioText">
         Le HUB est le rond-point DIGIY : il rassemble les portes publiques, les portes pro, les favoris,
-        les tarifs, l’activation et l’espace abonné. Le client choisit vite, le pro retrouve son outil,
+        les tarifs, l’activation et l’espace abonné. La Voix du Business arrive en tête : le client formule, les fiches remontent, le pro retrouve son action,
         et tout reste direct.
       </div>
       <div class="hubReaderStatus" id="digiyHubAudioStatus">Prêt à lire · guide court</div>
@@ -628,14 +1110,14 @@ button,input{font:inherit}
     <section class="section" id="favoris">
       <div class="sectionHead">
         <div>
-          <h2 class="sectionTitle">⭐ Favoris <small>DIGIY GO + 2</small></h2>
-          <div class="sectionSub">DIGIY GO est posé en premier. L’abonné parle, DIGIY prépare, puis il valide.</div>
+          <h2 class="sectionTitle">⭐ Favoris <small>La Voix + 2</small></h2>
+          <div class="sectionSub">La Voix du Business est posée en premier. Le public demande. Le pro s’inscrit ou active son module, puis entre par PIN pour travailler.</div>
         </div>
         <div class="tools">
           <button class="miniBtn gold" type="button" onclick="clearFavs()">Réinitialiser</button>
         </div>
       </div>
-      <div class="empty" id="favEmpty">DIGIY GO est le favori de départ. Ajoute ensuite deux portes utiles selon ton métier.</div>
+      <div class="empty" id="favEmpty">La Voix du Business est le favori de départ. Ajoute ensuite deux portes utiles selon ton métier.</div>
       <div class="grid favoritesGrid" id="favGrid"></div>
     </section>
 
@@ -656,7 +1138,7 @@ button,input{font:inherit}
       <div class="sectionHead">
         <div>
           <h2 class="sectionTitle">🏢 Portes pro <small id="proCount">0</small></h2>
-          <div class="sectionSub">Pour les abonnés : gérer, publier, encaisser, suivre, voir son argent.</div>
+          <div class="sectionSub">Pour les pros : d’abord s’inscrire ou activer, ensuite entrer par PIN dans le module protégé.</div>
         </div>
         <div class="tools">
           <a class="miniBtn gold" href="https://commencer-a-payer.digiylyfe.com/">Activer mon module</a>
@@ -668,9 +1150,9 @@ button,input{font:inherit}
 
     <section class="actionsBlock" aria-label="Actions utiles DIGIY">
       <div class="actionsGrid">
-        <a class="actionCard actionDigiyNav" href="https://pro-action-digiy.digiylyfe.com/">🎙️ DIGIY GO</a>
+        <a class="actionCard actionDigiyNav" href="https://pro-action-digiy.digiylyfe.com/">🎙️ La Voix du Business</a>
+        <a class="actionCard gold" href="https://commencer-a-payer.digiylyfe.com/">✍️ S’inscrire côté pro</a>
         <a class="actionCard" href="https://digiylyfe.com/">🌍 Retour site</a>
-        <a class="actionCard gold" href="https://commencer-a-payer.digiylyfe.com/">✍️ Activer mon module</a>
         <a class="actionCard red" href="https://pro-espace.digiylyfe.com/">🔐 Espace pro</a>
       </div>
     </section>
@@ -694,10 +1176,11 @@ button,input{font:inherit}
     </div>
     <div class="drawerGrid">
       <a class="gold" href="#favoris" onclick="closeMenu()">⭐ Favoris</a>
-      <a class="actionDigiyNav" href="https://pro-action-digiy.digiylyfe.com/">🎙️ DIGIY GO</a>
+      <a class="actionDigiyNav" href="https://pro-action-digiy.digiylyfe.com/">🎙️ La Voix du Business</a>
       <a class="green" href="#public" onclick="closeMenu()">🌍 Portes publiques</a>
       <a class="green" href="#pro" onclick="closeMenu()">🏢 Portes pro</a>
-      <a class="gold" href="https://commencer-a-payer.digiylyfe.com/">✍️ Activer mon module</a>
+      <a class="gold" href="https://commencer-a-payer.digiylyfe.com/">✍️ S’inscrire côté pro</a>
+      <a class="gold" href="https://commencer-a-payer.digiylyfe.com/">📦 Activer mon module</a>
       <a class="red" href="https://pro-espace.digiylyfe.com/">🔐 Espace pro</a>
       <a href="https://digiylyfe.com/">← Retour site</a>
       <a href="https://digiylyfe.net/">📰 Revue</a>
@@ -707,8 +1190,8 @@ button,input{font:inherit}
 
 <nav class="bottomNav" aria-label="Navigation mobile DIGIY HUB">
   <div class="bottomInner">
-    <a class="active" href="#public"><strong>🌍</strong><span>Public</span></a>
-    <a href="https://pro-action-digiy.digiylyfe.com/"><strong>🎙️</strong><span>DIGIY GO</span></a>
+    <a class="active" href="https://pro-action-digiy.digiylyfe.com/"><strong>🎙️</strong><span>La Voix</span></a>
+    <a href="#public"><strong>🌍</strong><span>Public</span></a>
     <a href="#favoris"><strong>⭐</strong><span>Favoris</span></a>
     <a href="#pro"><strong>🏢</strong><span>Pro</span></a>
     <a href="https://commencer-a-payer.digiylyfe.com/"><strong>📦</strong><span>Activer mon module</span></a>
@@ -726,6 +1209,7 @@ button,input{font:inherit}
   const DEFAULT_FAVORITES=["pro:actionDigiy"];
 
   const PUBLIC=[
+    {key:"voixBusiness",name:"La Voix du Business",icon:"🎙️",desc:"Exprimer un besoin : les fiches remontent, le contact reste direct.",href:"https://pro-action-digiy.digiylyfe.com/"},
     {key:"explore",name:"Découvrir le territoire",icon:"🗺️",desc:"Spots, lieux, ambiances : entrer dans la région.",href:"https://explore.digiylyfe.com/"},
     {key:"driver",name:"Trouver un chauffeur",icon:"🚗",desc:"Un trajet maintenant, contact direct.",href:"https://driver.digiylyfe.com/"},
     {key:"chauffeurs",name:"Nos chauffeurs",icon:"👑",desc:"Profils chauffeurs, style et présence terrain.",href:"https://galerie-chauffeurs.digiylyfe.com/"},
@@ -744,7 +1228,8 @@ button,input{font:inherit}
   ];
 
   const PRO=[
-    {key:"actionDigiy",name:"DIGIY GO",icon:"🎙️",desc:"Clique. Parle métier. DIGIY prépare. Tu valides.",href:"https://pro-action-digiy.digiylyfe.com/"},
+    {key:"actionDigiy",name:"ACTION DIGIY PRO",icon:"🎙️",desc:"Parle métier. DIGIY route. Le module prépare. Tu valides.",href:"https://pro-action-digiy.digiylyfe.com/pin.html"},
+    {key:"inscriptionProVoix",name:"S’inscrire côté pro",icon:"✍️",desc:"Pas encore abonné ? Active ton module avant l’entrée PIN.",href:"https://commencer-a-payer.digiylyfe.com/"},
     {key:"espacePro",name:"Mon activité",icon:"🏢",desc:"Entrée centrale abonné.",href:"https://pro-espace.digiylyfe.com/"},
     {key:"activer",name:"Activer mon module",icon:"💳",desc:"Ouvrir ou régler son module DIGIY.",href:"https://commencer-a-payer.digiylyfe.com/"},
     {key:"tarifs",name:"Nos tarifs",icon:"📦",desc:"Choisir son module et ouvrir l’activation.",href:"https://commencer-a-payer.digiylyfe.com/"},
@@ -795,7 +1280,7 @@ button,input{font:inherit}
   function toggleFav(kind,key){
     const id=favId(kind,key), idx=favs.indexOf(id);
     if(idx>=0){favs.splice(idx,1);saveFavs();renderAll();return;}
-    if(favs.length>=FAVORITES_MAX){alert("Maximum 3 favoris : DIGIY GO plus deux portes métier.");return;}
+    if(favs.length>=FAVORITES_MAX){alert("Maximum 3 favoris : La Voix du Business plus deux portes métier.");return;}
     favs.unshift(id);saveFavs();renderAll();
   }
   window.clearFavs=function(){favs=DEFAULT_FAVORITES.slice();saveFavs();renderAll();};
@@ -852,117 +1337,1724 @@ button,input{font:inherit}
 })();
 </script>
 
+<div class="voiceFloatReader" id="digiyVoiceFloatReader" aria-label="Lecteur flottant nouveauté DIGIY">
+  <div class="voiceFloatHead">
+    <div class="voiceFloatIcon" aria-hidden="true">🎙️</div>
+    <div class="voiceFloatTitle">
+      <b>🚀 Nouveauté vocale</b>
+      <span>DIGIY entend · classe · range · attend validation</span>
+    </div>
+    <button class="voiceFloatToggle" id="digiyVoiceFloatToggle" type="button" aria-label="Réduire ou ouvrir le lecteur">–</button>
+  </div>
+  <div class="voiceFloatBody">
+    <div class="voiceFloatText">
+      Le pro parle. DIGIY comprend, classe, range et prépare le brouillon.
+      Après confirmation du pro, DIGIY instruit la demande dans le bon module.
+    </div>
+    <div class="voiceFloatActions">
+      <button class="play" id="digiyVoiceFloatPlay" type="button">▶ Écouter</button>
+      <button class="stop" id="digiyVoiceFloatStop" type="button">⏹</button>
+      <a class="voiceFloatOpen" href="https://pro-action-digiy.digiylyfe.com/">🎙️ Ouvrir La Voix du Business</a>
+    </div>
+    <div class="voiceFloatStatus" id="digiyVoiceFloatStatus">Lecteur flottant prêt · appuie sur Écouter</div>
+    <div class="voiceFloatSettings">
+      <label for="digiyVoiceSelect">Choisir la voix du lecteur</label>
+      <select class="voiceFloatSelect" id="digiyVoiceSelect" aria-label="Choisir la voix du lecteur DIGIY">
+        <option value="">Voix automatique DIGIY</option>
+      </select>
+      <div class="voiceFloatQuality">Si la voix Google sonne mal, choisis une autre voix française ici si ton appareil la propose.</div>
+    </div>
+    <div class="voiceFloatHelp" id="digiyVoiceFloatHelp"><strong>Si le son ne sort pas :</strong> monte le volume, enlève le mode silencieux, ou lis le texte affiché. DIGIY ne confirme rien sans le pro.</div>
+  </div>
+</div>
+
+
+
+
+
 <script>
-/* ══ DIGIY VOICE — HUB GÉNÉRAL ══ */
+/* ══ DIGIY AUDIO — LECTEUR DOUX AVEC CHOIX DE VOIX ══ */
 (function(){
   "use strict";
 
-  var SPEAK =
-    "Bienvenue dans le HUB DIGIY de diji laïfe. " +
-    "Le HUB est le rond-point des portes : il enlève les détours et garde les accès utiles au même endroit. " +
-    "Nouvelle porte pro : DIGIY GO. Le professionnel clique sur le micro, parle métier simplement, DIGIY prépare le brouillon, le bon module se réveille, puis le professionnel valide. " +
-    "Côté public, on peut trouver un chauffeur, un logement, une réservation, une boutique, un artisan, une mission, un paiement ou une découverte du territoire. " +
-    "Côté pro, chaque professionnel retrouve son module : commerce, MARKET, LOC, RESA, DRIVER, JOBS, Mes services, EXPLORE ou PAY. " +
-    "Les favoris servent à garder les trois portes les plus utilisées sur ce téléphone. Activer mon module sert à voir l’offre, choisir son module, ouvrir ou régler un accès. L’espace pro rassemble les entrées abonnés. " +
-    "Règle DIGIY : le client arrive vite à la bonne porte, le pro garde son nom, son contact, son argent et sa relation. Zéro commission, contact direct, terrain organisé.";
+  var TEXT =
+    "Nouveauté DIGIY. La Voix du Business devient intuitive et vocale. " +
+    "Le professionnel parle naturellement. DIGIY entend, comprend, classe et range l’information dans le bon métier. " +
+    "DIGIY prépare le brouillon. Rien ne part tout seul. Le professionnel vérifie et confirme. " +
+    "Après confirmation du pro, DIGIY instruit la demande dans le module adapté. " +
+    "Moins d’écriture, moins de parcours, plus de voix métier, toujours validation humaine.";
 
-  var play = document.getElementById("digiyHubAudioPlay");
-  var stop = document.getElementById("digiyHubAudioStop");
-  var status = document.getElementById("digiyHubAudioStatus");
+  var STORE_KEY = "digiy_reader_voice_name_v1";
+  var STATE = {
+    queue:[],
+    index:0,
+    current:null,
+    speaking:false,
+    paused:false,
+    started:false,
+    watchdog:null
+  };
+  window.__DIGIY_AUDIO_STATE = STATE;
 
-  function digiySpeakText(text){
-    return String(text || "")
-      .replace(/\bWave\b/g, "Ouève")
-      .replace(/\bWouève\b/g, "Ouève")
-      .replace(/\bWéïv\b/g, "Ouève")
-      .replace(/\bWhatsApp\b/g, "Ouatsap")
-      .replace(/\bDIGIYLYFE\b/g, "diji laïfe")
-      .replace(/\bDIGIY GO\b/g, "diji go");
+  function byId(id){ return document.getElementById(id); }
+
+  function playButtons(){
+    return [
+      byId("digiyVoiceFloatPlay"),
+      byId("digiyVoiceNewsPlay"),
+      byId("digiyHubAudioPlay")
+    ].filter(Boolean);
   }
 
-  function setStatus(message){
-    if(status) status.textContent = message;
+  function stopButtons(){
+    return [
+      byId("digiyVoiceFloatStop"),
+      byId("digiyVoiceNewsStop"),
+      byId("digiyHubAudioStop")
+    ].filter(Boolean);
+  }
+
+  function statusEls(){
+    return [
+      byId("digiyVoiceFloatStatus"),
+      byId("digiyVoiceNewsStatus"),
+      byId("digiyHubAudioStatus")
+    ].filter(Boolean);
+  }
+
+  function boxEl(){ return byId("digiyVoiceFloatReader"); }
+  function helpEl(){ return byId("digiyVoiceFloatHelp"); }
+  function voiceSelect(){ return byId("digiyVoiceSelect"); }
+
+  function setButtons(text){
+    playButtons().forEach(function(btn){ btn.textContent = text; });
+  }
+
+  function setStatus(message, mode){
+    statusEls().forEach(function(el){ el.textContent = message; });
+    var box = boxEl();
+    if(box){
+      box.classList.toggle("is-speaking", mode === "speaking");
+      box.classList.toggle("is-error", mode === "error");
+    }
+  }
+
+  function setHelp(html){
+    var h = helpEl();
+    if(h) h.innerHTML = html;
   }
 
   function canSpeak(){
-    return "speechSynthesis" in window;
+    return "speechSynthesis" in window && typeof window.SpeechSynthesisUtterance !== "undefined";
   }
 
-  function pickVoice(){
-    if(!canSpeak()) return null;
-    var voices = window.speechSynthesis.getVoices() || [];
-    return voices.find(function(v){ return /^fr/i.test(v.lang || "") && /FR/i.test(v.lang || ""); })
-        || voices.find(function(v){ return /^fr/i.test(v.lang || ""); })
-        || voices[0]
-        || null;
+  function rawVoices(){
+    if(!canSpeak()) return [];
+    try{ return window.speechSynthesis.getVoices() || []; }
+    catch(e){ return []; }
   }
 
-  function stopSpeech(){
-    if(canSpeak()) window.speechSynthesis.cancel();
-    if(play) play.textContent = "▶ Écouter";
-    setStatus("Lecture arrêtée");
+  function cleanText(text){
+    return String(text || "")
+      .replace(/\bWave\b/g, "Ouève")
+      .replace(/\bWhatsApp\b/g, "Ouatsap")
+      .replace(/\bACTION DIGIY\b/g, "action diji i")
+      .replace(/\bDIGIYLYFE\b/g, "diji laïfe")
+      .replace(/\bDIGIY\b/g, "diji i");
   }
 
-  function speak(){
-    if(!canSpeak()){
-      setStatus("Lecture vocale non disponible ici");
+  function splitText(text){
+    var cleaned = cleanText(text)
+      .replace(/\s+/g, " ")
+      .replace(/([.!?])\s+/g, "$1|")
+      .trim();
+
+    var parts = cleaned.split("|").map(function(x){ return x.trim(); }).filter(Boolean);
+    var chunks = [];
+    var current = "";
+
+    parts.forEach(function(p){
+      if((current + " " + p).trim().length > 180 && current){
+        chunks.push(current.trim());
+        current = p;
+      }else{
+        current = (current + " " + p).trim();
+      }
+    });
+    if(current) chunks.push(current.trim());
+
+    return chunks.length ? chunks : [cleaned];
+  }
+
+  function scoreVoice(v){
+    var name = (v.name || "").toLowerCase();
+    var lang = (v.lang || "").toLowerCase();
+    var score = 0;
+
+    if(lang === "fr-fr") score += 80;
+    else if(lang.indexOf("fr") === 0) score += 65;
+
+    // Souvent meilleures / plus naturelles selon appareils.
+    if(/thomas|amelie|amélie|audrey|aurélie|aurelie|paul|pauline|hortense|denise|henri|claude|monica|virginie/.test(name)) score += 40;
+
+    // Chrome/Google peut sonner sec selon appareil : on le garde, mais pas en premier.
+    if(/google/.test(name)) score -= 18;
+
+    if(v.localService) score += 12;
+    if(/premium|neural|online|natural/.test(name)) score += 18;
+
+    return score;
+  }
+
+  function bestVoice(){
+    var voices = rawVoices();
+    if(!voices.length) return null;
+
+    var selected = voiceSelect() && voiceSelect().value;
+    if(selected){
+      var picked = voices.find(function(v){ return v.name === selected; });
+      if(picked) return picked;
+    }
+
+    var stored = "";
+    try{ stored = localStorage.getItem(STORE_KEY) || ""; }catch(e){}
+    if(stored){
+      var saved = voices.find(function(v){ return v.name === stored; });
+      if(saved) return saved;
+    }
+
+    return voices
+      .filter(function(v){ return /^fr/i.test(v.lang || "") || /fran|fren|français|francais/i.test(v.name || ""); })
+      .sort(function(a,b){ return scoreVoice(b) - scoreVoice(a); })[0]
+      || voices.sort(function(a,b){ return scoreVoice(b) - scoreVoice(a); })[0]
+      || null;
+  }
+
+  function populateVoices(){
+    var select = voiceSelect();
+    if(!select || !canSpeak()) return;
+
+    var voices = rawVoices();
+    var currentValue = "";
+    try{ currentValue = localStorage.getItem(STORE_KEY) || ""; }catch(e){}
+
+    select.innerHTML = '<option value="">Voix automatique DIGIY</option>';
+
+    var sorted = voices.slice().sort(function(a,b){
+      var afr = /^fr/i.test(a.lang || "") ? 0 : 1;
+      var bfr = /^fr/i.test(b.lang || "") ? 0 : 1;
+      if(afr !== bfr) return afr - bfr;
+      return scoreVoice(b) - scoreVoice(a);
+    });
+
+    sorted.forEach(function(v){
+      var opt = document.createElement("option");
+      opt.value = v.name;
+      opt.textContent = v.name + (v.lang ? " · " + v.lang : "");
+      select.appendChild(opt);
+    });
+
+    if(currentValue && sorted.some(function(v){ return v.name === currentValue; })){
+      select.value = currentValue;
+    }
+
+    select.onchange = function(){
+      try{ localStorage.setItem(STORE_KEY, select.value || ""); }catch(e){}
+      stopAudio("Voix changée · appuie sur Écouter");
+      if(select.value){
+        setHelp("<strong>Voix choisie :</strong> " + select.value + ". Appuie sur Écouter pour tester.");
+      }else{
+        setHelp("<strong>Voix automatique :</strong> DIGIY choisit la meilleure voix française disponible.");
+      }
+    };
+  }
+
+  function stopAudio(message){
+    clearTimeout(STATE.watchdog);
+    STATE.watchdog = null;
+    STATE.queue = [];
+    STATE.index = 0;
+    STATE.current = null;
+    STATE.speaking = false;
+    STATE.paused = false;
+    STATE.started = false;
+
+    try{
+      if(canSpeak()){
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.resume();
+      }
+    }catch(e){}
+
+    setButtons("▶ Écouter");
+    setStatus(message || "Lecture arrêtée · texte visible", "");
+    setHelp("<strong>Texte secours :</strong> le pro parle. DIGIY comprend, classe, range et prépare. Le pro confirme. Ensuite seulement DIGIY instruit.");
+  }
+
+  function speakNext(){
+    if(!STATE.queue.length || STATE.index >= STATE.queue.length){
+      STATE.current = null;
+      STATE.speaking = false;
+      STATE.paused = false;
+      setButtons("▶ Écouter");
+      setStatus("✓ Lecture terminée", "");
+      setHelp("<strong>Rappel :</strong> rien ne part tout seul. Validation humaine obligatoire.");
       return;
     }
 
-    if(window.speechSynthesis.paused){
-      window.speechSynthesis.resume();
-      if(play) play.textContent = "⏸ Pause";
-      setStatus("▶ Reprise…");
-      return;
-    }
+    var u = new SpeechSynthesisUtterance(STATE.queue[STATE.index]);
+    STATE.current = u;
+    window.__DIGIY_LAST_UTTERANCE = u;
 
-    if(window.speechSynthesis.speaking){
-      window.speechSynthesis.pause();
-      if(play) play.textContent = "▶ Reprendre";
-      setStatus("⏸ En pause");
-      return;
-    }
-
-    stopSpeech();
-
-    var u = new SpeechSynthesisUtterance(digiySpeakText(SPEAK));
     u.lang = "fr-FR";
-    u.rate = 0.86;
-    u.pitch = 1.02;
+    u.rate = 0.80;
+    u.pitch = 1.0;
     u.volume = 1;
 
-    var voice = pickVoice();
-    if(voice) u.voice = voice;
+    var v = bestVoice();
+    if(v) u.voice = v;
 
     u.onstart = function(){
-      if(play) play.textContent = "⏸ Pause";
-      setStatus("▶ DIGIY explique le HUB…");
-    };
-    u.onend = function(){
-      if(play) play.textContent = "▶ Écouter";
-      setStatus("✓ Lecture terminée");
-    };
-    u.onerror = function(){
-      if(play) play.textContent = "▶ Écouter";
-      setStatus("Lecture interrompue");
+      STATE.started = true;
+      STATE.speaking = true;
+      STATE.paused = false;
+      setButtons("⏸ Pause");
+      setStatus("▶ Lecture en cours… phrase " + (STATE.index + 1) + "/" + STATE.queue.length, "speaking");
+      setHelp("<strong>Lecture douce :</strong> le texte est découpé en phrases pour une voix plus stable.");
     };
 
-    window.speechSynthesis.speak(u);
+    u.onend = function(){
+      STATE.index += 1;
+      setTimeout(speakNext, 120);
+    };
+
+    u.onerror = function(){
+      STATE.current = null;
+      STATE.speaking = false;
+      setButtons("▶ Réessayer");
+      setStatus("Voix bloquée ou interrompue · change de voix si possible", "error");
+      setHelp("<strong>Si la voix est mauvaise ou muette :</strong> choisis une autre voix française dans la liste, enlève le mode silencieux, puis réessaie.");
+    };
+
+    try{
+      window.speechSynthesis.speak(u);
+      setTimeout(function(){ try{ window.speechSynthesis.resume(); }catch(e){} }, 80);
+    }catch(e){
+      setButtons("▶ Réessayer");
+      setStatus("Erreur audio · texte affiché", "error");
+      setHelp("<strong>Le lecteur n’a pas pu démarrer :</strong> le message reste lisible et la demande reste claire.");
+    }
   }
 
-  if(play) play.addEventListener("click", speak);
-  if(stop) stop.addEventListener("click", stopSpeech);
+  function startAudio(){
+    if(!canSpeak()){
+      setStatus("Audio non disponible ici · texte affiché", "error");
+      setHelp("<strong>Audio indisponible ici :</strong> le navigateur ne fournit pas de voix. Le texte reste lisible.");
+      return;
+    }
+
+    populateVoices();
+
+    clearTimeout(STATE.watchdog);
+    try{ window.speechSynthesis.cancel(); }catch(e){}
+
+    STATE.queue = splitText(TEXT);
+    STATE.index = 0;
+    STATE.started = false;
+    STATE.speaking = false;
+    STATE.paused = false;
+
+    setButtons("⏳ Préparation…");
+    setStatus("Préparation de la voix…", "");
+    setHelp("<strong>Préparation :</strong> DIGIY choisit une voix française et découpe le message pour mieux sonner.");
+
+    speakNext();
+
+    STATE.watchdog = setTimeout(function(){
+      if(!STATE.started){
+        setButtons("▶ Réessayer");
+        setStatus("Pas de son détecté · change de voix ou réessaie", "error");
+        setHelp("<strong>Pas de son :</strong> monte le volume, enlève le silencieux, vérifie le Bluetooth. Si la voix Google est mauvaise, choisis une autre voix dans la liste.");
+      }
+    }, 1800);
+  }
+
+  function toggleAudio(){
+    if(!canSpeak()){
+      startAudio();
+      return;
+    }
+
+    try{
+      if(window.speechSynthesis.paused || STATE.paused){
+        window.speechSynthesis.resume();
+        STATE.paused = false;
+        STATE.speaking = true;
+        setButtons("⏸ Pause");
+        setStatus("▶ Reprise audio…", "speaking");
+        return;
+      }
+
+      if(window.speechSynthesis.speaking || STATE.speaking){
+        window.speechSynthesis.pause();
+        STATE.paused = true;
+        STATE.speaking = false;
+        setButtons("▶ Reprendre");
+        setStatus("⏸ Audio en pause", "");
+        return;
+      }
+    }catch(e){}
+
+    startAudio();
+  }
+
+  function bind(){
+    populateVoices();
+
+    playButtons().forEach(function(btn){
+      if(btn.__digiyAudioBound) return;
+      btn.__digiyAudioBound = true;
+      btn.addEventListener("click", function(e){
+        e.preventDefault();
+        toggleAudio();
+      });
+    });
+
+    stopButtons().forEach(function(btn){
+      if(btn.__digiyStopBound) return;
+      btn.__digiyStopBound = true;
+      btn.addEventListener("click", function(e){
+        e.preventDefault();
+        stopAudio();
+      });
+    });
+
+    var toggle = byId("digiyVoiceFloatToggle");
+    var box = boxEl();
+    if(toggle && box && !toggle.__digiyBound){
+      toggle.__digiyBound = true;
+      toggle.addEventListener("click", function(){
+        box.classList.toggle("is-mini");
+        toggle.textContent = box.classList.contains("is-mini") ? "+" : "–";
+      });
+    }
+
+    var voice = bestVoice();
+    if(voice){
+      setStatus("Voix prête : " + voice.name, "");
+      setHelp("<strong>Voix prête :</strong> " + voice.name + ". Si elle sonne mal, choisis une autre voix dans la liste.");
+    }else if(canSpeak()){
+      setStatus("Voix en chargement · appuie sur Écouter", "");
+    }else{
+      setStatus("Audio non disponible ici · texte affiché", "error");
+    }
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", bind);
+  }else{
+    bind();
+  }
 
   if(canSpeak()){
-    window.speechSynthesis.onvoiceschanged = pickVoice;
+    try{
+      window.speechSynthesis.addEventListener("voiceschanged", function(){
+        populateVoices();
+        var voice = bestVoice();
+        if(voice) setStatus("Voix prête : " + voice.name, "");
+      });
+    }catch(e){
+      window.speechSynthesis.onvoiceschanged = function(){
+        populateVoices();
+        var voice = bestVoice();
+        if(voice) setStatus("Voix prête : " + voice.name, "");
+      };
+    }
   }
 
-  window.addEventListener("pagehide", stopSpeech);
+  window.addEventListener("pagehide", function(){ stopAudio("Lecture arrêtée"); });
 })();
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
