@@ -46,6 +46,7 @@ DIGIY leur donne des bras numériques :
 * garder la décision dans les mains du pro.
 
 Le professionnel garde son nom, son client, son argent et sa décision.
+- [ARCHITECTURE_METIERS_PRO.md](./ARCHITECTURE_METIERS_PRO.md) — doctrine centrale de l’Architecture Métiers Pro.
 
 ---
 
