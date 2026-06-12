@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>DIGIY HUB — La Voix du Business en tête</title>
+<title>DIGIY HUB — Choisis ta porte</title>
 <meta name="theme-color" content="#00853f" />
 <meta name="digiy-fix-top-readable" content="paves-ecriture-doctrine-20260530" />
 <meta name="digiy-fix" content="tarifs-vers-activer-mon-module-20260530" />
@@ -12,19 +12,19 @@
 <meta name="digiy-fix-doublon-voix-scroll" content="hub-retire-bloc-nouveaute-vocale-20260612" />
 <meta name="digiy-club-entreprises-audio" content="club-des-entreprises-du-terrain-20260612" />
 <meta name="digiy-fix-voix-business-doublon" content="presentation-unique-20260612" />
-<meta name="description" content="DIGIY HUB — La Voix du Business en tête : le public exprime un besoin, ACTION DIGIY route vers le bon métier, le module prépare, l’humain valide." />
+<meta name="description" content="DIGIY HUB — le rond-point des portes DIGIYLYFE : public, pro, activation, favoris et espace abonné." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://digiy-hub.digiylyfe.com/" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://digiy-hub.digiylyfe.com/" />
-<meta property="og:title" content="DIGIY HUB — La Voix du Business en tête" />
-<meta property="og:description" content="La Voix du Business devient la tête du HUB : besoin public, fiches, contact direct, puis action pro protégée." />
+<meta property="og:title" content="DIGIY HUB — Choisis ta porte" />
+<meta property="og:description" content="Le HUB rassemble les portes DIGIYLYFE : public, pro, activation, favoris et espace abonné." />
 <meta property="og:image" content="https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg" />
 <meta property="og:locale" content="fr_SN" />
 <meta property="og:site_name" content="DIGIYLYFE" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="DIGIY HUB — La Voix du Business en tête" />
-<meta name="twitter:description" content="Le HUB met La Voix du Business en tête : public ouvert, pro protégé, validation humaine." />
+<meta name="twitter:title" content="DIGIY HUB — Choisis ta porte" />
+<meta name="twitter:description" content="Le HUB DIGIYLYFE va droit à l’action : choisir une porte, ouvrir un module, activer ou revenir au site." />
 <meta name="twitter:image" content="https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg" />
 <link href="./icon-192.png" rel="icon" sizes="192x192" />
 <link href="./icon-192.png" rel="apple-touch-icon" />
@@ -974,7 +974,38 @@ button,input{font:inherit}
   line-height:1.35;
 }
 
+
+/* ══ AUDIO DISCRET HUB — PAS DE BLOC DOUBLON, PAS DE SCROLL FORCÉ ══ */
+.sr-only{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+.hubAudioStatusInline{
+  flex:1 1 100%;
+  min-height:20px;
+  color:#fff3cf;
+  font-family:var(--fontA);
+  font-size:12px;
+  font-weight:1000;
+  text-align:right;
+}
+.quickStack button.bigCta{
+  cursor:pointer;
+}
+@media(max-width:760px){
+  .hubAudioStatusInline{text-align:left;}
+}
+
 </style>
+<meta name="digiy-fix-hub-orientation" content="sans-doublon-voix-scroll-20260612" />
+<meta name="digiy-fix-hub-audio" content="audio-discret-sans-bloc-visible-20260612" />
 </head>
 <body>
 <div class="bgNoise" aria-hidden="true"></div>
@@ -985,10 +1016,10 @@ button,input{font:inherit}
         <span class="logo"><img src="https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg" alt="Logo DIGIYLYFE" /></span>
         <span>
           <span class="brandTitle">DIGIY HUB</span>
-          <span class="brandSub">La Voix du Business en tête</span>
+          <span class="brandSub">Choisis ta porte</span>
         </span>
       </a>
-      <span class="badgeHub">🎙️ Voix · tête de route</span>
+      <span class="badgeHub">🧭 HUB · portes utiles</span>
       <nav class="headerActions" aria-label="Actions principales">
         <a class="topBtn gold" href="https://pro-action-digiy.digiylyfe.com/">🎙️ La Voix</a>
         <a class="topBtn green" href="https://digiylyfe.com/">🌍 Site</a>
@@ -1020,62 +1051,50 @@ button,input{font:inherit}
     <section class="heroMini" id="haut">
       <div class="heroCard">
         <div class="heroCopy">
-          <h1>La Voix du Business.<br><span>DIGIY ouvre la route.</span></h1>
-          <div class="hubArchitectureTitle" aria-label="Architecture DIGIY dans le HUB">
-            <h2>La tête de l’architecture DIGIY.</h2>
-            <p>Le public exprime un besoin. Les fiches remontent. Côté pro, ACTION DIGIY prépare la bonne action. L’humain valide.</p>
+          <h1>DIGIY HUB.<br><span>Choisis ta porte.</span></h1>
+          <div class="hubArchitectureTitle" aria-label="Rond-point DIGIY dans le HUB">
+            <h2>Le rond-point des portes DIGIY.</h2>
+            <p>Public, pro, activation, favoris : ici, on ne refait pas le manifeste. On ouvre la bonne entrée.</p>
           </div>
-          <p>Le HUB garde les portes utiles, mais la tête de route devient claire : parler, orienter, afficher les fiches, contacter direct, puis travailler côté pro protégé.</p>
+          <p>La vitrine porte la vision. Le HUB sert l’action : trouver une porte, ouvrir un module, revenir au site, activer un accès ou entrer côté pro.</p>
           <div class="heroPills" aria-label="Repères DIGIY">
-            <span class="pill gold">0% commission</span>
-            <span class="pill green">Paiement direct</span>
+            <span class="pill gold">Portes utiles</span>
+            <span class="pill green">Public + Pro</span>
+            <span class="pill">Activation</span>
             <span class="pill">Favoris rapides</span>
-            <span class="pill">Public + Pro</span>
           </div>
-          </div>
-
         </div>
         <div class="quickStack">
-          <a class="bigCta" href="https://pro-action-digiy.digiylyfe.com/">🎙️ La Voix du Business</a>
-          <a class="bigCta" href="#public">🌍 Entrer côté public</a>
-          <a class="bigCta" href="https://commencer-a-payer.digiylyfe.com/">✍️ S’inscrire côté pro</a>
-          <a class="bigCta dark" href="#pro">🔐 Espace pro protégé</a>
+          <a class="bigCta" href="#public">🌍 Portes publiques</a>
+          <a class="bigCta" href="#pro">🏢 Portes pro</a>
+          <a class="bigCta" href="https://commencer-a-payer.digiylyfe.com/">✍️ Activer mon module</a>
+          <a class="bigCta dark" href="https://pro-action-digiy.digiylyfe.com/">🎙️ Ouvrir la voix</a>
+          <button class="bigCta" id="digiyHubAudioPlay" type="button">🎧 Écouter le HUB</button>
+          <button class="bigCta dark" id="digiyHubAudioStop" type="button">⏹ Stop audio</button>
+          <div class="hubAudioStatusInline" id="digiyHubAudioStatus">Audio prêt · guide court</div>
         </div>
       </div>
     </section>
 
-
-    <section class="hubReader" aria-label="Lecteur DIGIY HUB">
-      <div class="hubReaderTop">
-        <div>
-          <div class="hubReaderKicker">🎧 Lecteur DIGIY · HUB</div>
-          <h2>Comprendre les portes.</h2>
-        </div>
-        <div class="hubReaderActions">
-          <button class="main" id="digiyHubAudioPlay" type="button">▶ Écouter</button>
-          <button class="stop" id="digiyHubAudioStop" type="button">⏹ Stop</button>
-        </div>
-      </div>
-      <div class="hubReaderText" id="digiyHubAudioText">
-        Le HUB est le rond-point DIGIY : il rassemble les portes publiques, les portes pro, les favoris,
-        les tarifs, l’activation et l’espace abonné. La Voix du Business arrive en tête : le client formule, les fiches remontent, le pro retrouve son action,
-        et tout reste direct. Le HUB n’est pas une simple liste de liens : c’est l’entrée vers DIGIYLYFE, le Club des Entreprises du Terrain.
-      </div>
-      <div class="hubReaderStatus" id="digiyHubAudioStatus">Prêt à lire · guide court</div>
-    </section>
-
+    <p class="sr-only" id="digiyHubAudioText">
+      Bienvenue dans le HUB DIGIYLYFE. Ici, on ne refait pas le manifeste : on choisit la bonne porte.
+      Public, pro, favoris, activation ou espace abonné : le HUB sert l’action et enlève les détours.
+      La vitrine porte la vision. Le HUB oriente les mains.
+      DIGIYLYFE reste le Club des Entreprises du Terrain : les professionnels avancent dans une même architecture,
+      parce qu’ensemble, le terrain devient plus fort.
+    </p>
 
     <section class="section" id="favoris">
       <div class="sectionHead">
         <div>
-          <h2 class="sectionTitle">⭐ Favoris <small>La Voix + 2</small></h2>
-          <div class="sectionSub">La Voix du Business reste le favori de départ : elle ouvre le Club des Entreprises du Terrain. Ensuite seulement, le pro s’inscrit, active son module ou entre par PIN pour travailler.</div>
+          <h2 class="sectionTitle">⭐ Favoris <small>3 rapides</small></h2>
+          <div class="sectionSub">Garde ici les trois portes que tu utilises le plus : une publique, une pro, une activation ou une entrée métier.</div>
         </div>
         <div class="tools">
           <button class="miniBtn gold" type="button" onclick="clearFavs()">Réinitialiser</button>
         </div>
       </div>
-      <div class="empty" id="favEmpty">La Voix du Business est le favori de départ du Club des Entreprises du Terrain. Ajoute ensuite deux portes utiles selon ton métier.</div>
+      <div class="empty" id="favEmpty">Ajoute jusqu’à trois portes utiles selon ton métier ou ton usage du jour.</div>
       <div class="grid favoritesGrid" id="favGrid"></div>
     </section>
 
@@ -1164,7 +1183,7 @@ button,input{font:inherit}
   const HOME="https://digiy-hub.digiylyfe.com/";
   const FAVORITES_KEY="digiy_hub_favorites_v3_club_voix";
   const FAVORITES_MAX=3;
-  const DEFAULT_FAVORITES=["public:voixBusiness"];
+  const DEFAULT_FAVORITES=[];
 
   const PUBLIC=[
     {key:"voixBusiness",name:"La Voix du Business",icon:"🎙️",desc:"Porte d’entrée du Club des Entreprises du Terrain : le besoin s’exprime, les fiches remontent, le contact reste direct.",href:"https://pro-action-digiy.digiylyfe.com/"},
@@ -1240,7 +1259,7 @@ button,input{font:inherit}
   function toggleFav(kind,key){
     const id=favId(kind,key), idx=favs.indexOf(id);
     if(idx>=0){favs.splice(idx,1);saveFavs();renderAll();return;}
-    if(favs.length>=FAVORITES_MAX){alert("Maximum 3 favoris : La Voix du Business plus deux portes métier.");return;}
+    if(favs.length>=FAVORITES_MAX){alert("Maximum 3 favoris : garde seulement les portes vraiment utiles.");return;}
     favs.unshift(id);saveFavs();renderAll();
   }
   window.clearFavs=function(){favs=DEFAULT_FAVORITES.slice();saveFavs();renderAll();};
@@ -1293,468 +1312,70 @@ button,input{font:inherit}
   };
   window.menuBackdrop=function(e){if(e && e.target && e.target.id==="menuOverlay") closeMenu();};
   document.addEventListener("keydown",e=>{if(e.key==="Escape") closeMenu();});
+
+  /* DIGIY HUB — audio discret sans bloc visible lourd */
+  const hubAudioPlay=$("digiyHubAudioPlay");
+  const hubAudioStop=$("digiyHubAudioStop");
+  const hubAudioText=$("digiyHubAudioText");
+  const hubAudioStatus=$("digiyHubAudioStatus");
+
+  function setHubAudioStatus(message){
+    if(hubAudioStatus) hubAudioStatus.textContent=message;
+  }
+
+  function pickFrenchVoice(){
+    if(!("speechSynthesis" in window)) return null;
+    const voices=window.speechSynthesis.getVoices() || [];
+    return voices.find(v=>/fr[-_](SN|FR|CA|BE|CH)/i.test(v.lang||"")) ||
+           voices.find(v=>/^fr/i.test(v.lang||"")) ||
+           voices[0] || null;
+  }
+
+  function stopHubAudio(){
+    if("speechSynthesis" in window){
+      window.speechSynthesis.cancel();
+      setHubAudioStatus("Audio arrêté · HUB prêt");
+    }
+  }
+
+  function playHubAudio(){
+    if(!("speechSynthesis" in window)){
+      setHubAudioStatus("Audio indisponible sur ce navigateur");
+      return;
+    }
+    const text=(hubAudioText && hubAudioText.textContent || "").replace(/\s+/g," ").trim();
+    if(!text){
+      setHubAudioStatus("Aucun texte audio disponible");
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(text);
+    const voice=pickFrenchVoice();
+    if(voice) utterance.voice=voice;
+    utterance.lang=(voice && voice.lang) || "fr-FR";
+    utterance.rate=.88;
+    utterance.pitch=.95;
+    utterance.volume=1;
+    utterance.onstart=()=>setHubAudioStatus("Lecture en cours · HUB orientation");
+    utterance.onend=()=>setHubAudioStatus("Lecture terminée · choisis ta porte");
+    utterance.onerror=()=>setHubAudioStatus("Audio interrompu · relance si besoin");
+    window.speechSynthesis.speak(utterance);
+  }
+
+  if(hubAudioPlay) hubAudioPlay.addEventListener("click",playHubAudio);
+  if(hubAudioStop) hubAudioStop.addEventListener("click",stopHubAudio);
+  if("speechSynthesis" in window){
+    window.speechSynthesis.onvoiceschanged=function(){pickFrenchVoice();};
+  }
+
   renderAll();
 })();
 </script>
 
-<div class="voiceFloatReader" id="digiyVoiceFloatReader" aria-label="Lecteur flottant nouveauté DIGIY">
-  <div class="voiceFloatHead">
-    <div class="voiceFloatIcon" aria-hidden="true">🎙️</div>
-    <div class="voiceFloatTitle">
-      <b>🚀 Nouveauté vocale</b>
-      <span>DIGIY entend · classe · range · attend validation</span>
-    </div>
-    <button class="voiceFloatToggle" id="digiyVoiceFloatToggle" type="button" aria-label="Réduire ou ouvrir le lecteur">–</button>
-  </div>
-  <div class="voiceFloatBody">
-    <div class="voiceFloatText">
-      Le pro parle. DIGIY comprend, classe, range et prépare le brouillon.
-      Après confirmation du pro, DIGIY instruit la demande dans le bon module.
-      La voix ouvre l’entrée vers DIGIYLYFE, le Club des Entreprises du Terrain.
-    </div>
-    <div class="voiceFloatActions">
-      <button class="play" id="digiyVoiceFloatPlay" type="button">▶ Écouter</button>
-      <button class="stop" id="digiyVoiceFloatStop" type="button">⏹</button>
-      <a class="voiceFloatOpen" href="https://pro-action-digiy.digiylyfe.com/">🎙️ Ouvrir La Voix du Business</a>
-    </div>
-    <div class="voiceFloatStatus" id="digiyVoiceFloatStatus">Lecteur flottant prêt · appuie sur Écouter</div>
-    <div class="voiceFloatSettings">
-      <label for="digiyVoiceSelect">Choisir la voix du lecteur</label>
-      <select class="voiceFloatSelect" id="digiyVoiceSelect" aria-label="Choisir la voix du lecteur DIGIY">
-        <option value="">Voix automatique DIGIY</option>
-      </select>
-      <div class="voiceFloatQuality">Si la voix Google sonne mal, choisis une autre voix française ici si ton appareil la propose.</div>
-    </div>
-    <div class="voiceFloatHelp" id="digiyVoiceFloatHelp"><strong>Si le son ne sort pas :</strong> monte le volume, enlève le mode silencieux, ou lis le texte affiché. DIGIY ne confirme rien sans le pro.</div>
-  </div>
-</div>
-
-
-
-
-
-<script>
-/* ══ DIGIY AUDIO — LECTEUR DOUX AVEC CHOIX DE VOIX ══ */
-(function(){
-  "use strict";
-
-  var TEXT =
-    "Nouveauté DIGIY. La Voix du Business devient intuitive et vocale. " +
-    "Le professionnel parle naturellement. DIGIY entend, comprend, classe et range l’information dans le bon métier. " +
-    "DIGIY prépare le brouillon. Rien ne part tout seul. Le professionnel vérifie et confirme. " +
-    "Après confirmation du pro, DIGIY instruit la demande dans le module adapté. " +
-    "Le HUB n’est pas une simple liste de portes. C’est l’entrée vers DIGIYLYFE, le Club des Entreprises du Terrain. " +
-    "Les professionnels ne restent pas seuls dans leur coin : ils avancent dans une même architecture, parce qu’ensemble, le terrain devient plus fort. " +
-    "Moins d’écriture, moins de parcours, plus de voix métier, toujours validation humaine.";
-
-  var STORE_KEY = "digiy_reader_voice_name_v1";
-  var STATE = {
-    queue:[],
-    index:0,
-    current:null,
-    speaking:false,
-    paused:false,
-    started:false,
-    watchdog:null
-  };
-  window.__DIGIY_AUDIO_STATE = STATE;
-
-  function byId(id){ return document.getElementById(id); }
-
-  function playButtons(){
-    return [
-      byId("digiyVoiceFloatPlay"),
-      byId("digiyVoiceNewsPlay"),
-      byId("digiyHubAudioPlay")
-    ].filter(Boolean);
-  }
-
-  function stopButtons(){
-    return [
-      byId("digiyVoiceFloatStop"),
-      byId("digiyVoiceNewsStop"),
-      byId("digiyHubAudioStop")
-    ].filter(Boolean);
-  }
-
-  function statusEls(){
-    return [
-      byId("digiyVoiceFloatStatus"),
-      byId("digiyVoiceNewsStatus"),
-      byId("digiyHubAudioStatus")
-    ].filter(Boolean);
-  }
-
-  function boxEl(){ return byId("digiyVoiceFloatReader"); }
-  function helpEl(){ return byId("digiyVoiceFloatHelp"); }
-  function voiceSelect(){ return byId("digiyVoiceSelect"); }
-
-  function setButtons(text){
-    playButtons().forEach(function(btn){ btn.textContent = text; });
-  }
-
-  function setStatus(message, mode){
-    statusEls().forEach(function(el){ el.textContent = message; });
-    var box = boxEl();
-    if(box){
-      box.classList.toggle("is-speaking", mode === "speaking");
-      box.classList.toggle("is-error", mode === "error");
-    }
-  }
-
-  function setHelp(html){
-    var h = helpEl();
-    if(h) h.innerHTML = html;
-  }
-
-  function canSpeak(){
-    return "speechSynthesis" in window && typeof window.SpeechSynthesisUtterance !== "undefined";
-  }
-
-  function rawVoices(){
-    if(!canSpeak()) return [];
-    try{ return window.speechSynthesis.getVoices() || []; }
-    catch(e){ return []; }
-  }
-
-  function cleanText(text){
-    return String(text || "")
-      /*
-        Doctrine audio DIGIY :
-        - DIGIYLYFE = diji laïfe
-        - DIGIY = diji i
-        - ACTION DIGIY = action diji i
-        - QR = Q R · SMS = S M S · WhatsApp = Ouatsap · Wave = Ouève
-        - 0% = zéro pour cent
-        Ordre important : remplacer DIGIYLYFE / ACTION DIGIY avant DIGIY.
-      */
-      .replace(/\bACTION\s+DIGIY\b/g, "action diji i")
-      .replace(/\bDIGIYLYFE\b/g, "diji laïfe")
-      .replace(/\bDIGIY\b/g, "diji i")
-      .replace(/\bWhatsApp\b/g, "Ouatsap")
-      .replace(/\bWave\b/g, "Ouève")
-      .replace(/\bQR\b/g, "Q R")
-      .replace(/\bSMS\b/g, "S M S")
-      .replace(/\bPAY\b/g, "paie")
-      .replace(/\bFCFA\b/g, "F C F A")
-      .replace(/0\s*%/g, "zéro pour cent");
-  }
-
-  function splitText(text){
-    var cleaned = cleanText(text)
-      .replace(/\s+/g, " ")
-      .replace(/([.!?])\s+/g, "$1|")
-      .trim();
-
-    var parts = cleaned.split("|").map(function(x){ return x.trim(); }).filter(Boolean);
-    var chunks = [];
-    var current = "";
-
-    parts.forEach(function(p){
-      if((current + " " + p).trim().length > 180 && current){
-        chunks.push(current.trim());
-        current = p;
-      }else{
-        current = (current + " " + p).trim();
-      }
-    });
-    if(current) chunks.push(current.trim());
-
-    return chunks.length ? chunks : [cleaned];
-  }
-
-  function scoreVoice(v){
-    var name = (v.name || "").toLowerCase();
-    var lang = (v.lang || "").toLowerCase();
-    var score = 0;
-
-    if(lang === "fr-fr") score += 80;
-    else if(lang.indexOf("fr") === 0) score += 65;
-
-    // Souvent meilleures / plus naturelles selon appareils.
-    if(/thomas|amelie|amélie|audrey|aurélie|aurelie|paul|pauline|hortense|denise|henri|claude|monica|virginie/.test(name)) score += 40;
-
-    // Chrome/Google peut sonner sec selon appareil : on le garde, mais pas en premier.
-    if(/google/.test(name)) score -= 18;
-
-    if(v.localService) score += 12;
-    if(/premium|neural|online|natural/.test(name)) score += 18;
-
-    return score;
-  }
-
-  function bestVoice(){
-    var voices = rawVoices();
-    if(!voices.length) return null;
-
-    var selected = voiceSelect() && voiceSelect().value;
-    if(selected){
-      var picked = voices.find(function(v){ return v.name === selected; });
-      if(picked) return picked;
-    }
-
-    var stored = "";
-    try{ stored = localStorage.getItem(STORE_KEY) || ""; }catch(e){}
-    if(stored){
-      var saved = voices.find(function(v){ return v.name === stored; });
-      if(saved) return saved;
-    }
-
-    return voices
-      .filter(function(v){ return /^fr/i.test(v.lang || "") || /fran|fren|français|francais/i.test(v.name || ""); })
-      .sort(function(a,b){ return scoreVoice(b) - scoreVoice(a); })[0]
-      || voices.sort(function(a,b){ return scoreVoice(b) - scoreVoice(a); })[0]
-      || null;
-  }
-
-  function populateVoices(){
-    var select = voiceSelect();
-    if(!select || !canSpeak()) return;
-
-    var voices = rawVoices();
-    var currentValue = "";
-    try{ currentValue = localStorage.getItem(STORE_KEY) || ""; }catch(e){}
-
-    select.innerHTML = '<option value="">Voix automatique DIGIY</option>';
-
-    var sorted = voices.slice().sort(function(a,b){
-      var afr = /^fr/i.test(a.lang || "") ? 0 : 1;
-      var bfr = /^fr/i.test(b.lang || "") ? 0 : 1;
-      if(afr !== bfr) return afr - bfr;
-      return scoreVoice(b) - scoreVoice(a);
-    });
-
-    sorted.forEach(function(v){
-      var opt = document.createElement("option");
-      opt.value = v.name;
-      opt.textContent = v.name + (v.lang ? " · " + v.lang : "");
-      select.appendChild(opt);
-    });
-
-    if(currentValue && sorted.some(function(v){ return v.name === currentValue; })){
-      select.value = currentValue;
-    }
-
-    select.onchange = function(){
-      try{ localStorage.setItem(STORE_KEY, select.value || ""); }catch(e){}
-      stopAudio("Voix changée · appuie sur Écouter");
-      if(select.value){
-        setHelp("<strong>Voix choisie :</strong> " + select.value + ". Appuie sur Écouter pour tester.");
-      }else{
-        setHelp("<strong>Voix automatique :</strong> DIGIY choisit la meilleure voix française disponible.");
-      }
-    };
-  }
-
-  function stopAudio(message){
-    clearTimeout(STATE.watchdog);
-    STATE.watchdog = null;
-    STATE.queue = [];
-    STATE.index = 0;
-    STATE.current = null;
-    STATE.speaking = false;
-    STATE.paused = false;
-    STATE.started = false;
-
-    try{
-      if(canSpeak()){
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.resume();
-      }
-    }catch(e){}
-
-    setButtons("▶ Écouter");
-    setStatus(message || "Lecture arrêtée · texte visible", "");
-    setHelp("<strong>Texte secours :</strong> le pro parle. DIGIY comprend, classe, range et prépare. Le pro confirme. Ensuite seulement DIGIY instruit.");
-  }
-
-  function speakNext(){
-    if(!STATE.queue.length || STATE.index >= STATE.queue.length){
-      STATE.current = null;
-      STATE.speaking = false;
-      STATE.paused = false;
-      setButtons("▶ Écouter");
-      setStatus("✓ Lecture terminée", "");
-      setHelp("<strong>Rappel :</strong> rien ne part tout seul. Validation humaine obligatoire.");
-      return;
-    }
-
-    var u = new SpeechSynthesisUtterance(STATE.queue[STATE.index]);
-    STATE.current = u;
-    window.__DIGIY_LAST_UTTERANCE = u;
-
-    u.lang = "fr-FR";
-    u.rate = 0.80;
-    u.pitch = 1.0;
-    u.volume = 1;
-
-    var v = bestVoice();
-    if(v) u.voice = v;
-
-    u.onstart = function(){
-      STATE.started = true;
-      STATE.speaking = true;
-      STATE.paused = false;
-      setButtons("⏸ Pause");
-      setStatus("▶ Lecture en cours… phrase " + (STATE.index + 1) + "/" + STATE.queue.length, "speaking");
-      setHelp("<strong>Lecture douce :</strong> le texte est découpé en phrases pour une voix plus stable.");
-    };
-
-    u.onend = function(){
-      STATE.index += 1;
-      setTimeout(speakNext, 120);
-    };
-
-    u.onerror = function(){
-      STATE.current = null;
-      STATE.speaking = false;
-      setButtons("▶ Réessayer");
-      setStatus("Voix bloquée ou interrompue · change de voix si possible", "error");
-      setHelp("<strong>Si la voix est mauvaise ou muette :</strong> choisis une autre voix française dans la liste, enlève le mode silencieux, puis réessaie.");
-    };
-
-    try{
-      window.speechSynthesis.speak(u);
-      setTimeout(function(){ try{ window.speechSynthesis.resume(); }catch(e){} }, 80);
-    }catch(e){
-      setButtons("▶ Réessayer");
-      setStatus("Erreur audio · texte affiché", "error");
-      setHelp("<strong>Le lecteur n’a pas pu démarrer :</strong> le message reste lisible et la demande reste claire.");
-    }
-  }
-
-  function startAudio(){
-    if(!canSpeak()){
-      setStatus("Audio non disponible ici · texte affiché", "error");
-      setHelp("<strong>Audio indisponible ici :</strong> le navigateur ne fournit pas de voix. Le texte reste lisible.");
-      return;
-    }
-
-    populateVoices();
-
-    clearTimeout(STATE.watchdog);
-    try{ window.speechSynthesis.cancel(); }catch(e){}
-
-    STATE.queue = splitText(TEXT);
-    STATE.index = 0;
-    STATE.started = false;
-    STATE.speaking = false;
-    STATE.paused = false;
-
-    setButtons("⏳ Préparation…");
-    setStatus("Préparation de la voix…", "");
-    setHelp("<strong>Préparation :</strong> DIGIY choisit une voix française et découpe le message pour mieux sonner.");
-
-    speakNext();
-
-    STATE.watchdog = setTimeout(function(){
-      if(!STATE.started){
-        setButtons("▶ Réessayer");
-        setStatus("Pas de son détecté · change de voix ou réessaie", "error");
-        setHelp("<strong>Pas de son :</strong> monte le volume, enlève le silencieux, vérifie le Bluetooth. Si la voix Google est mauvaise, choisis une autre voix dans la liste.");
-      }
-    }, 1800);
-  }
-
-  function toggleAudio(){
-    if(!canSpeak()){
-      startAudio();
-      return;
-    }
-
-    try{
-      if(window.speechSynthesis.paused || STATE.paused){
-        window.speechSynthesis.resume();
-        STATE.paused = false;
-        STATE.speaking = true;
-        setButtons("⏸ Pause");
-        setStatus("▶ Reprise audio…", "speaking");
-        return;
-      }
-
-      if(window.speechSynthesis.speaking || STATE.speaking){
-        window.speechSynthesis.pause();
-        STATE.paused = true;
-        STATE.speaking = false;
-        setButtons("▶ Reprendre");
-        setStatus("⏸ Audio en pause", "");
-        return;
-      }
-    }catch(e){}
-
-    startAudio();
-  }
-
-  function bind(){
-    populateVoices();
-
-    playButtons().forEach(function(btn){
-      if(btn.__digiyAudioBound) return;
-      btn.__digiyAudioBound = true;
-      btn.addEventListener("click", function(e){
-        e.preventDefault();
-        toggleAudio();
-      });
-    });
-
-    stopButtons().forEach(function(btn){
-      if(btn.__digiyStopBound) return;
-      btn.__digiyStopBound = true;
-      btn.addEventListener("click", function(e){
-        e.preventDefault();
-        stopAudio();
-      });
-    });
-
-    var toggle = byId("digiyVoiceFloatToggle");
-    var box = boxEl();
-    if(toggle && box && !toggle.__digiyBound){
-      toggle.__digiyBound = true;
-      toggle.addEventListener("click", function(){
-        box.classList.toggle("is-mini");
-        toggle.textContent = box.classList.contains("is-mini") ? "+" : "–";
-      });
-    }
-
-    var voice = bestVoice();
-    if(voice){
-      setStatus("Voix prête : " + voice.name, "");
-      setHelp("<strong>Voix prête :</strong> " + voice.name + ". Si elle sonne mal, choisis une autre voix dans la liste.");
-    }else if(canSpeak()){
-      setStatus("Voix en chargement · appuie sur Écouter", "");
-    }else{
-      setStatus("Audio non disponible ici · texte affiché", "error");
-    }
-  }
-
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", bind);
-  }else{
-    bind();
-  }
-
-  if(canSpeak()){
-    try{
-      window.speechSynthesis.addEventListener("voiceschanged", function(){
-        populateVoices();
-        var voice = bestVoice();
-        if(voice) setStatus("Voix prête : " + voice.name, "");
-      });
-    }catch(e){
-      window.speechSynthesis.onvoiceschanged = function(){
-        populateVoices();
-        var voice = bestVoice();
-        if(voice) setStatus("Voix prête : " + voice.name, "");
-      };
-    }
-  }
-
-  window.addEventListener("pagehide", function(){ stopAudio("Lecture arrêtée"); });
-})();
-</script>
 
 </body>
 </html>
+
 
 
 
