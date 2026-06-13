@@ -1,14 +1,17 @@
 /* DIGIY HUB — Service Worker anti-vieille-route
    Objectif :
    - Ne jamais bloquer DIGIY HUB sur un ancien index.html
-   - Corriger PRO EXPLORE vers la nouvelle architecture V2
+   - Corriger les modules PRO V2 vers leur nouvelle racine
    - Garder seulement les fichiers sûrs en cache offline
 */
 
-const CACHE_NAME = "digiy-hub-v1.1.0-pro-explore-v2-root-20260613";
+const CACHE_NAME = "digiy-hub-v1.1.1-pro-driver-v2-root-20260613";
 
 const PRO_EXPLORE_OLD = "https://pro-explore.digiylyfe.com/pin.html";
 const PRO_EXPLORE_NEW = "https://pro-explore.digiylyfe.com/";
+
+const PRO_DRIVER_OLD = "https://pro-driver.digiylyfe.com/pin.html";
+const PRO_DRIVER_NEW = "https://pro-driver.digiylyfe.com/";
 
 const ASSETS = [
   "./offline.html",
@@ -20,13 +23,16 @@ function patchHubHtml(html) {
   return html
     .replaceAll(PRO_EXPLORE_OLD + "?v=hub-pro-explore-20260613", PRO_EXPLORE_NEW)
     .replaceAll(PRO_EXPLORE_OLD + "?v=explore-pin-boost-20260613", PRO_EXPLORE_NEW)
-    .replaceAll(PRO_EXPLORE_OLD, PRO_EXPLORE_NEW);
+    .replaceAll(PRO_EXPLORE_OLD, PRO_EXPLORE_NEW)
+    .replaceAll(PRO_DRIVER_OLD + "?v=hub-pro-driver-20260613", PRO_DRIVER_NEW)
+    .replaceAll(PRO_DRIVER_OLD + "?v=driver-pin-boost-20260613", PRO_DRIVER_NEW)
+    .replaceAll(PRO_DRIVER_OLD, PRO_DRIVER_NEW);
 }
 
 function htmlResponse(body, originalResponse) {
   const headers = new Headers(originalResponse.headers);
   headers.set("content-type", "text/html; charset=utf-8");
-  headers.set("x-digiy-pro-explore-route", "v2-root-20260613");
+  headers.set("x-digiy-pro-routes", "explore-v2-root-driver-v2-root-20260613");
   return new Response(body, {
     status: originalResponse.status,
     statusText: originalResponse.statusText,
@@ -101,7 +107,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  /* Pages HTML : réseau frais + correction route PRO EXPLORE V2 */
+  /* Pages HTML : réseau frais + correction routes PRO V2 */
   if (req.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname === "/") {
     event.respondWith(
       (async () => {
