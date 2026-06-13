@@ -1,19 +1,19 @@
-/* DIGIY HUB — Service Worker stable + safe cache */
-const CACHE_NAME = "digiy-hub-v1.0.8";
+/* DIGIY HUB — Service Worker anti-vieille-route
+   Objectif :
+   - Ne jamais bloquer DIGIY HUB sur un ancien index.html
+   - Forcer les routes fraîches, surtout PRO EXPLORE
+   - Garder seulement les fichiers sûrs en cache offline
+*/
+
+const CACHE_NAME = "digiy-hub-v1.0.9-pro-explore-route-20260613";
 
 const ASSETS = [
-  "./",
-  "./index.html",
   "./offline.html",
-  "./manifest.json",
   "./icon-192.png",
-  "./icon-512.png",
-  "./packs.html",
-  "./paiement-manuel.html",
-  "./temperature-business.html"
+  "./icon-512.png"
 ];
 
-/* Installation : cache safe, un fichier manquant ne casse pas tout */
+/* Installation : cache léger, sans index.html */
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
@@ -27,7 +27,7 @@ self.addEventListener("install", (event) => {
               await cache.put(asset, res.clone());
             }
           } catch (e) {
-            console.warn("[DIGIY SW] asset non caché:", asset, e);
+            console.warn("[DIGIY HUB SW] asset non caché:", asset, e);
           }
         })
       );
@@ -37,7 +37,7 @@ self.addEventListener("install", (event) => {
   );
 });
 
-/* Activation : supprime les anciens caches */
+/* Activation : supprime toutes les anciennes versions cache */
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
@@ -80,12 +80,12 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  /* Pages HTML : réseau d'abord, cache ensuite, offline en dernier */
-  if (req.mode === "navigate") {
+  /* Pages HTML : réseau frais d'abord, cache ensuite, offline en dernier */
+  if (req.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname === "/") {
     event.respondWith(
       (async () => {
         try {
-          const fresh = await fetch(req);
+          const fresh = await fetch(req, { cache: "reload" });
           const cache = await caches.open(CACHE_NAME);
           await cache.put(req, fresh.clone());
           return fresh;
