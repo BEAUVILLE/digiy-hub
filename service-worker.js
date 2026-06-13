@@ -1,17 +1,38 @@
 /* DIGIY HUB — Service Worker anti-vieille-route
    Objectif :
    - Ne jamais bloquer DIGIY HUB sur un ancien index.html
-   - Forcer les routes fraîches, surtout PRO EXPLORE
+   - Corriger PRO EXPLORE vers la nouvelle architecture V2
    - Garder seulement les fichiers sûrs en cache offline
 */
 
-const CACHE_NAME = "digiy-hub-v1.0.9-pro-explore-route-20260613";
+const CACHE_NAME = "digiy-hub-v1.1.0-pro-explore-v2-root-20260613";
+
+const PRO_EXPLORE_OLD = "https://pro-explore.digiylyfe.com/pin.html";
+const PRO_EXPLORE_NEW = "https://pro-explore.digiylyfe.com/";
 
 const ASSETS = [
   "./offline.html",
   "./icon-192.png",
   "./icon-512.png"
 ];
+
+function patchHubHtml(html) {
+  return html
+    .replaceAll(PRO_EXPLORE_OLD + "?v=hub-pro-explore-20260613", PRO_EXPLORE_NEW)
+    .replaceAll(PRO_EXPLORE_OLD + "?v=explore-pin-boost-20260613", PRO_EXPLORE_NEW)
+    .replaceAll(PRO_EXPLORE_OLD, PRO_EXPLORE_NEW);
+}
+
+function htmlResponse(body, originalResponse) {
+  const headers = new Headers(originalResponse.headers);
+  headers.set("content-type", "text/html; charset=utf-8");
+  headers.set("x-digiy-pro-explore-route", "v2-root-20260613");
+  return new Response(body, {
+    status: originalResponse.status,
+    statusText: originalResponse.statusText,
+    headers
+  });
+}
 
 /* Installation : cache léger, sans index.html */
 self.addEventListener("install", (event) => {
@@ -80,18 +101,36 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  /* Pages HTML : réseau frais d'abord, cache ensuite, offline en dernier */
+  /* Pages HTML : réseau frais + correction route PRO EXPLORE V2 */
   if (req.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname === "/") {
     event.respondWith(
       (async () => {
+        const cache = await caches.open(CACHE_NAME);
+
         try {
           const fresh = await fetch(req, { cache: "reload" });
-          const cache = await caches.open(CACHE_NAME);
+          const contentType = fresh.headers.get("content-type") || "";
+
+          if (contentType.includes("text/html")) {
+            const patchedHtml = patchHubHtml(await fresh.clone().text());
+            const patched = htmlResponse(patchedHtml, fresh);
+            await cache.put(req, patched.clone());
+            return patched;
+          }
+
           await cache.put(req, fresh.clone());
           return fresh;
         } catch (e) {
           const cached = await caches.match(req);
-          return cached || caches.match("./offline.html");
+          if (cached) {
+            const contentType = cached.headers.get("content-type") || "";
+            if (contentType.includes("text/html")) {
+              const patchedHtml = patchHubHtml(await cached.clone().text());
+              return htmlResponse(patchedHtml, cached);
+            }
+            return cached;
+          }
+          return caches.match("./offline.html");
         }
       })()
     );
