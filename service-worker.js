@@ -5,7 +5,7 @@
    - Garder seulement les fichiers sûrs en cache offline
 */
 
-const CACHE_NAME = "digiy-hub-v1.1.2-pro-v2-mono-fichier-routes-20260613";
+const CACHE_NAME = "digiy-hub-v1.1.3-pro-loc-v2-mono-fichier-root-20260613";
 
 const PRO_EXPLORE_OLD = "https://pro-explore.digiylyfe.com/pin.html";
 const PRO_EXPLORE_NEW = "https://pro-explore.digiylyfe.com/";
@@ -18,6 +18,9 @@ const PRO_MARKET_NEW = "https://pro-market.digiylyfe.com/";
 
 const PRO_BUILD_OLD = "https://pro-build.digiylyfe.com/pin.html";
 const PRO_BUILD_NEW = "https://pro-build.digiylyfe.com/";
+
+const PRO_LOC_OLD = "https://pro-loc.digiylyfe.com/pin.html";
+const PRO_LOC_NEW = "https://pro-loc.digiylyfe.com/";
 
 const ASSETS = [
   "./offline.html",
@@ -38,13 +41,16 @@ function patchHubHtml(html) {
     .replaceAll(PRO_MARKET_OLD, PRO_MARKET_NEW)
     .replaceAll(PRO_BUILD_OLD + "?v=hub-pro-build-20260613", PRO_BUILD_NEW)
     .replaceAll(PRO_BUILD_OLD + "?v=build-pin-boost-20260613", PRO_BUILD_NEW)
-    .replaceAll(PRO_BUILD_OLD, PRO_BUILD_NEW);
+    .replaceAll(PRO_BUILD_OLD, PRO_BUILD_NEW)
+    .replaceAll(PRO_LOC_OLD + "?v=hub-pro-loc-20260613", PRO_LOC_NEW)
+    .replaceAll(PRO_LOC_OLD + "?v=loc-pin-boost-20260613", PRO_LOC_NEW)
+    .replaceAll(PRO_LOC_OLD, PRO_LOC_NEW);
 }
 
 function htmlResponse(body, originalResponse) {
   const headers = new Headers(originalResponse.headers);
   headers.set("content-type", "text/html; charset=utf-8");
-  headers.set("x-digiy-pro-routes", "v2-mono-fichier-root-20260613");
+  headers.set("x-digiy-pro-routes", "v2-mono-fichier-root-loc-20260613");
   return new Response(body, {
     status: originalResponse.status,
     statusText: originalResponse.statusText,
