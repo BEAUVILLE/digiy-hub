@@ -1,17 +1,23 @@
 /* DIGIY HUB — Service Worker anti-vieille-route
    Objectif :
    - Ne jamais bloquer DIGIY HUB sur un ancien index.html
-   - Corriger les modules PRO V2 vers leur nouvelle racine
+   - Corriger les modules PRO V2 vers leur nouvelle racine mono-fichier
    - Garder seulement les fichiers sûrs en cache offline
 */
 
-const CACHE_NAME = "digiy-hub-v1.1.1-pro-driver-v2-root-20260613";
+const CACHE_NAME = "digiy-hub-v1.1.2-pro-v2-mono-fichier-routes-20260613";
 
 const PRO_EXPLORE_OLD = "https://pro-explore.digiylyfe.com/pin.html";
 const PRO_EXPLORE_NEW = "https://pro-explore.digiylyfe.com/";
 
 const PRO_DRIVER_OLD = "https://pro-driver.digiylyfe.com/pin.html";
 const PRO_DRIVER_NEW = "https://pro-driver.digiylyfe.com/";
+
+const PRO_MARKET_OLD = "https://pro-market.digiylyfe.com/pin.html";
+const PRO_MARKET_NEW = "https://pro-market.digiylyfe.com/";
+
+const PRO_BUILD_OLD = "https://pro-build.digiylyfe.com/pin.html";
+const PRO_BUILD_NEW = "https://pro-build.digiylyfe.com/";
 
 const ASSETS = [
   "./offline.html",
@@ -26,13 +32,19 @@ function patchHubHtml(html) {
     .replaceAll(PRO_EXPLORE_OLD, PRO_EXPLORE_NEW)
     .replaceAll(PRO_DRIVER_OLD + "?v=hub-pro-driver-20260613", PRO_DRIVER_NEW)
     .replaceAll(PRO_DRIVER_OLD + "?v=driver-pin-boost-20260613", PRO_DRIVER_NEW)
-    .replaceAll(PRO_DRIVER_OLD, PRO_DRIVER_NEW);
+    .replaceAll(PRO_DRIVER_OLD, PRO_DRIVER_NEW)
+    .replaceAll(PRO_MARKET_OLD + "?v=hub-pro-market-20260613", PRO_MARKET_NEW)
+    .replaceAll(PRO_MARKET_OLD + "?v=market-pin-boost-20260613", PRO_MARKET_NEW)
+    .replaceAll(PRO_MARKET_OLD, PRO_MARKET_NEW)
+    .replaceAll(PRO_BUILD_OLD + "?v=hub-pro-build-20260613", PRO_BUILD_NEW)
+    .replaceAll(PRO_BUILD_OLD + "?v=build-pin-boost-20260613", PRO_BUILD_NEW)
+    .replaceAll(PRO_BUILD_OLD, PRO_BUILD_NEW);
 }
 
 function htmlResponse(body, originalResponse) {
   const headers = new Headers(originalResponse.headers);
   headers.set("content-type", "text/html; charset=utf-8");
-  headers.set("x-digiy-pro-routes", "explore-v2-root-driver-v2-root-20260613");
+  headers.set("x-digiy-pro-routes", "v2-mono-fichier-root-20260613");
   return new Response(body, {
     status: originalResponse.status,
     statusText: originalResponse.statusText,
@@ -107,7 +119,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  /* Pages HTML : réseau frais + correction routes PRO V2 */
+  /* Pages HTML : réseau frais + correction routes PRO V2 mono-fichier */
   if (req.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname === "/") {
     event.respondWith(
       (async () => {
