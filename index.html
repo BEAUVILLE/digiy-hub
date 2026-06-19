@@ -990,20 +990,8 @@ button,input{font:inherit}
   white-space:nowrap!important;
   border:0!important;
 }
-.hubAudioStatusInline{
-  flex:1 1 100%;
-  min-height:20px;
-  color:#fff3cf;
-  font-family:var(--fontA);
-  font-size:12px;
-  font-weight:1000;
-  text-align:right;
-}
 .quickStack button.bigCta{
   cursor:pointer;
-}
-@media(max-width:760px){
-  .hubAudioStatusInline{text-align:left;}
 }
 
 </style>
@@ -1072,19 +1060,12 @@ button,input{font:inherit}
           <a class="bigCta" href="#pro">🏢 Portes pro</a>
           <a class="bigCta" href="https://commencer-a-payer.digiylyfe.com/">✍️ Activer mon module</a>
           <a class="bigCta dark" href="https://pro-action-digiy.digiylyfe.com/">🎙️ Ouvrir la voix</a>
-          <button class="bigCta" id="digiyHubAudioPlay" type="button">🎧 Écouter le HUB</button>
-          <button class="bigCta dark" id="digiyHubAudioStop" type="button">⏹ Stop audio</button>
-          <div class="hubAudioStatusInline" id="digiyHubAudioStatus">Audio prêt · guide court</div>
+
         </div>
       </div>
     </section>
 
-    <p class="sr-only" id="digiyHubAudioText">
-      Bienvenue dans le HUB DIGIYLYFE — le Club des Métiers du Terrain.
-      Ici, pas de détour : tu choisis ta porte, tu entres dans ton module, tu gardes la main sur ton client, ton argent et ta décision.
-      DIGIYLYFE est l’architecture des bras numériques des pros du terrain — de Saly à Sarlat.
-      Chauffeurs, artisans, commerçants, loueurs, recruteurs : chaque métier a ses bras numériques.
-      La voix ouvre. Les fiches remontent. L’humain choisit. Le terrain avance.</p>
+    
 
     <section class="section" id="favoris">
       <div class="sectionHead">
@@ -1314,68 +1295,12 @@ button,input{font:inherit}
   window.menuBackdrop=function(e){if(e && e.target && e.target.id==="menuOverlay") closeMenu();};
   document.addEventListener("keydown",e=>{if(e.key==="Escape") closeMenu();});
 
-  /* DIGIY HUB — audio discret sans bloc visible lourd */
-  const hubAudioPlay=$("digiyHubAudioPlay");
-  const hubAudioStop=$("digiyHubAudioStop");
-  const hubAudioText=$("digiyHubAudioText");
-  const hubAudioStatus=$("digiyHubAudioStatus");
-
-  function setHubAudioStatus(message){
-    if(hubAudioStatus) hubAudioStatus.textContent=message;
-  }
-
-  function pickFrenchVoice(){
-    if(!("speechSynthesis" in window)) return null;
-    const voices=window.speechSynthesis.getVoices() || [];
-    return voices.find(v=>/fr[-_](SN|FR|CA|BE|CH)/i.test(v.lang||"")) ||
-           voices.find(v=>/^fr/i.test(v.lang||"")) ||
-           voices[0] || null;
-  }
-
-  function stopHubAudio(){
-    if("speechSynthesis" in window){
-      window.speechSynthesis.cancel();
-      setHubAudioStatus("Audio arrêté · HUB prêt");
-    }
-  }
-
-  function playHubAudio(){
-    if(!("speechSynthesis" in window)){
-      setHubAudioStatus("Audio indisponible sur ce navigateur");
-      return;
-    }
-    const text=(hubAudioText && hubAudioText.textContent || "").replace(/\s+/g," ").trim();
-    if(!text){
-      setHubAudioStatus("Aucun texte audio disponible");
-      return;
-    }
-    window.speechSynthesis.cancel();
-    const utterance=new SpeechSynthesisUtterance(text);
-    const voice=pickFrenchVoice();
-    if(voice) utterance.voice=voice;
-    utterance.lang=(voice && voice.lang) || "fr-FR";
-    utterance.rate=.88;
-    utterance.pitch=.95;
-    utterance.volume=1;
-    utterance.onstart=()=>setHubAudioStatus("Lecture en cours · HUB orientation");
-    utterance.onend=()=>setHubAudioStatus("Lecture terminée · choisis ta porte");
-    utterance.onerror=()=>setHubAudioStatus("Audio interrompu · relance si besoin");
-    window.speechSynthesis.speak(utterance);
-  }
-
-  if(hubAudioPlay) hubAudioPlay.addEventListener("click",playHubAudio);
-  if(hubAudioStop) hubAudioStop.addEventListener("click",stopHubAudio);
-  if("speechSynthesis" in window){
-    window.speechSynthesis.onvoiceschanged=function(){pickFrenchVoice();};
-  }
-
   renderAll();
 })();
 </script>
 <script src="./digiy-audio-mix-v1.js?v=20260614-1"></script>
 </body>
 </html>
-
 
 
 
