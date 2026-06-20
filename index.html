@@ -15,6 +15,7 @@
 <meta name="digiy-fix-pro-explore-v2-route" content="cockpit-direct-root-20260613" />
 <meta name="digiy-pro-v2-routes-hardcoded" content="explore-driver-market-build-loc-root-20260613" />
 <meta name="digiy-pro-v2-routes-hardcoded-final" content="market-loc-driver-build-explore-root-20260613" />
+<meta name="digiy-bilingual-hub" content="fr-en-same-interface-20260620" />
 <meta name="description" content="DIGIY HUB — le Club des Métiers du Terrain : chauffeurs, artisans, commerçants, loueurs. Les bras numériques des pros, de Saly à Sarlat." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://digiy-hub.digiylyfe.com/" />
@@ -994,6 +995,48 @@ button,input{font:inherit}
   cursor:pointer;
 }
 
+
+/* ══ DIGIY HUB · Porte langue FR / EN ══ */
+.langSwitch{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  min-height:42px;
+  padding:4px;
+  border-radius:999px;
+  border:1px solid rgba(246,196,83,.36);
+  background:rgba(255,255,255,.07);
+  box-shadow:0 8px 22px rgba(0,0,0,.16);
+}
+.langSwitch button{
+  min-height:32px;
+  min-width:46px;
+  border:0;
+  border-radius:999px;
+  background:transparent;
+  color:rgba(248,250,252,.76);
+  font-family:var(--fontA);
+  font-size:11px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.langSwitch button.active{
+  background:linear-gradient(135deg,var(--gold),#22c55e);
+  color:#06140f;
+  box-shadow:0 6px 16px rgba(0,0,0,.20);
+}
+@media(max-width:760px){
+  .langSwitch{
+    order:3;
+    width:100%;
+    justify-content:center;
+    min-height:38px;
+    margin-top:2px;
+  }
+  .langSwitch button{flex:1;min-height:34px;}
+  .topbar{flex-wrap:wrap;}
+}
+
 </style>
 <meta name="digiy-fix-hub-orientation" content="sans-doublon-voix-scroll-20260612" />
 <meta name="digiy-fix-hub-audio" content="audio-discret-sans-bloc-visible-20260612" />
@@ -1011,6 +1054,10 @@ button,input{font:inherit}
         </span>
       </a>
       <span class="badgeHub">🧭 Club des Métiers du Terrain</span>
+      <span class="langSwitch" aria-label="Choisir la langue / Choose language">
+        <button type="button" data-lang-btn="fr" onclick="digiySetLang('fr')" aria-label="Version française">🇫🇷 FR</button>
+        <button type="button" data-lang-btn="en" onclick="digiySetLang('en')" aria-label="English version">🇬🇧 EN</button>
+      </span>
       <nav class="headerActions" aria-label="Actions principales">
         <a class="topBtn gold" href="https://pro-action-digiy.digiylyfe.com/">🎙️ La Voix</a>
         <a class="topBtn green" href="https://digiylyfe.com/">🌍 Site</a>
@@ -1298,8 +1345,229 @@ button,input{font:inherit}
   renderAll();
 })();
 </script>
+
+<script>
+(function(){
+  "use strict";
+  const LANG_KEY="digiy_hub_lang_v1";
+  const META={
+    fr:{
+      title:"DIGIY HUB — Club des Métiers du Terrain",
+      desc:"DIGIY HUB — le Club des Métiers du Terrain : chauffeurs, artisans, commerçants, loueurs. Les bras numériques des pros, de Saly à Sarlat.",
+      ogTitle:"DIGIY HUB — Club des Métiers du Terrain",
+      ogDesc:"Le Club des Métiers du Terrain : les bras numériques des pros. La voix ouvre, les fiches remontent, le pro garde la main.",
+      locale:"fr_SN"
+    },
+    en:{
+      title:"DIGIY HUB — Ground Business Club",
+      desc:"DIGIY HUB — the Ground Business Club: drivers, artisans, merchants and hosts. Digital arms for local professionals, from Saly to Sarlat.",
+      ogTitle:"DIGIY HUB — Ground Business Club",
+      ogDesc:"The Ground Business Club: digital arms for local professionals. Voice opens the doors, cards rise up, and the pro stays in control.",
+      locale:"en_US"
+    }
+  };
+  const FR_EN={
+    "Club des Métiers du Terrain":"Ground Business Club",
+    "🧭 Club des Métiers du Terrain":"🧭 Ground Business Club",
+    "🎙️ La Voix":"🎙️ Voice",
+    "🌍 Site":"🌍 Website",
+    "✍️ Activer mon module":"✍️ Activate my module",
+    "Je clique.":"I click.",
+    "Je parle.":"I speak.",
+    "J’existe.":"I exist.",
+    "Je suis visible.":"I am visible.",
+    "Je suis reconnu.":"I am recognized.",
+    "J’avance.":"I move forward.",
+    "🎙️ La Voix du Business":"🎙️ The Voice of Business",
+    "⭐ Favoris":"⭐ Favorites",
+    "🌍 Public":"🌍 Public",
+    "🏢 Pro":"🏢 Pro",
+    "← Site":"← Website",
+    "DIGIY HUB.":"DIGIY HUB.",
+    "Club des Métiers du Terrain.":"Ground Business Club.",
+    "L'architecture des bras numériques DIGIY.":"The architecture of DIGIY digital arms.",
+    "DIGIYLYFE n'est pas une appli de plus : c'est le Club des Métiers du Terrain. La voix ouvre. Les fiches remontent. Le pro garde la main.":"DIGIYLYFE is not just another app: it is the Ground Business Club. Voice opens the doors. Cards rise up. The pro stays in control.",
+    "Chauffeurs, artisans, commerçants, loueurs, recruteurs : chaque métier a ses bras numériques. Le HUB ouvre la bonne porte — sans détour, sans commission, sans intermédiaire.":"Drivers, artisans, merchants, hosts and recruiters: every trade has its digital arms. The HUB opens the right door — no detour, no commission, no middleman.",
+    "Portes utiles":"Useful doors",
+    "Public + Pro":"Public + Pro",
+    "Activation":"Activation",
+    "Favoris rapides":"Quick favorites",
+    "🌍 Portes publiques":"🌍 Public doors",
+    "🏢 Portes pro":"🏢 Pro doors",
+    "🎙️ Ouvrir la voix":"🎙️ Open voice",
+    "3 rapides":"3 quick",
+    "Garde ici les trois portes que tu utilises le plus : une publique, une pro, une activation ou une entrée métier.":"Keep your three most-used doors here: one public, one pro, one activation or trade entry.",
+    "Réinitialiser":"Reset",
+    "Ajoute jusqu’à 3 portes du Club selon ton métier : une publique, une pro, une action.":"Add up to 3 Club doors based on your trade: one public, one pro, one action.",
+    "Pour trouver, réserver, acheter, contacter, écouter ou découvrir.":"To find, book, buy, contact, listen or discover.",
+    "Voir le pro ↓":"See pro ↓",
+    "Pour les pros : d’abord s’inscrire ou activer, ensuite entrer par PIN dans le module protégé.":"For pros: first sign up or activate, then enter the protected module with your PIN.",
+    "Activer mon module":"Activate my module",
+    "Public ↑":"Public ↑",
+    "✍️ S’inscrire côté pro":"✍️ Sign up as a pro",
+    "🌍 Retour site":"🌍 Back to website",
+    "🔐 Espace pro":"🔐 Pro space",
+    "· Club des Métiers du Terrain · les bras numériques gardent la main au pro.":"· Ground Business Club · digital arms keep the pro in control.",
+    "Remonter":"Back to top",
+    "Site":"Website",
+    "☰ Portes DIGIY":"☰ DIGIY Doors",
+    "Club des Métiers du Terrain : choisis ta porte, entre dans ton module.":"Ground Business Club: choose your door, enter your module.",
+    "🌍 Portes publiques":"🌍 Public doors",
+    "🏢 Portes pro":"🏢 Pro doors",
+    "✍️ S’inscrire côté pro":"✍️ Sign up as a pro",
+    "← Retour site":"← Back to website",
+    "📰 Revue":"📰 Review",
+    "La Voix":"Voice",
+    "Favoris":"Favorites",
+    "Menu":"Menu",
+    "ACTION DIGIY PRO":"ACTION DIGIY PRO",
+    "La Voix du Business":"The Voice of Business",
+    "La porte d’entrée du Club des Métiers du Terrain. Tu parles, DIGIY oriente, les fiches remontent. Le pro garde la main.":"The entrance to the Ground Business Club. You speak, DIGIY routes, the cards rise up. The pro stays in control.",
+    "Découvrir le territoire":"Discover the territory",
+    "Découvre les lieux et les spots du territoire. Le terrain se montre.":"Discover places and spots across the territory. The field shows itself.",
+    "Trouver un chauffeur":"Find a driver",
+    "Un chauffeur du Club, un trajet direct. Zéro commission, contact réel.":"A Club driver, a direct ride. Zero commission, real contact.",
+    "Nos chauffeurs":"Our drivers",
+    "Les chauffeurs du Club : profils, style, présence terrain. Tu choisis, tu contactes.":"Club drivers: profiles, style and field presence. You choose, you contact.",
+    "Trouver où dormir":"Find a place to stay",
+    "Logements du Club : propriétaire direct, zéro intermédiaire. Tu réserves, il garde la main.":"Club stays: direct owner, zero middleman. You book, the owner stays in control.",
+    "Réserver":"Book",
+    "Réserve un créneau directement chez le pro. Simple, direct, sans détour.":"Book a slot directly with the pro. Simple, direct, no detour.",
+    "Restaurants":"Restaurants",
+    "Restaurants validés : carte, photos, contact direct. Le restaurateur garde sa relation.":"Validated restaurants: menu, photos, direct contact. The restaurant keeps the relationship.",
+    "Mon commerce":"My shop",
+    "Les commerces du Club : vitrine visible, contact simple. Le commerçant garde son client.":"Club shops: visible storefront, simple contact. The merchant keeps the client.",
+    "Les boutiques":"Shops",
+    "Le marché local numérisé : produits visibles, vendeur direct, zéro commission.":"The local market made digital: visible products, direct seller, zero commission.",
+    "Trouver un artisan":"Find an artisan",
+    "Les artisans du Club : travaux, dépannage, services. L’artisan reste le patron.":"Club artisans: works, repairs and services. The artisan remains the boss.",
+    "Trouver du travail":"Find work",
+    "Missions et opportunités du terrain. Le terrain recrute en direct, sans intermédiaire.":"Field missions and opportunities. The field recruits directly, without a middleman.",
+    "NDIMBAL Express":"NDIMBAL Express",
+    "Missions courtes validées par DIGIY. Dépôt direct, contact direct, 0 % commission.":"Short missions validated by DIGIY. Direct submission, direct contact, 0% commission.",
+    "Mon argent":"My money",
+    "Ton argent, ta trace. Paiement direct, suivi clair. Le pro garde la main sur ses finances.":"Your money, your trace. Direct payment, clear tracking. The pro stays in control of finances.",
+    "Publier une annonce":"Post an ad",
+    "Publie, diffuse, touche le quartier. Ton annonce reste la tienne.":"Post, share, reach the neighborhood. Your ad remains yours.",
+    "La carte":"The map",
+    "La carte du terrain : pros, lieux, services autour de toi. Le Club visible sur la carte.":"The field map: pros, places and services around you. The Club visible on the map.",
+    "Écouter":"Listen",
+    "Tous les textes DIGIY en audio. Pour ceux qui préfèrent écouter.":"All DIGIY texts in audio. For those who prefer listening.",
+    "Mon assistant DIGIY":"My DIGIY assistant",
+    "L’assistant du Club : une question, la bonne porte. Simple, humain, direct.":"The Club assistant: one question, the right door. Simple, human, direct.",
+    "Entrée protégée côté abonné : parle métier, DIGIY route, le module prépare, tu valides.":"Protected subscriber entry: speak your trade, DIGIY routes, the module prepares, you validate.",
+    "S’inscrire côté pro":"Sign up as a pro",
+    "Rejoins le Club des Métiers du Terrain. Un module, un abonnement fixe, 0 % commission.":"Join the Ground Business Club. One module, one fixed subscription, 0% commission.",
+    "Mon activité":"My activity",
+    "Ton espace membre du Club : modules, activité, suivi.":"Your Club member space: modules, activity, tracking.",
+    "Ouvre ton bras numérique. Un métier, un module, tu gardes la main.":"Open your digital arm. One trade, one module, you stay in control.",
+    "Nos tarifs":"Our prices",
+    "Abonnement fixe, sans surprise. Choisis ton métier, active ton module.":"Fixed subscription, no surprise. Choose your trade, activate your module.",
+    "La caisse du terrain : encaisser, suivre, garder la main sur chaque vente.":"The field cash register: collect, track and control every sale.",
+    "Je vends":"I sell",
+    "Ton marché numérique : produits visibles, contact direct, zéro intermédiaire.":"Your digital market: visible products, direct contact, zero middleman.",
+    "Je loue":"I rent",
+    "Tes logements en ligne, tes clients en direct. Tu loues, tu gardes ta relation.":"Your stays online, your clients direct. You rent, you keep the relationship.",
+    "Je réserve":"I take bookings",
+    "Ton planning terrain : créneaux, rendez-vous, clients — zéro détour.":"Your field schedule: slots, appointments, clients — zero detour.",
+    "Mon restaurant":"My restaurant",
+    "Module en veille stratégique. Les restaurants sont servis via Mon commerce (CAISSE PRO) en attendant.":"Strategic standby module. Restaurants are served through My Shop (PRO CASH REGISTER) for now.",
+    "Je conduis":"I drive",
+    "Ton cockpit chauffeur : trajets, tarifs, profil visible. Tu conduis, tu gardes ta course.":"Your driver cockpit: rides, prices, visible profile. You drive, you keep your ride.",
+    "Je recrute":"I recruit",
+    "Tes offres terrain, tes candidats directs. Tu recrutes sans passer par un intermédiaire.":"Your field offers, your direct candidates. You recruit without a middleman.",
+    "NDIMBAL Express — Dépôt":"NDIMBAL Express — Submission",
+    "Déposer une mission courte via PIN. Validation DIGIY séparée.":"Submit a short mission by PIN. Separate DIGIY validation.",
+    "Mes services":"My services",
+    "Tes services visibles, tes demandes directes. L’artisan garde son client.":"Your visible services, your direct requests. The artisan keeps the client.",
+    "Me faire connaître":"Get discovered",
+    "Ton lieu sur la carte, ton territoire visible. Le public te trouve, tu gardes le contact.":"Your place on the map, your territory visible. The public finds you, you keep the contact.",
+    "Tes entrées, tes sorties, ton reste. La finance terrain dans ta poche.":"Your income, your expenses, your remaining balance. Field finance in your pocket.",
+    "FAVORI":"FAVORITE",
+    "↗ Ouvrir":"↗ Open"
+  };
+  const EN_FR=Object.fromEntries(Object.entries(FR_EN).map(([fr,en])=>[en,fr]));
+  let applying=false;
+  function preserveSpace(original,replacement){
+    const lead=(original.match(/^\s*/)||[""])[0];
+    const trail=(original.match(/\s*$/)||[""])[0];
+    return lead+replacement+trail;
+  }
+  function translateTextNode(node,lang){
+    const raw=node.nodeValue;
+    const key=raw.trim();
+    if(!key)return;
+    const map=lang==="en"?FR_EN:EN_FR;
+    if(map[key] && map[key]!==key) node.nodeValue=preserveSpace(raw,map[key]);
+  }
+  function translateAttributes(el,lang){
+    const map=lang==="en"?FR_EN:EN_FR;
+    ["aria-label","title","alt"].forEach(attr=>{
+      const val=el.getAttribute && el.getAttribute(attr);
+      if(!val)return;
+      let next=val;
+      Object.keys(map).sort((a,b)=>b.length-a.length).forEach(k=>{
+        if(next.includes(k)) next=next.split(k).join(map[k]);
+      });
+      if(next!==val)el.setAttribute(attr,next);
+    });
+  }
+  function updateMeta(lang){
+    const m=META[lang]||META.fr;
+    document.documentElement.lang=lang==="en"?"en":"fr";
+    document.title=m.title;
+    const desc=document.querySelector('meta[name="description"]'); if(desc)desc.setAttribute("content",m.desc);
+    const ogTitle=document.querySelector('meta[property="og:title"]'); if(ogTitle)ogTitle.setAttribute("content",m.ogTitle);
+    const ogDesc=document.querySelector('meta[property="og:description"]'); if(ogDesc)ogDesc.setAttribute("content",m.ogDesc);
+    const ogLocale=document.querySelector('meta[property="og:locale"]'); if(ogLocale)ogLocale.setAttribute("content",m.locale);
+    const twTitle=document.querySelector('meta[name="twitter:title"]'); if(twTitle)twTitle.setAttribute("content",m.ogTitle);
+    const twDesc=document.querySelector('meta[name="twitter:description"]'); if(twDesc)twDesc.setAttribute("content",m.desc);
+  }
+  function updateButtons(lang){
+    document.querySelectorAll('[data-lang-btn]').forEach(btn=>{
+      const active=btn.getAttribute('data-lang-btn')===lang;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-pressed',active?'true':'false');
+    });
+  }
+  function applyLang(lang){
+    if(applying)return;
+    applying=true;
+    try{
+      updateMeta(lang);
+      updateButtons(lang);
+      const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode(node){
+        const parent=node.parentElement;
+        if(!parent)return NodeFilter.FILTER_REJECT;
+        if(parent.closest('script,style,textarea,input,select'))return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }});
+      const nodes=[];
+      while(walker.nextNode())nodes.push(walker.currentNode);
+      nodes.forEach(n=>translateTextNode(n,lang));
+      document.querySelectorAll('[aria-label],[title],[alt]').forEach(el=>translateAttributes(el,lang));
+    }finally{
+      applying=false;
+    }
+  }
+  window.digiySetLang=function(lang){
+    const next=lang==="en"?"en":"fr";
+    try{localStorage.setItem(LANG_KEY,next);}catch(e){}
+    applyLang(next);
+  };
+  const saved=(function(){try{return localStorage.getItem(LANG_KEY)||"fr";}catch(e){return "fr";}})();
+  window.digiySetLang(saved==="en"?"en":"fr");
+  const mo=new MutationObserver(function(){
+    const lang=(function(){try{return localStorage.getItem(LANG_KEY)||"fr";}catch(e){return "fr";}})();
+    if(lang==="en")applyLang("en");
+  });
+  mo.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["aria-label","title","alt"]});
+})();
+</script>
+
 </body>
 </html>
+
 
 
 
