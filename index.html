@@ -1042,6 +1042,7 @@ button,input{font:inherit}
 </style>
 <meta name="digiy-fix-hub-orientation" content="sans-doublon-voix-scroll-20260612" />
 <meta name="digiy-fix-hub-audio" content="audio-discret-sans-bloc-visible-20260612" />
+<meta name="digiy-carnet-pro-routes" content="public-et-pro-carnet-20260712" />
 </head>
 <body>
 <div class="bgNoise" aria-hidden="true"></div>
@@ -1229,7 +1230,7 @@ button,input{font:inherit}
     {key:"build",name:"Trouver un artisan",icon:"🏗️",desc:"Les artisans du Club : travaux, dépannage, services. L’artisan reste le patron.",href:"https://build.digiylyfe.com/"},
     {key:"jobs",name:"Trouver du travail",icon:"💼",desc:"Missions et opportunités du terrain. Le terrain recrute en direct, sans intermédiaire.",href:"https://jobs.digiylyfe.com/"},
     {key:"ndimbalExpress",name:"NDIMBAL Express",icon:"⚡",desc:"Annonces terrain validées par DIGIY : 7 jours, 15 jours ou 30 jours. Ticket durée, contact direct, 0 % commission.",href:"https://ndimbal-express.digiylyfe.com/"},
-    {key:"pay",name:"Mon argent",icon:"💳",desc:"Ton argent, ta trace. Paiement direct, suivi clair. Le pro garde la main sur ses finances.",href:"https://pay.digiylyfe.com/"},
+    {key:"pay",name:"DIGIY CARNET PRO",icon:"📒",desc:"Encaissements, dépenses, réserves et preuves. Ton activité devient claire sans que DIGIY touche à ton argent.",href:"https://digiy-carnet-pro.digiylyfe.com/"},
     {key:"carte",name:"La carte",icon:"🧭",desc:"La carte du terrain : pros, lieux, services autour de toi. Le Club visible sur la carte.",href:"https://ndimbal-map.digiylyfe.com/"},
     {key:"audio",name:"Écouter",icon:"🎧",desc:"Tous les textes DIGIY en audio. Pour ceux qui préfèrent écouter.",href:"https://digiy-audio.digiylyfe.com/"},
     {key:"assistant",name:"Mon assistant DIGIY",icon:"♾️",desc:"L’assistant du Club : une question, la bonne porte. Simple, humain, direct.",href:"https://knowledge.digiylyfe.com/widget/"}
@@ -1246,13 +1247,13 @@ button,input{font:inherit}
     {key:"marketPro",name:"Je vends",icon:"🛍️",desc:"Ton marché numérique : produits visibles, contact direct, zéro intermédiaire.",href:"https://pro-market.digiylyfe.com/pin.html"},
     {key:"locPro",name:"Je loue",icon:"🏠",desc:"Tes logements en ligne, tes clients en direct. Tu loues, tu gardes ta relation.",href:"https://pro-loc.digiylyfe.com/pin.html"},
     {key:"resaPro",name:"Je réserve",icon:"📅",desc:"Ton planning terrain : créneaux, rendez-vous, clients — zéro détour.",href:"https://pro-resa-resto.digiylyfe.com/pin.html"},
-    {key:"restoPro",name:"Mon restaurant",icon:"🍽️",desc:"Ton module restaurant : action RESTO, fiche, calendrier, réservation simple et acompte PAY.",href:"https://pro-resto.digiylyfe.com/pin.html"},
+    {key:"restoPro",name:"Mon restaurant",icon:"🍽️",desc:"Ton module restaurant : action RESTO, fiche, calendrier, réservation simple et acompte direct.",href:"https://pro-resto.digiylyfe.com/pin.html"},
     {key:"driverPro",name:"Je conduis",icon:"🚗",desc:"Ton cockpit chauffeur : trajets, tarifs, profil visible. Tu conduis, tu gardes ta course.",href:"https://pro-driver.digiylyfe.com/pin.html"},
     {key:"jobsPro",name:"Je recrute",icon:"💼",desc:"Tes offres terrain, tes candidats directs. Tu recrutes sans passer par un intermédiaire.",href:"https://pro-job.digiylyfe.com/pin.html"},
     {key:"ndimbalExpressPro",name:"NDIMBAL Express — Dépôt annonce",icon:"⚡",desc:"Déposer une annonce avec durée 7, 15 ou 30 jours via PIN. Validation DIGIY séparée.",href:"https://ndimbal-express.digiylyfe.com/inscription.html"},
     {key:"buildPro",name:"Mes services",icon:"🏗️",desc:"Tes services visibles, tes demandes directes. L’artisan garde son client.",href:"https://pro-build.digiylyfe.com/pin.html"},
     {key:"explorePro",name:"Me faire connaître",icon:"🗺️",desc:"Ton lieu sur la carte, ton territoire visible. Le public te trouve, tu gardes le contact.",href:"https://pro-explore.digiylyfe.com/pin.html"},
-    {key:"payPro",name:"Mon argent",icon:"💳",desc:"Tes entrées, tes sorties, ton reste. La finance terrain dans ta poche.",href:"https://pro-pay.digiylyfe.com/pin.html?redirect=hub"}
+    {key:"payPro",name:"PRO CARNET",icon:"📒",desc:"Tes encaissements, tes dépenses, ta réserve et tes preuves. Tu vois clairement ce que ton activité produit.",href:"https://pro-carnet.digiylyfe.com/pin.html?redirect=hub"}
   ];
 
   const $=id=>document.getElementById(id);
@@ -1312,7 +1313,7 @@ button,input{font:inherit}
         "https://pro-job.digiylyfe.com/":"https://pro-job.digiylyfe.com/pin.html",
         "https://pro-build.digiylyfe.com/":"https://pro-build.digiylyfe.com/pin.html",
         "https://pro-explore.digiylyfe.com/":"https://pro-explore.digiylyfe.com/pin.html",
-        "https://pro-pay.digiylyfe.com/":"https://pro-pay.digiylyfe.com/pin.html"
+        "https://pro-carnet.digiylyfe.com/":"https://pro-carnet.digiylyfe.com/pin.html"
       };
       if(protectedRoots[raw]) return protectedRoots[raw];
     }
@@ -1468,8 +1469,8 @@ button,input{font:inherit}
     "Missions et opportunités du terrain. Le terrain recrute en direct, sans intermédiaire.":"Field missions and opportunities. The field recruits directly, without a middleman.",
     "NDIMBAL Express":"NDIMBAL Express",
     "Annonces terrain validées par DIGIY : 7 jours, 15 jours ou 30 jours. Ticket durée, contact direct, 0 % commission.":"Field ads validated by DIGIY: 7 days, 15 days or 30 days. Duration ticket, direct contact, 0% commission.",
-    "Mon argent":"My money",
-    "Ton argent, ta trace. Paiement direct, suivi clair. Le pro garde la main sur ses finances.":"Your money, your trace. Direct payment, clear tracking. The pro stays in control of finances.",
+    "DIGIY CARNET PRO":"DIGIY CARNET PRO",
+    "Encaissements, dépenses, réserves et preuves. Ton activité devient claire sans que DIGIY touche à ton argent.":"Income, expenses, reserves and evidence. Your activity becomes clear without DIGIY ever holding your money.",
     "La carte":"The map",
     "La carte du terrain : pros, lieux, services autour de toi. Le Club visible sur la carte.":"The field map: pros, places and services around you. The Club visible on the map.",
     "Écouter":"Listen",
@@ -1503,7 +1504,8 @@ button,input{font:inherit}
     "Tes services visibles, tes demandes directes. L’artisan garde son client.":"Your visible services, your direct requests. The artisan keeps the client.",
     "Me faire connaître":"Get discovered",
     "Ton lieu sur la carte, ton territoire visible. Le public te trouve, tu gardes le contact.":"Your place on the map, your territory visible. The public finds you, you keep the contact.",
-    "Tes entrées, tes sorties, ton reste. La finance terrain dans ta poche.":"Your income, your expenses, your remaining balance. Field finance in your pocket.",
+    "PRO CARNET":"PRO CARNET",
+    "Tes encaissements, tes dépenses, ta réserve et tes preuves. Tu vois clairement ce que ton activité produit.":"Your income, expenses, reserve and evidence. You can clearly see what your activity produces.",
     "FAVORI":"FAVORITE",
     "↗ Ouvrir":"↗ Open"
   };
@@ -1588,4 +1590,5 @@ button,input{font:inherit}
 
 </body>
 </html>
+
 
