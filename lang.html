@@ -6,20 +6,17 @@
   <meta name="robots" content="noindex,follow">
   <meta name="theme-color" content="#00853f">
   <title>DIGIY HUB — langue</title>
-  <style>
-    html,body{margin:0;min-height:100%;background:#06140f;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-    body{display:grid;place-items:center;text-align:center}
-    p{padding:24px;font-weight:900}
-  </style>
+  <style>html,body{margin:0;min-height:100%;background:#06140f;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}body{display:grid;place-items:center;text-align:center}p{padding:24px;font-weight:900}</style>
 </head>
 <body>
   <p>DIGIY HUB…</p>
   <script>
   (function(){
-    var requested=(new URLSearchParams(location.search).get('lang')||'fr').slice(0,2).toLowerCase();
-    var lang=requested==='en'?'en':'fr';
-    try{localStorage.setItem('digiy_hub_lang_v1',lang)}catch(e){}
-    location.replace('/?lang='+encodeURIComponent(lang)+'&v=20260730-hub-safe1');
+    var supported=['fr','en','es','de','it','nl','ar'];
+    var lang=(new URLSearchParams(location.search).get('lang')||'fr').slice(0,2).toLowerCase();
+    if(supported.indexOf(lang)<0)lang='fr';
+    try{localStorage.setItem('digiy_hub_lang_7',lang)}catch(e){}
+    location.replace('/?lang='+encodeURIComponent(lang));
   })();
   </script>
   <noscript><a href="/?lang=fr">Ouvrir DIGIY HUB</a></noscript>
