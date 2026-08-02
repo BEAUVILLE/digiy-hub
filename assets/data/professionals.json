@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "professionals": [
+    {
+      "id": "astou-boutique",
+      "territoryId": "petite-cote",
+      "name": "Astou Boutique",
+      "primaryNeed": "shopping",
+      "services": ["Boutique", "Articles maison", "Contact direct"],
+      "mainZone": "saly",
+      "coverageMode": "selected_zones",
+      "zones": ["saly"],
+      "activityMode": "fixed",
+      "summary": {"fr": "Boutique locale à Saly avec contact direct.", "en": "Local shop in Saly with direct contact."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://astou-boutique.digiylyfe.com/"}
+      ]
+    },
+    {
+      "id": "babacar-plombier",
+      "territoryId": "petite-cote",
+      "name": "Babacar Plombier",
+      "primaryNeed": "artisan",
+      "services": ["Plomberie", "Dépannage"],
+      "mainZone": "mbour",
+      "coverageMode": "selected_zones",
+      "zones": ["mbour", "saly", "ngaparou"],
+      "activityMode": "mobile",
+      "summary": {"fr": "Plombier basé à Mbour, mobile sur plusieurs zones de la Petite Côte.", "en": "Plumber based in Mbour, serving several Petite Côte areas."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://babacar-plombier-pro.digiylyfe.com/"}
+      ]
+    },
+    {
+      "id": "chez-baptiste",
+      "territoryId": "vallee-dordogne",
+      "name": "Chez Baptiste",
+      "primaryNeed": "accommodation",
+      "services": ["Accueil chez l’habitant", "Hébergement"],
+      "mainZone": "sarlat",
+      "coverageMode": "selected_zones",
+      "zones": ["sarlat"],
+      "activityMode": "fixed",
+      "summary": {"fr": "Hébergement chez l’habitant à Sarlat.", "en": "Homestay accommodation in Sarlat."},
+      "contacts": []
+    },
+    {
+      "id": "entre-deux",
+      "territoryId": "vallee-dordogne",
+      "name": "L’Entre Deux",
+      "primaryNeed": "food",
+      "services": ["Restaurant", "Réservation directe"],
+      "mainZone": "sarlat",
+      "coverageMode": "selected_zones",
+      "zones": ["sarlat"],
+      "activityMode": "fixed",
+      "summary": {"fr": "Restaurant à Sarlat avec contact direct.", "en": "Restaurant in Sarlat with direct contact."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir le site", "en": "Visit website"}, "url": "https://restaurant-entre2malraux.fr/"}
+      ]
+    },
+    {
+      "id": "le-malraux",
+      "territoryId": "vallee-dordogne",
+      "name": "Le Malraux",
+      "primaryNeed": "food",
+      "services": ["Restaurant", "Réservation directe"],
+      "mainZone": "sarlat",
+      "coverageMode": "selected_zones",
+      "zones": ["sarlat"],
+      "activityMode": "fixed",
+      "summary": {"fr": "Restaurant à Sarlat avec contact direct.", "en": "Restaurant in Sarlat with direct contact."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir le site", "en": "Visit website"}, "url": "https://restaurant-entre2malraux.fr/"}
+      ]
+    }
+  ]
+}
