@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "defaultLanguage": "fr",
+  "territories": [
+    {
+      "id": "petite-cote",
+      "countryCode": "SN",
+      "countryName": {"fr": "Sénégal", "en": "Senegal"},
+      "name": {"fr": "Petite Côte", "en": "Petite Côte"},
+      "tagline": {
+        "fr": "Les professionnels du territoire, joignables directement.",
+        "en": "Local professionals, reachable directly."
+      },
+      "zones": [
+        {"id": "aibd", "name": {"fr": "AIBD", "en": "AIBD"}},
+        {"id": "ndayane", "name": {"fr": "Ndayane", "en": "Ndayane"}},
+        {"id": "popenguine", "name": {"fr": "Popenguine", "en": "Popenguine"}},
+        {"id": "somone", "name": {"fr": "Somone", "en": "Somone"}},
+        {"id": "ngaparou", "name": {"fr": "Ngaparou", "en": "Ngaparou"}},
+        {"id": "saly", "name": {"fr": "Saly", "en": "Saly"}},
+        {"id": "mbour", "name": {"fr": "Mbour", "en": "Mbour"}}
+      ]
+    },
+    {
+      "id": "vallee-dordogne",
+      "countryCode": "FR",
+      "countryName": {"fr": "France", "en": "France"},
+      "name": {"fr": "Vallée de la Dordogne", "en": "Dordogne Valley"},
+      "tagline": {
+        "fr": "Les professionnels du territoire, joignables directement.",
+        "en": "Local professionals, reachable directly."
+      },
+      "zones": [
+        {"id": "sarlat", "name": {"fr": "Sarlat", "en": "Sarlat"}}
+      ]
+    }
+  ]
+}
