@@ -59,6 +59,10 @@
       button.innerHTML='<strong>'+need.icon+'</strong><span></span>';
       button.querySelector('span').textContent=pick(need.label);
       button.addEventListener('click',function(){
+        if(need.url){
+          location.href=need.url;
+          return;
+        }
         state.need=state.need===need.id?'':need.id;
         render();
       });
