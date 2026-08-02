@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "professionals": [
     {
       "id": "chauffeur-baptiste",
@@ -29,6 +29,23 @@
       "summary": {"fr": "Chauffeur privé à Saly pour transferts AIBD, courses locales et trajets Petite Côte.", "en": "Private driver in Saly for AIBD transfers, local rides and Petite Côte trips."},
       "contacts": [
         {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://partenaire-lamine.digiylyfe.com/"}
+      ]
+    },
+    {
+      "id": "nazir-driver",
+      "territoryId": "petite-cote",
+      "name": "Nazir Driver",
+      "primaryNeed": "transport",
+      "services": ["Transferts AIBD", "Saly · Mbour", "Déplacements régionaux"],
+      "mainZone": "saly",
+      "coverageMode": "selected_zones",
+      "zones": ["aibd", "saly", "mbour"],
+      "activityMode": "mobile",
+      "summary": {"fr": "Chauffeur sur réservation pour trajets directs, transferts aéroport et déplacements régionaux.", "en": "Driver by reservation for direct trips, airport transfers and regional travel."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://galerie-chauffeurs.digiylyfe.com/nazir-driver.html"},
+        {"type": "whatsapp", "label": {"fr": "WhatsApp", "en": "WhatsApp"}, "url": "https://wa.me/221778310298?text=Bonjour%20Nazir%20Driver%2C%20je%20viens%20de%20DIGIYLYFE%20et%20je%20souhaite%20organiser%20un%20trajet."},
+        {"type": "phone", "label": {"fr": "Appeler", "en": "Call"}, "url": "tel:+221778310298"}
       ]
     },
     {
