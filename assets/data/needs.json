@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "needs": [
     {"id": "transport", "icon": "🚗", "label": {"fr": "Se déplacer", "en": "Get around"}},
     {"id": "artisan", "icon": "🔧", "label": {"fr": "Trouver un artisan", "en": "Find a tradesperson"}},
@@ -8,6 +8,6 @@
     {"id": "shopping", "icon": "🛍️", "label": {"fr": "Acheter local", "en": "Shop local"}},
     {"id": "jobs", "icon": "💼", "label": {"fr": "Emploi et missions", "en": "Jobs and gigs"}},
     {"id": "announcements", "icon": "⚡", "label": {"fr": "Annonces", "en": "Listings"}},
-    {"id": "guidance", "icon": "🎙️", "label": {"fr": "La Voix", "en": "Guidance"}}
+    {"id": "guidance", "icon": "🎙️", "label": {"fr": "La Voix", "en": "Guidance"}, "url": "https://pro-action-digiy.digiylyfe.com/"}
   ]
 }
