@@ -33,6 +33,23 @@
     return zone?pick(zone.name):id;
   }
 
+  function revealResults(){
+    var section=document.getElementById('resultSection')||document.getElementById('status');
+    if(!section) return;
+    var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    requestAnimationFrame(function(){
+      section.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
+
+      var first=document.querySelector('#results .card');
+      if(!first) return;
+      first.classList.remove('result-focus');
+      void first.offsetWidth;
+      first.classList.add('result-focus');
+      window.setTimeout(function(){first.classList.remove('result-focus');},1500);
+    });
+  }
+
   function renderHeader(){
     var current=territory();
     if(!current) return;
@@ -65,6 +82,7 @@
         }
         state.need=state.need===need.id?'':need.id;
         render();
+        revealResults();
       });
       root.appendChild(button);
     });
@@ -84,6 +102,7 @@
         state.zone=zone.id;
         renderZones();
         renderResults();
+        revealResults();
       });
       root.appendChild(button);
     });
