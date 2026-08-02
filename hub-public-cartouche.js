@@ -7,7 +7,8 @@
   var frame=document.getElementById('hubFrame');
   if(!frame) return;
 
-  var LANG_KEY='digiy_hub_lang_7';
+  var LANG_KEY='digiy_hub_lang_v1';
+  var LANG_KEY_LEGACY='digiy_hub_lang_7';
   var FAV_KEY='digiy_hub_public_favoris_v1';
   var LAST_KEY='digiy_hub_public_dernier_v1';
   var MAX_FAVS=3;
@@ -28,7 +29,16 @@
 
   function language(doc){
     var value='';
-    try{value=localStorage.getItem(LANG_KEY)||'';}catch(e){}
+    try{
+      value=localStorage.getItem(LANG_KEY)||'';
+      if(!value){
+        var legacy=(localStorage.getItem(LANG_KEY_LEGACY)||'').slice(0,2).toLowerCase();
+        if(COPY[legacy]){
+          value=legacy;
+          localStorage.setItem(LANG_KEY,legacy);
+        }
+      }
+    }catch(e){}
     value=(value||(doc&&doc.documentElement.lang)||'fr').slice(0,2).toLowerCase();
     return COPY[value]?value:'fr';
   }
