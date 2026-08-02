@@ -32,17 +32,34 @@
       ]
     },
     {
-      "id": "chez-baptiste",
-      "territoryId": "vallee-dordogne",
-      "name": "Chez Baptiste",
+      "id": "chez-baptiste-saly",
+      "territoryId": "petite-cote",
+      "name": "Chez Baptiste — Saly",
       "primaryNeed": "accommodation",
-      "services": ["Accueil chez l’habitant", "Hébergement"],
+      "services": ["Appartement meublé", "Location directe", "4 personnes"],
+      "mainZone": "saly",
+      "coverageMode": "selected_zones",
+      "zones": ["saly"],
+      "activityMode": "fixed",
+      "summary": {"fr": "Appartement meublé à Saly avec réservation et contact direct propriétaire.", "en": "Furnished apartment in Saly with direct booking and owner contact."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://part-chez-baptiste.digiylyfe.com/"}
+      ]
+    },
+    {
+      "id": "chez-baptiste-sarlat",
+      "territoryId": "vallee-dordogne",
+      "name": "Chez Baptiste — Sarlat",
+      "primaryNeed": "accommodation",
+      "services": ["Accueil chez l’habitant", "Chambre privée", "Demande directe"],
       "mainZone": "sarlat",
       "coverageMode": "selected_zones",
       "zones": ["sarlat"],
       "activityMode": "fixed",
-      "summary": {"fr": "Hébergement chez l’habitant à Sarlat.", "en": "Homestay accommodation in Sarlat."},
-      "contacts": []
+      "summary": {"fr": "Hébergement chez l’habitant à Sarlat avec photos et demande directe.", "en": "Homestay accommodation in Sarlat with photos and direct enquiry."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://sarlat-chez-baptiste.digiylyfe.com/"}
+      ]
     },
     {
       "id": "entre-deux",
