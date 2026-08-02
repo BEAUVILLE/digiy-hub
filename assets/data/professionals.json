@@ -1,6 +1,36 @@
 {
-  "version": 1,
+  "version": 2,
   "professionals": [
+    {
+      "id": "chauffeur-baptiste",
+      "territoryId": "petite-cote",
+      "name": "Chauffeur Baptiste",
+      "primaryNeed": "transport",
+      "services": ["Chauffeur ambassadeur", "Transport sur réservation", "Contact direct"],
+      "mainZone": "saly",
+      "coverageMode": "selected_zones",
+      "zones": ["aibd", "saly", "mbour"],
+      "activityMode": "mobile",
+      "summary": {"fr": "Chauffeur ambassadeur DIGIY DRIVER, joignable directement depuis sa fiche officielle.", "en": "DIGIY DRIVER ambassador, directly reachable from his official profile."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://digiy-driver-part-bapt.digiylyfe.com/"}
+      ]
+    },
+    {
+      "id": "chauffeur-lamine",
+      "territoryId": "petite-cote",
+      "name": "Lamine — Chauffeur privé",
+      "primaryNeed": "transport",
+      "services": ["Transfert AIBD", "Courses locales", "Circuits Petite Côte"],
+      "mainZone": "saly",
+      "coverageMode": "selected_zones",
+      "zones": ["aibd", "saly", "mbour"],
+      "activityMode": "mobile",
+      "summary": {"fr": "Chauffeur privé à Saly pour transferts AIBD, courses locales et trajets Petite Côte.", "en": "Private driver in Saly for AIBD transfers, local rides and Petite Côte trips."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://partenaire-lamine.digiylyfe.com/"}
+      ]
+    },
     {
       "id": "astou-boutique",
       "territoryId": "petite-cote",
@@ -17,6 +47,21 @@
       ]
     },
     {
+      "id": "boutique-bcheikh",
+      "territoryId": "petite-cote",
+      "name": "Boutique BCHEIKH",
+      "primaryNeed": "shopping",
+      "services": ["Mode", "T-shirts et polos", "Sous-vêtements"],
+      "mainZone": "saly",
+      "coverageMode": "selected_zones",
+      "zones": ["saly"],
+      "activityMode": "fixed",
+      "summary": {"fr": "Boutique BCHEIKH présente dans DIGIY MARKET avec ses produits visibles et le contact vendeur.", "en": "BCHEIKH shop is available in DIGIY MARKET with visible products and seller contact."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Ouvrir DIGIY MARKET", "en": "Open DIGIY MARKET"}, "url": "https://market.digiylyfe.com/"}
+      ]
+    },
+    {
       "id": "babacar-plombier",
       "territoryId": "petite-cote",
       "name": "Babacar Plombier",
@@ -29,6 +74,36 @@
       "summary": {"fr": "Plombier basé à Mbour, mobile sur plusieurs zones de la Petite Côte.", "en": "Plumber based in Mbour, serving several Petite Côte areas."},
       "contacts": [
         {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://babacar-plombier-pro.digiylyfe.com/"}
+      ]
+    },
+    {
+      "id": "mbaye-diouf",
+      "territoryId": "petite-cote",
+      "name": "Mbaye Diouf",
+      "primaryNeed": "artisan",
+      "services": ["Construction", "Villas", "Piscines", "Rénovation"],
+      "mainZone": "mbour",
+      "coverageMode": "selected_zones",
+      "zones": ["mbour", "saly"],
+      "activityMode": "mobile",
+      "summary": {"fr": "Bâtisseur de villas et piscines intervenant à Saly, Mbour et sur la Petite Côte.", "en": "Villa and pool builder serving Saly, Mbour and the Petite Côte."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://build.digiylyfe.com/fiche.html?slug=partenaires-mbaye"}
+      ]
+    },
+    {
+      "id": "zal-kourant",
+      "territoryId": "petite-cote",
+      "name": "Zal & Kourant",
+      "primaryNeed": "artisan",
+      "services": ["Électricité", "Installation", "Rénovation", "Dépannage"],
+      "mainZone": "saly",
+      "coverageMode": "selected_zones",
+      "zones": ["saly"],
+      "activityMode": "mobile",
+      "summary": {"fr": "Électriciens à Saly pour installation, rénovation et dépannage maison ou bâtiment.", "en": "Electricians in Saly for installation, renovation and home or building repairs."},
+      "contacts": [
+        {"type": "website", "label": {"fr": "Voir la fiche", "en": "View profile"}, "url": "https://build.digiylyfe.com/fiche.html?slug=partenaires-zal-kourant"}
       ]
     },
     {
