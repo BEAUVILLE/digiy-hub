@@ -7,7 +7,8 @@
   var frame=document.getElementById('hubFrame');
   if(!frame) return;
 
-  var STORE='digiy_hub_lang_7';
+  var STORE='digiy_hub_lang_v1';
+  var STORE_LEGACY='digiy_hub_lang_7';
   var COPY={
     fr:{tab:'PRO',mobile:'Mes modules PRO',title:'Mes modules PRO',sub:'Ouvre directement ton cockpit professionnel.',close:'Fermer',activate:'Activer un module',open:'Ouvrir'},
     en:{tab:'PRO',mobile:'My PRO modules',title:'My PRO modules',sub:'Open your professional cockpit directly.',close:'Close',activate:'Activate a module',open:'Open'},
@@ -29,14 +30,24 @@
     {icon:'💼',url:'https://pro-job.digiylyfe.com/pin.html',names:{fr:'JOBS PRO',en:'JOBS PRO',es:'JOBS PRO',de:'JOBS PRO',it:'JOBS PRO',nl:'JOBS PRO',ar:'JOBS PRO'}},
     {icon:'🏗️',url:'https://pro-build.digiylyfe.com/pin.html',names:{fr:'BUILD PRO',en:'BUILD PRO',es:'BUILD PRO',de:'BUILD PRO',it:'BUILD PRO',nl:'BUILD PRO',ar:'BUILD PRO'}},
     {icon:'🗺️',url:'https://pro-explore.digiylyfe.com/pin.html',names:{fr:'EXPLORE PRO',en:'EXPLORE PRO',es:'EXPLORE PRO',de:'EXPLORE PRO',it:'EXPLORE PRO',nl:'EXPLORE PRO',ar:'EXPLORE PRO'}},
-    {icon:'📒',url:'https://pro-carnet.digiylyfe.com/pin.html?redirect=hub',names:{fr:'CARNET PRO',en:'PRO LEDGER',es:'CARNET PRO',de:'PRO CARNET',it:'CARNET PRO',nl:'PRO CARNET',ar:'دفتر المهني'}}
+    {icon:'📒',url:'https://pro-carnet.digiylyfe.com/pin.html?redirect=hub',names:{fr:'CARNET PRO',en:'PRO LEDGER',es:'CARNET PRO',de:'PRO CARNET',it:'CARNET PRO',nl:'PRO CARNET',ar:'دفتر المهني'}},
+    {icon:'⚡',url:'https://ndimbal-express.digiylyfe.com/inscription.html',names:{fr:'NDIMBAL Express — Dépôt annonce',en:'NDIMBAL Express — Ad submission',es:'NDIMBAL Express — Publicar anuncio',de:'NDIMBAL Express — Anzeige aufgeben',it:'NDIMBAL Express — Pubblica annuncio',nl:'NDIMBAL Express — Advertentie plaatsen',ar:'NDIMBAL Express — نشر إعلان'}}
   ];
 
   var observedDoc=null,observer=null,lastLanguage='';
 
   function language(doc){
     var value='';
-    try{value=localStorage.getItem(STORE)||'';}catch(e){}
+    try{
+      value=localStorage.getItem(STORE)||'';
+      if(!value){
+        var legacy=(localStorage.getItem(STORE_LEGACY)||'').slice(0,2).toLowerCase();
+        if(COPY[legacy]){
+          value=legacy;
+          localStorage.setItem(STORE,legacy);
+        }
+      }
+    }catch(e){}
     value=(value||(doc&&doc.documentElement.lang)||'fr').slice(0,2).toLowerCase();
     return COPY[value]?value:'fr';
   }
