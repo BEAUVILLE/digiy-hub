@@ -1,5 +1,6 @@
 name: Corriger Lamine dans le HUB territorial
 
+# Déclenchement contrôlé après installation du workflow
 on:
   push:
     branches:
