@@ -1,0 +1,98 @@
+name: Corriger Lamine dans le HUB territorial
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/fix-lamine-territory.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Conserver Lamine dans la fusion Supabase et JSON
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          js_path = Path('assets/js/territory.js')
+          html_path = Path('territoire.html')
+          js = js_path.read_text(encoding='utf-8')
+          html = html_path.read_text(encoding='utf-8')
+
+          old = """  function mergeTerritoryFallback(liveProfessionals,jsonProfessionals){
+    var liveTerritories={};
+    liveProfessionals.forEach(function(item){liveTerritories[item.territoryId]=true;});
+    return liveProfessionals.concat(jsonProfessionals.filter(function(item){
+      return !liveTerritories[item.territoryId];
+    }));
+  }
+"""
+
+          new = """  function mergeTerritoryFallback(liveProfessionals,jsonProfessionals){
+    var liveTerritories={};
+    liveProfessionals.forEach(function(item){liveTerritories[item.territoryId]=true;});
+
+    var merged=liveProfessionals.concat(jsonProfessionals.filter(function(item){
+      return !liveTerritories[item.territoryId];
+    }));
+
+    /* Fiche officielle à préserver tant que sa ligne Supabase n'est pas active. */
+    jsonProfessionals.forEach(function(item){
+      if(item.id!=='chauffeur-lamine') return;
+
+      var alreadyPresent=merged.some(function(current){
+        return current.id===item.id||String(current.name||'').toLowerCase().indexOf('lamine')!==-1;
+      });
+
+      if(!alreadyPresent) merged.push(item);
+    });
+
+    return merged;
+  }
+"""
+
+          if js.count(old) != 1:
+              raise SystemExit('Bloc de fusion attendu introuvable ou dupliqué')
+          js = js.replace(old, new, 1)
+
+          old_version = './assets/js/territory.js?v=20260802-supabase1'
+          new_version = './assets/js/territory.js?v=20260803-lamine1'
+          if html.count(old_version) != 1:
+              raise SystemExit('Version du script territoire introuvable')
+          html = html.replace(old_version, new_version, 1)
+
+          required = [
+              "item.id!=='chauffeur-lamine'",
+              "indexOf('lamine')",
+              '20260803-lamine1',
+          ]
+          combined = js + html
+          missing = [value for value in required if value not in combined]
+          if missing:
+              raise SystemExit('Contrôle final échoué : ' + ' | '.join(missing))
+
+          js_path.write_text(js, encoding='utf-8')
+          html_path.write_text(html, encoding='utf-8')
+          print('Lamine sera conservé dans DIGIY PETITE CÔTE avec les fiches Supabase.')
+          PY
+
+      - name: Publier et retirer le correcteur temporaire
+        run: |
+          rm -f .github/workflows/fix-lamine-territory.yml
+          git config user.name "DIGIYLYFE Build"
+          git config user.email "actions@users.noreply.github.com"
+          git add assets/js/territory.js territoire.html .github/workflows/fix-lamine-territory.yml
+          git commit -m "HUB territorial : faire ressortir Lamine en Petite Côte"
+          git push origin HEAD:main
