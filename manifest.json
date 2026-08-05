@@ -1,0 +1,26 @@
+{
+  "name": "DIGIY HUB — Club des Métiers du Terrain",
+  "short_name": "DIGIY HUB",
+  "description": "La gare centrale multilingue des métiers du terrain : portes publiques et professionnelles, contact direct et 0 % de commission DIGIY.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#03120c",
+  "theme_color": "#00853f",
+  "lang": "fr",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -8,6 +8,7 @@
   <link rel="canonical" href="https://digiy-hub.digiylyfe.com/">
   <link rel="icon" href="./icon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="manifest" href="./manifest.json">
   <title>DIGIY HUB — Club des Métiers du Terrain</title>
   <meta name="description" content="DIGIY HUB — la gare centrale multilingue des métiers du terrain : portes publiques, portes professionnelles, contact direct et 0% commission.">
   <style>
@@ -31,6 +32,33 @@
     html[dir="rtl"] .language-buttons{justify-content:flex-start}
     @media(max-width:720px){:root{--bar-h:62px}.hub-mark b{display:none}.language-buttons{justify-content:flex-start}.language-buttons button{min-width:51px;padding:0 8px}}
   </style>
+  <script>
+  (function(){
+    'use strict';
+    window.addEventListener('load',function(){
+      (async function(){
+        try{
+          if('serviceWorker' in navigator){
+            var registrations=await navigator.serviceWorker.getRegistrations();
+            await Promise.all(registrations.map(function(registration){
+              return registration.unregister();
+            }));
+          }
+          if('caches' in window){
+            var keys=await caches.keys();
+            await Promise.all(keys.filter(function(key){
+              return key.indexOf('digiy-hub')!==-1;
+            }).map(function(key){
+              return caches.delete(key);
+            }));
+          }
+        }catch(error){
+          console.warn('[DIGIY HUB] nettoyage ancien cache différé',error);
+        }
+      })();
+    });
+  })();
+  </script>
   <script>try{localStorage.setItem('digiy_hub_lang_v1','fr')}catch(e){}</script>
   <script src="./hub-7lang.js?v=20260730-hub7a" defer></script>
   <script src="./hub-bonne-affaire.js?v=20260801-ba1" defer></script>
