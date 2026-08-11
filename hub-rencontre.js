@@ -8,16 +8,16 @@
   if(!frame) return;
 
   var URL='./rencontre/';
-  var TABLE_URL='./rencontre/table-virtuelle-voix.html';
+  var TABLE_URL='./rencontre/table-monde-traduction.html';
   var COPY={
-    fr:{name:'DIGIY RENCONTRE',desc:'Amitié · connaissances · activités · cercles. Ici, tu ne collectionnes pas des profils : tu rencontres ton territoire.',open:'Ouvrir',table:'🪑 TABLE VIRTUELLE — TEST',menu:'🤝 DIGIY RENCONTRE'},
-    en:{name:'DIGIY RENCONTRE',desc:'Friendship · people · activities · circles. Meet your territory, not a catalogue of profiles.',open:'Open',table:'🪑 VIRTUAL TABLE — TEST',menu:'🤝 DIGIY RENCONTRE'},
-    es:{name:'DIGIY RENCONTRE',desc:'Amistad · personas · actividades · círculos. Conoce tu territorio, no un catálogo de perfiles.',open:'Abrir',table:'🪑 MESA VIRTUAL — PRUEBA',menu:'🤝 DIGIY RENCONTRE'},
-    pt:{name:'DIGIY RENCONTRE',desc:'Amizade · pessoas · atividades · círculos. Conhece o teu território, não um catálogo de perfis.',open:'Abrir',table:'🪑 MESA VIRTUAL — TESTE',menu:'🤝 DIGIY RENCONTRE'},
-    de:{name:'DIGIY RENCONTRE',desc:'Freundschaft · Menschen · Aktivitäten · Kreise. Begegne deinem Umfeld statt Profile zu sammeln.',open:'Öffnen',table:'🪑 VIRTUELLER TISCH — TEST',menu:'🤝 DIGIY RENCONTRE'},
-    it:{name:'DIGIY RENCONTRE',desc:'Amicizia · persone · attività · cerchie. Incontra il territorio, non una raccolta di profili.',open:'Apri',table:'🪑 TAVOLO VIRTUALE — TEST',menu:'🤝 DIGIY RENCONTRE'},
-    nl:{name:'DIGIY RENCONTRE',desc:'Vriendschap · mensen · activiteiten · kringen. Ontmoet je omgeving, geen catalogus van profielen.',open:'Openen',table:'🪑 VIRTUELE TAFEL — TEST',menu:'🤝 DIGIY RENCONTRE'},
-    ar:{name:'DIGIY RENCONTRE',desc:'صداقة · تعارف · أنشطة · دوائر. تعرّف على محيطك بدل جمع الملفات الشخصية.',open:'فتح',table:'🪑 الطاولة الافتراضية — اختبار',menu:'🤝 DIGIY RENCONTRE'}
+    fr:{name:'DIGIY RENCONTRE',desc:'Amitié · connaissances · activités · cercles. Ici, tu ne collectionnes pas des profils : tu rencontres ton territoire.',open:'Ouvrir',table:'🌍 TABLE MONDE — TEST',menu:'🤝 DIGIY RENCONTRE'},
+    en:{name:'DIGIY RENCONTRE',desc:'Friendship · people · activities · circles. Meet your territory, not a catalogue of profiles.',open:'Open',table:'🌍 WORLD TABLE — TEST',menu:'🤝 DIGIY RENCONTRE'},
+    es:{name:'DIGIY RENCONTRE',desc:'Amistad · personas · actividades · círculos. Conoce tu territorio, no un catálogo de perfiles.',open:'Abrir',table:'🌍 MESA MUNDO — PRUEBA',menu:'🤝 DIGIY RENCONTRE'},
+    pt:{name:'DIGIY RENCONTRE',desc:'Amizade · pessoas · atividades · círculos. Conhece o teu território, não um catálogo de perfis.',open:'Abrir',table:'🌍 MESA MUNDO — TESTE',menu:'🤝 DIGIY RENCONTRE'},
+    de:{name:'DIGIY RENCONTRE',desc:'Freundschaft · Menschen · Aktivitäten · Kreise. Begegne deinem Umfeld statt Profile zu sammeln.',open:'Öffnen',table:'🌍 WELTTISCH — TEST',menu:'🤝 DIGIY RENCONTRE'},
+    it:{name:'DIGIY RENCONTRE',desc:'Amicizia · persone · attività · cerchie. Incontra il territorio, non una raccolta di profili.',open:'Apri',table:'🌍 TAVOLO MONDO — TEST',menu:'🤝 DIGIY RENCONTRE'},
+    nl:{name:'DIGIY RENCONTRE',desc:'Vriendschap · mensen · activiteiten · kringen. Ontmoet je omgeving, geen catalogus van profielen.',open:'Openen',table:'🌍 WERELDTAFEL — TEST',menu:'🤝 DIGIY RENCONTRE'},
+    ar:{name:'DIGIY RENCONTRE',desc:'صداقة · تعارف · أنشطة · دوائر. تعرّف على محيطك بدل جمع الملفات الشخصية.',open:'فتح',table:'🌍 طاولة العالم — اختبار',menu:'🤝 DIGIY RENCONTRE'}
   };
 
   function language(){
@@ -58,7 +58,7 @@
       }
     }
 
-    if(card.getAttribute('data-digiy-lang')!==lang || !card.querySelector('a[href*="table-virtuelle-voix.html"]')){
+    if(card.getAttribute('data-digiy-lang')!==lang || !card.querySelector('a[href*="table-monde-traduction.html"]')){
       card.innerHTML=cardMarkup(lang);
       card.setAttribute('data-digiy-lang',lang);
     }
@@ -86,13 +86,13 @@
     if(!tableLink){
       tableLink=doc.createElement('a');
       tableLink.className='green';
-      tableLink.href=TABLE_URL;
-      tableLink.target='_top';
-      tableLink.rel='noopener';
       tableLink.setAttribute('data-digiy-table-menu','true');
       if(link.nextSibling) drawer.insertBefore(tableLink,link.nextSibling);
       else drawer.appendChild(tableLink);
     }
+    tableLink.href=TABLE_URL;
+    tableLink.target='_top';
+    tableLink.rel='noopener';
     tableLink.textContent=COPY[lang].table;
   }
 
