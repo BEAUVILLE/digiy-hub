@@ -22,7 +22,7 @@
 </div>
 <header class="top"><div class="wrap"><div class="brand">🪑 DIGIY RENCONTRE<small>TABLE MONDE · V4 TEST</small></div><a class="back" href="./">↩ RENCONTRE</a></div></header>
 <main>
-<section class="hero"><div class="wrap"><div class="heroCard"><span class="eyebrow">8 langues · traduction locale si Chrome la fournit</span><h1>Parle dans ta langue.</h1><p>DIGIY transcrit. Le navigateur traduit. La table conserve le sens dans les deux langues.</p><div class="mantra">🌍 « Tu entres avec ta langue. La table ouvre le passage. »</div></div></div></section>
+<section class="hero"><div class="wrap"><div class="heroCard"><span class="eyebrow">9 langues dans RENCONTRE · traduction locale si Chrome la fournit</span><h1>Parle dans ta langue.</h1><p>DIGIY transcrit. Le navigateur traduit. La table conserve le sens dans les deux langues.</p><div class="mantra">🌍 « Tu entres avec ta langue. La table ouvre le passage. »</div></div></div></section>
 <section class="section"><div class="wrap"><div id="status" class="status">Prêt.</div></div></section>
 <section class="section"><div class="wrap"><div class="card">
   <div class="tableTitle"><h2>🌍 Le pont des langues</h2><span class="pill">V4</span></div>
@@ -44,12 +44,12 @@
   <div class="actions" style="margin-top:10px"><button id="sendBtn" class="btn primary" type="button">🪑 POSER LES DEUX À LA TABLE</button><button id="readTranslation" class="btn" type="button">🔊 ÉCOUTER LA TRADUCTION</button></div>
 </div></div></section>
 <section class="section"><div class="wrap"><div class="card"><div class="tableTitle"><h2>💬 Sur la table</h2><button id="clearBtn" class="mini" type="button">Effacer</button></div><div id="feed" class="feed"></div></div></div></section>
-<section class="section"><div class="wrap"><div class="note"><strong>Prototype V4 :</strong> aucune clé API DIGIY. Quand Chrome fournit son Translator API, la traduction est exécutée par le modèle géré par le navigateur. Le premier usage d’une paire de langues peut demander le téléchargement d’un modèle. Ce fichier ne relie pas encore deux appareils.</div></div></section>
+<section class="section"><div class="wrap"><div class="note"><strong>Prototype V4 :</strong> aucune clé API DIGIY. Quand Chrome fournit son Translator API, la traduction est exécutée par le modèle géré par le navigateur. Le chinois est ajouté uniquement à DIGIY RENCONTRE / TABLE MONDE. Le premier usage d’une paire de langues peut demander le téléchargement d’un modèle. Ce fichier ne relie pas encore deux appareils.</div></div></section>
 </main>
 <script>
 (()=>{
 'use strict';
-const LANGS={fr:{label:'🇫🇷 Français',speech:'fr-FR'},en:{label:'🇬🇧 English',speech:'en-US'},es:{label:'🇪🇸 Español',speech:'es-ES'},pt:{label:'🇵🇹 Português',speech:'pt-PT'},de:{label:'🇩🇪 Deutsch',speech:'de-DE'},it:{label:'🇮🇹 Italiano',speech:'it-IT'},nl:{label:'🇳🇱 Nederlands',speech:'nl-NL'},ar:{label:'🌙 العربية',speech:'ar-SA'}};
+const LANGS={fr:{label:'🇫🇷 Français',speech:'fr-FR'},en:{label:'🇬🇧 English',speech:'en-US'},es:{label:'🇪🇸 Español',speech:'es-ES'},pt:{label:'🇵🇹 Português',speech:'pt-PT'},de:{label:'🇩🇪 Deutsch',speech:'de-DE'},it:{label:'🇮🇹 Italiano',speech:'it-IT'},nl:{label:'🇳🇱 Nederlands',speech:'nl-NL'},ar:{label:'🌙 العربية',speech:'ar-SA'},zh:{label:'🇨🇳 中文',speech:'zh-CN'}};
 const $=id=>document.getElementById(id),sourceLang=$('sourceLang'),targetLang=$('targetLang'),draft=$('draft'),translation=$('translation'),status=$('status'),translatorState=$('translatorState'),pairLabel=$('pairLabel'),voiceGate=$('voiceGate'),voiceOrb=$('voiceOrb'),voiceTitle=$('voiceTitle'),voiceText=$('voiceText'),voiceYes=$('voiceYes'),voiceWrite=$('voiceWrite'),speakBtn=$('speakBtn'),translateBtn=$('translateBtn'),sendBtn=$('sendBtn'),readTranslation=$('readTranslation'),swapBtn=$('swapBtn'),feed=$('feed'),clearBtn=$('clearBtn');
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 let recognition=null,recognizing=false,translator=null,translatorKey='',translatedText='',messages=[];
