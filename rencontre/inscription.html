@@ -80,13 +80,35 @@
 
   function phone(v){v=String(v||'').trim().replace(/[^\d+]/g,'');if(/^0\d{8,}$/.test(v))v='+221'+v.replace(/^0+/,'');if(/^\d{9}$/.test(v))v='+221'+v;if(/^\d{11,15}$/.test(v)&&!v.startsWith('+'))v='+'+v;return v.startsWith('+')?v:''}
   function showOtp(email){sessionStorage.setItem(OTP_EMAIL,email);q('entryStep').classList.add('hidden');q('otpStep').classList.remove('hidden');q('otp').focus();q('msg').textContent='Code envoyé ✓ Saisis le code complet reçu par email.'}
+  function clearOtpEmail(){sessionStorage.removeItem(OTP_EMAIL)}
 
   async function finishProfile(){
     const raw=localStorage.getItem(PENDING);if(!raw)return true;
-    let p;try{p=JSON.parse(raw)}catch(e){return false}
-    const {error}=await client.rpc('digiy_rencontre_register_profile',{p_phone_number:p.phone_number,p_display_name:p.display_name,p_zone_id:p.zone_id,p_intention:p.intention,p_bio:p.bio,p_is_adult:true});
-    if(error){console.error(error);q('msg').textContent='Code validé, mais la finalisation du profil doit être vérifiée.';return false}
-    localStorage.removeItem(PENDING);return true;
+    let p;try{p=JSON.parse(raw)}catch(e){q('msg').textContent='Profil local illisible. Recommence l’inscription.';return false}
+
+    const {data:userData,error:userError}=await client.auth.getUser();
+    const user=userData?.user;
+    if(userError||!user?.id){console.error(userError);q('msg').textContent='Code validé, mais la session utilisateur doit être vérifiée.';return false}
+
+    const {error:baseError}=await client.from('digiy_profiles').upsert({
+      user_id:user.id,
+      phone_number:p.phone_number
+    },{onConflict:'user_id'});
+    if(baseError){console.error(baseError);q('msg').textContent='Code validé, mais le profil DIGIY principal n’a pas pu être finalisé : '+baseError.message;return false}
+
+    const {error:profileError}=await client.from('digiy_rencontre_profiles').upsert({
+      user_id:user.id,
+      display_name:p.display_name,
+      bio:p.bio,
+      zone_id:p.zone_id,
+      intention:p.intention,
+      is_adult:true,
+      is_active:true
+    },{onConflict:'user_id'});
+    if(profileError){console.error(profileError);q('msg').textContent='Code validé, mais le profil RENCONTRE n’a pas pu être finalisé : '+profileError.message;return false}
+
+    localStorage.removeItem(PENDING);
+    return true;
   }
 
   q('send').onclick=async()=>{
@@ -111,6 +133,16 @@
 
   q('verify').onclick=async()=>{
     if(!client)return;
+
+    const {data:existingSession}=await client.auth.getSession();
+    if(existingSession?.session){
+      q('verify').disabled=true;q('msg').textContent='Code déjà validé ✓ Finalisation du profil…';
+      const ok=await finishProfile();
+      q('verify').disabled=false;
+      if(ok){clearOtpEmail();location.replace('./')}
+      return;
+    }
+
     const email=sessionStorage.getItem(OTP_EMAIL)||'';
     const token=q('otp').value.replace(/\D/g,'').slice(0,10);
     if(!email){q('msg').textContent='Email introuvable. Recommence la demande de code.';return}
@@ -119,13 +151,36 @@
     const {data,error}=await client.auth.verifyOtp({email,token,type:'email'});
     q('verify').disabled=false;
     if(error||!data?.session){q('msg').textContent='Code invalide ou expiré : '+(error?.message||'session non créée');return}
-    sessionStorage.removeItem(OTP_EMAIL);
-    if(await finishProfile()) location.replace('./');
+
+    q('msg').textContent='Code validé ✓ Finalisation du profil…';
+    if(await finishProfile()){
+      clearOtpEmail();
+      location.replace('./');
+    }
   };
 
-  q('restart').onclick=()=>{sessionStorage.removeItem(OTP_EMAIL);q('otpStep').classList.add('hidden');q('entryStep').classList.remove('hidden');q('msg').textContent='';};
+  q('restart').onclick=async()=>{
+    clearOtpEmail();
+    if(client){try{await client.auth.signOut()}catch(e){}}
+    q('otpStep').classList.add('hidden');
+    q('entryStep').classList.remove('hidden');
+    q('verify').textContent='VALIDER LE CODE';
+    q('msg').textContent='';
+  };
 
-  (async()=>{if(!client)return;const {data}=await client.auth.getSession();if(data?.session){if(await finishProfile())location.replace('./');}})();
+  (async()=>{
+    if(!client)return;
+    const {data}=await client.auth.getSession();
+    if(!data?.session)return;
+    if(await finishProfile()){
+      clearOtpEmail();
+      location.replace('./');
+      return;
+    }
+    q('entryStep').classList.add('hidden');
+    q('otpStep').classList.remove('hidden');
+    q('verify').textContent='FINALISER LE PROFIL';
+  })();
 })();
 </script>
 </body>
