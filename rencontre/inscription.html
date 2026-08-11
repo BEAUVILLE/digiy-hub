@@ -90,22 +90,19 @@
     const user=userData?.user;
     if(userError||!user?.id){console.error(userError);q('msg').textContent='Code validé, mais la session utilisateur doit être vérifiée.';return false}
 
-    const {error:baseError}=await client.from('digiy_profiles').upsert({
-      user_id:user.id,
-      phone_number:p.phone_number
-    },{onConflict:'user_id'});
-    if(baseError){console.error(baseError);q('msg').textContent='Code validé, mais le profil DIGIY principal n’a pas pu être finalisé : '+baseError.message;return false}
-
-    const {error:profileError}=await client.from('digiy_rencontre_profiles').upsert({
-      user_id:user.id,
-      display_name:p.display_name,
-      bio:p.bio,
-      zone_id:p.zone_id,
-      intention:p.intention,
-      is_adult:true,
-      is_active:true
-    },{onConflict:'user_id'});
-    if(profileError){console.error(profileError);q('msg').textContent='Code validé, mais le profil RENCONTRE n’a pas pu être finalisé : '+profileError.message;return false}
+    const {error}=await client.rpc('digiy_rencontre_register_profile',{
+      p_phone_number:p.phone_number,
+      p_display_name:p.display_name,
+      p_zone_id:p.zone_id,
+      p_intention:p.intention,
+      p_bio:p.bio,
+      p_is_adult:true
+    });
+    if(error){
+      console.error(error);
+      q('msg').textContent='Code validé, mais la finalisation RENCONTRE bloque : '+error.message;
+      return false;
+    }
 
     localStorage.removeItem(PENDING);
     return true;
