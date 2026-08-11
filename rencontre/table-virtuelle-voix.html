@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07140f">
+  <meta name="robots" content="noindex,nofollow">
+  <title>DIGIY RENCONTRE — Table virtuelle voix ↔ texte</title>
+  <style>
+    :root{--bg:#07140f;--card:#0f241b;--card2:#0b1b15;--line:rgba(255,255,255,.13);--text:#f6fbf8;--muted:rgba(246,251,248,.72);--gold:#dcb45a;--gold2:#f3d184;--green:#14b86d;--danger:#ff7a7a;--shadow:0 18px 48px rgba(0,0,0,.28)}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 18% 0%,rgba(220,180,90,.14),transparent 28%),radial-gradient(circle at 90% 5%,rgba(20,184,109,.12),transparent 28%),linear-gradient(180deg,#06110d,var(--bg));color:var(--text);font:16px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{width:min(760px,calc(100% - 18px));margin:auto}.top{position:sticky;top:0;z-index:20;background:rgba(7,20,15,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.top .wrap{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{font-weight:1000}.brand small{display:block;color:var(--muted);font-size:11px}.back{color:#fff;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:9px 12px;font-weight:900}.hero{padding:16px 0 8px}.heroCard,.card{border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,rgba(15,36,27,.98),rgba(9,26,19,.98));box-shadow:var(--shadow)}.heroCard{padding:20px}.eyebrow{display:inline-flex;border:1px solid rgba(220,180,90,.28);background:rgba(220,180,90,.08);color:#ffe5a7;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:1000}.hero h1{margin:12px 0 8px;font-size:clamp(32px,9vw,52px);line-height:1;letter-spacing:-.04em}.hero p{margin:0;color:var(--muted);font-weight:760}.mantra{margin-top:14px;padding:12px 14px;border-radius:17px;background:rgba(20,184,109,.08);border:1px solid rgba(20,184,109,.25);font-weight:900}.modeRow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.mode{border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;border-radius:16px;padding:10px 6px;text-align:center;font-weight:950}.mode strong{display:block;font-size:18px}.section{padding:9px 0}.card{padding:15px}.status{padding:11px 13px;border-radius:15px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted);font-size:13px;font-weight:850}.status.good{border-color:rgba(20,184,109,.35);color:#dcffec}.composer{display:grid;gap:10px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;min-height:48px;border-radius:999px;padding:0 14px;font-weight:1000}.btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#082017;border-color:transparent}.btn.green{background:linear-gradient(135deg,var(--green),#84e0ac);color:#052015;border-color:transparent}.btn:disabled{opacity:.5;cursor:not-allowed}.input{width:100%;min-height:112px;border:1px solid var(--line);border-radius:18px;background:#081b14;color:#fff;padding:14px;resize:vertical;outline:none;font:inherit}.input:focus{border-color:rgba(220,180,90,.5);box-shadow:0 0 0 3px rgba(220,180,90,.08)}.helper{color:var(--muted);font-size:12px;font-weight:760}.tableTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.tableTitle h2{margin:0;font-size:22px}.pill{border:1px solid rgba(220,180,90,.25);background:rgba(220,180,90,.08);color:#ffe5a7;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:950}.feed{display:grid;gap:10px}.msg{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.045);padding:12px}.msgHead{display:flex;align-items:center;justify-content:space-between;gap:8px}.who{font-weight:1000}.time{color:var(--muted);font-size:11px}.msg p{margin:8px 0 10px;white-space:pre-wrap;word-break:break-word}.msgActions{display:flex;gap:8px;flex-wrap:wrap}.mini{border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;border-radius:999px;min-height:38px;padding:0 11px;font-weight:900}.empty{text-align:center;color:var(--muted);padding:18px 8px;font-weight:760}.footerNote{margin:10px 0 24px;padding:13px;border-radius:18px;border:1px solid rgba(220,180,90,.22);background:rgba(220,180,90,.06);color:var(--muted);font-size:12px;font-weight:760}.toggleLine{display:flex;align-items:center;justify-content:space-between;gap:10px}.switch{display:flex;align-items:center;gap:8px;font-weight:900}.switch input{width:20px;height:20px}.sr{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}@media(max-width:560px){.modeRow{grid-template-columns:1fr}.actions{grid-template-columns:1fr}.heroCard{padding:18px}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap"><div class="brand">🪑 DIGIY RENCONTRE<small>TABLE VIRTUELLE · prototype local</small></div><a class="back" href="./">↩ RENCONTRE</a></div></header>
+
+  <main>
+    <section class="hero"><div class="wrap"><div class="heroCard">
+      <span class="eyebrow">0 clé API DIGIY · libre de choisir</span>
+      <h1>Prends une chaise.</h1>
+      <p>Tu peux parler, écrire ou simplement écouter. La caméra n’est jamais obligatoire.</p>
+      <div class="mantra">« L’appareil écoute. L’appareil lit. DIGIY crée le lien. »</div>
+      <div class="modeRow" aria-label="Modes de participation">
+        <div class="mode"><strong>🎙️</strong>Parler</div>
+        <div class="mode"><strong>📝</strong>Écrire</div>
+        <div class="mode"><strong>🔊</strong>Écouter</div>
+      </div>
+    </div></div></section>
+
+    <section class="section"><div class="wrap"><div id="status" class="status">Table prête. Aucun audio n’est envoyé à DIGIY par ce prototype.</div></div></section>
+
+    <section class="section"><div class="wrap"><div class="card composer">
+      <div class="tableTitle"><h2>☕ Ma table</h2><span class="pill">1 chaise occupée</span></div>
+      <textarea id="draft" class="input" maxlength="1200" placeholder="Parle avec le micro de ton appareil ou écris ici…"></textarea>
+      <div class="actions">
+        <button id="speakBtn" class="btn green" type="button">🎙️ PARLER → TEXTE</button>
+        <button id="sendBtn" class="btn primary" type="button">🪑 POSER À LA TABLE</button>
+      </div>
+      <div class="helper" id="speechHelp">Si le micro direct du navigateur n’est pas disponible, DIGIY place le curseur dans le champ : utilise alors Dictée / le micro du clavier de ton téléphone ou ordinateur.</div>
+      <div class="toggleLine">
+        <label class="switch"><input id="autoRead" type="checkbox"> 🔊 Lire automatiquement les nouveaux messages</label>
+        <button id="stopVoice" class="mini" type="button">⏹ Stop voix</button>
+      </div>
+    </div></div></section>
+
+    <section class="section"><div class="wrap"><div class="card">
+      <div class="tableTitle"><h2>💬 Sur la table</h2><button id="clearBtn" class="mini" type="button">Effacer le test</button></div>
+      <div id="feed" class="feed"></div>
+    </div></div></section>
+
+    <section class="section"><div class="wrap"><div class="footerNote">
+      <strong>Prototype V1 :</strong> aucun compte, aucune visioconférence et aucun transport réseau entre plusieurs personnes dans ce fichier. La reconnaissance vocale directe est utilisée seulement si le navigateur l’offre sans clé. Sinon, la dictée native de l’appareil reste le chemin recommandé. La lecture utilise les voix disponibles sur l’appareil / navigateur.
+    </div></div></section>
+  </main>
+
+  <div id="live" class="sr" aria-live="polite"></div>
+
+  <script>
+  (() => {
+    'use strict';
+
+    const $ = (id) => document.getElementById(id);
+    const draft = $('draft');
+    const speakBtn = $('speakBtn');
+    const sendBtn = $('sendBtn');
+    const feed = $('feed');
+    const status = $('status');
+    const autoRead = $('autoRead');
+    const stopVoice = $('stopVoice');
+    const clearBtn = $('clearBtn');
+    const live = $('live');
+    const STORE = 'digiy_rencontre_table_voice_demo_v1';
+
+    let messages = [];
+    let recognizing = false;
+    let recognition = null;
+
+    function esc(s='') {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function setStatus(text, good=false) {
+      status.textContent = text;
+      status.classList.toggle('good', good);
+      live.textContent = text;
+    }
+
+    function save() {
+      localStorage.setItem(STORE, JSON.stringify(messages.slice(-30)));
+    }
+
+    function load() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(STORE) || '[]');
+        messages = Array.isArray(parsed) ? parsed : [];
+      } catch (_) { messages = []; }
+      render();
+    }
+
+    function speak(text) {
+      if (!('speechSynthesis' in window) || !text) {
+        setStatus('Lecture vocale indisponible sur cet appareil.');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'fr-FR';
+      u.rate = 1;
+      u.pitch = 1;
+      u.onstart = () => setStatus('🔊 Lecture en cours…', true);
+      u.onend = () => setStatus('Lecture terminée. Table prête.', true);
+      u.onerror = () => setStatus('La lecture vocale a été interrompue.');
+      window.speechSynthesis.speak(u);
+    }
+
+    function render() {
+      if (!messages.length) {
+        feed.innerHTML = '<div class="empty">Aucun message pour le moment. Prends la première chaise.</div>';
+        return;
+      }
+      feed.innerHTML = messages.map((m,i) => `
+        <article class="msg">
+          <div class="msgHead"><span class="who">${esc(m.who || 'Moi')}</span><span class="time">${esc(m.time || '')}</span></div>
+          <p>${esc(m.text)}</p>
+          <div class="msgActions"><button class="mini readMsg" type="button" data-i="${i}">🔊 Écouter</button></div>
+        </article>`).join('');
+    }
+
+    function send() {
+      const text = draft.value.trim();
+      if (!text) {
+        setStatus('Dis ou écris quelque chose avant de le poser à la table.');
+        draft.focus();
+        return;
+      }
+      const now = new Date();
+      messages.push({who:'Moi', text, time:now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})});
+      save();
+      render();
+      draft.value = '';
+      setStatus('Message posé à la table ✓', true);
+      if (autoRead.checked) speak(text);
+    }
+
+    function startNativeFallback() {
+      draft.focus();
+      setStatus('🎙️ Champ prêt : utilise maintenant Dictée / le micro du clavier de ton appareil.', true);
+    }
+
+    function initRecognition() {
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) return null;
+      try {
+        const r = new SR();
+        r.lang = 'fr-FR';
+        r.continuous = false;
+        r.interimResults = true;
+        r.maxAlternatives = 1;
+        if ('processLocally' in r) {
+          try { r.processLocally = true; } catch (_) {}
+        }
+        r.onstart = () => {
+          recognizing = true;
+          speakBtn.textContent = '⏹ ARRÊTER';
+          setStatus('🎙️ Je t’écoute… parle normalement.', true);
+        };
+        r.onresult = (event) => {
+          let finalText = '';
+          let interim = '';
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const t = event.results[i][0]?.transcript || '';
+            if (event.results[i].isFinal) finalText += t;
+            else interim += t;
+          }
+          if (finalText) draft.value = (draft.value + ' ' + finalText).trim();
+          if (interim) setStatus('🎙️ ' + interim, true);
+        };
+        r.onerror = (e) => {
+          recognizing = false;
+          speakBtn.textContent = '🎙️ PARLER → TEXTE';
+          if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+            setStatus('Micro direct refusé. Utilise la dictée native de ton appareil.');
+          } else {
+            setStatus('Micro direct indisponible ici. Passage à la dictée native de l’appareil.');
+            startNativeFallback();
+          }
+        };
+        r.onend = () => {
+          recognizing = false;
+          speakBtn.textContent = '🎙️ PARLER → TEXTE';
+          if (draft.value.trim()) setStatus('Transcription prête. Tu peux la poser à la table ✓', true);
+        };
+        return r;
+      } catch (_) { return null; }
+    }
+
+    speakBtn.addEventListener('click', () => {
+      if (!recognition) recognition = initRecognition();
+      if (!recognition) return startNativeFallback();
+      try {
+        if (recognizing) recognition.stop();
+        else recognition.start();
+      } catch (_) {
+        startNativeFallback();
+      }
+    });
+
+    sendBtn.addEventListener('click', send);
+    draft.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') send();
+    });
+
+    feed.addEventListener('click', (e) => {
+      const btn = e.target.closest('.readMsg');
+      if (!btn) return;
+      const m = messages[Number(btn.dataset.i)];
+      if (m) speak(m.text);
+    });
+
+    stopVoice.addEventListener('click', () => {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      setStatus('Voix arrêtée.');
+    });
+
+    clearBtn.addEventListener('click', () => {
+      messages = [];
+      localStorage.removeItem(STORE);
+      render();
+      setStatus('Test local effacé.');
+    });
+
+    load();
+  })();
+  </script>
+</body>
+</html>
