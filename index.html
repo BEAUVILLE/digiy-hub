@@ -9,7 +9,7 @@
   <link rel="icon" href="./icon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="./icon-192.png">
   <link rel="manifest" href="./manifest.json">
-  <title>DIGIY HUB — Club des Métiers du Terrain</title>
+  <title>DIGIY HUB — Club des Métiers du Terrain · 8 langues</title>
   <meta name="description" content="DIGIY HUB — la gare centrale multilingue des métiers du terrain : portes publiques, portes professionnelles, contact direct et 0% commission.">
   <style>
     :root{--bar-h:58px;--bg:#03120c;--gold:#f6c453;--green:#00a651;--ink:#f8fafc;--line:rgba(255,255,255,.16)}
@@ -59,8 +59,12 @@
     });
   })();
   </script>
-  <script>try{localStorage.setItem('digiy_hub_lang_v1','fr')}catch(e){}</script>
+  <script>
+  (function(){try{var p=new URLSearchParams(location.search);var l=(p.get('lang')||'').slice(0,2).toLowerCase();if(l==='pt')localStorage.setItem('digiy_hub_lang_7','fr');}catch(e){}})();
+  </script>
+  <script src="https://digiylyfe.com/assets/i18n/digiy-world8.js?v=20260810-world8" defer></script>
   <script src="./hub-7lang.js?v=20260730-hub7a" defer></script>
+  <script src="./hub-world8-pt.js?v=20260810-world8" defer></script>
   <script src="./hub-bonne-affaire.js?v=20260801-ba1" defer></script>
   <script src="./hub-rencontre.js?v=20260810-rencontre1" defer></script>
   <script src="./hub-pro-cartouche.js?v=20260801-pro1" defer></script>
@@ -78,6 +82,7 @@
         <button type="button" data-shell-lang="fr">🇫🇷 FR</button>
         <button type="button" data-shell-lang="en">🇬🇧 EN</button>
         <button type="button" data-shell-lang="es">🇪🇸 ES</button>
+        <button type="button" data-shell-lang="pt">🇵🇹 PT</button>
         <button type="button" data-shell-lang="de">🇩🇪 DE</button>
         <button type="button" data-shell-lang="it">🇮🇹 IT</button>
         <button type="button" data-shell-lang="nl">🇳🇱 NL</button>
