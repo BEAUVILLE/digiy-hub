@@ -70,6 +70,7 @@
   const mode=new URLSearchParams(location.search).get('mode')==='login'?'login':'signup';
 
   if(mode==='login'){
+    localStorage.removeItem(PENDING);
     q('title').textContent='Se connecter';
     q('lead').textContent='Reçois un code de connexion par email pour retrouver ton espace.';
     q('signupFields').classList.add('hidden');
@@ -119,6 +120,7 @@
       if(!q('adult').checked){q('msg').textContent='Le module V1 est réservé aux 18+.';return}
       localStorage.setItem(PENDING,JSON.stringify({display_name:name,phone_number:ph,zone_id:q('zone').value,intention:q('intention').value,bio:q('bio').value.trim()||null,is_adult:true}));
     }else{
+      localStorage.removeItem(PENDING);
       email=q('loginEmail').value.trim().toLowerCase();if(!email.includes('@')){q('msg').textContent='Email invalide.';return}
     }
     q('send').disabled=true;q('msg').textContent='Envoi du code…';
