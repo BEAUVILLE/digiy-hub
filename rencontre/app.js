@@ -13,6 +13,7 @@
   const circleList = $('#circleList');
   const circleSelect = $('#circle');
   const zoneSelect = $('#zone');
+  const authActions = $('#digiyAuthActions');
 
   let intention = 'OUVERT';
   let activeSlot = '17:00';
@@ -47,6 +48,22 @@
     status.textContent = message;
     status.style.borderColor = good ? 'rgba(18,183,106,.38)' : '';
     status.style.color = good ? '#dfffea' : '';
+  }
+
+  function renderConnected(profile) {
+    if (!authActions || !profile) return;
+    authActions.innerHTML = `
+      <a class="create" href="#panel-people">✓ CONNECTÉ · ${esc(profile.display_name || 'membre')}</a>
+      <a class="login" href="#" id="rencontreLogout">SE DÉCONNECTER</a>`;
+    const logout = $('#rencontreLogout');
+    if (logout) {
+      logout.addEventListener('click', async (e) => {
+        e.preventDefault();
+        logout.textContent = 'Déconnexion…';
+        try { await client.auth.signOut(); } catch (err) { console.error(err); }
+        location.reload();
+      });
+    }
   }
 
   function renderCircles(rows = demoCircles.map(([slug,icon,name,description], i) => ({slug,icon,name,description,position:(i+1)*10}))) {
@@ -139,6 +156,7 @@
 
     try {
       await loadCurrentProfile();
+      if (currentProfile) renderConnected(currentProfile);
       if (!currentProfile?.is_active || !currentProfile?.is_adult) {
         setStatus('Un profil DIGIY RENCONTRE actif et 18+ est requis avant la découverte.');
         renderCircles(); renderZones(); renderPeople([]); renderActivities([]);
