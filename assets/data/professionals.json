@@ -165,7 +165,7 @@
       "activityMode": "fixed",
       "summary": {"fr": "Restaurant à Sarlat avec contact direct.", "en": "Restaurant in Sarlat with direct contact."},
       "contacts": [
-        {"type": "website", "label": {"fr": "Voir le site", "en": "Visit website"}, "url": "https://restaurant-entre2malraux.fr/"}
+        {"type": "website", "label": {"fr": "Voir le site", "en": "Visit website"}, "url": "https://malraux-entre2.digiylyfe.com/"}
       ]
     },
     {
@@ -180,7 +180,7 @@
       "activityMode": "fixed",
       "summary": {"fr": "Restaurant à Sarlat avec contact direct.", "en": "Restaurant in Sarlat with direct contact."},
       "contacts": [
-        {"type": "website", "label": {"fr": "Voir le site", "en": "Visit website"}, "url": "https://restaurant-entre2malraux.fr/"}
+        {"type": "website", "label": {"fr": "Voir le site", "en": "Visit website"}, "url": "https://malraux-entre2.digiylyfe.com/"}
       ]
     }
   ]
