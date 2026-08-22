@@ -1,128 +1,21 @@
 <!doctype html>
-<html lang="fr" dir="ltr">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#00853f">
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://digiy-hub.digiylyfe.com/">
-  <link rel="icon" href="./icon-192.png" sizes="192x192">
-  <link rel="apple-touch-icon" href="./icon-192.png">
-  <link rel="manifest" href="./manifest.json">
-  <title>DIGIY HUB — Club des Métiers du Terrain · 8 langues</title>
-  <meta name="description" content="DIGIY HUB — la gare centrale multilingue des métiers du terrain : portes publiques, portes professionnelles, contact direct et 0% commission.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://digiylyfe.com/">
+  <meta http-equiv="refresh" content="0;url=https://digiylyfe.com/">
+  <title>DIGIYLYFE</title>
+  <script>window.location.replace('https://digiylyfe.com/');</script>
   <style>
-    :root{--bar-h:52px;--bg:#03120c;--gold:#f6c453;--green:#00a651;--ink:#f8fafc;--line:rgba(255,255,255,.16)}
-    *{box-sizing:border-box}
-    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
-    .language-shell{height:var(--bar-h);padding:max(5px,env(safe-area-inset-top)) 8px 5px;background:linear-gradient(135deg,#061c12,#083923);border-bottom:1px solid rgba(246,196,83,.30);box-shadow:0 6px 20px rgba(0,0,0,.24);position:relative;z-index:20}
-    .language-inner{height:100%;display:flex;align-items:center;gap:6px;max-width:1180px;margin:auto;min-width:0}
-    .hub-mark{display:flex;align-items:center;gap:6px;flex:0 0 auto;color:#fff3cf;font-weight:1000;font-size:11px;letter-spacing:.03em;white-space:nowrap}
-    .hub-mark span{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),#22c55e);color:#06140f;font-size:16px}
-    .language-buttons{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;flex:1;min-width:0;overflow:visible}
-    .language-buttons button{min-width:0;height:29px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.07);color:#fff;padding:0 3px;font-weight:1000;font-size:9px;cursor:pointer;white-space:nowrap}
-    .language-buttons button.active{background:linear-gradient(135deg,var(--gold),#22c55e);border-color:rgba(246,196,83,.62);color:#06140f;box-shadow:0 4px 12px rgba(0,0,0,.18)}
-    .frame-wrap{position:relative;width:100%;height:calc(100dvh - var(--bar-h));background:#03120c}
-    #hubFrame{display:block;width:100%;height:100%;border:0;background:#03120c}
-    .loading{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 20% 0%,rgba(0,166,81,.28),transparent 55%),#03120c;color:#fff3cf;font-weight:1000;z-index:2;transition:opacity .18s ease}
-    .loading.hidden{opacity:0;pointer-events:none}
-    .loading span{padding:18px 22px;border-radius:20px;border:1px solid rgba(246,196,83,.28);background:rgba(255,255,255,.06)}
-    html[dir="rtl"] .language-inner{direction:rtl}
-    @media(max-width:720px){
-      :root{--bar-h:48px}
-      .language-shell{padding-left:5px;padding-right:5px}
-      .hub-mark b{display:none}
-      .hub-mark span{width:28px;height:28px;border-radius:9px;font-size:15px}
-      .language-inner{gap:4px}
-      .language-buttons{gap:2px}
-      .language-buttons button{height:27px;font-size:8px;padding:0 2px}
-    }
-    @media(max-width:390px){.language-buttons button{font-size:7.5px}}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:#06140f;color:#fffaf0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center}a{display:inline-flex;min-height:52px;align-items:center;justify-content:center;padding:12px 20px;border:2px solid #f6c453;border-radius:999px;background:#073f32;color:#fff;text-decoration:none;font-weight:950}
   </style>
-  <script>
-  (function(){
-    'use strict';
-    window.addEventListener('load',function(){
-      (async function(){
-        try{
-          if('serviceWorker' in navigator){
-            var registrations=await navigator.serviceWorker.getRegistrations();
-            await Promise.all(registrations.map(function(registration){
-              return registration.unregister();
-            }));
-          }
-          if('caches' in window){
-            var keys=await caches.keys();
-            await Promise.all(keys.filter(function(key){
-              return key.indexOf('digiy-hub')!==-1;
-            }).map(function(key){
-              return caches.delete(key);
-            }));
-          }
-        }catch(error){
-          console.warn('[DIGIY HUB] nettoyage ancien cache différé',error);
-        }
-      })();
-    });
-  })();
-  </script>
-  <script>
-  (function(){try{var p=new URLSearchParams(location.search);var l=(p.get('lang')||'').slice(0,2).toLowerCase();if(l==='pt')localStorage.setItem('digiy_hub_lang_7','fr');}catch(e){}})();
-  </script>
-  <script src="https://digiylyfe.com/assets/i18n/digiy-world8.js?v=20260810-world8" defer></script>
-  <script src="./hub-7lang.js?v=20260812-hub-world8-visible-v2" defer></script>
-  <script src="./hub-world8-pt.js?v=20260812-hub-world8-visible-v2" defer></script>
-  <script src="./hub-bonne-affaire.js?v=20260801-ba1" defer></script>
-  <script src="./hub-rencontre.js?v=20260811-monde1" defer></script>
-  <script src="./hub-pro-cartouche.js?v=20260801-pro1" defer></script>
-  <script src="./hub-pro-mobile-fix.js?v=20260801-pro2" defer></script>
-  <script src="./hub-pro-personnalisation.js?v=20260801-pro3" defer></script>
-  <script src="./hub-public-cartouche.js?v=20260801-public1" defer></script>
-  <script src="./hub-public-grid-memory.js?v=20260801-public2" defer></script>
-  <script src="./hub-territories-cartouche.js?v=20260802-territories3" defer></script>
-  <script>
-  (function(){
-    'use strict';
-    function fixDriverRoute(){
-      var frame=document.getElementById('hubFrame');
-      if(!frame) return;
-      try{
-        var doc=frame.contentDocument;
-        if(!doc) return;
-        doc.querySelectorAll('a[href="https://driver.digiylyfe.com/"]').forEach(function(a){
-          a.setAttribute('href','https://driver-client.digiylyfe.com/');
-        });
-      }catch(e){}
-    }
-    window.addEventListener('load',function(){
-      var frame=document.getElementById('hubFrame');
-      if(!frame) return;
-      frame.addEventListener('load',fixDriverRoute);
-      fixDriverRoute();
-    });
-  })();
-  </script>
 </head>
 <body>
-  <header class="language-shell" aria-label="DIGIY HUB languages">
-    <div class="language-inner">
-      <div class="hub-mark"><span>🧭</span><b>DIGIY HUB</b></div>
-      <nav class="language-buttons" id="hubLanguages" aria-label="Choisir la langue">
-        <button type="button" data-shell-lang="fr">FR</button>
-        <button type="button" data-shell-lang="en">EN</button>
-        <button type="button" data-shell-lang="es">ES</button>
-        <button type="button" data-shell-lang="pt">PT</button>
-        <button type="button" data-shell-lang="de">DE</button>
-        <button type="button" data-shell-lang="it">IT</button>
-        <button type="button" data-shell-lang="nl">NL</button>
-        <button type="button" data-shell-lang="ar">AR</button>
-      </nav>
-    </div>
-  </header>
-  <main class="frame-wrap">
-    <div class="loading" id="hubLoading"><span>DIGIY HUB…</span></div>
-    <iframe id="hubFrame" title="DIGIY HUB" loading="eager" allow="clipboard-read; clipboard-write"></iframe>
+  <main>
+    <p>Redirection vers DIGIYLYFE.COM…</p>
+    <a href="https://digiylyfe.com/">← OUVRIR DIGIYLYFE.COM</a>
   </main>
-  <noscript><p><a href="./hub-core.html">Ouvrir DIGIY HUB</a></p></noscript>
 </body>
 </html>
