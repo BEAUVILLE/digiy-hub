@@ -83,7 +83,7 @@
   <script>
   (function(){
     'use strict';
-    function fixDriverRoute(){
+    function fixFrameRoutes(){
       var frame=document.getElementById('hubFrame');
       if(!frame) return;
       try{
@@ -92,13 +92,23 @@
         doc.querySelectorAll('a[href="https://driver.digiylyfe.com/"]').forEach(function(a){
           a.setAttribute('href','https://driver-client.digiylyfe.com/');
         });
+        doc.querySelectorAll('a[href]').forEach(function(a){
+          var raw=a.getAttribute('href')||'';
+          if(!/^https:\/\//i.test(raw)) return;
+          try{
+            var url=new URL(raw);
+            var host=url.hostname.toLowerCase();
+            var ecosystem=(host==='digiylyfe.com'||host.endsWith('.digiylyfe.com')||host==='digiylyfe.net'||host.endsWith('.digiylyfe.net'));
+            if(ecosystem) a.setAttribute('target','_top');
+          }catch(_){}
+        });
       }catch(e){}
     }
     window.addEventListener('load',function(){
       var frame=document.getElementById('hubFrame');
       if(!frame) return;
-      frame.addEventListener('load',fixDriverRoute);
-      fixDriverRoute();
+      frame.addEventListener('load',fixFrameRoutes);
+      fixFrameRoutes();
     });
   })();
   </script>
