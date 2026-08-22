@@ -80,6 +80,28 @@
   <script src="./hub-public-cartouche.js?v=20260801-public1" defer></script>
   <script src="./hub-public-grid-memory.js?v=20260801-public2" defer></script>
   <script src="./hub-territories-cartouche.js?v=20260802-territories3" defer></script>
+  <script>
+  (function(){
+    'use strict';
+    function fixDriverRoute(){
+      var frame=document.getElementById('hubFrame');
+      if(!frame) return;
+      try{
+        var doc=frame.contentDocument;
+        if(!doc) return;
+        doc.querySelectorAll('a[href="https://driver.digiylyfe.com/"]').forEach(function(a){
+          a.setAttribute('href','https://driver-client.digiylyfe.com/');
+        });
+      }catch(e){}
+    }
+    window.addEventListener('load',function(){
+      var frame=document.getElementById('hubFrame');
+      if(!frame) return;
+      frame.addEventListener('load',fixDriverRoute);
+      fixDriverRoute();
+    });
+  })();
+  </script>
 </head>
 <body>
   <header class="language-shell" aria-label="DIGIY HUB languages">
