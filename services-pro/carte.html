@@ -23,7 +23,8 @@ async function boot(){
  const {data,error}=await sb.rpc("digiy_services_pro_public_professional_by_slug_v2",{p_slug:slug});
  const p=data?.[0];
  if(error||!p){box.innerHTML="<p>Carte indisponible.</p>";return}
- const wa=(p.whatsapp||p.phone||"").replace(/\D/g,"");
+ const rawWa=(p.whatsapp||p.phone||"").replace(/\D/g,"");
+ const wa=(String(p.country||"").toLowerCase()==="sénégal"&&rawWa.length===9)?"221"+rawWa:rawWa;
  const premium=p.presence_level!=="card";
  box.innerHTML='<div class="hero"><div class="eyebrow">🧭 DIGIY SERVICES PRO</div><div class="identity"><h1>'+esc(p.display_name)+'</h1><div class="trade"><span class="trade-label">Métier :</span> '+esc(p.profession_code)+'</div><span class="territory">'+esc(p.zone)+' · '+esc(p.country)+'</span></div></div><div class="body">'+
    '<div class="direct"><strong>Contact direct</strong><span>0 % commission DIGIYLYFE</span></div>'+
