@@ -99,6 +99,12 @@ footer{padding:24px 0 40px;color:var(--muted);font-size:13px}
 </form>
 </section>
 
+<section class="card">
+<h2>Professionnels SERVICES PRO</h2>
+<p class="small">Seules les fiches contrôlées et publiées par DIGIY apparaissent ici.</p>
+<div id="professionalsList" class="grid" style="grid-template-columns:1fr"></div>
+</section>
+
 <footer>DIGIYLYFE · Votre place dans le monde numérique · Contact direct · 0 % commission · <a href="./acces-digiy.html" style="color:inherit;font-weight:800">🔐 Accès DIGIY</a></footer>
 </main>
 
@@ -133,6 +139,20 @@ form.addEventListener("submit",async(e)=>{
   form.reset();
   document.getElementById("country").value="Sénégal";
 });
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+async function loadProfessionals(){
+  const box=document.getElementById("professionalsList");
+  const {data,error}=await sb.rpc("digiy_services_pro_public_professionals_v1",{p_profession_code:null,p_zone:null});
+  if(error){box.innerHTML='<div class="small">Les fiches sont temporairement indisponibles.</div>';return}
+  box.innerHTML=(data||[]).map(p=>{
+    const wa=(p.whatsapp||p.phone||"").replace(/\D/g,"");
+    const contact=wa?'<a class="btn" style="text-decoration:none;display:inline-block;margin-top:10px" href="https://wa.me/'+esc(wa)+'" target="_blank" rel="noopener">CONTACTER</a>':'';
+    const web=p.website_url?'<a href="'+esc(p.website_url)+'" target="_blank" rel="noopener">Site officiel</a>':'';
+    const maps=p.maps_url?'<a href="'+esc(p.maps_url)+'" target="_blank" rel="noopener">Google Maps</a>':'';
+    return '<article class="chip" style="display:block"><strong>'+esc(p.display_name)+'</strong><div class="small">'+esc(p.profession_code)+' · '+esc(p.zone)+' · '+esc(p.country)+'</div>'+(p.organization_name?'<div>'+esc(p.organization_name)+'</div>':'')+(p.credentials_text?'<div class="small">'+esc(p.credentials_text)+'</div>':'')+(p.description?'<p class="small">'+esc(p.description)+'</p>':'')+'<div class="small">'+[web,maps].filter(Boolean).join(' · ')+'</div>'+contact+'</article>';
+  }).join("")||'<div class="small">Aucune fiche professionnelle publiée pour le moment.</div>';
+}
+loadProfessionals();
 </script>
 </body>
 </html>
