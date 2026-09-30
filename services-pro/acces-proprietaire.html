@@ -32,7 +32,7 @@ document.getElementById("send").onclick=async()=>{
  const email=document.getElementById("email").value.trim();
  if(!email){msg.textContent="Email requis.";return}
  const redirect=new URL("./acces-proprietaire.html",location.href).href;
- const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:redirect,shouldCreateUser:false}});
+ const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:redirect,shouldCreateUser:true}});
  msg.textContent=error?"⚠️ "+error.message:"✅ Magic-link envoyé.";
 };
 check();
