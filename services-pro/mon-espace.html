@@ -39,9 +39,20 @@ async function save(i,id){
  alert(error?"⚠️ "+error.message:"✅ Informations mises à jour.");
  if(!error) boot();
 }
+const isPublicWebUrl=value=>{
+ try{
+  const u=new URL(value);
+  return u.protocol==="https:"||u.protocol==="http:";
+ }catch{return false}
+};
 async function saveMedia(i,id){
  const photos=(document.getElementById("photos-"+i)?.value||"").split(/\n+/).map(x=>x.trim()).filter(Boolean);
  const urls=(document.getElementById("media-"+i)?.value||"").split(/\n+/).map(x=>x.trim()).filter(Boolean);
+ const invalid=[...photos,...urls].filter(url=>!isPublicWebUrl(url));
+ if(invalid.length){
+  alert("⚠️ URL invalide : "+invalid[0]+"\nUtilisez un lien public commençant par http:// ou https://");
+  return;
+ }
  const media=urls.map(url=>({url}));
  const {error}=await sb.rpc("digiy_services_pro_owner_update_media_v1",{p_id:id,p_photo_urls:photos,p_media_links:media});
  alert(error?"⚠️ "+error.message:"✅ URLs photos et médias mises à jour.");
