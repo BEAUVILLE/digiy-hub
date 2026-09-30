@@ -6,7 +6,7 @@
 <title>SERVICES PRO — Gestion DIGIY</title>
 <style>
 :root{--bg:#f5f2e8;--card:#fffdf7;--ink:#173b31;--muted:#66746d;--line:#ddd5c2}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui}.wrap{max-width:920px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}.meta{color:var(--muted);font-size:13px}.need{white-space:pre-wrap}.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#fff5cf;border:1px solid #ead28a;font-size:12px;font-weight:900}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button,.logout{border:0;border-radius:999px;padding:9px 12px;font-weight:900;cursor:pointer}.approve{background:#0f6b4f;color:#fff}.reject{background:#7d2f2f;color:#fff}.plain{background:#ece7d8;color:#173b31}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui}.wrap{max-width:920px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}.meta{color:var(--muted);font-size:13px}.need{white-space:pre-wrap}.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#fff5cf;border:1px solid #ead28a;font-size:12px;font-weight:900}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button,.logout{border:0;border-radius:999px;padding:9px 12px;font-weight:900;cursor:pointer}.field{display:grid;gap:6px;margin:10px 0}.field input,.field textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit}.field textarea{min-height:80px;resize:vertical}.approve{background:#0f6b4f;color:#fff}.reject{background:#7d2f2f;color:#fff}.plain{background:#ece7d8;color:#173b31}
 </style>
 </head>
 <body>
@@ -15,11 +15,34 @@
 <p>Demandes reçues avant qualification et mise en relation.</p>
 <div id="status" class="card">Chargement…</div>
 <div id="list"></div>
+<section class="card">
+<h2>➕ Ajouter un professionnel</h2>
+<div class="field"><label>Slug</label><input id="proSlug" placeholder="cabinet-dupont-dakar"></div>
+<div class="field"><label>Profession</label><input id="proProfession" placeholder="architecte, comptable, geometre…"></div>
+<div class="field"><label>Nom affiché</label><input id="proName"></div>
+<div class="field"><label>Cabinet / organisation</label><input id="proOrg"></div>
+<div class="field"><label>Zone</label><input id="proZone"></div>
+<div class="field"><label>Pays</label><input id="proCountry" value="Sénégal"></div>
+<div class="field"><label>Téléphone</label><input id="proPhone"></div>
+<div class="field"><label>WhatsApp</label><input id="proWhatsapp"></div>
+<div class="field"><label>Email</label><input id="proEmail"></div>
+<div class="field"><label>Description</label><textarea id="proDescription"></textarea></div>
+<div class="field"><label>Qualifications / agréments</label><textarea id="proCredentials"></textarea></div>
+<div class="field"><label>Site web</label><input id="proWebsite"></div>
+<div class="field"><label>Google Maps</label><input id="proMaps"></div>
+<label><input type="checkbox" id="proActive" checked> Actif</label>
+<label><input type="checkbox" id="proPublished"> Publié</label>
+<div class="actions"><button class="approve" id="savePro">💾 Enregistrer la fiche</button></div>
+</section>
+<section class="card">
+<h2>👥 Professionnels SERVICES PRO</h2>
+<div id="prosList" class="meta">Chargement…</div>
+</section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js"></script>
 <script>
 const sb=supabase.createClient("https://wesqmwjjtsefyjnluosj.supabase.co","sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3");
-const statusBox=document.getElementById("status"),list=document.getElementById("list");
+const statusBox=document.getElementById("status"),list=document.getElementById("list"),prosList=document.getElementById("prosList");
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const labels={pending_review:"En attente",approved:"Validée",rejected:"Refusée",matched:"Mise en relation",closed:"Clôturée"};
 async function boot(){
@@ -32,18 +55,66 @@ async function boot(){
  statusBox.textContent=(data||[]).length+" demande(s)";
  list.innerHTML=(data||[]).map(r=>{
   const actions=r.status==="closed"?"":'<div class="actions">'+
-   (r.status!=="approved"?'<button class="approve" data-id="'+esc(r.id)+'" data-status="approved">✅ Valider</button>':'')+
-   (r.status!=="matched"?'<button class="plain" data-id="'+esc(r.id)+'" data-status="matched">🤝 Mise en relation</button>':'')+
-   (r.status!=="rejected"?'<button class="reject" data-id="'+esc(r.id)+'" data-status="rejected">❌ Refuser</button>':'')+
-   '<button class="plain" data-id="'+esc(r.id)+'" data-status="closed">🔒 Clôturer</button></div>';
+   (r.status!=="approved"&&r.status!=="matched"?'<button class="approve" data-id="'+esc(r.id)+'" data-status="approved">✅ Valider</button>':'')+
+   (r.status==="approved"?'<button class="plain" data-match-request="'+esc(r.id)+'">🤝 Choisir un professionnel</button>':'')+
+   (r.status!=="rejected"&&r.status!=="matched"?'<button class="reject" data-id="'+esc(r.id)+'" data-status="rejected">❌ Refuser</button>':'')+
+   '<button class="plain" data-id="'+esc(r.id)+'" data-status="closed">🔒 Clôturer</button></div>'+
+   '<div id="match-'+esc(r.id)+'"></div>';
   return '<article class="card"><div><strong>'+esc(r.profession_code)+'</strong> · '+esc(r.requester_name)+'</div><div class="meta">'+esc(r.zone)+' · '+esc(r.country)+(r.period_text?' · '+esc(r.period_text):'')+'</div><p class="need">'+esc(r.need_text)+'</p><div class="meta">☎ '+esc(r.phone)+'</div><span class="status">'+esc(labels[r.status]||r.status)+'</span>'+actions+'</article>';
  }).join("")||'<div class="card">Aucune demande reçue.</div>';
  document.querySelectorAll("[data-status]").forEach(btn=>btn.onclick=()=>setStatus(btn.dataset.id,btn.dataset.status));
+ document.querySelectorAll("[data-match-request]").forEach(btn=>btn.onclick=()=>showMatchOptions(btn.dataset.matchRequest));
+ await loadProfessionals();
 }
 async function setStatus(id,next){
  const {error}=await sb.rpc("digiy_services_pro_admin_set_status_v1",{p_id:id,p_status:next});
  if(error){alert("⚠️ "+error.message);return}
  await boot();
+}
+async function loadProfessionals(){
+ const {data,error}=await sb.rpc("digiy_services_pro_admin_professionals_v1");
+ if(error){prosList.textContent="⚠️ "+error.message;return}
+ window.servicesPros=data||[];
+ prosList.innerHTML=(data||[]).map(p=>'<div class="card"><strong>'+esc(p.display_name)+'</strong> · '+esc(p.profession_code)+'<div class="meta">'+esc(p.zone)+' · '+esc(p.country)+' · '+(p.is_published?'Publié':'Non publié')+' · '+(p.is_active?'Actif':'Inactif')+'</div><div class="meta">☎ '+esc(p.phone||"")+'</div></div>').join("")||'Aucun professionnel enregistré.';
+}
+async function showMatchOptions(requestId){
+ const box=document.getElementById("match-"+requestId);
+ if(!box)return;
+ await loadProfessionals();
+ const pros=(window.servicesPros||[]).filter(p=>p.is_active);
+ box.innerHTML='<div class="card"><strong>Choisir le professionnel</strong>'+pros.map(p=>'<div class="actions"><button class="plain" data-match-pro="'+esc(p.id)+'" data-request="'+esc(requestId)+'">'+esc(p.display_name)+' · '+esc(p.profession_code)+' · '+esc(p.zone)+'</button></div>').join("")+'</div>';
+ box.querySelectorAll("[data-match-pro]").forEach(btn=>btn.onclick=()=>matchRequest(btn.dataset.request,btn.dataset.matchPro));
+}
+async function matchRequest(requestId,proId){
+ const {error}=await sb.rpc("digiy_services_pro_admin_match_request_v1",{p_request_id:requestId,p_professional_id:proId});
+ if(error){alert("⚠️ "+error.message);return}
+ await boot();
+}
+document.getElementById("savePro").onclick=async()=>{
+ const payload={
+   p_id:null,
+   p_slug:document.getElementById("proSlug").value.trim(),
+   p_profession_code:document.getElementById("proProfession").value.trim(),
+   p_display_name:document.getElementById("proName").value.trim(),
+   p_organization_name:document.getElementById("proOrg").value.trim(),
+   p_zone:document.getElementById("proZone").value.trim(),
+   p_country:document.getElementById("proCountry").value.trim()||"Sénégal",
+   p_phone:document.getElementById("proPhone").value.trim(),
+   p_whatsapp:document.getElementById("proWhatsapp").value.trim(),
+   p_email:document.getElementById("proEmail").value.trim(),
+   p_description:document.getElementById("proDescription").value.trim(),
+   p_credentials_text:document.getElementById("proCredentials").value.trim(),
+   p_website_url:document.getElementById("proWebsite").value.trim(),
+   p_maps_url:document.getElementById("proMaps").value.trim(),
+   p_is_active:document.getElementById("proActive").checked,
+   p_is_published:document.getElementById("proPublished").checked
+ };
+ const {error}=await sb.rpc("digiy_services_pro_admin_upsert_professional_v1",payload);
+ if(error){alert("⚠️ "+error.message);return}
+ alert("✅ Fiche professionnelle enregistrée.");
+ ["proSlug","proProfession","proName","proOrg","proZone","proPhone","proWhatsapp","proEmail","proDescription","proCredentials","proWebsite","proMaps"].forEach(id=>document.getElementById(id).value="");
+ document.getElementById("proCountry").value="Sénégal";document.getElementById("proActive").checked=true;document.getElementById("proPublished").checked=false;
+ await loadProfessionals();
 }
 document.getElementById("logout").onclick=async()=>{await sb.auth.signOut();location.replace("./acces-digiy.html")};
 boot();
