@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>SERVICES PRO — Accès propriétaire</title>
+<style>
+:root{--g:#073f32;--gold:#d8ad46;--cream:#f6f1e5;--paper:#fffefa;--ink:#173b31;--muted:#6e8179;--line:#dfe8e2}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--cream);font-family:system-ui;color:var(--ink);padding:18px}.card{width:min(520px,100%);background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 18px 50px rgba(7,63,50,.08)}.k{color:var(--gold);font-size:12px;font-weight:900;letter-spacing:.08em}.field{display:grid;gap:6px;margin:16px 0}input{padding:13px;border:1px solid var(--line);border-radius:12px;font:inherit}.btn{border:0;border-radius:999px;padding:13px 18px;background:var(--g);color:#fff;font-weight:900;cursor:pointer}.small{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="card">
+<div class="k">🧭 DIGIY SERVICES PRO</div>
+<h1>Accès propriétaire</h1>
+<p>Retrouvez votre carte DIGIY et gérez vos informations courantes.</p>
+<div class="field"><label>Email</label><input id="email" type="email" autocomplete="email"></div>
+<button class="btn" id="send">Recevoir mon magic-link</button>
+<p id="msg" class="small"></p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js"></script>
+<script>
+const sb=supabase.createClient("https://wesqmwjjtsefyjnluosj.supabase.co","sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3");
+const msg=document.getElementById("msg");
+async function check(){
+ const {data:{user}}=await sb.auth.getUser();
+ if(!user)return;
+ const {data,error}=await sb.rpc("digiy_services_pro_owner_profiles_v1");
+ if(!error&&Array.isArray(data)&&data.length) location.replace("./mon-espace.html");
+}
+document.getElementById("send").onclick=async()=>{
+ const email=document.getElementById("email").value.trim();
+ if(!email){msg.textContent="Email requis.";return}
+ const redirect=new URL("./acces-proprietaire.html",location.href).href;
+ const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:redirect,shouldCreateUser:false}});
+ msg.textContent=error?"⚠️ "+error.message:"✅ Magic-link envoyé.";
+};
+check();
+</script>
+</body>
+</html>
