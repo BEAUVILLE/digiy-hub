@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DIGIY SERVICES PRO — Trouver une expertise qualifiée</title>
+<meta name="description" content="Architectes, comptables, géomètres, juristes, huissiers et autres professions expertes. Décrivez votre besoin, votre territoire et contactez le bon professionnel.">
+<style>
+:root{--bg:#f5f2e8;--card:#fffdf7;--ink:#173b31;--muted:#66746d;--line:#ddd5c2;--accent:#0f6b4f;--gold:#b9892f}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:820px;margin:auto;padding:18px}.hero{padding:24px 0 12px}.eyebrow{font-weight:900;letter-spacing:.08em;font-size:12px;color:var(--accent)}
+h1{font-size:clamp(32px,8vw,54px);line-height:.98;margin:8px 0 14px}.lead{font-size:18px;line-height:1.5;color:#334c44}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}.chip{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;font-weight:850}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0;box-shadow:0 8px 24px rgba(23,59,49,.06)}
+form{display:grid;gap:12px}.field{display:grid;gap:6px}.field label{font-size:13px;font-weight:900}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;background:white;color:var(--ink)}
+.field textarea{min-height:120px;resize:vertical}.btn{border:0;border-radius:999px;padding:14px 18px;background:var(--accent);color:white;font-weight:950;font-size:16px;cursor:pointer}
+.small{font-size:13px;color:var(--muted);line-height:1.45}.ok{padding:12px;border-radius:12px;background:#e9f7ef;border:1px solid #b6ddc6;font-weight:800}.err{padding:12px;border-radius:12px;background:#fff0f0;border:1px solid #e2bcbc;font-weight:800}
+footer{padding:24px 0 40px;color:var(--muted);font-size:13px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero">
+<div class="eyebrow">DIGIY SERVICES PRO</div>
+<h1>La bonne expertise, dans le bon territoire.</h1>
+<p class="lead">Architectes, comptables, géomètres, juristes, huissiers, notaires, bureaux d’études, ingénieurs, consultants et autres professions expertes.</p>
+<p class="lead"><strong>Vous décrivez votre besoin. DIGIY qualifie la demande. Le contact reste direct.</strong></p>
+</section>
+
+<section class="grid" aria-label="Professions">
+<div class="chip">🏛️ Architectes</div>
+<div class="chip">📊 Comptables</div>
+<div class="chip">📐 Géomètres</div>
+<div class="chip">⚖️ Juristes / Avocats</div>
+<div class="chip">📜 Huissiers / Commissaires de justice</div>
+<div class="chip">🖋️ Notaires</div>
+<div class="chip">🏗️ Bureaux d’études</div>
+<div class="chip">🧭 Ingénieurs / Experts techniques</div>
+<div class="chip">💼 Consultants spécialisés</div>
+</section>
+
+<section class="card">
+<h2>Décrire mon besoin</h2>
+<p class="small">Aucun paiement ni mise en relation automatique ici. DIGIY contrôle la demande avant orientation. 0 % commission sur votre relation avec le professionnel.</p>
+
+<form id="requestForm">
+<div class="field">
+<label for="profession">Expertise recherchée</label>
+<select id="profession" required>
+<option value="">Choisir…</option>
+<option value="architecte">Architecte</option>
+<option value="comptable">Comptable / Expert-comptable</option>
+<option value="geometre">Géomètre</option>
+<option value="juriste">Juriste / Avocat</option>
+<option value="huissier">Huissier / Commissaire de justice</option>
+<option value="notaire">Notaire</option>
+<option value="bureau-etudes">Bureau d’études</option>
+<option value="ingenieur">Ingénieur / Expert technique</option>
+<option value="consultant">Consultant spécialisé</option>
+<option value="autre">Autre profession experte</option>
+</select>
+</div>
+
+<div class="field">
+<label for="need">Votre besoin</label>
+<textarea id="need" required minlength="10" placeholder="Ex. bornage d’un terrain, création de société, audit comptable, acte juridique, étude technique…"></textarea>
+</div>
+
+<div class="two">
+<div class="field">
+<label for="zone">Ville / zone / territoire</label>
+<input id="zone" required placeholder="Ex. Saly, Dakar, Thiès…">
+</div>
+<div class="field">
+<label for="country">Pays</label>
+<input id="country" value="Sénégal" required>
+</div>
+</div>
+
+<div class="field">
+<label for="period">Date / période souhaitée</label>
+<input id="period" placeholder="Ex. cette semaine, avant le 15 octobre…">
+</div>
+
+<div class="two">
+<div class="field">
+<label for="name">Votre nom</label>
+<input id="name" required>
+</div>
+<div class="field">
+<label for="phone">WhatsApp / téléphone</label>
+<input id="phone" required inputmode="tel">
+</div>
+</div>
+
+<button class="btn" type="submit">ENVOYER MON BESOIN À DIGIY</button>
+<div id="result" aria-live="polite"></div>
+</form>
+</section>
+
+<footer>DIGIYLYFE · Votre place dans le monde numérique · Contact direct · 0 % commission</footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js"></script>
+<script>
+const sb=supabase.createClient(
+  "https://wesqmwjjtsefyjnluosj.supabase.co",
+  "sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3"
+);
+const form=document.getElementById("requestForm");
+const result=document.getElementById("result");
+form.addEventListener("submit",async(e)=>{
+  e.preventDefault();
+  result.className="";result.textContent="Envoi…";
+  const payload={
+    p_profession_code:document.getElementById("profession").value,
+    p_need_text:document.getElementById("need").value.trim(),
+    p_zone:document.getElementById("zone").value.trim(),
+    p_country:document.getElementById("country").value.trim()||"Sénégal",
+    p_period_text:document.getElementById("period").value.trim(),
+    p_requester_name:document.getElementById("name").value.trim(),
+    p_phone:document.getElementById("phone").value.trim()
+  };
+  const {data,error}=await sb.rpc("digiy_services_pro_public_request_v1",payload);
+  if(error){
+    result.className="err";
+    result.textContent="⚠️ Envoi impossible. Vérifiez les informations et réessayez.";
+    return;
+  }
+  result.className="ok";
+  result.textContent="✅ Votre besoin a bien été transmis à DIGIY pour contrôle.";
+  form.reset();
+  document.getElementById("country").value="Sénégal";
+});
+</script>
+</body>
+</html>
