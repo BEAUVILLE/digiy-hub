@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carte DIGIY — SERVICES PRO</title>
+<meta name="robots" content="index,follow">
+<style>
+:root{--bg:#f5f2e8;--card:#fffdf7;--ink:#173b31;--muted:#66746d;--line:#ddd5c2;--accent:#0f6b4f}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);font-family:system-ui;color:var(--ink);padding:18px}.card{width:min(520px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 18px 60px rgba(23,59,49,.1)}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.08em;color:var(--accent)}h1{margin:8px 0 4px;font-size:34px}.meta{color:var(--muted);margin:4px 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{display:inline-block;text-decoration:none;border-radius:999px;padding:12px 16px;background:var(--accent);color:#fff;font-weight:900}.btn.secondary{background:#ece7d8;color:var(--ink)}#qr{margin-top:20px;display:grid;place-items:center}.premium{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}.small{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="card" id="card"><div class="meta">Chargement…</div></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+const sb=supabase.createClient("https://wesqmwjjtsefyjnluosj.supabase.co","sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3");
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+async function boot(){
+ const slug=new URLSearchParams(location.search).get("slug");
+ const box=document.getElementById("card");
+ if(!slug){box.innerHTML="<p>Carte introuvable.</p>";return}
+ const {data,error}=await sb.rpc("digiy_services_pro_public_professional_by_slug_v1",{p_slug:slug});
+ const p=data?.[0];
+ if(error||!p){box.innerHTML="<p>Carte indisponible.</p>";return}
+ const wa=(p.whatsapp||p.phone||"").replace(/\D/g,"");
+ const premium=p.presence_level!=="card";
+ box.innerHTML='<div class="eyebrow">🧭 DIGIY SERVICES PRO</div><h1>'+esc(p.display_name)+'</h1><div class="meta">'+esc(p.profession_code)+' · '+esc(p.zone)+' · '+esc(p.country)+'</div>'+
+   '<div class="actions">'+(wa?'<a class="btn" target="_blank" rel="noopener" href="https://wa.me/'+esc(wa)+'">WhatsApp</a>':'')+
+   (p.phone?'<a class="btn secondary" href="tel:'+esc(p.phone)+'">Appeler</a>':'')+'</div>'+
+   (premium?'<div class="premium">'+(p.organization_name?'<strong>'+esc(p.organization_name)+'</strong>':'')+(p.credentials_text?'<p class="small">'+esc(p.credentials_text)+'</p>':'')+(p.description?'<p>'+esc(p.description)+'</p>':'')+(p.website_url?'<p><a href="'+esc(p.website_url)+'" target="_blank" rel="noopener">Site professionnel</a></p>':'')+(p.maps_url?'<p><a href="'+esc(p.maps_url)+'" target="_blank" rel="noopener">Google Maps</a></p>':'')+'</div>':'')+
+   '<div id="qr"></div><p class="small">Scannez pour retrouver cette carte DIGIY.</p>';
+ new QRCode(document.getElementById("qr"),{text:location.href,width:150,height:150});
+}
+boot();
+</script>
+</body>
+</html>
