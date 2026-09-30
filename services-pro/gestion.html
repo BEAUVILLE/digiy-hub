@@ -16,7 +16,7 @@
 <div id="status" class="card">Chargement…</div>
 <div id="list"></div>
 <section class="card">
-<h2>➕ Ajouter un professionnel</h2>
+<h2 id="proFormTitle">➕ Ajouter un professionnel</h2><input type="hidden" id="proId">
 <div class="field"><label>Slug</label><input id="proSlug" placeholder="cabinet-dupont-dakar"></div>
 <div class="field"><label>Profession</label><input id="proProfession" placeholder="architecte, comptable, geometre…"></div>
 <div class="field"><label>Nom affiché</label><input id="proName"></div>
@@ -75,7 +75,8 @@ async function loadProfessionals(){
  const {data,error}=await sb.rpc("digiy_services_pro_admin_professionals_v1");
  if(error){prosList.textContent="⚠️ "+error.message;return}
  window.servicesPros=data||[];
- prosList.innerHTML=(data||[]).map(p=>'<div class="card"><strong>'+esc(p.display_name)+'</strong> · '+esc(p.profession_code)+'<div class="meta">'+esc(p.zone)+' · '+esc(p.country)+' · '+(p.is_published?'Publié':'Non publié')+' · '+(p.is_active?'Actif':'Inactif')+'</div><div class="meta">☎ '+esc(p.phone||"")+'</div></div>').join("")||'Aucun professionnel enregistré.';
+ prosList.innerHTML=(data||[]).map(p=>'<div class="card"><strong>'+esc(p.display_name)+'</strong> · '+esc(p.profession_code)+'<div class="meta">'+esc(p.zone)+' · '+esc(p.country)+' · '+(p.is_published?'Publié':'Non publié')+' · '+(p.is_active?'Actif':'Inactif')+'</div><div class="meta">☎ '+esc(p.phone||"")+'</div><div class="actions"><button class="plain" data-edit-pro="'+esc(p.id)+'">✏️ Modifier</button></div></div>').join("")||'Aucun professionnel enregistré.';
+ prosList.querySelectorAll("[data-edit-pro]").forEach(btn=>btn.onclick=()=>editProfessional(btn.dataset.editPro));
 }
 async function showMatchOptions(requestId){
  const box=document.getElementById("match-"+requestId);
@@ -90,9 +91,31 @@ async function matchRequest(requestId,proId){
  if(error){alert("⚠️ "+error.message);return}
  await boot();
 }
+function editProfessional(id){
+ const p=(window.servicesPros||[]).find(x=>x.id===id);
+ if(!p)return;
+ document.getElementById("proId").value=p.id||"";
+ document.getElementById("proSlug").value=p.slug||"";
+ document.getElementById("proProfession").value=p.profession_code||"";
+ document.getElementById("proName").value=p.display_name||"";
+ document.getElementById("proOrg").value=p.organization_name||"";
+ document.getElementById("proZone").value=p.zone||"";
+ document.getElementById("proCountry").value=p.country||"Sénégal";
+ document.getElementById("proPhone").value=p.phone||"";
+ document.getElementById("proWhatsapp").value=p.whatsapp||"";
+ document.getElementById("proEmail").value=p.email||"";
+ document.getElementById("proDescription").value=p.description||"";
+ document.getElementById("proCredentials").value=p.credentials_text||"";
+ document.getElementById("proWebsite").value=p.website_url||"";
+ document.getElementById("proMaps").value=p.maps_url||"";
+ document.getElementById("proActive").checked=!!p.is_active;
+ document.getElementById("proPublished").checked=!!p.is_published;
+ document.getElementById("proFormTitle").textContent="✏️ Modifier le professionnel";
+ window.scrollTo({top:document.getElementById("proFormTitle").offsetTop-20,behavior:"smooth"});
+}
 document.getElementById("savePro").onclick=async()=>{
  const payload={
-   p_id:null,
+   p_id:document.getElementById("proId").value||null,
    p_slug:document.getElementById("proSlug").value.trim(),
    p_profession_code:document.getElementById("proProfession").value.trim(),
    p_display_name:document.getElementById("proName").value.trim(),
@@ -111,8 +134,10 @@ document.getElementById("savePro").onclick=async()=>{
  };
  const {error}=await sb.rpc("digiy_services_pro_admin_upsert_professional_v1",payload);
  if(error){alert("⚠️ "+error.message);return}
- alert("✅ Fiche professionnelle enregistrée.");
- ["proSlug","proProfession","proName","proOrg","proZone","proPhone","proWhatsapp","proEmail","proDescription","proCredentials","proWebsite","proMaps"].forEach(id=>document.getElementById(id).value="");
+ alert(document.getElementById("proId").value?"✅ Fiche professionnelle modifiée.":"✅ Fiche professionnelle enregistrée.");
+ document.getElementById("proId").value="";
+ document.getElementById("proFormTitle").textContent="➕ Ajouter un professionnel";
+  ["proSlug","proProfession","proName","proOrg","proZone","proPhone","proWhatsapp","proEmail","proDescription","proCredentials","proWebsite","proMaps"].forEach(id=>document.getElementById(id).value="");
  document.getElementById("proCountry").value="Sénégal";document.getElementById("proActive").checked=true;document.getElementById("proPublished").checked=false;
  await loadProfessionals();
 }
