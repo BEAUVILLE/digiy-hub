@@ -149,7 +149,8 @@ async function loadProfessionals(){
     const contact=wa?'<a class="btn" style="text-decoration:none;display:inline-block;margin-top:10px" href="https://wa.me/'+esc(wa)+'" target="_blank" rel="noopener">CONTACTER</a>':'';
     const web=p.website_url?'<a href="'+esc(p.website_url)+'" target="_blank" rel="noopener">Site officiel</a>':'';
     const maps=p.maps_url?'<a href="'+esc(p.maps_url)+'" target="_blank" rel="noopener">Google Maps</a>':'';
-    return '<article class="chip" style="display:block"><strong>'+esc(p.display_name)+'</strong><div class="small">'+esc(p.profession_code)+' · '+esc(p.zone)+' · '+esc(p.country)+'</div>'+(p.organization_name?'<div>'+esc(p.organization_name)+'</div>':'')+(p.credentials_text?'<div class="small">'+esc(p.credentials_text)+'</div>':'')+(p.description?'<p class="small">'+esc(p.description)+'</p>':'')+'<div class="small">'+[web,maps].filter(Boolean).join(' · ')+'</div>'+contact+'</article>';
+    const card='<a class="btn" style="text-decoration:none;display:inline-block;margin-top:10px;background:#ece7d8;color:#173b31" href="./carte.html?slug='+encodeURIComponent(p.slug)+'">VOIR LA CARTE</a>';
+    return '<article class="chip" style="display:block"><strong>'+esc(p.display_name)+'</strong><div class="small">'+esc(p.profession_code)+' · '+esc(p.zone)+' · '+esc(p.country)+'</div>'+(p.organization_name?'<div>'+esc(p.organization_name)+'</div>':'')+(p.credentials_text?'<div class="small">'+esc(p.credentials_text)+'</div>':'')+(p.description?'<p class="small">'+esc(p.description)+'</p>':'')+'<div class="small">'+[web,maps].filter(Boolean).join(' · ')+'</div>'+contact+card+'</article>';
   }).join("")||'<div class="small">Aucune fiche professionnelle publiée pour le moment.</div>';
 }
 loadProfessionals();

@@ -6,7 +6,7 @@
 <title>SERVICES PRO — Gestion DIGIY</title>
 <style>
 :root{--bg:#f5f2e8;--card:#fffdf7;--ink:#173b31;--muted:#66746d;--line:#ddd5c2}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui}.wrap{max-width:920px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}.meta{color:var(--muted);font-size:13px}.need{white-space:pre-wrap}.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#fff5cf;border:1px solid #ead28a;font-size:12px;font-weight:900}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button,.logout{border:0;border-radius:999px;padding:9px 12px;font-weight:900;cursor:pointer}.field{display:grid;gap:6px;margin:10px 0}.field input,.field textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit}.field textarea{min-height:80px;resize:vertical}.approve{background:#0f6b4f;color:#fff}.reject{background:#7d2f2f;color:#fff}.plain{background:#ece7d8;color:#173b31}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui}.wrap{max-width:920px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}.meta{color:var(--muted);font-size:13px}.need{white-space:pre-wrap}.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#fff5cf;border:1px solid #ead28a;font-size:12px;font-weight:900}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button,.logout{border:0;border-radius:999px;padding:9px 12px;font-weight:900;cursor:pointer}.field{display:grid;gap:6px;margin:10px 0}.field input,.field textarea,.field select{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit}.field textarea{min-height:80px;resize:vertical}.approve{background:#0f6b4f;color:#fff}.reject{background:#7d2f2f;color:#fff}.plain{background:#ece7d8;color:#173b31}
 </style>
 </head>
 <body>
@@ -30,6 +30,8 @@
 <div class="field"><label>Qualifications / agréments</label><textarea id="proCredentials"></textarea></div>
 <div class="field"><label>Site web</label><input id="proWebsite"></div>
 <div class="field"><label>Google Maps</label><input id="proMaps"></div>
+<div class="field"><label>Niveau de présence</label><select id="proLevel"><option value="card">Carte DIGIY</option><option value="fiche">Fiche professionnelle</option><option value="site">Site professionnel</option></select></div>
+<div class="field"><label>Mode commercial de la carte</label><select id="proCardMode"><option value="free">Carte gratuite</option><option value="subscription">Carte avec adhésion</option></select></div>
 <label><input type="checkbox" id="proActive" checked> Actif</label>
 <label><input type="checkbox" id="proPublished"> Publié</label>
 <div class="actions"><button class="approve" id="savePro">💾 Enregistrer la fiche</button></div>
@@ -75,7 +77,7 @@ async function loadProfessionals(){
  const {data,error}=await sb.rpc("digiy_services_pro_admin_professionals_v1");
  if(error){prosList.textContent="⚠️ "+error.message;return}
  window.servicesPros=data||[];
- prosList.innerHTML=(data||[]).map(p=>'<div class="card"><strong>'+esc(p.display_name)+'</strong> · '+esc(p.profession_code)+'<div class="meta">'+esc(p.zone)+' · '+esc(p.country)+' · '+(p.is_published?'Publié':'Non publié')+' · '+(p.is_active?'Actif':'Inactif')+'</div><div class="meta">☎ '+esc(p.phone||"")+'</div><div class="actions"><button class="plain" data-edit-pro="'+esc(p.id)+'">✏️ Modifier</button></div></div>').join("")||'Aucun professionnel enregistré.';
+ prosList.innerHTML=(data||[]).map(p=>'<div class="card"><strong>'+esc(p.display_name)+'</strong> · '+esc(p.profession_code)+'<div class="meta">'+esc(p.zone)+' · '+esc(p.country)+' · '+esc(p.presence_level||"card")+' · '+esc(p.card_access_mode||"free")+' · '+(p.is_published?'Publié':'Non publié')+' · '+(p.is_active?'Actif':'Inactif')+'</div><div class="actions"><a class="plain" style="text-decoration:none;padding:9px 12px;border-radius:999px" target="_blank" href="./carte.html?slug='+encodeURIComponent(p.slug)+'">🪪 Voir la carte</a></div><div class="meta">☎ '+esc(p.phone||"")+'</div><div class="actions"><button class="plain" data-edit-pro="'+esc(p.id)+'">✏️ Modifier</button></div></div>').join("")||'Aucun professionnel enregistré.';
  prosList.querySelectorAll("[data-edit-pro]").forEach(btn=>btn.onclick=()=>editProfessional(btn.dataset.editPro));
 }
 async function showMatchOptions(requestId){
@@ -108,6 +110,8 @@ function editProfessional(id){
  document.getElementById("proCredentials").value=p.credentials_text||"";
  document.getElementById("proWebsite").value=p.website_url||"";
  document.getElementById("proMaps").value=p.maps_url||"";
+ document.getElementById("proLevel").value=p.presence_level||"card";
+ document.getElementById("proCardMode").value=p.card_access_mode||"free";
  document.getElementById("proActive").checked=!!p.is_active;
  document.getElementById("proPublished").checked=!!p.is_published;
  document.getElementById("proFormTitle").textContent="✏️ Modifier le professionnel";
@@ -129,16 +133,18 @@ document.getElementById("savePro").onclick=async()=>{
    p_credentials_text:document.getElementById("proCredentials").value.trim(),
    p_website_url:document.getElementById("proWebsite").value.trim(),
    p_maps_url:document.getElementById("proMaps").value.trim(),
+   p_presence_level:document.getElementById("proLevel").value,
+   p_card_access_mode:document.getElementById("proCardMode").value,
    p_is_active:document.getElementById("proActive").checked,
    p_is_published:document.getElementById("proPublished").checked
  };
- const {error}=await sb.rpc("digiy_services_pro_admin_upsert_professional_v1",payload);
+ const {error}=await sb.rpc("digiy_services_pro_admin_upsert_professional_v2",payload);
  if(error){alert("⚠️ "+error.message);return}
  alert(document.getElementById("proId").value?"✅ Fiche professionnelle modifiée.":"✅ Fiche professionnelle enregistrée.");
  document.getElementById("proId").value="";
  document.getElementById("proFormTitle").textContent="➕ Ajouter un professionnel";
   ["proSlug","proProfession","proName","proOrg","proZone","proPhone","proWhatsapp","proEmail","proDescription","proCredentials","proWebsite","proMaps"].forEach(id=>document.getElementById(id).value="");
- document.getElementById("proCountry").value="Sénégal";document.getElementById("proActive").checked=true;document.getElementById("proPublished").checked=false;
+ document.getElementById("proCountry").value="Sénégal";document.getElementById("proLevel").value="card";document.getElementById("proCardMode").value="free";document.getElementById("proActive").checked=true;document.getElementById("proPublished").checked=false;
  await loadProfessionals();
 }
 document.getElementById("logout").onclick=async()=>{await sb.auth.signOut();location.replace("./acces-digiy.html")};
