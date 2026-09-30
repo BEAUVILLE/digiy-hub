@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mon espace — SERVICES PRO</title>
+<style>
+:root{--g:#073f32;--gold:#d8ad46;--cream:#f6f1e5;--paper:#fffefa;--ink:#173b31;--muted:#6e8179;--line:#dfe8e2}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);font-family:system-ui;color:var(--ink)}.wrap{width:min(100% - 24px,900px);margin:auto;padding:18px 0 40px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.brand{font-weight:950;font-size:22px}.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;margin:12px 0;box-shadow:0 10px 28px rgba(7,63,50,.06)}.grid{display:grid;gap:12px}@media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff8df;border:1px solid #ead28a;font-size:12px;font-weight:900}.field{display:grid;gap:6px;margin:12px 0}input{padding:12px;border:1px solid var(--line);border-radius:11px;font:inherit}.btn{display:inline-block;border:0;border-radius:999px;padding:11px 14px;background:var(--g);color:#fff;font-weight:900;text-decoration:none;cursor:pointer}.secondary{background:#ece7d8;color:var(--ink)}.small{font-size:13px;color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap}.logout{border:0;border-radius:999px;padding:9px 12px;font-weight:900;cursor:pointer}.qr{display:grid;place-items:center;padding:12px}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="top"><div><div class="small">🧭 DIGIY SERVICES PRO</div><div class="brand">Mon espace</div></div><button class="logout" id="logout">Déconnexion</button></div>
+<div id="content"><div class="card">Chargement…</div></div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+const sb=supabase.createClient("https://wesqmwjjtsefyjnluosj.supabase.co","sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3");
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const labels={card:"Carte DIGIY",fiche:"Fiche professionnelle",site:"Site professionnel"};
+async function boot(){
+ const {data:{user}}=await sb.auth.getUser();
+ if(!user){location.replace("./acces-proprietaire.html");return}
+ const {data,error}=await sb.rpc("digiy_services_pro_owner_profiles_v1");
+ if(error||!data?.length){document.getElementById("content").innerHTML='<div class="card">Aucune présence SERVICES PRO rattachée à ce compte.</div>';return}
+ document.getElementById("content").innerHTML=data.map((p,i)=>{
+   const url=new URL("./carte.html?slug="+encodeURIComponent(p.slug),location.href).href;
+   return '<section class="card"><div class="small">'+esc(p.profession_code)+' · '+esc(p.country)+'</div><h2>'+esc(p.display_name)+'</h2><span class="badge">'+esc(labels[p.presence_level]||p.presence_level)+'</span><p class="small">'+(p.is_published?'Visible publiquement':'Non publiée')+' · '+(p.card_access_mode==="free"?'Carte gratuite':'Carte avec adhésion')+'</p><div class="grid"><div><h3>Ma carte DIGIY</h3><div class="actions"><a class="btn" target="_blank" href="'+esc(url)+'">Voir ma carte</a><a class="btn secondary" target="_blank" href="https://digiylyfe.com/tarifs-adherents-1.html?country=sn#fiche-pro">Passer à la fiche</a><a class="btn secondary" target="_blank" href="https://digiylyfe.com/tarifs-adherents-1.html?country=sn#site">Voir les sites</a></div><div class="qr" id="qr-'+i+'"></div></div><div><h3>Mes informations courantes</h3><div class="field"><label>Zone</label><input id="zone-'+i+'" value="'+esc(p.zone||"")+'"></div><div class="field"><label>Téléphone</label><input id="phone-'+i+'" value="'+esc(p.phone||"")+'"></div><div class="field"><label>WhatsApp</label><input id="wa-'+i+'" value="'+esc(p.whatsapp||"")+'"></div><button class="btn" data-save="'+i+'" data-id="'+esc(p.id)+'">Enregistrer</button><p class="small">Identité, métier, niveau commercial et publication restent protégés par DIGIY.</p></div></div></section>';
+ }).join("");
+ data.forEach((p,i)=>{const url=new URL("./carte.html?slug="+encodeURIComponent(p.slug),location.href).href;new QRCode(document.getElementById("qr-"+i),{text:url,width:140,height:140})});
+ document.querySelectorAll("[data-save]").forEach(btn=>btn.onclick=()=>save(btn.dataset.save,btn.dataset.id));
+}
+async function save(i,id){
+ const {error}=await sb.rpc("digiy_services_pro_owner_update_card_v1",{p_id:id,p_zone:document.getElementById("zone-"+i).value.trim(),p_phone:document.getElementById("phone-"+i).value.trim(),p_whatsapp:document.getElementById("wa-"+i).value.trim()});
+ alert(error?"⚠️ "+error.message:"✅ Informations mises à jour.");
+ if(!error) boot();
+}
+document.getElementById("logout").onclick=async()=>{await sb.auth.signOut();location.replace("./acces-proprietaire.html")};
+boot();
+</script>
+</body>
+</html>
